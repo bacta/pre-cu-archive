@@ -1,0 +1,26 @@
+package com.ocdsoft.bacta.swg.precu.message.object;
+
+import com.ocdsoft.bacta.swg.network.soe.buffer.SoeByteBuf;
+import com.ocdsoft.bacta.swg.network.swg.message.SwgMessage;
+
+public class ObjectMenuSelectMessage extends SwgMessage {
+    private long playerId;
+    private byte selectedItemId;
+
+    public ObjectMenuSelectMessage(long playerId, byte selectedItemId) {
+        super(0x03, 0x7CA18726);
+
+        this.playerId = playerId;
+        this.selectedItemId = selectedItemId;
+
+        writeLong(playerId);
+        writeByte(selectedItemId);
+    }
+
+    public ObjectMenuSelectMessage(SoeByteBuf buffer) {
+        super(0x03, 0x7CA18726);
+
+        playerId = buffer.readLong();
+        selectedItemId = buffer.readByte();
+    }
+}
