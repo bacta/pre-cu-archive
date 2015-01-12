@@ -1,7 +1,7 @@
 package com.ocdsoft.bacta.swg.precu.chat;
 
-import com.ocdsoft.bacta.swg.network.soe.lang.UnicodeString;
-import com.ocdsoft.bacta.swg.network.soe.object.chat.ChatAvatarId;
+import com.ocdsoft.bacta.engine.lang.UnicodeString;
+import com.ocdsoft.bacta.soe.object.chat.ChatAvatarId;
 
 import java.util.List;
 

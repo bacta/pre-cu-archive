@@ -1,31 +1,31 @@
 package com.ocdsoft.bacta.swg.precu.chat;
 
-import com.ocdsoft.bacta.swg.network.soe.client.SoeUdpClient;
-import com.ocdsoft.bacta.swg.network.soe.object.chat.ChatAvatarId;
-import com.ocdsoft.bacta.swg.server.game.message.chat.ChatInstantMessageToClient;
-import com.ocdsoft.bacta.swg.server.game.message.chat.ChatOnAddFriend;
-import com.ocdsoft.bacta.swg.server.game.message.chat.ChatOnConnectAvatar;
-import com.ocdsoft.bacta.swg.server.game.message.chat.ChatOnSendInstantMessage;
+import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
+import com.ocdsoft.bacta.soe.object.chat.ChatAvatarId;
+import com.ocdsoft.bacta.swg.precu.message.chat.ChatInstantMessageToClient;
+import com.ocdsoft.bacta.swg.precu.message.chat.ChatOnAddFriend;
+import com.ocdsoft.bacta.swg.precu.message.chat.ChatOnConnectAvatar;
+import com.ocdsoft.bacta.swg.precu.message.chat.ChatOnSendInstantMessage;
 import org.slf4j.LoggerFactory;
 
 /**
  * Created by crush on 7/24/2014.
  */
 public class ChatServerAgentHandler {
-    private final SoeUdpClient client;
+    private final SoeUdpConnection connection;
 
     private final org.slf4j.Logger logger = LoggerFactory.getLogger(getClass().getSimpleName());
 
-    public ChatServerAgentHandler(SoeUdpClient client) {
-        this.client = client;
+    public ChatServerAgentHandler(SoeUdpConnection connection) {
+        this.connection = connection;
     }
 
     public void onConnectAvatar(final ChatAvatarId avatarId) {
-        client.sendMessage(new ChatOnConnectAvatar());
+        connection.sendMessage(new ChatOnConnectAvatar());
     }
 
     public void onInstantMessageReceived(final ChatAvatarId senderId, final String message) {
-        client.sendMessage(new ChatInstantMessageToClient(senderId, message));
+        connection.sendMessage(new ChatInstantMessageToClient(senderId, message));
     }
 
     public void onInstantMessageSent(final ChatAvatarId recipientId, final String message, final int sequenceId, final int errorCode) {
@@ -35,16 +35,16 @@ public class ChatServerAgentHandler {
         //16 Your message to crush was not sent because it was too long.
         //Anything else is just a generic error message.
 
-        client.sendMessage(new ChatOnSendInstantMessage(sequenceId, errorCode));
+        connection.sendMessage(new ChatOnSendInstantMessage(sequenceId, errorCode));
     }
 
     public void onFriendAdded(final ChatAvatarId friendId) {
         logger.info("onFriendAdded");
-        client.sendMessage(new ChatOnAddFriend());
+        connection.sendMessage(new ChatOnAddFriend());
     }
 
     public void onFriendStatusChanged(final ChatAvatarId friendId, boolean status) {
         logger.info("onFriendStatusChanged");
-        //client.sendMessage(new ChatOnChangeFriendStatus());
+        //connection.sendMessage(new ChatOnChangeFriendStatus());
     }
 }

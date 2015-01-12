@@ -1,11 +1,11 @@
 package com.ocdsoft.bacta.swg.precu.controller.object.command;
 
 import com.google.inject.Inject;
+import com.ocdsoft.bacta.swg.annotations.Command;
 import com.ocdsoft.bacta.swg.server.game.GameClient;
 import com.ocdsoft.bacta.swg.server.game.object.SceneObject;
 import com.ocdsoft.bacta.swg.server.game.object.tangible.TangibleObject;
 import com.ocdsoft.bacta.swg.server.game.service.container.ContainerService;
-import com.ocdsoft.bacta.swg.shared.annotations.Command;
 import com.ocdsoft.network.service.object.ObjectService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

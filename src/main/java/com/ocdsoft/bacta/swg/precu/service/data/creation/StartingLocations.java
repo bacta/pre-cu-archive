@@ -2,7 +2,7 @@ package com.ocdsoft.bacta.swg.precu.service.data.creation;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.ocdsoft.bacta.swg.server.game.service.data.SharedFileLoader;
+import com.ocdsoft.bacta.swg.precu.service.data.SharedFileLoader;
 import com.ocdsoft.bacta.swg.shared.iff.IffReader;
 import com.ocdsoft.bacta.swg.shared.iff.chunk.ChunkReader;
 import com.ocdsoft.bacta.swg.shared.iff.datatable.DataTable;
@@ -30,11 +30,11 @@ public class StartingLocations implements SharedFileLoader {
     }
 
     /**
-     * Gets a {@link com.ocdsoft.bacta.server.game.service.data.creation.StartingLocations.StartingLocationInfo} object
+     * Gets a {@link StartingLocationInfo} object
      * specified by a string key representing the location.
      *
      * @param location The key that represents the location. i.e. mos_eisley
-     * @return {@link com.ocdsoft.bacta.server.game.service.data.creation.StartingLocations.StartingLocationInfo} object
+     * @return {@link StartingLocationInfo} object
      * if key exists. Otherwise, null.
      */
     public StartingLocationInfo getStartingLocationInfo(final String location) {

@@ -1,15 +1,8 @@
 package com.ocdsoft.bacta.swg.precu.zone;
 
-import com.ocdsoft.bacta.swg.server.game.message.scene.SceneObjectDestroyMessage;
-import com.ocdsoft.bacta.swg.server.game.object.tangible.TangibleObject;
+
 import com.ocdsoft.bacta.swg.shared.iff.appearance.ProceduralTerrainAppearanceTemplate;
 import lombok.Getter;
-import org.magnos.steer.spatial.CollisionCallback;
-import org.magnos.steer.spatial.SearchCallback;
-import org.magnos.steer.spatial.SpatialDatabase;
-import org.magnos.steer.spatial.SpatialEntity;
-import org.magnos.steer.spatial.quad.SpatialQuadTree;
-import org.magnos.steer.vec.Vec3;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

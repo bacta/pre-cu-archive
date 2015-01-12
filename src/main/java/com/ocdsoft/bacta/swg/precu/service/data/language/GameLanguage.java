@@ -2,7 +2,7 @@ package com.ocdsoft.bacta.swg.precu.service.data.language;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.ocdsoft.bacta.swg.server.game.service.data.SharedFileLoader;
+import com.ocdsoft.bacta.swg.precu.service.data.SharedFileLoader;
 import com.ocdsoft.bacta.swg.shared.iff.IffReader;
 import com.ocdsoft.bacta.swg.shared.iff.chunk.ChunkReader;
 import com.ocdsoft.bacta.swg.shared.iff.datatable.DataTable;
@@ -29,12 +29,12 @@ public class GameLanguage implements SharedFileLoader {
     }
 
     /**
-     * A {@link com.ocdsoft.bacta.server.game.service.data.language.GameLanguage.GameLanguageInfo} can be retrieved by
+     * A {@link GameLanguageInfo} can be retrieved by
      * specifying either the speak skill, comprehension skill, or language name. i.e. language_basic_speak,
      * language_basic_comprehend, and basic will all return the object for the basic language.
      *
      * @param language The key representing the desired GameLanguageInfo.
-     * @return {@link com.ocdsoft.bacta.server.game.service.data.language.GameLanguage.GameLanguageInfo} if key exists.
+     * @return {@link GameLanguageInfo} if key exists.
      * Otherwise, null.
      */
     public GameLanguageInfo getGameLanguageInfo(final String language) {

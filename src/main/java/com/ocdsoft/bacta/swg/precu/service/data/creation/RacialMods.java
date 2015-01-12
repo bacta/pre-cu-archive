@@ -2,7 +2,7 @@ package com.ocdsoft.bacta.swg.precu.service.data.creation;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.ocdsoft.bacta.swg.server.game.service.data.SharedFileLoader;
+import com.ocdsoft.bacta.swg.precu.service.data.SharedFileLoader;
 import com.ocdsoft.bacta.swg.shared.iff.IffReader;
 import com.ocdsoft.bacta.swg.shared.iff.chunk.ChunkReader;
 import com.ocdsoft.bacta.swg.shared.iff.datatable.DataTable;
@@ -30,11 +30,11 @@ public class RacialMods implements SharedFileLoader {
     }
 
     /**
-     * Gets a {@link com.ocdsoft.bacta.server.game.service.data.creation.RacialMods.RacialModInfo} object for the given
+     * Gets a {@link RacialModInfo} object for the given
      * player template.
      *
      * @param playerTemplate Player template is a string. It's a file name, not a file path. i.e. bothan_male.
-     * @return {@link com.ocdsoft.bacta.server.game.service.data.creation.RacialMods.RacialModInfo} if key exists. Otherwise, null.
+     * @return {@link RacialModInfo} if key exists. Otherwise, null.
      */
     public RacialModInfo getRacialModInfo(final String playerTemplate) {
         return racialMods.get(playerTemplate);

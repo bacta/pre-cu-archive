@@ -2,7 +2,7 @@ package com.ocdsoft.bacta.swg.precu.service.data.creation;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.ocdsoft.bacta.swg.server.game.service.data.SharedFileLoader;
+import com.ocdsoft.bacta.swg.precu.service.data.SharedFileLoader;
 import com.ocdsoft.bacta.swg.shared.iff.chunk.ChunkBuffer;
 import com.ocdsoft.bacta.swg.shared.iff.chunk.ChunkBufferContext;
 import com.ocdsoft.bacta.swg.shared.iff.chunk.ChunkReader;

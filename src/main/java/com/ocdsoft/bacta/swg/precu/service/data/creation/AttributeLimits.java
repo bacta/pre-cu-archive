@@ -2,7 +2,7 @@ package com.ocdsoft.bacta.swg.precu.service.data.creation;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.ocdsoft.bacta.swg.server.game.service.data.SharedFileLoader;
+import com.ocdsoft.bacta.swg.precu.service.data.SharedFileLoader;
 import com.ocdsoft.bacta.swg.shared.iff.IffReader;
 import com.ocdsoft.bacta.swg.shared.iff.chunk.ChunkReader;
 import com.ocdsoft.bacta.swg.shared.iff.datatable.DataTable;
@@ -28,13 +28,13 @@ public final class AttributeLimits implements SharedFileLoader {
         load();
     }
     /**
-     * Gets an {@link com.ocdsoft.bacta.server.game.service.data.creation.AttributeLimits.AttributeLimitInfo} object for
+     * Gets an {@link AttributeLimitInfo} object for
      * the specified player template. <i>The player template should only be the file name, and not the fullpath.</i>
      * <p/>
      * i.e. bothan_female.
      *
      * @param playerTemplate The player template to use as a key. This should be the filename, not the full path. i.e. bothan_female
-     * @return Returns an {@link com.ocdsoft.bacta.server.game.service.data.creation.AttributeLimits.AttributeLimitInfo} object
+     * @return Returns an {@link AttributeLimitInfo} object
      * if a record corresponding to the key is found. Otherwise, null.
      */
     public AttributeLimitInfo getAttributeLimits(final String playerTemplate) {

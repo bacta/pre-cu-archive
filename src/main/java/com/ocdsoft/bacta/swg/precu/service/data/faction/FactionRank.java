@@ -2,7 +2,7 @@ package com.ocdsoft.bacta.swg.precu.service.data.faction;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.ocdsoft.bacta.swg.server.game.service.data.SharedFileLoader;
+import com.ocdsoft.bacta.swg.precu.service.data.SharedFileLoader;
 import com.ocdsoft.bacta.swg.shared.iff.IffReader;
 import com.ocdsoft.bacta.swg.shared.iff.chunk.ChunkReader;
 import com.ocdsoft.bacta.swg.shared.iff.datatable.DataTable;
@@ -34,7 +34,7 @@ public final class FactionRank implements SharedFileLoader {
     }
 
     /**
-     * Gets a {@link com.ocdsoft.bacta.server.game.service.data.faction.FactionRank.FactionRankInfo} by index.
+     * Gets a {@link FactionRankInfo} by index.
      *
      * @param index The index to retrieve.
      * @return Returns null if index not found.
@@ -44,11 +44,11 @@ public final class FactionRank implements SharedFileLoader {
     }
 
     /**
-     * Gets a {@link com.ocdsoft.bacta.server.game.service.data.faction.FactionRank.FactionRankInfo} by name.
+     * Gets a {@link FactionRankInfo} by name.
      * Names are like: lance_corporal, staff_sergeant, etc.
      *
      * @param name The name to search for.
-     * @return {@link com.ocdsoft.bacta.server.game.service.data.faction.FactionRank.FactionRankInfo} if a name corresponds
+     * @return {@link FactionRankInfo} if a name corresponds
      * in the map. Otherwise, null.
      */
     public final FactionRankInfo getFactionRankInfoByName(final String name) {

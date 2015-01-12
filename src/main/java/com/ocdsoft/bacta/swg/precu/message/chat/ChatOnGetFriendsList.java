@@ -26,9 +26,9 @@ public class ChatOnGetFriendsList extends SwgMessage {
             writeInt(friendsList.size());
 
             for (String name : friendsList) {
-                writeAscii("SWG"); //TODO: retrieve these from galaxy information?
-                writeAscii("Bacta");
-                writeAscii(name);
+                putAscii("SWG"); //TODO: retrieve these from galaxy information?
+                putAscii("Bacta");
+                putAscii(name);
             }
         } else {
             writeInt(0);

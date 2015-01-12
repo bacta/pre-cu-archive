@@ -1,6 +1,7 @@
 package com.ocdsoft.bacta.swg.precu.controller.object.command;
 
 import com.google.inject.Inject;
+import com.ocdsoft.bacta.swg.annotations.Command;
 import com.ocdsoft.bacta.swg.network.soe.object.chat.ChatAvatarId;
 import com.ocdsoft.bacta.swg.server.game.GameClient;
 import com.ocdsoft.bacta.swg.server.game.chat.ChatServerAgent;
@@ -9,7 +10,6 @@ import com.ocdsoft.bacta.swg.server.game.message.chat.ChatOnChangeFriendStatus;
 import com.ocdsoft.bacta.swg.server.game.message.chat.ChatOnGetFriendsList;
 import com.ocdsoft.bacta.swg.server.game.object.tangible.TangibleObject;
 import com.ocdsoft.bacta.swg.server.game.object.tangible.creature.CreatureObject;
-import com.ocdsoft.bacta.swg.shared.annotations.Command;
 import com.ocdsoft.conf.BactaConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

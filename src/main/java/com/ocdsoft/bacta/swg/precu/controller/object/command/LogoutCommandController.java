@@ -1,13 +1,13 @@
 package com.ocdsoft.bacta.swg.precu.controller.object.command;
 
 import com.google.inject.Inject;
+import com.ocdsoft.bacta.swg.annotations.Command;
 import com.ocdsoft.bacta.swg.server.game.GameClient;
 import com.ocdsoft.bacta.swg.server.game.event.ObservableGameEvent;
 import com.ocdsoft.bacta.swg.server.game.message.player.LogoutMessage;
 import com.ocdsoft.bacta.swg.server.game.object.tangible.TangibleObject;
 import com.ocdsoft.bacta.swg.server.game.object.tangible.creature.CreaturePosture;
 import com.ocdsoft.bacta.swg.server.game.task.GameTask;
-import com.ocdsoft.bacta.swg.shared.annotations.Command;
 import com.ocdsoft.network.service.scheduler.SchedulerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

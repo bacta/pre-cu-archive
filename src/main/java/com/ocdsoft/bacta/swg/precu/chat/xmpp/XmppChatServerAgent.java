@@ -2,11 +2,11 @@ package com.ocdsoft.bacta.swg.precu.chat.xmpp;
 
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
-import com.ocdsoft.bacta.swg.network.soe.object.chat.ChatAvatarId;
-import com.ocdsoft.bacta.swg.network.soe.object.chat.InvalidChatAvatarIdException;
-import com.ocdsoft.bacta.swg.server.game.chat.ChatServerAgent;
-import com.ocdsoft.bacta.swg.server.game.chat.ChatServerAgentHandler;
-import com.ocdsoft.conf.BactaConfiguration;
+import com.ocdsoft.bacta.engine.conf.BactaConfiguration;
+import com.ocdsoft.bacta.soe.object.chat.ChatAvatarId;
+import com.ocdsoft.bacta.soe.object.chat.InvalidChatAvatarIdException;
+import com.ocdsoft.bacta.swg.precu.chat.ChatServerAgent;
+import com.ocdsoft.bacta.swg.precu.chat.ChatServerAgentHandler;
 import org.jivesoftware.smack.*;
 import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smack.packet.Presence;
@@ -19,6 +19,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
 
 public final class XmppChatServerAgent extends ChatServerAgent {
     private final Logger logger = LoggerFactory.getLogger(getClass());

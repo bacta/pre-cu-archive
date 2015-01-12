@@ -2,8 +2,8 @@ package com.ocdsoft.bacta.swg.precu.service.data;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import com.ocdsoft.bacta.engine.conf.BactaConfiguration;
 import com.ocdsoft.bacta.swg.shared.tre.TreeFile;
-import com.ocdsoft.conf.BactaConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

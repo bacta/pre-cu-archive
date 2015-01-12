@@ -1,7 +1,6 @@
 package com.ocdsoft.bacta.swg.precu.chat;
 
-
-import com.ocdsoft.bacta.swg.network.soe.object.chat.ChatAvatarId;
+import com.ocdsoft.bacta.soe.object.chat.ChatAvatarId;
 import lombok.Getter;
 
 import java.util.List;

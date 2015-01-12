@@ -56,25 +56,134 @@
 
     <build>
         <plugins>
+            <!--<plugin>-->
+            <!--<groupId>org.jsonschema2pojo</groupId>-->
+            <!--<artifactId>jsonschema2pojo-maven-plugin</artifactId>-->
+            <!--<version>0.4.7</version>-->
+            <!--<dependencies>-->
+            <!--<dependency>-->
+            <!--<groupId>com.ocdsoft.bacta.soe</groupId>-->
+            <!--<artifactId>jsonschema2pojo-bacta</artifactId>-->
+            <!--<version>1.0.0-SNAPSHOT</version>-->
+            <!--</dependency>-->
+            <!--</dependencies>-->
+            <!--<configuration>-->
+            <!--<sourceDirectory>src/main/resources/com/ocdsoft/bacta/soe/message/soe</sourceDirectory>-->
+            <!--<targetPackage>com.ocdsoft.bacta.soe.message</targetPackage>-->
+            <!--<usePrimitives>true</usePrimitives>-->
+            <!--<removeOldOutput>true</removeOldOutput>-->
+
+            <!--<customRuleFactory>com.ocdsoft.bacta.soe.json.schema.SoeRuleFactory</customRuleFactory>-->
+            <!--</configuration>-->
+            <!--<executions>-->
+            <!--<execution>-->
+            <!--<goals>-->
+            <!--<goal>generate</goal>-->
+            <!--</goals>-->
+            <!--</execution>-->
+            <!--</executions>-->
+            <!--</plugin>-->
+
             <plugin>
-                <artifactId>maven-assembly-plugin</artifactId>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.3</version>
+                <extensions>true</extensions>
                 <configuration>
-                    <archive>
-                        <manifest>
-                            <mainClass>com.ocdsoft.bacta.swg.precu.App</mainClass>
-                        </manifest>
-                    </archive>
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.17</version>
+                <configuration>
+                    <includes>
+                        <include>**/*Test.class</include>
+                        <include>**/*Spec.class</include>
+                    </includes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <testSource>1.8</testSource>
+                    <testTarget>1.8</testTarget>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <version>2.1</version>
+            </plugin>
+            <plugin>
+                <groupId>pl.project13.maven</groupId>
+                <artifactId>git-commit-id-plugin</artifactId>
+                <version>2.1.11</version>
                 <executions>
                     <execution>
-                        <id>make-assembly</id> <!-- this is used for inheritance merges -->
-                        <phase>package</phase> <!-- bind to the packaging phase -->
                         <goals>
-                            <goal>single</goal>
+                            <goal>revision</goal>
                         </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <generateGitPropertiesFile>true</generateGitPropertiesFile>
+                    <generateGitPropertiesFilename>src/main/resources/git.properties</generateGitPropertiesFilename>
+                    <gitDescribe>
+                        <tags>true</tags>
+                    </gitDescribe>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.6.4.201312101107</version>
+                <configuration>
+
+                    <output>file</output>
+                    <append>true</append>
+                </configuration>
+
+                <executions>
+                    <execution>
+                        <id>jacoco-initialize</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>1.7</version>
+                <executions>
+                    <execution>
+                        <id>add-source</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>target/java-gen</source>
+                            </sources>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
@@ -102,6 +211,26 @@
           <groupId>com.ocdsoft.bacta</groupId>
           <artifactId>swg</artifactId>
           <version>1.0.0-SNAPSHOT</version>
+      </dependency>
+      <dependency>
+          <groupId>com.ocdsoft.bacta.data.couchbase</groupId>
+          <artifactId>couchbase-connector</artifactId>
+          <version>1.0.0-SNAPSHOT</version>
+      </dependency>
+      <dependency>
+          <groupId>com.ocdsoft.bacta.engine.serialization</groupId>
+          <artifactId>kryo</artifactId>
+          <version>1.0.0-SNAPSHOT</version>
+      </dependency>
+      <dependency>
+          <groupId>org.igniterealtime.smack</groupId>
+          <artifactId>smack-core</artifactId>
+          <version>4.0.1</version>
+      </dependency>
+      <dependency>
+          <groupId>org.igniterealtime.smack</groupId>
+          <artifactId>smack-tcp</artifactId>
+          <version>4.0.1</version>
       </dependency>
   </dependencies>
 </project>

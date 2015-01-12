@@ -1,11 +1,11 @@
 package com.ocdsoft.bacta.swg.precu.controller.object;
 
+import com.ocdsoft.bacta.swg.annotations.ObjController;
 import com.ocdsoft.bacta.swg.network.soe.buffer.SoeByteBuf;
 import com.ocdsoft.bacta.swg.server.game.GameClient;
 import com.ocdsoft.bacta.swg.server.game.message.messagequeue.MessageQueueObjectMenuRequest;
 import com.ocdsoft.bacta.swg.server.game.message.object.ObjControllerMessage;
 import com.ocdsoft.bacta.swg.server.game.object.tangible.TangibleObject;
-import com.ocdsoft.bacta.swg.shared.annotations.ObjController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -2,6 +2,7 @@ package com.ocdsoft.bacta.swg.precu.router;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;
+import com.ocdsoft.bacta.swg.annotations.ObjController;
 import com.ocdsoft.bacta.swg.network.soe.buffer.SoeByteBuf;
 import com.ocdsoft.bacta.swg.network.soe.message.util.SoeMessageUtil;
 import com.ocdsoft.bacta.swg.network.swg.ServerType;
@@ -13,7 +14,6 @@ import com.ocdsoft.bacta.swg.server.game.controller.object.ObjectController;
 import com.ocdsoft.bacta.swg.server.game.message.object.ObjControllerMessage;
 import com.ocdsoft.bacta.swg.server.game.object.SceneObject;
 import com.ocdsoft.bacta.swg.server.game.object.tangible.TangibleObject;
-import com.ocdsoft.bacta.swg.shared.annotations.ObjController;
 import com.ocdsoft.bacta.swg.shared.util.ObjectControllerNames;
 import com.ocdsoft.network.annotation.ControllerScan;
 import com.ocdsoft.network.service.object.ObjectService;

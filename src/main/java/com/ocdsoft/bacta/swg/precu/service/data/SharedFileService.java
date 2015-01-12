@@ -14,9 +14,9 @@ import java.util.Set;
 /**
  * SharedFileService houses all the shared data that different services will need to fulfill their function.
  * <p>
- * To add a new shared data resource to the class, simply implement the {@link com.ocdsoft.bacta.server.game.service.data.SharedFileLoader} interface on
+ * To add a new shared data resource to the class, simply implement the {@link SharedFileLoader} interface on
  * the class, and then add it as a field (visibility doesn't matter). When a new instance of SharedDataService is created,
- * the {@link com.ocdsoft.bacta.server.game.service.data.SharedFileLoader#load(com.ocdsoft.bacta.shared.tre.TreeFile)} method will be called on each field.
+ * the {@link SharedFileLoader#load(TreeFile)} method will be called on each field.
  * </p>
  * <p>
  * For this reason, it is important to remember to initialize your field before the field reflection is done in

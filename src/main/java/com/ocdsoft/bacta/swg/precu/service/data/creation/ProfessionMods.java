@@ -2,7 +2,7 @@ package com.ocdsoft.bacta.swg.precu.service.data.creation;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.ocdsoft.bacta.swg.server.game.service.data.SharedFileLoader;
+import com.ocdsoft.bacta.swg.precu.service.data.SharedFileLoader;
 import com.ocdsoft.bacta.swg.shared.iff.IffReader;
 import com.ocdsoft.bacta.swg.shared.iff.chunk.ChunkReader;
 import com.ocdsoft.bacta.swg.shared.iff.datatable.DataTable;
@@ -34,11 +34,11 @@ public class ProfessionMods implements SharedFileLoader {
     }
 
     /**
-     * Gets a {@link com.ocdsoft.bacta.server.game.service.data.creation.ProfessionMods.ProfessionModInfo} object for the
+     * Gets a {@link ProfessionModInfo} object for the
      * specified profession.
      *
      * @param profession The profession is a string. i.e. combat_marksman, crafting_artisan, etc.
-     * @return {@link com.ocdsoft.bacta.server.game.service.data.creation.ProfessionMods.ProfessionModInfo} if the key exists.
+     * @return {@link ProfessionModInfo} if the key exists.
      * Otherwise, null.
      */
     public ProfessionModInfo getProfessionModInfo(final String profession) {
