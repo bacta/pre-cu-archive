@@ -3,7 +3,7 @@ package com.ocdsoft.bacta.swg.precu.service.data;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.ocdsoft.bacta.engine.conf.BactaConfiguration;
-import com.ocdsoft.bacta.swg.shared.tre.TreeFile;
+import com.ocdsoft.bacta.tre.TreeFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,13 +14,13 @@ import java.util.Collection;
  */
 @Singleton
 public class SetupSharedFile {
-    private final Logger logger = LoggerFactory.getLogger(getClass());
+    private static final Logger logger = LoggerFactory.getLogger(SetupSharedFile.class);
 
     private final BactaConfiguration configuration;
     private final TreeFile treeFile;
 
     @Inject
-    public SetupSharedFile(BactaConfiguration configuration, TreeFile treeFile) {
+    public SetupSharedFile(final BactaConfiguration configuration, final TreeFile treeFile) {
         this.configuration = configuration;
         this.treeFile = treeFile;
 
@@ -65,6 +65,7 @@ public class SetupSharedFile {
 
             treeFile.addSearchAbsolute(configuration.getIntWithDefault("SharedFile", "searchAbsolute", maxSearchPriority + 1));
             treeFile.addSearchCache(configuration.getIntWithDefault("SharedFile", "searchCache", maxSearchPriority + 1));
+
         } catch (Exception e) {
             e.printStackTrace();
         }

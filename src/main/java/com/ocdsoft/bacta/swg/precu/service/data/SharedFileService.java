@@ -3,7 +3,7 @@ package com.ocdsoft.bacta.swg.precu.service.data;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
-import com.ocdsoft.bacta.swg.shared.tre.TreeFile;
+import com.ocdsoft.bacta.tre.TreeFile;
 import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

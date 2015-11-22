@@ -2,14 +2,12 @@ package com.ocdsoft.bacta.swg.precu.service.data.language;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import com.ocdsoft.bacta.swg.datatable.DataTable;
+import com.ocdsoft.bacta.swg.datatable.DataTableManager;
 import com.ocdsoft.bacta.swg.precu.service.data.SharedFileLoader;
-import com.ocdsoft.bacta.swg.shared.iff.IffReader;
-import com.ocdsoft.bacta.swg.shared.iff.chunk.ChunkReader;
-import com.ocdsoft.bacta.swg.shared.iff.datatable.DataTable;
-import com.ocdsoft.bacta.swg.shared.iff.datatable.DataTableIffReader;
-import com.ocdsoft.bacta.swg.shared.iff.datatable.DataTableRow;
-import com.ocdsoft.bacta.swg.shared.tre.TreeFile;
 import lombok.Getter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,12 +17,15 @@ import java.util.Map;
  */
 @Singleton
 public class GameLanguage implements SharedFileLoader {
+    private static final String dataTableName = "datatables/game_language/game_language.iff";
+    private static final Logger logger = LoggerFactory.getLogger(GameLanguage.class);
+
     private final Map<String, GameLanguageInfo> gameLanguage = new HashMap<>();
-    private final TreeFile treeFile;
+    private final DataTableManager dataTableManager;
 
     @Inject
-    public GameLanguage(TreeFile treeFile) {
-        this.treeFile = treeFile;
+    public GameLanguage(final DataTableManager dataTableManager) {
+        this.dataTableManager = dataTableManager;
         load();
     }
 
@@ -42,16 +43,20 @@ public class GameLanguage implements SharedFileLoader {
     }
 
     private void load() {
-        final IffReader<DataTable> dataTableReader = new DataTableIffReader();
-        final DataTable dataTable = dataTableReader.read(
-                new ChunkReader("datatables/game_language/game_language.iff", treeFile.open("datatables/game_language/game_language.iff")));
+        logger.trace("Loading game language.");
 
-        for (DataTableRow row : dataTable.getRows()) {
-            GameLanguageInfo languageInfo = new GameLanguageInfo(row);
+        final DataTable dataTable = dataTableManager.getTable(dataTableName);
+
+        for (int row = 0; row < dataTable.getNumRows(); ++row) {
+            final GameLanguageInfo languageInfo = new GameLanguageInfo(dataTable, row);
             gameLanguage.put(languageInfo.speakSkillModName, languageInfo);
             gameLanguage.put(languageInfo.comprehendSkillModName, languageInfo);
             gameLanguage.put(languageInfo.stringId, languageInfo);
         }
+
+        dataTableManager.close(dataTableName);
+
+        logger.debug("Finished loading game language.");
     }
 
     @Override
@@ -74,15 +79,15 @@ public class GameLanguage implements SharedFileLoader {
 
         private final String[] alphabet = new String[26];
 
-        public GameLanguageInfo(DataTableRow row) {
-            speakSkillModName = row.get(0).getString();
-            comprehendSkillModName = row.get(1).getString();
-            stringId = row.get(2).getString();
+        public GameLanguageInfo(final DataTable dataTable, final int row) {
+            speakSkillModName = dataTable.getStringValue("speakSkillModName", row);
+            comprehendSkillModName = dataTable.getStringValue("comprehendSkillModName", row);
+            stringId = dataTable.getStringValue("stringId", row);
 
             for (int i = 0; i < alphabet.length; i++)
-                alphabet[i] = row.get(i + 3).getString();
+                alphabet[i] = dataTable.getStringValue(i + 3, row);
 
-            audible = row.get(alphabet.length + 3).getInt();
+            audible = dataTable.getIntValue("audible", row);
         }
     }
 }

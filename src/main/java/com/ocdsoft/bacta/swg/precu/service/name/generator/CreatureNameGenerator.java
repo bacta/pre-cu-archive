@@ -1,9 +1,9 @@
 package com.ocdsoft.bacta.swg.precu.service.name.generator;
 
 import com.google.common.base.CharMatcher;
-import com.ocdsoft.bacta.swg.server.game.service.name.NameService;
-import com.ocdsoft.bacta.swg.server.game.util.Gender;
-import com.ocdsoft.bacta.swg.server.game.util.Race;
+import com.ocdsoft.bacta.swg.lang.Gender;
+import com.ocdsoft.bacta.swg.lang.Race;
+import com.ocdsoft.bacta.swg.name.NameService;
 import org.apache.commons.lang.WordUtils;
 
 import java.security.InvalidParameterException;

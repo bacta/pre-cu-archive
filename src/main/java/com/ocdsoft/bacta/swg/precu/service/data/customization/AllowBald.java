@@ -2,13 +2,9 @@ package com.ocdsoft.bacta.swg.precu.service.data.customization;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import com.ocdsoft.bacta.swg.datatable.DataTable;
+import com.ocdsoft.bacta.swg.datatable.DataTableManager;
 import com.ocdsoft.bacta.swg.precu.service.data.SharedFileLoader;
-import com.ocdsoft.bacta.swg.shared.iff.IffReader;
-import com.ocdsoft.bacta.swg.shared.iff.chunk.ChunkReader;
-import com.ocdsoft.bacta.swg.shared.iff.datatable.DataTable;
-import com.ocdsoft.bacta.swg.shared.iff.datatable.DataTableIffReader;
-import com.ocdsoft.bacta.swg.shared.iff.datatable.DataTableRow;
-import com.ocdsoft.bacta.swg.shared.tre.TreeFile;
 import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
 import org.slf4j.Logger;
@@ -19,15 +15,16 @@ import org.slf4j.LoggerFactory;
  */
 @Singleton
 public class AllowBald implements SharedFileLoader {
-    private final Logger logger = LoggerFactory.getLogger(getClass());
+    private static final String dataTableName = "datatables/customization/allow_bald.iff";
+    private static final Logger logger = LoggerFactory.getLogger(AllowBald.class);
 
     private final TObjectIntMap<String> allowBald = new TObjectIntHashMap<>();
 
-    private final TreeFile treeFile;
+    private final DataTableManager dataTableManager;
 
     @Inject
-    public AllowBald(TreeFile treeFile) {
-        this.treeFile = treeFile;
+    public AllowBald(final DataTableManager dataTableManager) {
+        this.dataTableManager = dataTableManager;
         load();
     }
 
@@ -47,14 +44,12 @@ public class AllowBald implements SharedFileLoader {
     private void load() {
         logger.trace("Loading allow bald player template settings.");
 
-        final IffReader<DataTable> dataTableReader = new DataTableIffReader();
-        final DataTable dataTable = dataTableReader.read(
-                new ChunkReader("datatables/customization/allow_bald.iff", treeFile.open("datatables/customization/allow_bald.iff")));
+        final DataTable dataTable = dataTableManager.getTable(dataTableName);
 
-        for (DataTableRow row : dataTable.getRows()) {
+        for (int row = 0; row < dataTable.getNumRows(); ++row) {
             allowBald.put(
-                    row.get(0).getString(), //Key
-                    row.get(1).getInt());   //Value
+                    dataTable.getStringValue("SPECIES_GENDER", row), //Key
+                    dataTable.getIntValue("ALLOW_BALD", row));   //Value
         }
 
         logger.debug(String.format("Loaded %d allow bald player template settings.", allowBald.size()));

@@ -2,13 +2,9 @@ package com.ocdsoft.bacta.swg.precu.service.data.creation;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import com.ocdsoft.bacta.swg.datatable.DataTable;
+import com.ocdsoft.bacta.swg.datatable.DataTableManager;
 import com.ocdsoft.bacta.swg.precu.service.data.SharedFileLoader;
-import com.ocdsoft.bacta.swg.shared.iff.IffReader;
-import com.ocdsoft.bacta.swg.shared.iff.chunk.ChunkReader;
-import com.ocdsoft.bacta.swg.shared.iff.datatable.DataTable;
-import com.ocdsoft.bacta.swg.shared.iff.datatable.DataTableIffReader;
-import com.ocdsoft.bacta.swg.shared.iff.datatable.DataTableRow;
-import com.ocdsoft.bacta.swg.shared.tre.TreeFile;
 import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,13 +19,15 @@ import java.util.Map;
  */
 @Singleton
 public class ProfessionMods implements SharedFileLoader {
-    private final Logger logger = LoggerFactory.getLogger(getClass());
+    private static final String dataTableName = "datatables/creation/profession_mods.iff";
+    private static final Logger logger = LoggerFactory.getLogger(ProfessionMods.class);
+
     private Map<String, ProfessionModInfo> professionMods = new HashMap<>();
-    private final TreeFile treeFile;
+    private final DataTableManager dataTableManager;
 
     @Inject
-    public ProfessionMods(TreeFile treeFile) {
-        this.treeFile = treeFile;
+    public ProfessionMods(final DataTableManager dataTableManager) {
+        this.dataTableManager = dataTableManager;
         load();
     }
 
@@ -48,14 +46,14 @@ public class ProfessionMods implements SharedFileLoader {
     private void load() {
         logger.trace("Loading profession mods.");
 
-        final IffReader<DataTable> dataTableReader = new DataTableIffReader();
-        final DataTable dataTable = dataTableReader.read(
-                new ChunkReader("datatables/creation/profession_mods.iff", treeFile.open("datatables/creation/profession_mods.iff")));
+        final DataTable dataTable = dataTableManager.getTable(dataTableName);
 
-        for (DataTableRow row : dataTable.getRows()) {
-            ProfessionModInfo modInfo = new ProfessionModInfo(row);
+        for (int row = 0; row < dataTable.getNumRows(); ++row) {
+            final ProfessionModInfo modInfo = new ProfessionModInfo(dataTable, row);
             professionMods.put(modInfo.profession, modInfo);
         }
+
+        dataTableManager.close(dataTableName);
 
         logger.debug(String.format("Loaded %d profession mods.", professionMods.size()));
     }
@@ -74,17 +72,17 @@ public class ProfessionMods implements SharedFileLoader {
         @Getter
         private final Collection<Integer> attributes = new ArrayList<>(9);
 
-        public ProfessionModInfo(DataTableRow row) {
-            profession = row.get(0).getString();
-            attributes.add(row.get(1).getInt());
-            attributes.add(row.get(2).getInt());
-            attributes.add(row.get(3).getInt());
-            attributes.add(row.get(4).getInt());
-            attributes.add(row.get(5).getInt());
-            attributes.add(row.get(6).getInt());
-            attributes.add(row.get(7).getInt());
-            attributes.add(row.get(8).getInt());
-            attributes.add(row.get(9).getInt());
+        public ProfessionModInfo(final DataTable dataTable, final int row) {
+            profession = dataTable.getStringValue("profession", row);
+            attributes.add(dataTable.getIntValue(1, row));
+            attributes.add(dataTable.getIntValue(2, row));
+            attributes.add(dataTable.getIntValue(3, row));
+            attributes.add(dataTable.getIntValue(4, row));
+            attributes.add(dataTable.getIntValue(5, row));
+            attributes.add(dataTable.getIntValue(6, row));
+            attributes.add(dataTable.getIntValue(7, row));
+            attributes.add(dataTable.getIntValue(8, row));
+            attributes.add(dataTable.getIntValue(9, row));
         }
     }
 }

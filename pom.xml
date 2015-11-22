@@ -213,6 +213,11 @@
           <version>1.0.0-SNAPSHOT</version>
       </dependency>
       <dependency>
+          <groupId>com.ocdsoft.bacta</groupId>
+          <artifactId>tre</artifactId>
+          <version>1.0.0-SNAPSHOT</version>
+      </dependency>
+      <dependency>
           <groupId>com.ocdsoft.bacta.data.couchbase</groupId>
           <artifactId>couchbase-connector</artifactId>
           <version>1.0.0-SNAPSHOT</version>
@@ -231,6 +236,11 @@
           <groupId>org.igniterealtime.smack</groupId>
           <artifactId>smack-tcp</artifactId>
           <version>4.0.1</version>
+      </dependency>
+      <dependency>
+          <groupId>com.ocdsoft.bacta</groupId>
+          <artifactId>iff</artifactId>
+          <version>1.0.0-SNAPSHOT</version>
       </dependency>
   </dependencies>
 </project>

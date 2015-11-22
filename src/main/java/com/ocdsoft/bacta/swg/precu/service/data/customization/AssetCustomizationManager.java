@@ -1,16 +1,14 @@
 package com.ocdsoft.bacta.swg.precu.service.data.customization;
 
+import bacta.iff.Iff;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.ocdsoft.bacta.soe.util.SOECRC32;
 import com.ocdsoft.bacta.swg.precu.service.data.SharedFileLoader;
-import com.ocdsoft.bacta.swg.shared.iff.chunk.ChunkBuffer;
-import com.ocdsoft.bacta.swg.shared.iff.chunk.ChunkBufferContext;
-import com.ocdsoft.bacta.swg.shared.iff.chunk.ChunkReader;
 import com.ocdsoft.bacta.swg.shared.object.customization.BasicRangedIntCustomizationVariable;
 import com.ocdsoft.bacta.swg.shared.object.customization.CustomizationVariable;
 import com.ocdsoft.bacta.swg.shared.object.customization.PaletteColorCustomizationVariable;
-import com.ocdsoft.bacta.swg.shared.tre.TreeFile;
+import com.ocdsoft.bacta.tre.TreeFile;
 import gnu.trove.map.TIntShortMap;
 import gnu.trove.map.TShortIntMap;
 import gnu.trove.map.hash.TIntShortHashMap;
@@ -63,20 +61,20 @@ import java.util.Map;
 public final class AssetCustomizationManager implements SharedFileLoader {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    private static final int ID_ACST = ChunkBuffer.createChunkId("ACST");
-    private static final int ID_0000 = ChunkBuffer.createChunkId("0000");
-    private static final int ID_NAME = ChunkBuffer.createChunkId("NAME");
-    private static final int ID_PNOF = ChunkBuffer.createChunkId("PNOF");
-    private static final int ID_VNOF = ChunkBuffer.createChunkId("VNOF");
-    private static final int ID_DEFV = ChunkBuffer.createChunkId("DEFV");
-    private static final int ID_IRNG = ChunkBuffer.createChunkId("IRNG");
-    private static final int ID_RTYP = ChunkBuffer.createChunkId("RTYP");
-    private static final int ID_UCMP = ChunkBuffer.createChunkId("UCMP");
-    private static final int ID_ULST = ChunkBuffer.createChunkId("ULST");
-    private static final int ID_UIDX = ChunkBuffer.createChunkId("UIDX");
-    private static final int ID_LLST = ChunkBuffer.createChunkId("LLST");
-    private static final int ID_LIDX = ChunkBuffer.createChunkId("LIDX");
-    private static final int ID_CIDX = ChunkBuffer.createChunkId("CIDX");
+    private static final int ID_ACST = Iff.createChunkId("ACST");
+    private static final int ID_0000 = Iff.createChunkId("0000");
+    private static final int ID_NAME = Iff.createChunkId("NAME");
+    private static final int ID_PNOF = Iff.createChunkId("PNOF");
+    private static final int ID_VNOF = Iff.createChunkId("VNOF");
+    private static final int ID_DEFV = Iff.createChunkId("DEFV");
+    private static final int ID_IRNG = Iff.createChunkId("IRNG");
+    private static final int ID_RTYP = Iff.createChunkId("RTYP");
+    private static final int ID_UCMP = Iff.createChunkId("UCMP");
+    private static final int ID_ULST = Iff.createChunkId("ULST");
+    private static final int ID_UIDX = Iff.createChunkId("UIDX");
+    private static final int ID_LLST = Iff.createChunkId("LLST");
+    private static final int ID_LIDX = Iff.createChunkId("LIDX");
+    private static final int ID_CIDX = Iff.createChunkId("CIDX");
 
     private byte[] name;
     private short[] pnof;
@@ -95,40 +93,40 @@ public final class AssetCustomizationManager implements SharedFileLoader {
     private final TreeFile treeFile;
 
     @Inject
-    public AssetCustomizationManager(TreeFile treeFile) {
+    public AssetCustomizationManager(final TreeFile treeFile) {
         this.treeFile = treeFile;
         load();
     }
 
     private void load() {
         logger.trace("Starting to load.");
-
-        final ChunkReader reader = new ChunkReader("customization/asset_customization_manager.iff", treeFile.open("customization/asset_customization_manager.iff"));
-
-        ChunkBufferContext root = reader.nextChunk();
-
-        if (root.isFormType(ID_ACST)) {
-            root = reader.nextChunk();
-
-            if (root.isFormType(ID_0000)) {
-                parseNAME(reader);
-                parsePNOF(reader);
-                parseVNOF(reader);
-                parseDEFV(reader);
-                parseIRNG(reader);
-                parseRTYP(reader);
-                parseUCMP(reader);
-                parseULST(reader);
-                parseUIDX(reader);
-                parseLLST(reader);
-                parseLIDX(reader);
-                parseCIDX(reader);
-            } else {
-                logger.error("Invalid version for asset customization manager file.");
-            }
-        } else {
-            logger.error("Invalid asset customization manager file.");
-        }
+//
+//        final ChunkReader reader = new ChunkReader("customization/asset_customization_manager.iff", treeFile.open("customization/asset_customization_manager.iff"));
+//
+//        ChunkBufferContext root = reader.nextChunk();
+//
+//        if (root.isFormType(ID_ACST)) {
+//            root = reader.nextChunk();
+//
+//            if (root.isFormType(ID_0000)) {
+//                parseNAME(reader);
+//                parsePNOF(reader);
+//                parseVNOF(reader);
+//                parseDEFV(reader);
+//                parseIRNG(reader);
+//                parseRTYP(reader);
+//                parseUCMP(reader);
+//                parseULST(reader);
+//                parseUIDX(reader);
+//                parseLLST(reader);
+//                parseLIDX(reader);
+//                parseCIDX(reader);
+//            } else {
+//                logger.error("Invalid version for asset customization manager file.");
+//            }
+//        } else {
+//            logger.error("Invalid asset customization manager file.");
+//        }
 
         logger.debug("Finished loading.");
     }
@@ -319,193 +317,193 @@ public final class AssetCustomizationManager implements SharedFileLoader {
             }
         }
     }
-
-    private final void parseNAME(ChunkReader reader) {
-        final ChunkBufferContext root = reader.nextChunk();
-
-        if (root.isChunkId(ID_NAME)) {
-            name = new byte[root.getChunkSize()];
-            reader.readBytes(name);
-        } else {
-            logger.error("Expected NAME chunk, but encountered: " + ChunkBuffer.getChunkName(root.getChunkId()));
-        }
-    }
-
-    private final void parsePNOF(ChunkReader reader) {
-        final ChunkBufferContext root = reader.nextChunk();
-
-        if (root.isChunkId(ID_PNOF)) {
-            int n = root.getChunkSize() / 2;
-            pnof = new short[n];
-
-            for (int i = 0; i < n; i++)
-                pnof[i] = reader.readShort();
-
-        } else {
-            logger.error("Expected PNOF chunk, but encountered: " + ChunkBuffer.getChunkName(root.getChunkId()));
-        }
-    }
-
-    private final void parseVNOF(ChunkReader reader) {
-        final ChunkBufferContext root = reader.nextChunk();
-
-        if (root.isChunkId(ID_VNOF)) {
-            int n = root.getChunkSize() / 2;
-            vnof = new short[n];
-
-            for (int i = 0; i < n; i++)
-                vnof[i] = reader.readShort();
-
-        } else {
-            logger.error("Expected VNOF chunk, but encountered: " + ChunkBuffer.getChunkName(root.getChunkId()));
-        }
-    }
-
-    private final void parseDEFV(ChunkReader reader) {
-        final ChunkBufferContext root = reader.nextChunk();
-
-        if (root.isChunkId(ID_DEFV)) {
-            int n = root.getChunkSize() / 4;
-            defv = new int[n];
-
-            for (int i = 0; i < n; i++)
-                defv[i] = reader.readInt();
-
-        } else {
-            logger.error("Expected DEFV chunk, but encountered: " + ChunkBuffer.getChunkName(root.getChunkId()));
-        }
-    }
-
-    private final void parseIRNG(ChunkReader reader) {
-        final ChunkBufferContext root = reader.nextChunk();
-
-        if (root.isChunkId(ID_IRNG)) {
-            int n = root.getChunkSize() / 8;
-            irng = new long[n];
-
-            for (int i = 0; i < n; i++)
-                irng[i] = reader.readLong();
-
-        } else {
-            logger.error("Expected IRNG chunk, but encountered: " + ChunkBuffer.getChunkName(root.getChunkId()));
-        }
-    }
-
-    private final void parseRTYP(ChunkReader reader) {
-        final ChunkBufferContext root = reader.nextChunk();
-
-        if (root.isChunkId(ID_RTYP)) {
-            int n = root.getChunkSize();
-            rtyp = new short[n];
-
-            for (int i = 0; i < n; i++)
-                rtyp[i] = reader.readShort();
-
-        } else {
-            logger.error("Expected RTYP chunk, but encountered: " + ChunkBuffer.getChunkName(root.getChunkId()));
-        }
-    }
-
-    private final void parseUCMP(ChunkReader reader) {
-        final ChunkBufferContext root = reader.nextChunk();
-
-        if (root.isChunkId(ID_UCMP)) {
-            int n = root.getChunkSize() / 3;
-            ucmp = new int[n];
-
-            for (int i = 0; i < n; i++) {
-                int val = (reader.readByte()) //name index
-                        + (reader.readByte() << 8) //rtyp index
-                        + (reader.readByte() << 16); //defv index
-
-                ucmp[i] = val;
-            }
-
-        } else {
-            logger.error("Expected UCMP chunk, but encountered: " + ChunkBuffer.getChunkName(root.getChunkId()));
-        }
-    }
-
-    private final void parseULST(ChunkReader reader) {
-        final ChunkBufferContext root = reader.nextChunk();
-
-        if (root.isChunkId(ID_ULST)) {
-            int n = root.getChunkSize() / 2;
-            ulst = new short[n];
-
-            for (int i = 0; i < n; i++)
-                ulst[i] = reader.readShort();
-
-        } else {
-            logger.error("Expected ULST chunk, but encountered: " + ChunkBuffer.getChunkName(root.getChunkId()));
-        }
-    }
-
-    private final void parseUIDX(ChunkReader reader) {
-        final ChunkBufferContext root = reader.nextChunk();
-
-        if (root.isChunkId(ID_UIDX)) {
-            int n = root.getChunkSize() / 5;
-
-            for (int i = 0; i < n; i++) {
-                short key = reader.readShort();
-                int val = reader.readShort()
-                        + (reader.readByte() << 16);
-
-                uidx.put(key, val);
-            }
-        } else {
-            logger.error("Expected UIDX chunk, but encountered: " + ChunkBuffer.getChunkName(root.getChunkId()));
-        }
-    }
-
-    private final void parseLLST(ChunkReader reader) {
-        final ChunkBufferContext root = reader.nextChunk();
-
-        if (root.isChunkId(ID_LLST)) {
-            int n = root.getChunkSize() / 2;
-            llst = new short[n];
-
-            for (int i = 0; i < n; i++)
-                llst[i] = reader.readShort();
-
-        } else {
-            logger.error("Expected LLST chunk, but encountered: " + ChunkBuffer.getChunkName(root.getChunkId()));
-        }
-    }
-
-    private final void parseLIDX(ChunkReader reader) {
-        final ChunkBufferContext root = reader.nextChunk();
-
-        if (root.isChunkId(ID_LIDX)) {
-            int n = root.getChunkSize() / 5;
-
-            for (int i = 0; i < n; i++) {
-                short key = reader.readShort();
-                int val = reader.readShort();
-                val += reader.readByte() << 16;
-
-                lidx.put(key, val);
-            }
-        } else {
-            logger.error("Expected LIDX chunk, but encountered: " + ChunkBuffer.getChunkName(root.getChunkId()));
-        }
-    }
-
-    private final void parseCIDX(ChunkReader reader) {
-        final ChunkBufferContext root = reader.nextChunk();
-
-        if (root.isChunkId(ID_CIDX)) {
-            int n = root.getChunkSize() / 6;
-
-            for (int i = 0; i < n; i++) {
-                int key = reader.readInt();
-                short val = reader.readShort();
-
-                cidx.put(key, val);
-            }
-        } else {
-            logger.error("Expected CIDX chunk, but encountered: " + ChunkBuffer.getChunkName(root.getChunkId()));
-        }
-    }
+//
+//    private final void parseNAME(ChunkReader reader) {
+//        final ChunkBufferContext root = reader.nextChunk();
+//
+//        if (root.isChunkId(ID_NAME)) {
+//            name = new byte[root.getChunkSize()];
+//            reader.readBytes(name);
+//        } else {
+//            logger.error("Expected NAME chunk, but encountered: " + ChunkBuffer.getChunkName(root.getChunkId()));
+//        }
+//    }
+//
+//    private final void parsePNOF(ChunkReader reader) {
+//        final ChunkBufferContext root = reader.nextChunk();
+//
+//        if (root.isChunkId(ID_PNOF)) {
+//            int n = root.getChunkSize() / 2;
+//            pnof = new short[n];
+//
+//            for (int i = 0; i < n; i++)
+//                pnof[i] = reader.readShort();
+//
+//        } else {
+//            logger.error("Expected PNOF chunk, but encountered: " + ChunkBuffer.getChunkName(root.getChunkId()));
+//        }
+//    }
+//
+//    private final void parseVNOF(ChunkReader reader) {
+//        final ChunkBufferContext root = reader.nextChunk();
+//
+//        if (root.isChunkId(ID_VNOF)) {
+//            int n = root.getChunkSize() / 2;
+//            vnof = new short[n];
+//
+//            for (int i = 0; i < n; i++)
+//                vnof[i] = reader.readShort();
+//
+//        } else {
+//            logger.error("Expected VNOF chunk, but encountered: " + ChunkBuffer.getChunkName(root.getChunkId()));
+//        }
+//    }
+//
+//    private final void parseDEFV(ChunkReader reader) {
+//        final ChunkBufferContext root = reader.nextChunk();
+//
+//        if (root.isChunkId(ID_DEFV)) {
+//            int n = root.getChunkSize() / 4;
+//            defv = new int[n];
+//
+//            for (int i = 0; i < n; i++)
+//                defv[i] = reader.readInt();
+//
+//        } else {
+//            logger.error("Expected DEFV chunk, but encountered: " + ChunkBuffer.getChunkName(root.getChunkId()));
+//        }
+//    }
+//
+//    private final void parseIRNG(ChunkReader reader) {
+//        final ChunkBufferContext root = reader.nextChunk();
+//
+//        if (root.isChunkId(ID_IRNG)) {
+//            int n = root.getChunkSize() / 8;
+//            irng = new long[n];
+//
+//            for (int i = 0; i < n; i++)
+//                irng[i] = reader.readLong();
+//
+//        } else {
+//            logger.error("Expected IRNG chunk, but encountered: " + ChunkBuffer.getChunkName(root.getChunkId()));
+//        }
+//    }
+//
+//    private final void parseRTYP(ChunkReader reader) {
+//        final ChunkBufferContext root = reader.nextChunk();
+//
+//        if (root.isChunkId(ID_RTYP)) {
+//            int n = root.getChunkSize();
+//            rtyp = new short[n];
+//
+//            for (int i = 0; i < n; i++)
+//                rtyp[i] = reader.readShort();
+//
+//        } else {
+//            logger.error("Expected RTYP chunk, but encountered: " + ChunkBuffer.getChunkName(root.getChunkId()));
+//        }
+//    }
+//
+//    private final void parseUCMP(ChunkReader reader) {
+//        final ChunkBufferContext root = reader.nextChunk();
+//
+//        if (root.isChunkId(ID_UCMP)) {
+//            int n = root.getChunkSize() / 3;
+//            ucmp = new int[n];
+//
+//            for (int i = 0; i < n; i++) {
+//                int val = (reader.readByte()) //name index
+//                        + (reader.readByte() << 8) //rtyp index
+//                        + (reader.readByte() << 16); //defv index
+//
+//                ucmp[i] = val;
+//            }
+//
+//        } else {
+//            logger.error("Expected UCMP chunk, but encountered: " + ChunkBuffer.getChunkName(root.getChunkId()));
+//        }
+//    }
+//
+//    private final void parseULST(ChunkReader reader) {
+//        final ChunkBufferContext root = reader.nextChunk();
+//
+//        if (root.isChunkId(ID_ULST)) {
+//            int n = root.getChunkSize() / 2;
+//            ulst = new short[n];
+//
+//            for (int i = 0; i < n; i++)
+//                ulst[i] = reader.readShort();
+//
+//        } else {
+//            logger.error("Expected ULST chunk, but encountered: " + ChunkBuffer.getChunkName(root.getChunkId()));
+//        }
+//    }
+//
+//    private final void parseUIDX(ChunkReader reader) {
+//        final ChunkBufferContext root = reader.nextChunk();
+//
+//        if (root.isChunkId(ID_UIDX)) {
+//            int n = root.getChunkSize() / 5;
+//
+//            for (int i = 0; i < n; i++) {
+//                short key = reader.readShort();
+//                int val = reader.readShort()
+//                        + (reader.readByte() << 16);
+//
+//                uidx.put(key, val);
+//            }
+//        } else {
+//            logger.error("Expected UIDX chunk, but encountered: " + ChunkBuffer.getChunkName(root.getChunkId()));
+//        }
+//    }
+//
+//    private final void parseLLST(ChunkReader reader) {
+//        final ChunkBufferContext root = reader.nextChunk();
+//
+//        if (root.isChunkId(ID_LLST)) {
+//            int n = root.getChunkSize() / 2;
+//            llst = new short[n];
+//
+//            for (int i = 0; i < n; i++)
+//                llst[i] = reader.readShort();
+//
+//        } else {
+//            logger.error("Expected LLST chunk, but encountered: " + ChunkBuffer.getChunkName(root.getChunkId()));
+//        }
+//    }
+//
+//    private final void parseLIDX(ChunkReader reader) {
+//        final ChunkBufferContext root = reader.nextChunk();
+//
+//        if (root.isChunkId(ID_LIDX)) {
+//            int n = root.getChunkSize() / 5;
+//
+//            for (int i = 0; i < n; i++) {
+//                short key = reader.readShort();
+//                int val = reader.readShort();
+//                val += reader.readByte() << 16;
+//
+//                lidx.put(key, val);
+//            }
+//        } else {
+//            logger.error("Expected LIDX chunk, but encountered: " + ChunkBuffer.getChunkName(root.getChunkId()));
+//        }
+//    }
+//
+//    private final void parseCIDX(ChunkReader reader) {
+//        final ChunkBufferContext root = reader.nextChunk();
+//
+//        if (root.isChunkId(ID_CIDX)) {
+//            int n = root.getChunkSize() / 6;
+//
+//            for (int i = 0; i < n; i++) {
+//                int key = reader.readInt();
+//                short val = reader.readShort();
+//
+//                cidx.put(key, val);
+//            }
+//        } else {
+//            logger.error("Expected CIDX chunk, but encountered: " + ChunkBuffer.getChunkName(root.getChunkId()));
+//        }
+//    }
 }

@@ -2,14 +2,12 @@ package com.ocdsoft.bacta.swg.precu.service.data.creation;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import com.ocdsoft.bacta.swg.datatable.DataTable;
+import com.ocdsoft.bacta.swg.datatable.DataTableManager;
 import com.ocdsoft.bacta.swg.precu.service.data.SharedFileLoader;
-import com.ocdsoft.bacta.swg.shared.iff.IffReader;
-import com.ocdsoft.bacta.swg.shared.iff.chunk.ChunkReader;
-import com.ocdsoft.bacta.swg.shared.iff.datatable.DataTable;
-import com.ocdsoft.bacta.swg.shared.iff.datatable.DataTableIffReader;
-import com.ocdsoft.bacta.swg.shared.iff.datatable.DataTableRow;
-import com.ocdsoft.bacta.swg.shared.tre.TreeFile;
 import lombok.Getter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,13 +17,16 @@ import java.util.Map;
  */
 @Singleton
 public class RacialMods implements SharedFileLoader {
+    private static final String dataTableName = "datatables/creation/racial_mods.iff";
+    private static final Logger logger = LoggerFactory.getLogger(RacialMods.class);
+
     private final Map<String, RacialModInfo> racialMods = new HashMap<>();
 
-    private final TreeFile treeFile;
+    private final DataTableManager dataTableManager;
 
     @Inject
-    public RacialMods(TreeFile treeFile) {
-        this.treeFile = treeFile;
+    public RacialMods(final DataTableManager dataTableManager) {
+        this.dataTableManager = dataTableManager;
         load();
     }
 
@@ -41,15 +42,19 @@ public class RacialMods implements SharedFileLoader {
     }
 
     private void load() {
-        final IffReader<DataTable> dataTableReader = new DataTableIffReader();
-        final DataTable dataTable = dataTableReader.read(
-                new ChunkReader("datatables/creation/racial_mods.iff", treeFile.open("datatables/creation/racial_mods.iff")));
+        logger.trace("Loading racial mods.");
 
-        for (DataTableRow row : dataTable.getRows()) {
-            RacialModInfo modInfo = new RacialModInfo(row);
+        final DataTable dataTable = dataTableManager.getTable(dataTableName);
+
+        for (int row = 0; row < dataTable.getNumRows(); ++row) {
+            final RacialModInfo modInfo = new RacialModInfo(dataTable, row);
             racialMods.put(modInfo.maleTemplate, modInfo);
             racialMods.put(modInfo.femaleTemplate, modInfo);
         }
+
+        dataTableManager.close(dataTableName);
+
+        logger.debug(String.format("Loaded %d racial mods.", racialMods.size()));
     }
 
     @Override
@@ -85,18 +90,18 @@ public class RacialMods implements SharedFileLoader {
         @Getter
         private final int willpower;
 
-        public RacialModInfo(DataTableRow row) {
-            this.maleTemplate = row.get(0).getString();
-            this.femaleTemplate = row.get(1).getString();
-            this.health = row.get(2).getInt();
-            this.strength = row.get(3).getInt();
-            this.constitution = row.get(4).getInt();
-            this.action = row.get(5).getInt();
-            this.quickness = row.get(6).getInt();
-            this.stamina = row.get(7).getInt();
-            this.mind = row.get(8).getInt();
-            this.focus = row.get(9).getInt();
-            this.willpower = row.get(10).getInt();
+        public RacialModInfo(final DataTable dataTable, final int row) {
+            this.maleTemplate = dataTable.getStringValue("male_template", row);
+            this.femaleTemplate = dataTable.getStringValue("female_template", row);
+            this.health = dataTable.getIntValue("health", row);
+            this.strength = dataTable.getIntValue("strength", row);
+            this.constitution = dataTable.getIntValue("constitution", row);
+            this.action = dataTable.getIntValue("action", row);
+            this.quickness = dataTable.getIntValue("quickness", row);
+            this.stamina = dataTable.getIntValue("stamina", row);
+            this.mind = dataTable.getIntValue("mind", row);
+            this.focus = dataTable.getIntValue("focus", row);
+            this.willpower = dataTable.getIntValue("willpower", row);
         }
     }
 }

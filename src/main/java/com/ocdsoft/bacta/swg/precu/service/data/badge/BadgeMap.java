@@ -2,17 +2,15 @@ package com.ocdsoft.bacta.swg.precu.service.data.badge;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import com.ocdsoft.bacta.swg.datatable.DataTable;
+import com.ocdsoft.bacta.swg.datatable.DataTableManager;
 import com.ocdsoft.bacta.swg.precu.service.data.SharedFileLoader;
-import com.ocdsoft.bacta.swg.shared.iff.IffReader;
-import com.ocdsoft.bacta.swg.shared.iff.chunk.ChunkReader;
-import com.ocdsoft.bacta.swg.shared.iff.datatable.DataTable;
-import com.ocdsoft.bacta.swg.shared.iff.datatable.DataTableIffReader;
-import com.ocdsoft.bacta.swg.shared.iff.datatable.DataTableRow;
-import com.ocdsoft.bacta.swg.shared.tre.TreeFile;
 import gnu.trove.iterator.TIntObjectIterator;
 import gnu.trove.map.TIntObjectMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
 import lombok.Getter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -22,25 +20,31 @@ import java.util.Collection;
  */
 @Singleton
 public final class BadgeMap implements SharedFileLoader {
+    private static final String dataTableName = "datatables/badge/badge_map.iff";
+    private static final Logger logger = LoggerFactory.getLogger(BadgeMap.class);
 
     private final TIntObjectMap<BadgeInfo> badges = new TIntObjectHashMap<>();
-    private final TreeFile treeFile;
+    private final DataTableManager dataTableManager;
 
     @Inject
-    public BadgeMap(TreeFile treeFile) {
-        this.treeFile = treeFile;
+    public BadgeMap(final DataTableManager dataTableManager) {
+        this.dataTableManager = dataTableManager;
         load();
     }
 
     private void load() {
-        final IffReader<DataTable> dataTableReader = new DataTableIffReader();
-        final DataTable dataTable = dataTableReader.read(
-                new ChunkReader("datatables/badge/badge_map.iff", treeFile.open("datatables/badge/badge_map.iff")));
+        logger.trace("Loading badges.");
 
-        for (DataTableRow row : dataTable.getRows()) {
-            BadgeInfo badge = new BadgeInfo(row);
-            badges.put(badge.index, badge);
+        final DataTable badgeMap = dataTableManager.getTable(dataTableName, true);
+
+        for (int row = 0; row < badgeMap.getNumRows(); ++row) {
+            final BadgeInfo badge = new BadgeInfo(badgeMap, row);
+            badges.put(badge.getIndex(), badge);
         }
+
+        dataTableManager.close(dataTableName);
+
+        logger.debug(String.format("Loaded %d badges.", badges.size()));
     }
 
     @Override
@@ -127,13 +131,13 @@ public final class BadgeMap implements SharedFileLoader {
         @Getter
         private final String type;
 
-        public BadgeInfo(DataTableRow row) {
-            this.index = row.get(0).getInt();
-            this.key = row.get(1).getString();
-            this.music = row.get(2).getString();
-            this.category = row.get(3).getInt();
-            this.show = row.get(4).getInt();
-            this.type = row.get(5).getString();
+        public BadgeInfo(final DataTable dataTable, int row) {
+            this.index = dataTable.getIntValue("INDEX", row);
+            this.key = dataTable.getStringValue("KEY", row);
+            this.music = dataTable.getStringValue("MUSIC", row);
+            this.category = dataTable.getIntValue("CATEGORY", row);
+            this.show = dataTable.getIntValue("SHOW", row);
+            this.type = dataTable.getStringValue("TYPE", row);
         }
     }
 }

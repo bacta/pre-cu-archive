@@ -2,14 +2,12 @@ package com.ocdsoft.bacta.swg.precu.service.data.creation;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import com.ocdsoft.bacta.swg.datatable.DataTable;
+import com.ocdsoft.bacta.swg.datatable.DataTableManager;
 import com.ocdsoft.bacta.swg.precu.service.data.SharedFileLoader;
-import com.ocdsoft.bacta.swg.shared.iff.IffReader;
-import com.ocdsoft.bacta.swg.shared.iff.chunk.ChunkReader;
-import com.ocdsoft.bacta.swg.shared.iff.datatable.DataTable;
-import com.ocdsoft.bacta.swg.shared.iff.datatable.DataTableIffReader;
-import com.ocdsoft.bacta.swg.shared.iff.datatable.DataTableRow;
-import com.ocdsoft.bacta.swg.shared.tre.TreeFile;
 import lombok.Getter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,12 +17,16 @@ import java.util.Map;
  */
 @Singleton
 public final class AttributeLimits implements SharedFileLoader {
+    private static final String dataTableName = "datatables/creation/attribute_limits.iff";
+    private static final Logger logger = LoggerFactory.getLogger(AttributeLimits.class);
+
     private final Map<String, AttributeLimitInfo> attributeLimits = new HashMap<>();
-    private final TreeFile treeFile;
+
+    private final DataTableManager dataTableManager;
 
     @Inject
-    public AttributeLimits(TreeFile treeFile) {
-        this.treeFile = treeFile;
+    public AttributeLimits(final DataTableManager dataTableManager) {
+        this.dataTableManager = dataTableManager;
         load();
     }
     /**
@@ -42,14 +44,19 @@ public final class AttributeLimits implements SharedFileLoader {
     }
 
     private void load() {
-        final IffReader<DataTable> dataTableReader = new DataTableIffReader();
-        final DataTable dataTable = dataTableReader.read(new ChunkReader("datatables/creation/attribute_limits.iff", treeFile.open("datatables/creation/attribute_limits.iff")));
+        logger.trace("Loading attribute limits.");
 
-        for (DataTableRow row : dataTable.getRows()) {
-            AttributeLimitInfo limitInfo = new AttributeLimitInfo(row);
+        final DataTable dataTable = dataTableManager.getTable(dataTableName);
+
+        for (int row = 0; row < dataTable.getNumRows(); ++row) {
+            final AttributeLimitInfo limitInfo = new AttributeLimitInfo(dataTable, row);
             attributeLimits.put(limitInfo.maleTemplate, limitInfo);
             attributeLimits.put(limitInfo.femaleTemplate, limitInfo);
         }
+
+        dataTableManager.close(dataTableName);
+
+        logger.debug(String.format("Loaded %d profession mods.", attributeLimits.size()));
     }
 
     @Override
@@ -104,28 +111,28 @@ public final class AttributeLimits implements SharedFileLoader {
         @Getter
         private final int total;
 
-        public AttributeLimitInfo(DataTableRow row) {
-            this.maleTemplate = row.get(0).getString();
-            this.femaleTemplate = row.get(1).getString();
-            this.minHealth = row.get(2).getInt();
-            this.maxHealth = row.get(3).getInt();
-            this.minStrength = row.get(4).getInt();
-            this.maxStrength = row.get(5).getInt();
-            this.minConstitution = row.get(6).getInt();
-            this.maxConstitution = row.get(7).getInt();
-            this.minAction = row.get(8).getInt();
-            this.maxAction = row.get(9).getInt();
-            this.minQuickness = row.get(10).getInt();
-            this.maxQuickness = row.get(11).getInt();
-            this.minStamina = row.get(12).getInt();
-            this.maxStamina = row.get(13).getInt();
-            this.minMind = row.get(14).getInt();
-            this.maxMind = row.get(15).getInt();
-            this.minFocus = row.get(16).getInt();
-            this.maxFocus = row.get(17).getInt();
-            this.minWillpower = row.get(18).getInt();
-            this.maxWillpower = row.get(19).getInt();
-            this.total = row.get(20).getInt();
+        public AttributeLimitInfo(final DataTable dataTable, final int row) {
+            this.maleTemplate = dataTable.getStringValue("male_template", row);
+            this.femaleTemplate = dataTable.getStringValue("female_template", row);
+            this.minHealth = dataTable.getIntValue("min_health", row);
+            this.maxHealth = dataTable.getIntValue("max_health", row);
+            this.minStrength = dataTable.getIntValue("min_strength", row);
+            this.maxStrength = dataTable.getIntValue("max_strength", row);
+            this.minConstitution = dataTable.getIntValue("min_constitution", row);
+            this.maxConstitution = dataTable.getIntValue("max_constitution", row);
+            this.minAction = dataTable.getIntValue("min_action", row);
+            this.maxAction = dataTable.getIntValue("max_action", row);
+            this.minQuickness = dataTable.getIntValue("min_quickness", row);
+            this.maxQuickness = dataTable.getIntValue("max_quickness", row);
+            this.minStamina = dataTable.getIntValue("min_stamina", row);
+            this.maxStamina = dataTable.getIntValue("max_stamina", row);
+            this.minMind = dataTable.getIntValue("min_mind", row);
+            this.maxMind = dataTable.getIntValue("max_mind", row);
+            this.minFocus = dataTable.getIntValue("min_focus", row);
+            this.maxFocus = dataTable.getIntValue("max_focus", row);
+            this.minWillpower = dataTable.getIntValue("min_willpower", row);
+            this.maxWillpower = dataTable.getIntValue("max_willpower", row);
+            this.total = dataTable.getIntValue("total", row);
         }
     }
 }

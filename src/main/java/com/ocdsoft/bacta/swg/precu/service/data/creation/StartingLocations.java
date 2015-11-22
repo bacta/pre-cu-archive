@@ -2,14 +2,12 @@ package com.ocdsoft.bacta.swg.precu.service.data.creation;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import com.ocdsoft.bacta.swg.datatable.DataTable;
+import com.ocdsoft.bacta.swg.datatable.DataTableManager;
 import com.ocdsoft.bacta.swg.precu.service.data.SharedFileLoader;
-import com.ocdsoft.bacta.swg.shared.iff.IffReader;
-import com.ocdsoft.bacta.swg.shared.iff.chunk.ChunkReader;
-import com.ocdsoft.bacta.swg.shared.iff.datatable.DataTable;
-import com.ocdsoft.bacta.swg.shared.iff.datatable.DataTableIffReader;
-import com.ocdsoft.bacta.swg.shared.iff.datatable.DataTableRow;
-import com.ocdsoft.bacta.swg.shared.tre.TreeFile;
 import lombok.Getter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,13 +17,15 @@ import java.util.Map;
  */
 @Singleton
 public class StartingLocations implements SharedFileLoader {
-    private final Map<String, StartingLocationInfo> startingLocations = new HashMap<>();
+    private static final String dataTableName = "datatables/creation/starting_locations.iff";
+    private static final Logger logger = LoggerFactory.getLogger(StartingLocations.class);
 
-    private final TreeFile treeFile;
+    private final Map<String, StartingLocationInfo> startingLocations = new HashMap<>();
+    private final DataTableManager dataTableManager;
 
     @Inject
-    public StartingLocations(TreeFile treeFile) {
-        this.treeFile = treeFile;
+    public StartingLocations(final DataTableManager dataTableManager) {
+        this.dataTableManager = dataTableManager;
         load();
     }
 
@@ -42,14 +42,18 @@ public class StartingLocations implements SharedFileLoader {
     }
 
     private void load() {
-        final IffReader<DataTable> dataTableReader = new DataTableIffReader();
-        final DataTable dataTable = dataTableReader.read(
-                new ChunkReader("datatables/creation/starting_locations.iff", treeFile.open("datatables/creation/starting_locations.iff")));
+        logger.trace("Loading starting locations.");
 
-        for (DataTableRow row : dataTable.getRows()) {
-            StartingLocationInfo locationInfo = new StartingLocationInfo(row);
+        final DataTable dataTable = dataTableManager.getTable(dataTableName);
+
+        for (int row = 0; row < dataTable.getNumRows(); ++row) {
+            final StartingLocationInfo locationInfo = new StartingLocationInfo(dataTable, row);
             startingLocations.put(locationInfo.location, locationInfo);
         }
+
+        dataTableManager.close(dataTableName);
+
+        logger.debug(String.format("Loaded %d starting locations.", startingLocations.size()));
     }
 
     public void reload() {
@@ -81,17 +85,17 @@ public class StartingLocations implements SharedFileLoader {
         @Getter
         private final float heading;
 
-        public StartingLocationInfo(DataTableRow row) {
-            location = row.get(0).getString();
-            planet = row.get(1).getString();
-            x = row.get(2).getFloat();
-            y = row.get(3).getFloat();
-            z = row.get(4).getFloat();
-            cellId = row.get(5).getString();
-            image = row.get(6).getString();
-            description = row.get(7).getString();
-            radius = row.get(8).getFloat();
-            heading = row.get(9).getFloat();
+        public StartingLocationInfo(final DataTable dataTable, final int row) {
+            location = dataTable.getStringValue("location", row);
+            planet = dataTable.getStringValue("planet", row);
+            x = dataTable.getFloatValue("x", row);
+            y = dataTable.getFloatValue("y", row);
+            z = dataTable.getFloatValue("z", row);
+            cellId = dataTable.getStringValue("cellId", row);
+            image = dataTable.getStringValue("image", row);
+            description = dataTable.getStringValue("description", row);
+            radius = dataTable.getFloatValue("radius", row);
+            heading = dataTable.getFloatValue("heading", row);
         }
     }
 }
