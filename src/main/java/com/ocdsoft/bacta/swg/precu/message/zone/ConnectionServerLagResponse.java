@@ -1,8 +1,8 @@
 package com.ocdsoft.bacta.swg.precu.message.zone;
 
-import com.ocdsoft.bacta.swg.network.swg.message.SwgMessage;
+import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
 
-public class ConnectionServerLagResponse extends SwgMessage {
+public class ConnectionServerLagResponse extends GameNetworkMessage {
 
 	public ConnectionServerLagResponse() {
 		super(0x01, 0x1590F63C);

@@ -1,11 +1,11 @@
 package com.ocdsoft.bacta.swg.precu.object.cell;
 
 import com.ocdsoft.bacta.swg.network.soe.lang.UnicodeString;
-import com.ocdsoft.bacta.swg.server.game.object.SceneObject;
-import com.ocdsoft.bacta.swg.server.game.object.Vector;
-import com.ocdsoft.bacta.swg.server.game.object.archive.delta.AutoDeltaBoolean;
-import com.ocdsoft.bacta.swg.server.game.object.archive.delta.AutoDeltaInt;
-import com.ocdsoft.bacta.swg.server.game.object.archive.delta.AutoDeltaVariable;
+import com.ocdsoft.bacta.swg.precu.object.SceneObject;
+import com.ocdsoft.bacta.swg.precu.object.Vector;
+import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaBoolean;
+import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaInt;
+import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaVariable;
 
 /**
  * Created by crush on 8/18/2014.

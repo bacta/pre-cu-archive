@@ -1,11 +1,11 @@
 package com.ocdsoft.bacta.swg.precu.controller.object.command;
 
 import com.google.inject.Inject;
-import com.ocdsoft.bacta.swg.annotations.Command;
-import com.ocdsoft.bacta.swg.server.game.GameClient;
-import com.ocdsoft.bacta.swg.server.game.object.SceneObject;
-import com.ocdsoft.bacta.swg.server.game.object.tangible.TangibleObject;
-import com.ocdsoft.bacta.swg.server.game.service.container.ContainerService;
+import com.ocdsoft.bacta.soe.controller.Command;
+import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
+import com.ocdsoft.bacta.swg.precu.object.SceneObject;
+import com.ocdsoft.bacta.swg.precu.object.tangible.TangibleObject;
+import com.ocdsoft.bacta.swg.precu.service.container.ContainerService;
 import com.ocdsoft.network.service.object.ObjectService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +27,7 @@ public class TransferItemMiscCommandController implements CommandController {
     }
 
 	@Override
-	public void handleCommand(GameClient client, TangibleObject invoker, TangibleObject target, String params) {
+	public void handleCommand(SoeUdpConnection connection, TangibleObject invoker, TangibleObject target, String params) {
         try {
             StringTokenizer tokenizer = new StringTokenizer(params);
 

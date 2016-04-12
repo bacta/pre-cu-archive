@@ -1,8 +1,8 @@
 package com.ocdsoft.bacta.swg.precu.controller.object.command;
 
-import com.ocdsoft.bacta.swg.annotations.Command;
-import com.ocdsoft.bacta.swg.server.game.GameClient;
-import com.ocdsoft.bacta.swg.server.game.object.tangible.TangibleObject;
+import com.ocdsoft.bacta.soe.controller.Command;
+import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
+import com.ocdsoft.bacta.swg.precu.object.tangible.TangibleObject;
 
 import java.util.StringTokenizer;
 
@@ -10,7 +10,7 @@ import java.util.StringTokenizer;
 public class RequestWaypointAtPositionCommandController implements CommandController {
 
     @Override
-    public void handleCommand(GameClient client, TangibleObject invoker,
+    public void handleCommand(SoeUdpConnection connection, TangibleObject invoker,
                               TangibleObject target, String params) {
 
         try {

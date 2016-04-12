@@ -1,33 +1,35 @@
 package com.ocdsoft.bacta.swg.precu.object;
 
-import com.ocdsoft.bacta.swg.network.soe.lang.UnicodeString;
-import com.ocdsoft.bacta.swg.network.soe.message.util.SoeMessageUtil;
-import com.ocdsoft.bacta.swg.network.swg.message.SwgMessage;
-import com.ocdsoft.bacta.swg.server.game.GameClient;
-import com.ocdsoft.bacta.swg.server.game.event.ObservableGameEvent;
-import com.ocdsoft.bacta.swg.server.game.message.BaselinesMessage;
-import com.ocdsoft.bacta.swg.server.game.message.DeltasMessage;
-import com.ocdsoft.bacta.swg.server.game.message.object.ObjControllerMessage;
-import com.ocdsoft.bacta.swg.server.game.message.scene.*;
-import com.ocdsoft.bacta.swg.server.game.object.archive.OnDirtyCallbackBase;
-import com.ocdsoft.bacta.swg.server.game.object.archive.delta.AutoDeltaByteStream;
-import com.ocdsoft.bacta.swg.server.game.object.archive.delta.AutoDeltaFloat;
-import com.ocdsoft.bacta.swg.server.game.object.archive.delta.AutoDeltaInt;
-import com.ocdsoft.bacta.swg.server.game.object.archive.delta.AutoDeltaVariable;
+import com.ocdsoft.bacta.engine.lang.ObservableEventRegistry;
+import com.ocdsoft.bacta.engine.lang.Observer;
+import com.ocdsoft.bacta.engine.lang.Subject;
+import com.ocdsoft.bacta.engine.lang.UnicodeString;
+import com.ocdsoft.bacta.engine.object.NetworkObject;
+import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
+import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
+import com.ocdsoft.bacta.soe.object.Transform;
+import com.ocdsoft.bacta.soe.util.SoeMessageUtil;
+import com.ocdsoft.bacta.swg.precu.event.ObservableGameEvent;
+import com.ocdsoft.bacta.swg.precu.message.BaselinesMessage;
+import com.ocdsoft.bacta.swg.precu.message.DeltasMessage;
+import com.ocdsoft.bacta.swg.precu.message.object.ObjControllerMessage;
+import com.ocdsoft.bacta.swg.precu.message.scene.*;
+import com.ocdsoft.bacta.swg.precu.object.archive.OnDirtyCallbackBase;
+import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaByteStream;
+import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaFloat;
+import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaInt;
+import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaVariable;
 import com.ocdsoft.bacta.swg.shared.container.Container;
-import com.ocdsoft.bacta.swg.shared.localization.StringId;
+import com.ocdsoft.bacta.swg.localization.StringId;
 import com.ocdsoft.bacta.swg.shared.object.template.ObjectTemplate;
-import com.ocdsoft.network.lang.ObservableEventRegistry;
-import com.ocdsoft.network.lang.Observer;
-import com.ocdsoft.network.lang.Subject;
-import com.ocdsoft.network.object.NetworkObject;
+
 import lombok.Getter;
 import lombok.Setter;
-import org.magnos.steer.vec.Vec3;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.vecmath.Quat4f;
+import javax.vecmath.Vector3f;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -49,12 +51,9 @@ public abstract class SceneObject extends NetworkObject implements Subject<Obser
     private long containedBy = 0;
 
     @Getter
-    protected Quat4f orientation = new Quat4f();
+    protected Transform transform = new Transform();
 
-    @Getter
-    protected Vec3 position = Vec3.ZERO;
-
-    protected transient Container container;
+    protected transient Container<SceneObject> container;
 
     @Getter
     @Setter
@@ -62,9 +61,9 @@ public abstract class SceneObject extends NetworkObject implements Subject<Obser
     
     @Getter
     @Setter
-    protected transient GameClient client;
+    protected transient SoeUdpConnection connection;
     
-    protected transient final Set<GameClient> listeners;
+    protected transient final Set<SoeUdpConnection> listeners;
 
     @Getter
     @Setter //TODO: Remove setter access. Require reflection to gain access.
@@ -113,14 +112,14 @@ public abstract class SceneObject extends NetworkObject implements Subject<Obser
 
     protected SceneObject() {
         listeners = Collections.synchronizedSet(new HashSet<>());
-        client = null;
+        connection = null;
 
         balanceBank = new AutoDeltaInt(0, authoritativeClientServerPackage);
         balanceCash = new AutoDeltaInt(0, authoritativeClientServerPackage);
 
         complexity = new AutoDeltaFloat(1.0f, sharedPackage);
-        nameStringId = new AutoDeltaVariable<>(StringId.empty, sharedPackage);
-        objectName = new AutoDeltaVariable<>(UnicodeString.empty, sharedPackage);
+        nameStringId = new AutoDeltaVariable<>(StringId.Invalid, sharedPackage);
+        objectName = new AutoDeltaVariable<>(UnicodeString.EMPTY, sharedPackage);
         volume = new AutoDeltaInt(0, sharedPackage);
 
         authServerProcessId = new AutoDeltaInt(0, sharedPackageNp);
@@ -128,36 +127,36 @@ public abstract class SceneObject extends NetworkObject implements Subject<Obser
         eventRegistry = new ObservableEventRegistry();
     }
 
-    protected final void sendTo(GameClient theirClient) {
+    protected final void sendTo(SoeUdpConnection theirConnection) {
         logger.trace("Sending baselines to {}.", getNetworkId());
 
-        if (theirClient == null) return;
+        if (theirConnection == null) return;
 
         SceneCreateObjectByCrc msg = new SceneCreateObjectByCrc(this);
-        theirClient.sendMessage(msg);
+        theirConnection.sendMessage(msg);
 
         UpdateContainmentMessage link = new UpdateContainmentMessage(this, containedBy, currentArrangement);
-        theirClient.sendMessage(link);
+        theirConnection.sendMessage(link);
 
-        sendBaselinesTo(theirClient);
+        sendBaselinesTo(theirConnection);
 
         if (container != null) {
             for (SceneObject containedObject : container) {
                 //TODO: Remove this if block when refactored to have contents list on Container.
                 //At that point, there should never be a null object in the list...
                 if (containedObject != null)
-                    containedObject.sendTo(theirClient);
+                    containedObject.sendTo(theirConnection);
             }
         }
 
         SceneEndBaselines close = new SceneEndBaselines(this);
-        theirClient.sendMessage(close);
+        theirConnection.sendMessage(close);
     }
 
-    public final void sendDestroyTo(GameClient theirClient) {
-        if (theirClient != null) {
+    public final void sendDestroyTo(SoeUdpConnection theirConnection) {
+        if (theirConnection != null) {
             SceneObjectDestroyMessage msg = new SceneObjectDestroyMessage(this);
-            theirClient.sendMessage(msg);
+            theirConnection.sendMessage(msg);
         }
     }
 
@@ -167,26 +166,26 @@ public abstract class SceneObject extends NetworkObject implements Subject<Obser
         initialized = true;
     }
 
-    private final void sendBaselinesTo(GameClient theirClient) {
+    private final void sendBaselinesTo(SoeUdpConnection theirConnection) {
 
-        if(this.client == null || theirClient == null) return;
+        if(getConnection() == null || theirConnection == null) return;
 
-        if (this.client.equals(theirClient)) {
-            theirClient.sendMessage(new BaselinesMessage(this, authoritativeClientServerPackage, 1)); //BaselineTypes.ClientServer)); //1
+        if (getConnection().equals(theirConnection)) {
+            theirConnection.sendMessage(new BaselinesMessage(this, authoritativeClientServerPackage, 1)); //BaselineTypes.ClientServer)); //1
         }
 
-        theirClient.sendMessage(new BaselinesMessage(this, sharedPackage, 3)); //BaselineTypes.Shared)); //3
+        theirConnection.sendMessage(new BaselinesMessage(this, sharedPackage, 3)); //BaselineTypes.Shared)); //3
 
-        if (this.client.equals(theirClient)) {
-            theirClient.sendMessage(new BaselinesMessage(this, authoritativeClientServerPackageNp, 4)); //BaselineTypes.ClientServerNp)); //4
+        if (getConnection().equals(theirConnection)) {
+            theirConnection.sendMessage(new BaselinesMessage(this, authoritativeClientServerPackageNp, 4)); //BaselineTypes.ClientServerNp)); //4
         }
 
-        theirClient.sendMessage(new BaselinesMessage(this, sharedPackageNp, 6)); //BaselineTypes.SharedNp)); //6
+        theirConnection.sendMessage(new BaselinesMessage(this, sharedPackageNp, 6)); //BaselineTypes.SharedNp)); //6
 
-        if (this.client.equals(theirClient)) {
-            theirClient.sendMessage(new BaselinesMessage(this, uiPackage, 7)); //BaselineTypes.Ui)); //7
-            theirClient.sendMessage(new BaselinesMessage(this, firstParentAuthClientServerPackage, 8)); //BaselineTypes.FirstParentClientServer)); //8
-            theirClient.sendMessage(new BaselinesMessage(this, firstParentAuthClientServerPackageNp, 9)); //BaselineTypes.FirstParentClientServerNp)); //9
+        if (getConnection().equals(theirConnection)) {
+            theirConnection.sendMessage(new BaselinesMessage(this, uiPackage, 7)); //BaselineTypes.Ui)); //7
+            theirConnection.sendMessage(new BaselinesMessage(this, firstParentAuthClientServerPackage, 8)); //BaselineTypes.FirstParentClientServer)); //8
+            theirConnection.sendMessage(new BaselinesMessage(this, firstParentAuthClientServerPackageNp, 9)); //BaselineTypes.FirstParentClientServerNp)); //9
         }
     }
 
@@ -195,22 +194,22 @@ public abstract class SceneObject extends NetworkObject implements Subject<Obser
             broadcastMessage(new DeltasMessage(this, authoritativeClientServerPackage, 1));
 
         if (sharedPackage.isDirty())
-            getClient().sendMessage(new DeltasMessage(this, sharedPackage, 3));
+            getConnection().sendMessage(new DeltasMessage(this, sharedPackage, 3));
 
         if (authoritativeClientServerPackageNp.isDirty())
-            getClient().sendMessage(new DeltasMessage(this, authoritativeClientServerPackageNp, 4));
+            getConnection().sendMessage(new DeltasMessage(this, authoritativeClientServerPackageNp, 4));
 
         if (sharedPackageNp.isDirty())
             broadcastMessage(new DeltasMessage(this, sharedPackageNp, 6));
 
         if (uiPackage.isDirty())
-            getClient().sendMessage(new DeltasMessage(this, uiPackage, 7));
+            getConnection().sendMessage(new DeltasMessage(this, uiPackage, 7));
 
         if (firstParentAuthClientServerPackage.isDirty())
-            getClient().sendMessage(new DeltasMessage(this, firstParentAuthClientServerPackage, 8));
+            getConnection().sendMessage(new DeltasMessage(this, firstParentAuthClientServerPackage, 8));
 
         if (firstParentAuthClientServerPackageNp.isDirty())
-            getClient().sendMessage(new DeltasMessage(this, firstParentAuthClientServerPackageNp, 9));
+            getConnection().sendMessage(new DeltasMessage(this, firstParentAuthClientServerPackageNp, 9));
 
         clearDeltas();
     }
@@ -226,9 +225,7 @@ public abstract class SceneObject extends NetworkObject implements Subject<Obser
     }
 
     public void setPosition(float x, float z, float y) {
-        position.x = x;
-        position.y = y;
-        position.z = z;
+        this.transform.setPosition(x, z, y);
         dirty = true;
     }
 
@@ -236,18 +233,18 @@ public abstract class SceneObject extends NetworkObject implements Subject<Obser
         setPosition(x, z, y);
     }
 
-    public void setPosition(Vec3 position) {
-        this.position = position;
+    public void setPosition(Vector3f position) {
+        this.transform.setPosition(position);
         dirty = true;
     }
 
     public final void setOrientation(float x, float y, float z, float w) {
-        orientation.set(x, y, z, w);
+        this.transform.setOrientation(x, y, z, w);
         dirty = true;
     }
 
     public final void setOrientation(Quat4f orientation) {
-        this.orientation = orientation;
+        this.transform.setOrientation(orientation);
         dirty = true;
     }
 
@@ -261,22 +258,20 @@ public abstract class SceneObject extends NetworkObject implements Subject<Obser
         uiPackage.addOnDirtyCallback(onDirtyCallback);
     }
 
-    public final void broadcastMessage(SwgMessage message) {
+    public final void broadcastMessage(GameNetworkMessage message) {
         broadcastMessage(message, true);
     }
 
-    public final void broadcastMessage(SwgMessage message, boolean sendSelf) {
+    public final void broadcastMessage(GameNetworkMessage message, boolean sendSelf) {
 
-        for (GameClient theirClient : listeners) {
-            if(!sendSelf && theirClient == client) {
+        for (SoeUdpConnection theirConnection : listeners) {
+            if(!sendSelf && theirConnection == getConnection()) {
                 continue;
             }
-            SwgMessage newMessage = new SwgMessage(message.copy());
-            theirClient.sendMessage(newMessage);
-            logger.debug("Broadcasting message " + message.getClass().getSimpleName() + " to " + theirClient.getCharacter().getObjectName().getString());
-            System.out.println(SoeMessageUtil.bytesToHex(newMessage));
+            theirConnection.sendMessage(message);
+            logger.debug("Broadcasting message {} to {}", message.getClass().getSimpleName(), theirConnection.getCurrentCharName());
+            System.out.println(SoeMessageUtil.bytesToHex(message));
         }
-        message.release();
     }
 
     public final void broadcastMessage(ObjControllerMessage message) {
@@ -284,18 +279,15 @@ public abstract class SceneObject extends NetworkObject implements Subject<Obser
     }
 
     public final void broadcastMessage(ObjControllerMessage message, boolean changeReceiver) {
-        for (GameClient theirClient : listeners) {
-            ObjControllerMessage newMessage = new ObjControllerMessage(message.copy());
+        for (SoeUdpConnection theirConnection : listeners) {
             if(changeReceiver) {
-                newMessage.setReceiver(theirClient.getCharacter().getNetworkId());
+                message.setReceiver(theirConnection.getCurrentNetworkId());
             }
-            theirClient.sendMessage(newMessage);
+            theirConnection.sendMessage(message);
 
-            logger.debug("Broadcasting obj controller to " + theirClient.getCharacter().getObjectName().getString());
-            System.out.println(SoeMessageUtil.bytesToHex(newMessage));
+            logger.debug("Broadcasting obj controller to {}", theirConnection.getCurrentCharName());
+            System.out.println(SoeMessageUtil.bytesToHex(message));
         }
-
-        message.release();
     }
 
     @Override

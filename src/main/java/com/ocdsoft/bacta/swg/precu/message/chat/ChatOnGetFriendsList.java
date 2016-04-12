@@ -1,11 +1,11 @@
 package com.ocdsoft.bacta.swg.precu.message.chat;
 
-import com.ocdsoft.bacta.swg.network.swg.message.SwgMessage;
-import com.ocdsoft.bacta.swg.server.game.object.tangible.creature.CreatureObject;
+import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
+import com.ocdsoft.bacta.swg.precu.object.tangible.creature.CreatureObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ChatOnGetFriendsList extends SwgMessage {
+public class ChatOnGetFriendsList extends GameNetworkMessage {
     private final Logger logger = LoggerFactory.getLogger(getClass().getSimpleName());
 
     public ChatOnGetFriendsList(CreatureObject creo) {

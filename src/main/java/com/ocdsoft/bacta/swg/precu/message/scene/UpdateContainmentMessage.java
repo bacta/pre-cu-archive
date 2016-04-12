@@ -1,9 +1,9 @@
 package com.ocdsoft.bacta.swg.precu.message.scene;
 
-import com.ocdsoft.bacta.swg.network.swg.message.SwgMessage;
-import com.ocdsoft.bacta.swg.server.game.object.SceneObject;
+import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
+import com.ocdsoft.bacta.swg.precu.object.SceneObject;
 
-public class UpdateContainmentMessage extends SwgMessage {
+public class UpdateContainmentMessage extends GameNetworkMessage {
     public UpdateContainmentMessage(SceneObject object) {
         super(0x04, 0x56CBDE9E);
 

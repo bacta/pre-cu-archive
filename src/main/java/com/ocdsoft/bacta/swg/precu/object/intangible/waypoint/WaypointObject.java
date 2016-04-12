@@ -1,12 +1,12 @@
 package com.ocdsoft.bacta.swg.precu.object.intangible.waypoint;
 
 import com.ocdsoft.bacta.swg.network.soe.lang.UnicodeString;
-import com.ocdsoft.bacta.swg.server.game.object.Vector;
-import com.ocdsoft.bacta.swg.server.game.object.archive.delta.AutoDeltaBoolean;
-import com.ocdsoft.bacta.swg.server.game.object.archive.delta.AutoDeltaLong;
-import com.ocdsoft.bacta.swg.server.game.object.archive.delta.AutoDeltaString;
-import com.ocdsoft.bacta.swg.server.game.object.archive.delta.AutoDeltaVariable;
-import com.ocdsoft.bacta.swg.server.game.object.intangible.IntangibleObject;
+import com.ocdsoft.bacta.swg.precu.object.Vector;
+import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaBoolean;
+import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaLong;
+import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaString;
+import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaVariable;
+import com.ocdsoft.bacta.swg.precu.object.intangible.IntangibleObject;
 
 
 public final class WaypointObject extends IntangibleObject {

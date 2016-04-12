@@ -1,39 +1,34 @@
 package com.ocdsoft.bacta.swg.precu.controller;
 
 import com.google.inject.Inject;
-import com.ocdsoft.bacta.swg.network.soe.buffer.SoeByteBuf;
-import com.ocdsoft.bacta.swg.network.soe.object.chat.ChatAvatarId;
-import com.ocdsoft.bacta.swg.network.swg.ServerType;
-import com.ocdsoft.bacta.swg.network.swg.SwgController;
-import com.ocdsoft.bacta.swg.network.swg.controller.SwgMessageController;
-import com.ocdsoft.bacta.swg.server.game.GameClient;
-import com.ocdsoft.bacta.swg.server.game.chat.ChatServerAgent;
-import com.ocdsoft.bacta.swg.server.game.message.chat.ChatInstantMessageToCharacter;
+import com.ocdsoft.bacta.soe.GameNetworkMessageController;
+import com.ocdsoft.bacta.soe.GameNetworkMessageHandled;
+import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
+import com.ocdsoft.bacta.soe.object.chat.ChatAvatarId;
+import com.ocdsoft.bacta.swg.precu.chat.ChatServerAgent;
+import com.ocdsoft.bacta.swg.precu.message.chat.ChatInstantMessageToCharacter;
+import com.ocdsoft.bacta.swg.shared.lang.NotImplementedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@SwgController(server = ServerType.GAME, handles = ChatInstantMessageToCharacter.class)
-public class ChatInstantMessageToCharacterController implements SwgMessageController<GameClient> {
+@GameNetworkMessageHandled(ChatInstantMessageToCharacter.class)
+public class ChatInstantMessageToCharacterController implements GameNetworkMessageController<ChatInstantMessageToCharacter> {
 
     private Logger logger = LoggerFactory.getLogger(getClass().getSimpleName());
 
-    @Inject
-    public ChatInstantMessageToCharacterController() {
-
-    }
-
     @Override
-    public void handleIncoming(GameClient client, SoeByteBuf message) {
-
-        ChatAvatarId recipient = new ChatAvatarId(message);
-
-        String msg = message.readUnicode();
-        int stringIdParameter = message.readInt();
-        int sequence = message.readInt();
-
-        ChatServerAgent agent = client.getChatServerAgent();
-
-        if (agent != null)
-            agent.sendInstantMessage(recipient, msg, sequence); //TODO: Stringidparams
+    public void handleIncoming(SoeUdpConnection connection, ChatInstantMessageToCharacter message) throws Exception {
+        throw new NotImplementedException();
+//        ChatAvatarId recipient = new ChatAvatarId(message);
+//
+//        String msg = message.readUnicode();
+//        int stringIdParameter = message.readInt();
+//        int sequence = message.readInt();
+//
+//        ChatServerAgent agent = client.getChatServerAgent();
+//
+//        if (agent != null) {
+//            agent.sendInstantMessage(recipient, msg, sequence); //TODO: Stringidparams
+//        }
     }
 }

@@ -1,7 +1,6 @@
 package com.ocdsoft.bacta.swg.precu.object.archive;
 
-import com.ocdsoft.bacta.swg.network.soe.buffer.SoeByteBuf;
-
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,14 +18,14 @@ public class AutoByteStream {
         members.add(variable);
     }
 
-    public void pack(SoeByteBuf buffer) {
-        buffer.writeShort(getItemCount());
+    public void pack(ByteBuffer buffer) {
+        buffer.putShort((short) getItemCount());
 
         for (AutoVariableBase variable : members)
             variable.pack(buffer);
     }
 
-    public void unpack(SoeByteBuf buffer) {
+    public void unpack(ByteBuffer buffer) {
         throw new RuntimeException("Not implemented.");
     }
 }

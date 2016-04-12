@@ -2,7 +2,7 @@ package com.ocdsoft.bacta.swg.precu.message.outofband;
 
 import com.ocdsoft.bacta.swg.network.soe.buffer.SoeByteBuf;
 import com.ocdsoft.bacta.swg.network.soe.buffer.SoeByteBufSerializable;
-import com.ocdsoft.bacta.swg.shared.localization.StringId;
+import com.ocdsoft.bacta.swg.localization.StringId;
 
 public final class ProsePackageParticipant implements SoeByteBufSerializable {
     public static final ProsePackageParticipant empty = new ProsePackageParticipant();

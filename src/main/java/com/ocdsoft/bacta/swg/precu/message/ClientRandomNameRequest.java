@@ -1,8 +1,8 @@
 package com.ocdsoft.bacta.swg.precu.message;
 
-import com.ocdsoft.bacta.swg.network.swg.message.SwgMessage;
+import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
 
-public class ClientRandomNameRequest extends SwgMessage {
+public class ClientRandomNameRequest extends GameNetworkMessage {
 
     public ClientRandomNameRequest() {
         super(0xffffb6d1, 0x25d6d1);

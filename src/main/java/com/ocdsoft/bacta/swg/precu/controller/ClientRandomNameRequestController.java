@@ -3,17 +3,17 @@ package com.ocdsoft.bacta.swg.precu.controller;
 import com.google.inject.Inject;
 import com.ocdsoft.bacta.swg.network.soe.buffer.SoeByteBuf;
 import com.ocdsoft.bacta.swg.network.swg.ServerType;
-import com.ocdsoft.bacta.swg.network.swg.SwgController;
-import com.ocdsoft.bacta.swg.network.swg.controller.SwgMessageController;
-import com.ocdsoft.bacta.swg.server.game.GameClient;
-import com.ocdsoft.bacta.swg.server.game.message.ClientRandomNameRequest;
-import com.ocdsoft.bacta.swg.server.game.message.zone.ClientRandomNameResponse;
-import com.ocdsoft.bacta.swg.server.game.service.name.NameService;
-import com.ocdsoft.bacta.swg.server.game.util.Gender;
-import com.ocdsoft.bacta.swg.server.game.util.Race;
+import com.ocdsoft.bacta.soe.GameNetworkMessageHandled;
+import com.ocdsoft.bacta.soe.GameNetworkMessageController;
+import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
+import com.ocdsoft.bacta.swg.precu.message.ClientRandomNameRequest;
+import com.ocdsoft.bacta.swg.precu.message.zone.ClientRandomNameResponse;
+import com.ocdsoft.bacta.swg.precu.service.name.NameService;
+import com.ocdsoft.bacta.swg.precu.util.Gender;
+import com.ocdsoft.bacta.swg.precu.util.Race;
 
-@SwgController(server = ServerType.GAME, handles = ClientRandomNameRequest.class)
-public class ClientRandomNameRequestController implements SwgMessageController<GameClient> {
+@GameNetworkMessageHandled(server = ServerType.GAME, handles = ClientRandomNameRequest.class)
+public class ClientRandomNameRequestController implements GameNetworkMessageController<GameClient> {
 
     private final NameService nameService;
 
@@ -23,7 +23,7 @@ public class ClientRandomNameRequestController implements SwgMessageController<G
     }
 
     @Override
-    public void handleIncoming(GameClient client, SoeByteBuf message) {
+    public void handleIncoming(SoeUdpConnection connection, SoeByteBuf message) {
 
         String raceString = message.readAscii();
 

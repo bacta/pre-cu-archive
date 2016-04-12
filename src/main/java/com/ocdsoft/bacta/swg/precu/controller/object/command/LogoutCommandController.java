@@ -1,13 +1,13 @@
 package com.ocdsoft.bacta.swg.precu.controller.object.command;
 
 import com.google.inject.Inject;
-import com.ocdsoft.bacta.swg.annotations.Command;
-import com.ocdsoft.bacta.swg.server.game.GameClient;
-import com.ocdsoft.bacta.swg.server.game.event.ObservableGameEvent;
-import com.ocdsoft.bacta.swg.server.game.message.player.LogoutMessage;
-import com.ocdsoft.bacta.swg.server.game.object.tangible.TangibleObject;
-import com.ocdsoft.bacta.swg.server.game.object.tangible.creature.CreaturePosture;
-import com.ocdsoft.bacta.swg.server.game.task.GameTask;
+import com.ocdsoft.bacta.soe.controller.Command;
+import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
+import com.ocdsoft.bacta.swg.precu.event.ObservableGameEvent;
+import com.ocdsoft.bacta.swg.precu.message.player.LogoutMessage;
+import com.ocdsoft.bacta.swg.precu.object.tangible.TangibleObject;
+import com.ocdsoft.bacta.swg.precu.object.tangible.creature.CreaturePosture;
+import com.ocdsoft.bacta.swg.precu.task.GameTask;
 import com.ocdsoft.network.service.scheduler.SchedulerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,16 +27,16 @@ public class LogoutCommandController implements CommandController {
     }
 
 	@Override
-	public void handleCommand(GameClient client, TangibleObject invoker, TangibleObject target, String params) {
+	public void handleCommand(SoeUdpConnection connection, TangibleObject invoker, TangibleObject target, String params) {
 
         schedulerService.schedule(new LogoutTask(client), 30, TimeUnit.SECONDS);
 	}
 
     private class LogoutTask extends GameTask {
 
-        private final GameClient client;
+        private final SoeUdpConnection connection;
 
-        public LogoutTask(GameClient client) {
+        public LogoutTask(SoeUdpConnection connection) {
             this.client = client;
             client.getCharacter().setPosture(CreaturePosture.SITTING);
             client.getCharacter().register(this, ObservableGameEvent.POSTURE_CHANGE);

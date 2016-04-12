@@ -1,7 +1,7 @@
 package com.ocdsoft.bacta.swg.precu.object.universe.guild;
 
-import com.ocdsoft.bacta.swg.server.game.object.archive.delta.AutoDeltaSet;
-import com.ocdsoft.bacta.swg.server.game.object.universe.UniverseObject;
+import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaSet;
+import com.ocdsoft.bacta.swg.precu.object.universe.UniverseObject;
 
 public final class GuildObject extends UniverseObject {
     @Override

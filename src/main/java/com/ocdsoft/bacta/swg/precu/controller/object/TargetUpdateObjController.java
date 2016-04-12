@@ -3,9 +3,9 @@ package com.ocdsoft.bacta.swg.precu.controller.object;
 import com.google.inject.Inject;
 import com.ocdsoft.bacta.swg.annotations.ObjController;
 import com.ocdsoft.bacta.swg.network.soe.buffer.SoeByteBuf;
-import com.ocdsoft.bacta.swg.server.game.GameClient;
-import com.ocdsoft.bacta.swg.server.game.object.tangible.TangibleObject;
-import com.ocdsoft.bacta.swg.server.game.object.tangible.creature.CreatureObject;
+import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
+import com.ocdsoft.bacta.swg.precu.object.tangible.TangibleObject;
+import com.ocdsoft.bacta.swg.precu.object.tangible.creature.CreatureObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,7 +20,7 @@ public class TargetUpdateObjController implements ObjectController {
     }
 
     @Override
-    public void handleIncoming(GameClient client, SoeByteBuf message, TangibleObject invoker) {
+    public void handleIncoming(SoeUdpConnection connection, SoeByteBuf message, TangibleObject invoker) {
 
         if (invoker instanceof CreatureObject) {
             CreatureObject creatureObject = (CreatureObject) invoker;

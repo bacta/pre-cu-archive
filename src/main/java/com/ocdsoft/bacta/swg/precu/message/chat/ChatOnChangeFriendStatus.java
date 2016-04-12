@@ -1,8 +1,8 @@
 package com.ocdsoft.bacta.swg.precu.message.chat;
 
-import com.ocdsoft.bacta.swg.network.swg.message.SwgMessage;
+import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
 
-public class ChatOnChangeFriendStatus extends SwgMessage {
+public class ChatOnChangeFriendStatus extends GameNetworkMessage {
 
     public ChatOnChangeFriendStatus(long objectId) {
         super(0x06, 0x54336726);

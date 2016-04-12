@@ -1,9 +1,9 @@
 package com.ocdsoft.bacta.swg.precu.controller.object.command;
 
-import com.ocdsoft.bacta.swg.server.game.GameClient;
-import com.ocdsoft.bacta.swg.server.game.object.tangible.TangibleObject;
-import com.ocdsoft.network.controller.Controller;
+import com.ocdsoft.bacta.engine.network.controller.Controller;
+import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
+import com.ocdsoft.bacta.swg.precu.object.tangible.TangibleObject;
 
 public interface CommandController extends Controller {
-	public void handleCommand(GameClient client, TangibleObject invoker, TangibleObject target, String params);
+	public void handleCommand(SoeUdpConnection connection, TangibleObject invoker, TangibleObject target, String params);
 }

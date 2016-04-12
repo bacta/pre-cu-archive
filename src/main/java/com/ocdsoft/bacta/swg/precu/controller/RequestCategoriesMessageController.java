@@ -3,18 +3,18 @@ package com.ocdsoft.bacta.swg.precu.controller;
 import com.google.inject.Inject;
 import com.ocdsoft.bacta.swg.network.soe.buffer.SoeByteBuf;
 import com.ocdsoft.bacta.swg.network.swg.ServerType;
-import com.ocdsoft.bacta.swg.network.swg.SwgController;
-import com.ocdsoft.bacta.swg.network.swg.controller.SwgMessageController;
-import com.ocdsoft.bacta.swg.server.game.GameClient;
-import com.ocdsoft.bacta.swg.server.game.message.knowledgebase.RequestCategoriesMessage;
-import com.ocdsoft.bacta.swg.server.game.message.knowledgebase.RequestCategoriesResponseMessage;
-import com.ocdsoft.bacta.swg.server.game.object.archive.AutoArray;
-import com.ocdsoft.bacta.swg.server.game.object.knowledgebase.CustomerServiceCategory;
+import com.ocdsoft.bacta.soe.GameNetworkMessageHandled;
+import com.ocdsoft.bacta.soe.GameNetworkMessageController;
+import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
+import com.ocdsoft.bacta.swg.precu.message.knowledgebase.RequestCategoriesMessage;
+import com.ocdsoft.bacta.swg.precu.message.knowledgebase.RequestCategoriesResponseMessage;
+import com.ocdsoft.bacta.swg.precu.object.archive.AutoArray;
+import com.ocdsoft.bacta.swg.precu.object.knowledgebase.CustomerServiceCategory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@SwgController(server = ServerType.GAME, handles = RequestCategoriesMessage.class)
-public class RequestCategoriesMessageController implements SwgMessageController<GameClient> {
+@GameNetworkMessageHandled(server = ServerType.GAME, handles = RequestCategoriesMessage.class)
+public class RequestCategoriesMessageController implements GameNetworkMessageController<GameClient> {
 
     private Logger logger = LoggerFactory.getLogger(getClass().getSimpleName());
 
@@ -24,7 +24,7 @@ public class RequestCategoriesMessageController implements SwgMessageController<
     }
 
     @Override
-    public void handleIncoming(GameClient client, SoeByteBuf message) {
+    public void handleIncoming(SoeUdpConnection connection, SoeByteBuf message) {
 
         AutoArray<CustomerServiceCategory> categories = new AutoArray<>();
 

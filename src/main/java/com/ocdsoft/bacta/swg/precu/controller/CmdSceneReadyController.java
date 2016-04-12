@@ -2,21 +2,21 @@ package com.ocdsoft.bacta.swg.precu.controller;
 
 import com.ocdsoft.bacta.swg.network.soe.buffer.SoeByteBuf;
 import com.ocdsoft.bacta.swg.network.swg.ServerType;
-import com.ocdsoft.bacta.swg.network.swg.SwgController;
-import com.ocdsoft.bacta.swg.network.swg.controller.SwgMessageController;
-import com.ocdsoft.bacta.swg.server.game.GameClient;
-import com.ocdsoft.bacta.swg.server.game.message.chat.ChatSystemMessage;
-import com.ocdsoft.bacta.swg.server.game.message.zone.CmdSceneReady;
+import com.ocdsoft.bacta.soe.GameNetworkMessageHandled;
+import com.ocdsoft.bacta.soe.GameNetworkMessageController;
+import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
+import com.ocdsoft.bacta.swg.precu.message.chat.ChatSystemMessage;
+import com.ocdsoft.bacta.swg.precu.message.zone.CmdSceneReady;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@SwgController(server = ServerType.GAME, handles = CmdSceneReady.class)
-public class CmdSceneReadyController implements SwgMessageController<GameClient> {
+@GameNetworkMessageHandled(server = ServerType.GAME, handles = CmdSceneReady.class)
+public class CmdSceneReadyController implements GameNetworkMessageController<GameClient> {
 
     private Logger logger = LoggerFactory.getLogger(getClass().getSimpleName());
 
     @Override
-    public void handleIncoming(GameClient client, SoeByteBuf message) {
+    public void handleIncoming(SoeUdpConnection connection, SoeByteBuf message) {
 
         client.sendMessage(new CmdSceneReady());
 

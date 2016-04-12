@@ -1,8 +1,8 @@
 package com.ocdsoft.bacta.swg.precu.message.ui;
 
-import com.ocdsoft.bacta.swg.network.swg.message.SwgMessage;
+import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
 
-public class SuiCreatePageMessage extends SwgMessage {
+public class SuiCreatePageMessage extends GameNetworkMessage {
     //SuiPageData pageData;
 
 

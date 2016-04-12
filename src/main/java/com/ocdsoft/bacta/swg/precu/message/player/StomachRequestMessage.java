@@ -1,8 +1,8 @@
 package com.ocdsoft.bacta.swg.precu.message.player;
 
-import com.ocdsoft.bacta.swg.network.swg.message.SwgMessage;
+import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
 
-public class StomachRequestMessage extends SwgMessage {
+public class StomachRequestMessage extends GameNetworkMessage {
 
     public StomachRequestMessage() {
         super(0x1, 0xb75dd5d7);

@@ -1,6 +1,6 @@
 package com.ocdsoft.bacta.swg.precu.message.ui;
 
-import com.ocdsoft.bacta.swg.server.game.object.sui.SuiCommand;
+import com.ocdsoft.bacta.swg.precu.object.sui.SuiCommand;
 
 import java.util.List;
 

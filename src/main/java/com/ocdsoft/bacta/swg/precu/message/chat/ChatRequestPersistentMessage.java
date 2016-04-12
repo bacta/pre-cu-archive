@@ -1,13 +1,13 @@
 package com.ocdsoft.bacta.swg.precu.message.chat;
 
-import com.ocdsoft.bacta.swg.network.swg.message.SwgMessage;
+import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
 
 /**
  * Sent when a persistent message is requested from the mail window.
  *
  * @direction c->s
  */
-public class ChatRequestPersistentMessage extends SwgMessage {
+public class ChatRequestPersistentMessage extends GameNetworkMessage {
 
     //int messageId
     //int sequence

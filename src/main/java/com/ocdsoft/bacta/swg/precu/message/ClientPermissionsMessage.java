@@ -1,9 +1,11 @@
 package com.ocdsoft.bacta.swg.precu.message;
 
-import com.ocdsoft.bacta.swg.network.swg.message.SwgMessage;
+import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
 import com.ocdsoft.network.object.account.Account;
 
-public class ClientPermissionsMessage extends SwgMessage {
+import java.nio.ByteBuffer;
+
+public class ClientPermissionsMessage extends GameNetworkMessage {
     //bool canLogin
     //bool canCreateRegularCharacter
     //bool canCreateJediCharacter
@@ -21,5 +23,15 @@ public class ClientPermissionsMessage extends SwgMessage {
         writeBoolean(canCreateRegularCharacter);
         writeBoolean(canCreateJediCharacter);
         writeBoolean(canSkipTutorial);
+    }
+
+    @Override
+    public void readFromBuffer(ByteBuffer buffer) {
+
+    }
+
+    @Override
+    public void writeToBuffer(ByteBuffer buffer) {
+
     }
 }

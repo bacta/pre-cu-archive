@@ -1,9 +1,10 @@
 package com.ocdsoft.bacta.swg.precu.object.archive.delta;
 
-import com.ocdsoft.bacta.swg.network.soe.buffer.SoeByteBuf;
-import com.ocdsoft.bacta.swg.server.game.object.archive.AutoVariableBase;
+import com.ocdsoft.bacta.swg.precu.object.archive.AutoVariableBase;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.nio.ByteBuffer;
 
 /**
  * Created by crush on 8/14/2014.
@@ -19,8 +20,8 @@ public abstract class AutoDeltaVariableBase implements AutoVariableBase, Compara
 
     public abstract void clearDelta();
     public abstract boolean isDirty();
-    public abstract void packDelta(SoeByteBuf buffer);
-    public abstract void unpackDelta(SoeByteBuf buffer);
+    public abstract void packDelta(ByteBuffer buffer);
+    public abstract void unpackDelta(ByteBuffer buffer);
 
     @Override
     public int compareTo(AutoDeltaVariableBase other) {

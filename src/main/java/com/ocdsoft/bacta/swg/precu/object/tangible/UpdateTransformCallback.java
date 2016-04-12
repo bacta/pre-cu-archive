@@ -1,7 +1,7 @@
 package com.ocdsoft.bacta.swg.precu.object.tangible;
 
 import com.google.common.collect.ImmutableSet;
-import com.ocdsoft.bacta.swg.server.game.util.DistanceUtil;
+import com.ocdsoft.bacta.swg.precu.util.DistanceUtil;
 import org.magnos.steer.spatial.SearchCallback;
 import org.magnos.steer.spatial.SpatialEntity;
 import org.magnos.steer.vec.Vec;

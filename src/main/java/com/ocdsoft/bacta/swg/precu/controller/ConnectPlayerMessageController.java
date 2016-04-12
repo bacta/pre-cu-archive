@@ -2,23 +2,23 @@ package com.ocdsoft.bacta.swg.precu.controller;
 
 import com.google.inject.Inject;
 import com.ocdsoft.bacta.swg.network.soe.buffer.SoeByteBuf;
-import com.ocdsoft.bacta.swg.network.soe.object.chat.ChatAvatarId;
+import com.ocdsoft.bacta.soe.object.chat.ChatAvatarId;
 import com.ocdsoft.bacta.swg.network.swg.ServerType;
-import com.ocdsoft.bacta.swg.network.swg.SwgController;
-import com.ocdsoft.bacta.swg.network.swg.controller.SwgMessageController;
-import com.ocdsoft.bacta.swg.server.game.GameClient;
-import com.ocdsoft.bacta.swg.server.game.chat.ChatServerAgent;
-import com.ocdsoft.bacta.swg.server.game.chat.ChatServerAgentFactory;
-import com.ocdsoft.bacta.swg.server.game.chat.ChatServerAgentHandler;
-import com.ocdsoft.bacta.swg.server.game.message.chat.ConnectPlayerMessage;
-import com.ocdsoft.bacta.swg.server.game.message.zone.ConnectPlayerResponseMessage;
-import com.ocdsoft.bacta.swg.server.game.object.tangible.creature.CreatureObject;
-import com.ocdsoft.conf.BactaConfiguration;
+import com.ocdsoft.bacta.soe.GameNetworkMessageHandled;
+import com.ocdsoft.bacta.soe.GameNetworkMessageController;
+import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
+import com.ocdsoft.bacta.swg.precu.chat.ChatServerAgent;
+import com.ocdsoft.bacta.swg.precu.chat.ChatServerAgentFactory;
+import com.ocdsoft.bacta.swg.precu.chat.ChatServerAgentHandler;
+import com.ocdsoft.bacta.swg.precu.message.chat.ConnectPlayerMessage;
+import com.ocdsoft.bacta.swg.precu.message.zone.ConnectPlayerResponseMessage;
+import com.ocdsoft.bacta.swg.precu.object.tangible.creature.CreatureObject;
+import com.ocdsoft.bacta.engine.conf.BactaConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@SwgController(server = ServerType.GAME, handles = ConnectPlayerMessage.class)
-public class ConnectPlayerMessageController implements SwgMessageController<GameClient> {
+@GameNetworkMessageHandled(server = ServerType.GAME, handles = ConnectPlayerMessage.class)
+public class ConnectPlayerMessageController implements GameNetworkMessageController<GameClient> {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private final ChatServerAgentFactory serverAgentFactory;
@@ -34,7 +34,7 @@ public class ConnectPlayerMessageController implements SwgMessageController<Game
     }
 
     @Override
-    public void handleIncoming(GameClient client, SoeByteBuf data) throws Exception {
+    public void handleIncoming(SoeUdpConnection connection, SoeByteBuf data) throws Exception {
         CreatureObject creatureObject = client.getCharacter();
 
         String game = configuration.getStringWithDefault("Bacta/GameServer", "Game", "SWG");

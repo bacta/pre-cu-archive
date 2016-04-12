@@ -1,11 +1,11 @@
 package com.ocdsoft.bacta.swg.precu.object.tangible.creature;
 
 
-import com.ocdsoft.bacta.swg.server.game.event.ObservableGameEvent;
-import com.ocdsoft.bacta.swg.server.game.message.player.PostureMessage;
-import com.ocdsoft.bacta.swg.server.game.object.GroupInviter;
-import com.ocdsoft.bacta.swg.server.game.object.archive.delta.*;
-import com.ocdsoft.bacta.swg.server.game.object.tangible.TangibleObject;
+import com.ocdsoft.bacta.swg.precu.event.ObservableGameEvent;
+import com.ocdsoft.bacta.swg.precu.message.player.PostureMessage;
+import com.ocdsoft.bacta.swg.precu.object.GroupInviter;
+import com.ocdsoft.bacta.swg.precu.object.archive.delta.*;
+import com.ocdsoft.bacta.swg.precu.object.tangible.TangibleObject;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;

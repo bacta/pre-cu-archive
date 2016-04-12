@@ -1,10 +1,10 @@
 package com.ocdsoft.bacta.swg.precu.object.intangible.player;
 
-import com.ocdsoft.bacta.swg.server.game.chat.ChatServerAgent;
-import com.ocdsoft.bacta.swg.server.game.message.outofband.WaypointDataBase;
-import com.ocdsoft.bacta.swg.server.game.object.MatchMakingId;
-import com.ocdsoft.bacta.swg.server.game.object.archive.delta.*;
-import com.ocdsoft.bacta.swg.server.game.object.intangible.IntangibleObject;
+import com.ocdsoft.bacta.swg.precu.chat.ChatServerAgent;
+import com.ocdsoft.bacta.swg.precu.message.outofband.WaypointDataBase;
+import com.ocdsoft.bacta.swg.precu.object.MatchMakingId;
+import com.ocdsoft.bacta.swg.precu.object.archive.delta.*;
+import com.ocdsoft.bacta.swg.precu.object.intangible.IntangibleObject;
 import lombok.Getter;
 import lombok.Setter;
 

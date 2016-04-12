@@ -1,20 +1,30 @@
 package com.ocdsoft.bacta.swg.precu.object.tangible.creature;
 
-import com.ocdsoft.bacta.swg.network.soe.buffer.SoeByteBuf;
-import com.ocdsoft.bacta.swg.network.soe.buffer.SoeByteBufSerializable;
+import com.ocdsoft.bacta.engine.buffer.ByteBufferSerializable;
 import lombok.Getter;
 
-public class SkillModEntry implements SoeByteBufSerializable {
+import java.nio.ByteBuffer;
 
-    @Getter
-    private int modifier = 0;
-    @Getter
-    private int bonus = 0;
+@Getter
+public class SkillModEntry implements ByteBufferSerializable {
 
-    @Override
-    public void writeToBuffer(SoeByteBuf message) {
-        message.writeInt(modifier);
-        message.writeInt(bonus);
+    private int modifier;
+    private int bonus;
+
+    public SkillModEntry(final int modifier, final int bonus) {
+        this.modifier = modifier;
+        this.bonus = bonus;
     }
 
+    @Override
+    public void readFromBuffer(ByteBuffer buffer) {
+        modifier = buffer.getInt();
+        bonus = buffer.getInt();
+    }
+
+    @Override
+    public void writeToBuffer(ByteBuffer buffer) {
+        buffer.putInt(modifier);
+        buffer.putInt(bonus);
+    }
 }

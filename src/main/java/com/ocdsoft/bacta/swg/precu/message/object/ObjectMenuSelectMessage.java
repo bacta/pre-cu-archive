@@ -1,9 +1,9 @@
 package com.ocdsoft.bacta.swg.precu.message.object;
 
 import com.ocdsoft.bacta.swg.network.soe.buffer.SoeByteBuf;
-import com.ocdsoft.bacta.swg.network.swg.message.SwgMessage;
+import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
 
-public class ObjectMenuSelectMessage extends SwgMessage {
+public class ObjectMenuSelectMessage extends GameNetworkMessage {
     private long playerId;
     private byte selectedItemId;
 

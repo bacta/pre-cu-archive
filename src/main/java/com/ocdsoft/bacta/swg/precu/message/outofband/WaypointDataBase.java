@@ -1,30 +1,38 @@
 package com.ocdsoft.bacta.swg.precu.message.outofband;
 
-import com.ocdsoft.bacta.swg.network.soe.buffer.SoeByteBuf;
-import com.ocdsoft.bacta.swg.network.soe.buffer.SoeByteBufSerializable;
-import com.ocdsoft.bacta.swg.server.game.object.Location;
+import com.ocdsoft.bacta.engine.buffer.ByteBufferSerializable;
+import com.ocdsoft.bacta.engine.utils.BufferUtil;
+import com.ocdsoft.bacta.swg.precu.object.Location;
 
-public class WaypointDataBase implements SoeByteBufSerializable {
+import java.nio.ByteBuffer;
+
+public class WaypointDataBase implements ByteBufferSerializable {
+
     private int appearanceNameCrc;
     private Location location;
     private String name;
     private byte color;
     private boolean active;
 
-    public WaypointDataBase(SoeByteBuf message) {
-        appearanceNameCrc = message.readInt();
-        location = new Location(message);
-        name = message.readUnicode();
-        color = message.readByte();
-        active = message.readBoolean();
+    public WaypointDataBase() {
+        location = new Location();
     }
 
     @Override
-    public void writeToBuffer(SoeByteBuf buffer) {
-        buffer.writeInt(appearanceNameCrc);
+    public void readFromBuffer(ByteBuffer buffer) {
+        appearanceNameCrc = buffer.getInt();
+        location.readFromBuffer(buffer);
+        name = BufferUtil.getUnicode(buffer);
+        color = buffer.get();
+        active = BufferUtil.getBoolean(buffer);
+    }
+
+    @Override
+    public void writeToBuffer(ByteBuffer buffer) {
+        buffer.putInt(appearanceNameCrc);
         location.writeToBuffer(buffer);
-        buffer.writeUnicode(name);
-        buffer.writeByte(color);
-        buffer.writeBoolean(active);
+        BufferUtil.putUnicode(buffer, name);
+        buffer.put(color);
+        BufferUtil.putBoolean(buffer, active);
     }
 }

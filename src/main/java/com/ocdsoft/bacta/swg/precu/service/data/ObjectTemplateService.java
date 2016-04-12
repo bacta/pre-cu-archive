@@ -5,9 +5,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.ocdsoft.bacta.swg.precu.object.SceneObject;
 import com.ocdsoft.bacta.swg.shared.lang.NotImplementedException;
-import com.ocdsoft.bacta.swg.shared.object.crc.ConstCharCrcString;
 import com.ocdsoft.bacta.swg.shared.object.template.*;
-import com.ocdsoft.bacta.swg.shared.object.template.param.*;
 import com.ocdsoft.bacta.swg.shared.slot.ArrangementDescriptorList;
 import com.ocdsoft.bacta.swg.shared.slot.SlotDescriptorList;
 import com.ocdsoft.bacta.tre.TreeFile;
@@ -31,65 +29,66 @@ public class ObjectTemplateService extends ObjectTemplateList {
             TreeFile treeFile,
             SlotDescriptorList slotDescriptorList,
             ArrangementDescriptorList arrangementDescriptorList) {
-        super(treeFile);
+
+        //super(treeFile);
 
         this.slotDescriptorList = slotDescriptorList;
         this.arrangementDescriptorList = arrangementDescriptorList;
 
         configureBindings();
 
-        crcStringTable.load("misc/object_template_crc_string_table.iff");
+        //crcStringTable.load("misc/object_template_crc_string_table.iff");
 
         load(); //TODO:Is there a better way to invoke loading?
     }
 
     private void configureBindings() {
         try {
-            StringParamIffLoader stringParamIffLoader = new StringParamIffLoader();
-
-            registerTemplateBaseLoader(BoolParam.class, new BoolParamIffLoader());
-            registerTemplateBaseLoader(DynamicVariableParam.class, new DynamicVariableParamIffLoader());
-            registerTemplateBaseLoader(FloatParam.class, new FloatParamIffLoader());
-            registerTemplateBaseLoader(IntegerParam.class, new IntegerParamIffLoader());
-            registerTemplateBaseLoader(StringParam.class, stringParamIffLoader);
-            registerTemplateBaseLoader(StringIdParam.class, new StringIdParamIffLoader(stringParamIffLoader));
-            registerTemplateBaseLoader(StructParam.class, new StructParamIffLoader(this));
-            registerTemplateBaseLoader(TriggerVolumeParam.class, new TriggerVolumeParamIffLoader());
-            registerTemplateBaseLoader(VectorParam.class, new VectorParamIffLoader());
-
-            assignBinding(ObjectTemplate.ID_CCLT, SharedCellObjectTemplate::new);
-            assignBinding(ObjectTemplate.ID_RCCT, SharedResourceContainerObjectTemplate::new);
-            assignBinding(ObjectTemplate.ID_SBMK, SharedBattleFieldMarkerObjectTemplate::new);
-            assignBinding(ObjectTemplate.ID_SBOT, SharedBuildingObjectTemplate::new);
-            assignBinding(ObjectTemplate.ID_SCNC, SharedConstructionContractObjectTemplate::new);
-            assignBinding(ObjectTemplate.ID_SCOT, SharedCreatureObjectTemplate::new);
-            assignBinding(ObjectTemplate.ID_SCOU, SharedCountingObjectTemplate::new);
-            assignBinding(ObjectTemplate.ID_SDSC, SharedDraftSchematicObjectTemplate::new);
-            assignBinding(ObjectTemplate.ID_SISS, SharedDraftSchematicObjectTemplate.IngredientSlot::new);
-            assignBinding(ObjectTemplate.ID_DSSA, SharedDraftSchematicObjectTemplate.SchematicAttribute::new);
-            assignBinding(ObjectTemplate.ID_SFOT, SharedFactoryObjectTemplate::new);
-            assignBinding(ObjectTemplate.ID_SGLD, SharedGuildObjectTemplate::new);
-            assignBinding(ObjectTemplate.ID_SGRP, SharedGroupObjectTemplate::new);
-            assignBinding(ObjectTemplate.ID_SHOT, SharedObjectTemplate::new);
-            assignBinding(ObjectTemplate.ID_SIOT, SharedInstallationObjectTemplate::new);
-            assignBinding(ObjectTemplate.ID_SITN, SharedIntangibleObjectTemplate::new);
-            assignBinding(ObjectTemplate.ID_SJED, SharedJediManagerTemplate::new);
-            assignBinding(ObjectTemplate.ID_SMLE, SharedMissionListEntryObjectTemplate::new);
-            assignBinding(ObjectTemplate.ID_SMSC, SharedManufactureSchematicObjectTemplate::new);
-            assignBinding(ObjectTemplate.ID_SMSD, SharedMissionDataObjectTemplate::new);
-            assignBinding(ObjectTemplate.ID_SMSO, SharedMissionObjectTemplate::new);
-            assignBinding(ObjectTemplate.ID_SPLY, SharedPlayerObjectTemplate::new);
-            assignBinding(ObjectTemplate.ID_SSHP, SharedShipObjectTemplate::new);
-            assignBinding(ObjectTemplate.ID_STAT, SharedStaticObjectTemplate::new);
-            assignBinding(ObjectTemplate.ID_STOK, SharedTokenObjectTemplate::new);
-            assignBinding(ObjectTemplate.ID_STOT, SharedTangibleObjectTemplate::new);
-            assignBinding(ObjectTemplate.ID_RICV, SharedTangibleObjectTemplate.RangedIntCustomizationVariable::new);
-            assignBinding(ObjectTemplate.ID_PCCV, SharedTangibleObjectTemplate.PaletteColorCustomizationVariable::new);
-            assignBinding(ObjectTemplate.ID_CSCV, SharedTangibleObjectTemplate.ConstStringCustomizationVariable::new);
-            assignBinding(ObjectTemplate.ID_CVMM, SharedTangibleObjectTemplate.CustomizationVariableMapping::new);
-            assignBinding(ObjectTemplate.ID_SUNI, SharedUniverseObjectTemplate::new);
-            assignBinding(ObjectTemplate.ID_SWAY, SharedWaypointObjectTemplate::new);
-            assignBinding(ObjectTemplate.ID_SWOT, SharedWeaponObjectTemplate::new);
+//            StringParamIffLoader stringParamIffLoader = new StringParamIffLoader();
+//
+//            registerTemplateBaseLoader(BoolParam.class, new BoolParamIffLoader());
+//            registerTemplateBaseLoader(DynamicVariableParam.class, new DynamicVariableParamIffLoader());
+//            registerTemplateBaseLoader(FloatParam.class, new FloatParamIffLoader());
+//            registerTemplateBaseLoader(IntegerParam.class, new IntegerParamIffLoader());
+//            registerTemplateBaseLoader(StringParam.class, stringParamIffLoader);
+//            registerTemplateBaseLoader(StringIdParam.class, new StringIdParamIffLoader(stringParamIffLoader));
+//            registerTemplateBaseLoader(StructParam.class, new StructParamIffLoader(this));
+//            registerTemplateBaseLoader(TriggerVolumeParam.class, new TriggerVolumeParamIffLoader());
+//            registerTemplateBaseLoader(VectorParam.class, new VectorParamIffLoader());
+//
+//            assignBinding(ObjectTemplate.ID_CCLT, SharedCellObjectTemplate::new);
+//            assignBinding(ObjectTemplate.ID_RCCT, SharedResourceContainerObjectTemplate::new);
+//            assignBinding(ObjectTemplate.ID_SBMK, SharedBattleFieldMarkerObjectTemplate::new);
+//            assignBinding(ObjectTemplate.ID_SBOT, SharedBuildingObjectTemplate::new);
+//            assignBinding(ObjectTemplate.ID_SCNC, SharedConstructionContractObjectTemplate::new);
+//            assignBinding(ObjectTemplate.ID_SCOT, SharedCreatureObjectTemplate::new);
+//            assignBinding(ObjectTemplate.ID_SCOU, SharedCountingObjectTemplate::new);
+//            assignBinding(ObjectTemplate.ID_SDSC, SharedDraftSchematicObjectTemplate::new);
+//            assignBinding(ObjectTemplate.ID_SISS, SharedDraftSchematicObjectTemplate.IngredientSlot::new);
+//            assignBinding(ObjectTemplate.ID_DSSA, SharedDraftSchematicObjectTemplate.SchematicAttribute::new);
+//            assignBinding(ObjectTemplate.ID_SFOT, SharedFactoryObjectTemplate::new);
+//            assignBinding(ObjectTemplate.ID_SGLD, SharedGuildObjectTemplate::new);
+//            assignBinding(ObjectTemplate.ID_SGRP, SharedGroupObjectTemplate::new);
+//            assignBinding(ObjectTemplate.ID_SHOT, SharedObjectTemplate::new);
+//            assignBinding(ObjectTemplate.ID_SIOT, SharedInstallationObjectTemplate::new);
+//            assignBinding(ObjectTemplate.ID_SITN, SharedIntangibleObjectTemplate::new);
+//            assignBinding(ObjectTemplate.ID_SJED, SharedJediManagerTemplate::new);
+//            assignBinding(ObjectTemplate.ID_SMLE, SharedMissionListEntryObjectTemplate::new);
+//            assignBinding(ObjectTemplate.ID_SMSC, SharedManufactureSchematicObjectTemplate::new);
+//            assignBinding(ObjectTemplate.ID_SMSD, SharedMissionDataObjectTemplate::new);
+//            assignBinding(ObjectTemplate.ID_SMSO, SharedMissionObjectTemplate::new);
+//            assignBinding(ObjectTemplate.ID_SPLY, SharedPlayerObjectTemplate::new);
+//            assignBinding(ObjectTemplate.ID_SSHP, SharedShipObjectTemplate::new);
+//            assignBinding(ObjectTemplate.ID_STAT, SharedStaticObjectTemplate::new);
+//            assignBinding(ObjectTemplate.ID_STOK, SharedTokenObjectTemplate::new);
+//            assignBinding(ObjectTemplate.ID_STOT, SharedTangibleObjectTemplate::new);
+//            assignBinding(ObjectTemplate.ID_RICV, SharedTangibleObjectTemplate.RangedIntCustomizationVariable::new);
+//            assignBinding(ObjectTemplate.ID_PCCV, SharedTangibleObjectTemplate.PaletteColorCustomizationVariable::new);
+//            assignBinding(ObjectTemplate.ID_CSCV, SharedTangibleObjectTemplate.ConstStringCustomizationVariable::new);
+//            assignBinding(ObjectTemplate.ID_CVMM, SharedTangibleObjectTemplate.CustomizationVariableMapping::new);
+//            assignBinding(ObjectTemplate.ID_SUNI, SharedUniverseObjectTemplate::new);
+//            assignBinding(ObjectTemplate.ID_SWAY, SharedWaypointObjectTemplate::new);
+//            assignBinding(ObjectTemplate.ID_SWOT, SharedWeaponObjectTemplate::new);
 
             //TODO: Finish this mapping
 //            templateClassMap.put(ObjectTemplate.ID_CCLT, CellObject.class);
@@ -125,25 +124,25 @@ public class ObjectTemplateService extends ObjectTemplateList {
     }
 
     private void load() {
-        Collection<ConstCharCrcString> templatePaths = crcStringTable.getAllStrings();
-
-        for (ConstCharCrcString crcString : templatePaths) {
-            ObjectTemplate objectTemplate = getObjectTemplate(crcString);
-
-            if (objectTemplate == null) {
-                logger.warn("Object template <{}> does not exist.", crcString.getString());
-            } else if (objectTemplate instanceof SharedObjectTemplate) {
-                SharedObjectTemplate sharedObjectTemplate = (SharedObjectTemplate) objectTemplate;
-
-                sharedObjectTemplate.setSlotDescriptor(
-                        slotDescriptorList.fetch(sharedObjectTemplate.getSlotDescriptorFilename()));
-
-                sharedObjectTemplate.setArrangementDescriptor(
-                        arrangementDescriptorList.fetch(sharedObjectTemplate.getArrangementDescriptorFilename()));
-            }
-        }
-
-        logger.info("Loaded {} object templates.", loadedTemplates.size());
+//        Collection<ConstCharCrcString> templatePaths = crcStringTable.getAllStrings();
+//
+//        for (ConstCharCrcString crcString : templatePaths) {
+//            ObjectTemplate objectTemplate = getObjectTemplate(crcString);
+//
+//            if (objectTemplate == null) {
+//                logger.warn("Object template <{}> does not exist.", crcString.getString());
+//            } else if (objectTemplate instanceof SharedObjectTemplate) {
+//                SharedObjectTemplate sharedObjectTemplate = (SharedObjectTemplate) objectTemplate;
+//
+//                sharedObjectTemplate.setSlotDescriptor(
+//                        slotDescriptorList.fetch(sharedObjectTemplate.getSlotDescriptorFilename()));
+//
+//                sharedObjectTemplate.setArrangementDescriptor(
+//                        arrangementDescriptorList.fetch(sharedObjectTemplate.getArrangementDescriptorFilename()));
+//            }
+//        }
+//
+//        logger.info("Loaded {} object templates.", loadedTemplates.size());
     }
 
     /**

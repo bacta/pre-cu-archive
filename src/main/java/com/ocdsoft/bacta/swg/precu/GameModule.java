@@ -2,18 +2,18 @@ package com.ocdsoft.bacta.swg.precu;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Module;
+import com.google.inject.TypeLiteral;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
-import com.ocdsoft.bacta.soe.io.udp.game.GameServerState;
-import com.ocdsoft.bacta.soe.io.udp.game.GameServerStatusUpdater;
-import com.ocdsoft.bacta.soe.io.udp.game.GameTransceiverFactory;
-import com.ocdsoft.bacta.swg.network.soe.ServerState;
-import com.ocdsoft.bacta.swg.server.game.chat.ChatServerAgent;
-import com.ocdsoft.bacta.swg.server.game.chat.ChatServerAgentFactory;
-import com.ocdsoft.bacta.swg.server.game.chat.xmpp.XmppChatServerAgent;
-import com.ocdsoft.bacta.swg.server.game.service.name.DefaultNameService;
-import com.ocdsoft.bacta.swg.server.game.service.name.NameService;
-import com.ocdsoft.bacta.swg.server.game.zone.PlanetMap;
-import com.ocdsoft.bacta.swg.server.game.zone.ZoneMap;
+import com.ocdsoft.bacta.swg.precu.chat.ChatServerAgent;
+import com.ocdsoft.bacta.swg.precu.chat.ChatServerAgentFactory;
+import com.ocdsoft.bacta.swg.precu.chat.xmpp.XmppChatServerAgent;
+import com.ocdsoft.bacta.swg.precu.factory.ObjControllerMessageFactory;
+import com.ocdsoft.bacta.swg.precu.factory.ObjControllerMessageFactoryImpl;
+import com.ocdsoft.bacta.swg.precu.message.object.ObjControllerMessage;
+import com.ocdsoft.bacta.swg.precu.service.name.DefaultNameService;
+import com.ocdsoft.bacta.swg.precu.service.name.NameService;
+import com.ocdsoft.bacta.swg.precu.zone.PlanetMap;
+import com.ocdsoft.bacta.swg.precu.zone.ZoneMap;
 
 public class GameModule extends AbstractModule implements Module {
 
@@ -24,12 +24,8 @@ public class GameModule extends AbstractModule implements Module {
                 .implement(ChatServerAgent.class, XmppChatServerAgent.class)
                 .build(ChatServerAgentFactory.class));
 
-        install(new FactoryModuleBuilder()
-                .build(GameTransceiverFactory.class));
-
-        bind(GameServerStatusUpdater.class).asEagerSingleton();
-
-        bind(ServerState.class).to(GameServerState.class);
+        bind(ObjControllerMessageFactory.class).to(ObjControllerMessageFactoryImpl.class);
+        install(new FactoryModuleBuilder().build(ObjControllerMessageFactory.class));
 
         bind(NameService.class).to(DefaultNameService.class);
 

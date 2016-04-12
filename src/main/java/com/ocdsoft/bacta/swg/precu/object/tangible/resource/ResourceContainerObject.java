@@ -1,6 +1,6 @@
 package com.ocdsoft.bacta.swg.precu.object.tangible.resource;
 
-import com.ocdsoft.bacta.swg.server.game.object.tangible.TangibleObject;
+import com.ocdsoft.bacta.swg.precu.object.tangible.TangibleObject;
 
 /**
  * Created by crush on 9/4/2014.

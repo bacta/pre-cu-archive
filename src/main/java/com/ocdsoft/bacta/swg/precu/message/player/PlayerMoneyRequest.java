@@ -1,8 +1,8 @@
 package com.ocdsoft.bacta.swg.precu.message.player;
 
-import com.ocdsoft.bacta.swg.network.swg.message.SwgMessage;
+import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
 
-public class PlayerMoneyRequest extends SwgMessage {
+public class PlayerMoneyRequest extends GameNetworkMessage {
 
     public PlayerMoneyRequest() {
         super(0x1, 0x9d105aa1);

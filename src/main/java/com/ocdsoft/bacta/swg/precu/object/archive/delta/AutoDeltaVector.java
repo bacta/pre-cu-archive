@@ -1,10 +1,10 @@
 package com.ocdsoft.bacta.swg.precu.object.archive.delta;
 
-import com.ocdsoft.bacta.swg.network.soe.buffer.SoeByteBuf;
-import com.ocdsoft.bacta.swg.network.swg.util.ByteAppender;
 import com.ocdsoft.bacta.swg.shared.lang.NotImplementedException;
+import com.ocdsoft.bacta.swg.util.ByteAppender;
 import lombok.Getter;
 
+import java.nio.ByteBuffer;
 import java.util.*;
 
 public class AutoDeltaVector<T> extends AutoDeltaContainer implements Iterable<T> {
@@ -104,31 +104,31 @@ public class AutoDeltaVector<T> extends AutoDeltaContainer implements Iterable<T
     }
 
     @Override
-    public void packDelta(SoeByteBuf buffer) {
+    public void packDelta(ByteBuffer buffer) {
         try {
-            buffer.writeInt(commands.size());
-            buffer.writeInt(baselineCommandCount);
+            buffer.putInt(commands.size());
+            buffer.putInt(baselineCommandCount);
 
             for (Command command : commands) {
-                buffer.writeByte(command.cmd);
+                buffer.put(command.cmd);
 
                 switch (command.cmd) {
                     case Command.Erase:
-                        buffer.writeShort(command.index);
+                        buffer.putShort(command.index);
                         break;
                     case Command.Insert:
-                        buffer.writeShort(command.index);
+                        buffer.putShort(command.index);
                         ByteAppender.append((T) command.value, buffer);
                         break;
                     case Command.Set:
-                        buffer.writeShort(command.index);
+                        buffer.putShort(command.index);
                         ByteAppender.append((T) command.value, buffer);
                         break;
                     case Command.SetAll:
                         //This isn't technically correct, but it will do.
                         Collection<T> collection = (Collection<T>) command.value;
 
-                        buffer.writeShort(command.index);
+                        buffer.putShort(command.index);
                         for (T obj : collection)
                             ByteAppender.append(obj, buffer);
                     default:
@@ -143,7 +143,7 @@ public class AutoDeltaVector<T> extends AutoDeltaContainer implements Iterable<T
     }
 
     @Override
-    public void unpackDelta(SoeByteBuf buffer) {
+    public void unpackDelta(ByteBuffer buffer) {
         throw new NotImplementedException();
     }
 
@@ -153,10 +153,10 @@ public class AutoDeltaVector<T> extends AutoDeltaContainer implements Iterable<T
     }
 
     @Override
-    public void pack(SoeByteBuf buffer) {
+    public void pack(ByteBuffer buffer) {
         try {
-            buffer.writeInt(v.size());
-            buffer.writeInt(baselineCommandCount);
+            buffer.putInt(v.size());
+            buffer.putInt(baselineCommandCount);
 
             for (T obj : v)
                 ByteAppender.append(obj, buffer);
@@ -166,7 +166,7 @@ public class AutoDeltaVector<T> extends AutoDeltaContainer implements Iterable<T
     }
 
     @Override
-    public void unpack(SoeByteBuf buffer) {
+    public void unpack(ByteBuffer buffer) {
         throw new NotImplementedException();
     }
 

@@ -1,11 +1,10 @@
 package com.ocdsoft.bacta.swg.precu.object.archive.delta;
 
-
-import com.ocdsoft.bacta.swg.network.soe.buffer.SoeByteBuf;
-import com.ocdsoft.bacta.swg.network.swg.util.ByteAppender;
 import com.ocdsoft.bacta.swg.shared.lang.NotImplementedException;
+import com.ocdsoft.bacta.swg.util.ByteAppender;
 import lombok.Getter;
 
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -79,13 +78,13 @@ public class AutoDeltaSet<T> extends AutoDeltaContainer {
     }
 
     @Override
-    public void packDelta(SoeByteBuf buffer) {
+    public void packDelta(ByteBuffer buffer) {
         try {
-            buffer.writeInt(commands.size());
-            buffer.writeInt(baselineCommandCount);
+            buffer.putInt(commands.size());
+            buffer.putInt(baselineCommandCount);
 
             for (Command command : commands) {
-                buffer.writeByte(command.cmd);
+                buffer.put(command.cmd);
 
                 if (command.cmd <= 1)
                     ByteAppender.append(command.value, buffer);
@@ -96,15 +95,15 @@ public class AutoDeltaSet<T> extends AutoDeltaContainer {
     }
 
     @Override
-    public void unpackDelta(SoeByteBuf buffer) {
+    public void unpackDelta(ByteBuffer buffer) {
         throw new NotImplementedException();
     }
 
     @Override
-    public void pack(SoeByteBuf buffer) {
+    public void pack(ByteBuffer buffer) {
         try {
-            buffer.writeInt(set.size());
-            buffer.writeInt(baselineCommandCount);
+            buffer.putInt(set.size());
+            buffer.putInt(baselineCommandCount);
 
             for (T obj : set) {
                 ByteAppender.append(obj, buffer);
@@ -115,7 +114,7 @@ public class AutoDeltaSet<T> extends AutoDeltaContainer {
     }
 
     @Override
-    public void unpack(SoeByteBuf buffer) {
+    public void unpack(ByteBuffer buffer) {
         throw new NotImplementedException();
     }
 

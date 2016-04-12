@@ -1,8 +1,8 @@
 package com.ocdsoft.bacta.swg.precu.message.auction;
 
-import com.ocdsoft.bacta.swg.network.swg.message.SwgMessage;
+import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
 
-public class CommoditiesItemTypeListRequest extends SwgMessage {
+public class CommoditiesItemTypeListRequest extends GameNetworkMessage {
  
     public CommoditiesItemTypeListRequest() {
         super(0x2, 0x48f493c5);

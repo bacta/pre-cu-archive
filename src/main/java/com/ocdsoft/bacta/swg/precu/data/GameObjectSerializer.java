@@ -14,7 +14,7 @@ import com.ocdsoft.bacta.swg.precu.object.archive.delta.*;
 import com.ocdsoft.bacta.swg.precu.object.intangible.player.PlayerObject;
 import com.ocdsoft.bacta.swg.precu.object.tangible.TangibleObject;
 import com.ocdsoft.bacta.swg.precu.object.tangible.creature.CreatureObject;
-import com.ocdsoft.bacta.swg.shared.localization.StringId;
+import com.ocdsoft.bacta.swg.localization.StringId;
 import de.javakaffee.kryoserializers.BitSetSerializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

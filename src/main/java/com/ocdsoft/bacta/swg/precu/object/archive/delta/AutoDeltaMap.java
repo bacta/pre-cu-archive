@@ -1,9 +1,9 @@
 package com.ocdsoft.bacta.swg.precu.object.archive.delta;
 
-import com.ocdsoft.bacta.swg.network.soe.buffer.SoeByteBuf;
-import com.ocdsoft.bacta.swg.network.swg.util.ByteAppender;
+import com.ocdsoft.bacta.swg.util.ByteAppender;
 import lombok.Getter;
 
+import java.nio.ByteBuffer;
 import java.util.*;
 import java.util.Map.Entry;
 
@@ -69,13 +69,13 @@ public class AutoDeltaMap<K, V> extends AutoDeltaContainer implements Iterable<E
     }
 
     @Override
-    public void packDelta(SoeByteBuf buffer) {
+    public void packDelta(ByteBuffer buffer) {
         try {
-            buffer.writeInt(commands.size());
-            buffer.writeInt(baselineCommandCount);
+            buffer.putInt(commands.size());
+            buffer.putInt(baselineCommandCount);
 
             for (Command command : commands) {
-                buffer.writeByte(command.cmd);
+                buffer.put(command.cmd);
                 ByteAppender.append(command.key, buffer);
                 ByteAppender.append(command.value, buffer);
             }
@@ -85,7 +85,7 @@ public class AutoDeltaMap<K, V> extends AutoDeltaContainer implements Iterable<E
     }
 
     @Override
-    public void unpackDelta(SoeByteBuf buffer) {
+    public void unpackDelta(ByteBuffer buffer) {
 
     }
 
@@ -95,10 +95,10 @@ public class AutoDeltaMap<K, V> extends AutoDeltaContainer implements Iterable<E
     }
 
     @Override
-    public void pack(SoeByteBuf buffer) {
+    public void pack(ByteBuffer buffer) {
         try {
-            buffer.writeInt(map.size());
-            buffer.writeInt(baselineCommandCount);
+            buffer.putInt(map.size());
+            buffer.putInt(baselineCommandCount);
 
             for (Entry<K, V> entry : map.entrySet()) {
                 ByteAppender.append(entry.getKey(), buffer);
@@ -110,7 +110,7 @@ public class AutoDeltaMap<K, V> extends AutoDeltaContainer implements Iterable<E
     }
 
     @Override
-    public void unpack(SoeByteBuf buffer) {
+    public void unpack(ByteBuffer buffer) {
 
     }
 

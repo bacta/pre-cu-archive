@@ -4,17 +4,17 @@ import com.google.inject.Inject;
 import com.ocdsoft.bacta.swg.network.soe.buffer.SoeByteBuf;
 import com.ocdsoft.bacta.swg.network.soe.object.account.SoeAccount;
 import com.ocdsoft.bacta.swg.network.swg.ServerType;
-import com.ocdsoft.bacta.swg.network.swg.SwgController;
-import com.ocdsoft.bacta.swg.network.swg.controller.SwgMessageController;
-import com.ocdsoft.bacta.swg.server.game.GameClient;
-import com.ocdsoft.bacta.swg.server.game.message.ClientPermissionsMessage;
-import com.ocdsoft.bacta.swg.server.game.message.zone.ClientIdMsg;
+import com.ocdsoft.bacta.soe.GameNetworkMessageHandled;
+import com.ocdsoft.bacta.soe.GameNetworkMessageController;
+import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
+import com.ocdsoft.bacta.swg.precu.message.ClientPermissionsMessage;
+import com.ocdsoft.bacta.swg.precu.message.zone.ClientIdMsg;
 import com.ocdsoft.network.security.authenticator.AccountService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@SwgController(server = ServerType.GAME, handles = ClientIdMsg.class)
-public class ClientIdController implements SwgMessageController<GameClient> {
+@GameNetworkMessageHandled(server = ServerType.GAME, handles = ClientIdMsg.class)
+public class ClientIdController implements GameNetworkMessageController<GameClient> {
 
     private Logger logger = LoggerFactory.getLogger(getClass().getSimpleName());
 
@@ -28,7 +28,7 @@ public class ClientIdController implements SwgMessageController<GameClient> {
     }
 
     @Override
-    public void handleIncoming(GameClient client, SoeByteBuf message) {
+    public void handleIncoming(SoeUdpConnection connection, SoeByteBuf message) {
 
         int unknown1 = message.readInt();
 

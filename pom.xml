@@ -56,34 +56,6 @@
 
     <build>
         <plugins>
-            <!--<plugin>-->
-            <!--<groupId>org.jsonschema2pojo</groupId>-->
-            <!--<artifactId>jsonschema2pojo-maven-plugin</artifactId>-->
-            <!--<version>0.4.7</version>-->
-            <!--<dependencies>-->
-            <!--<dependency>-->
-            <!--<groupId>com.ocdsoft.bacta.soe</groupId>-->
-            <!--<artifactId>jsonschema2pojo-bacta</artifactId>-->
-            <!--<version>1.0.0-SNAPSHOT</version>-->
-            <!--</dependency>-->
-            <!--</dependencies>-->
-            <!--<configuration>-->
-            <!--<sourceDirectory>src/main/resources/com/ocdsoft/bacta/soe/message/soe</sourceDirectory>-->
-            <!--<targetPackage>com.ocdsoft.bacta.soe.message</targetPackage>-->
-            <!--<usePrimitives>true</usePrimitives>-->
-            <!--<removeOldOutput>true</removeOldOutput>-->
-
-            <!--<customRuleFactory>com.ocdsoft.bacta.soe.json.schema.SoeRuleFactory</customRuleFactory>-->
-            <!--</configuration>-->
-            <!--<executions>-->
-            <!--<execution>-->
-            <!--<goals>-->
-            <!--<goal>generate</goal>-->
-            <!--</goals>-->
-            <!--</execution>-->
-            <!--</executions>-->
-            <!--</plugin>-->
-
             <plugin>
                 <groupId>org.sonatype.plugins</groupId>
                 <artifactId>nexus-staging-maven-plugin</artifactId>
@@ -152,6 +124,16 @@
       <scope>test</scope>
     </dependency>
       <dependency>
+          <groupId>org.igniterealtime.smack</groupId>
+          <artifactId>smack-core</artifactId>
+          <version>4.0.1</version>
+      </dependency>
+      <dependency>
+          <groupId>org.igniterealtime.smack</groupId>
+          <artifactId>smack-tcp</artifactId>
+          <version>4.0.1</version>
+      </dependency>
+      <dependency>
           <groupId>com.ocdsoft.bacta</groupId>
           <artifactId>engine</artifactId>
           <version>1.0.0-SNAPSHOT</version>
@@ -177,23 +159,13 @@
           <version>1.0.0-SNAPSHOT</version>
       </dependency>
       <dependency>
-          <groupId>com.ocdsoft.bacta.engine.serialization</groupId>
-          <artifactId>kryo</artifactId>
+          <groupId>com.ocdsoft.bacta</groupId>
+          <artifactId>iff</artifactId>
           <version>1.0.0-SNAPSHOT</version>
       </dependency>
       <dependency>
-          <groupId>org.igniterealtime.smack</groupId>
-          <artifactId>smack-core</artifactId>
-          <version>4.0.1</version>
-      </dependency>
-      <dependency>
-          <groupId>org.igniterealtime.smack</groupId>
-          <artifactId>smack-tcp</artifactId>
-          <version>4.0.1</version>
-      </dependency>
-      <dependency>
-          <groupId>com.ocdsoft.bacta</groupId>
-          <artifactId>iff</artifactId>
+          <groupId>com.ocdsoft.bacta.engine.serialization</groupId>
+          <artifactId>kryo</artifactId>
           <version>1.0.0-SNAPSHOT</version>
       </dependency>
   </dependencies>

@@ -1,16 +1,16 @@
 package com.ocdsoft.bacta.swg.precu.controller.object.command;
 
 import com.google.inject.Inject;
-import com.ocdsoft.bacta.swg.annotations.Command;
-import com.ocdsoft.bacta.swg.network.soe.object.chat.ChatAvatarId;
-import com.ocdsoft.bacta.swg.server.game.GameClient;
-import com.ocdsoft.bacta.swg.server.game.chat.ChatServerAgent;
-import com.ocdsoft.bacta.swg.server.game.message.chat.ChatOnAddFriend;
-import com.ocdsoft.bacta.swg.server.game.message.chat.ChatOnChangeFriendStatus;
-import com.ocdsoft.bacta.swg.server.game.message.chat.ChatOnGetFriendsList;
-import com.ocdsoft.bacta.swg.server.game.object.tangible.TangibleObject;
-import com.ocdsoft.bacta.swg.server.game.object.tangible.creature.CreatureObject;
-import com.ocdsoft.conf.BactaConfiguration;
+import com.ocdsoft.bacta.engine.conf.BactaConfiguration;
+import com.ocdsoft.bacta.soe.object.chat.ChatAvatarId;
+import com.ocdsoft.bacta.soe.controller.Command;
+import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
+import com.ocdsoft.bacta.swg.precu.chat.ChatServerAgent;
+import com.ocdsoft.bacta.swg.precu.message.chat.ChatOnAddFriend;
+import com.ocdsoft.bacta.swg.precu.message.chat.ChatOnChangeFriendStatus;
+import com.ocdsoft.bacta.swg.precu.message.chat.ChatOnGetFriendsList;
+import com.ocdsoft.bacta.swg.precu.object.tangible.TangibleObject;
+import com.ocdsoft.bacta.swg.precu.object.tangible.creature.CreatureObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,12 +27,12 @@ public class AddFriendCommandController implements CommandController {
     }
 
     @Override
-    public void handleCommand(GameClient client, TangibleObject invoker, TangibleObject target, String params) {
+    public void handleCommand(SoeUdpConnection connection, TangibleObject invoker, TangibleObject target, String params) {
         try {
             StringTokenizer tokenizer = new StringTokenizer(params);
             String name = tokenizer.nextToken();
 
-            ChatServerAgent agent = client.getChatServerAgent();
+            ChatServerAgent agent = connection.getChatServerAgent();
 
             ChatAvatarId avatarId = agent.getAvatarId();
             ChatAvatarId friendAvatarId = new ChatAvatarId(
@@ -46,15 +46,15 @@ public class AddFriendCommandController implements CommandController {
 
             //PlayerObject ghost = (PlayerObject) invoker.getSlottedObject("ghost");
 
-            client.sendMessage(new ChatOnAddFriend());
-            client.sendMessage(new ChatOnChangeFriendStatus(invoker.getNetworkId()));
+            connection.sendMessage(new ChatOnAddFriend());
+            connection.sendMessage(new ChatOnChangeFriendStatus(invoker.getNetworkId()));
 
             //ghost.getFriendList().add(friendAvatarId.getUsername());
             //ghost.getFriendList().replaceAll(Arrays.asList(new String[]{
             //        name
             //}));
 
-            client.sendMessage(new ChatOnGetFriendsList((CreatureObject) invoker));
+            connection.sendMessage(new ChatOnGetFriendsList((CreatureObject) invoker));
 
             //ProsePackage prose = new ProsePackage(new StringId("cmnty", "friend_added"));
             //prose.setTarget(new ProsePackageParticipant(name));

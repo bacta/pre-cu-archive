@@ -1,14 +1,28 @@
 package com.ocdsoft.bacta.swg.precu.object.tangible.creature;
 
-import com.ocdsoft.bacta.swg.network.soe.buffer.SoeByteBuf;
-import com.ocdsoft.bacta.swg.network.soe.buffer.SoeByteBufSerializable;
+import com.ocdsoft.bacta.engine.buffer.ByteBufferSerializable;
 
-public class GroupMissionCriticalObject implements SoeByteBufSerializable {
+import java.nio.ByteBuffer;
 
-    @Override
-    public void writeToBuffer(SoeByteBuf message) {
-        message.writeLong(0);
-        message.writeLong(0);
+public class GroupMissionCriticalObject implements ByteBufferSerializable {
+
+    private long unknown1;
+    private long unknown2;
+
+    public GroupMissionCriticalObject() {
+        unknown1 = 0;
+        unknown2 = 0;
     }
 
+    @Override
+    public void readFromBuffer(ByteBuffer buffer) {
+        unknown1 = buffer.getLong();
+        unknown2 = buffer.getLong();
+    }
+
+    @Override
+    public void writeToBuffer(ByteBuffer buffer) {
+        buffer.putLong(unknown1);
+        buffer.putLong(unknown2);
+    }
 }

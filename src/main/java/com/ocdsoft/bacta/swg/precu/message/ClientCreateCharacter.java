@@ -1,12 +1,58 @@
 package com.ocdsoft.bacta.swg.precu.message;
 
-import com.ocdsoft.bacta.swg.network.swg.message.SwgMessage;
+import com.ocdsoft.bacta.engine.utils.BufferUtil;
+import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
+import lombok.Data;
 
-public class ClientCreateCharacter extends SwgMessage {
+import java.nio.ByteBuffer;
+
+@Data
+public class ClientCreateCharacter extends GameNetworkMessage {
+
+    private String appearanceData;
+    private String characterName;
+    private String templateName;
+    private String startingLocation;
+    private String hairTemplateName;
+    private String hairAppearanceData;
+    private String profession;
+    private boolean jedi;
+    private float scaleFactor;
+    private String biography;
+    private boolean useNewbieTutorial;
 
     public ClientCreateCharacter() {
-        super(0x3074, 0x59b97f);
-        
+        super(0x74, 0x59b97f30);
+    }
+
+    @Override
+    public void readFromBuffer(ByteBuffer buffer) {
+        appearanceData = BufferUtil.getAscii(buffer);
+        characterName = BufferUtil.getUnicode(buffer);
+        templateName = BufferUtil.getAscii(buffer);
+        startingLocation = BufferUtil.getAscii(buffer);  // City name
+        hairTemplateName = BufferUtil.getAscii(buffer);
+        hairAppearanceData = BufferUtil.getAscii(buffer);
+        profession = BufferUtil.getAscii(buffer);
+        jedi = BufferUtil.getBoolean(buffer);
+        scaleFactor = buffer.getFloat();
+        biography = BufferUtil.getUnicode(buffer);
+        useNewbieTutorial = BufferUtil.getBoolean(buffer);
+    }
+
+    @Override
+    public void writeToBuffer(ByteBuffer buffer) {
+        BufferUtil.putAscii(buffer, appearanceData);
+        BufferUtil.putUnicode(buffer, characterName);
+        BufferUtil.putAscii(buffer, templateName);
+        BufferUtil.putAscii(buffer, startingLocation);
+        BufferUtil.putAscii(buffer, hairTemplateName);
+        BufferUtil.putAscii(buffer, hairAppearanceData);
+        BufferUtil.putAscii(buffer, profession);
+        BufferUtil.putBoolean(buffer, jedi);
+        buffer.putFloat(scaleFactor);
+        BufferUtil.putUnicode(buffer, biography);
+        BufferUtil.putBoolean(buffer, useNewbieTutorial);
     }
     /**
          00 09 00 03 0C 00 74 30 7F B9 59 00 01 23 17 FF

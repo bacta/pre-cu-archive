@@ -1,7 +1,8 @@
 package com.ocdsoft.bacta.swg.precu.object;
 
-import com.ocdsoft.bacta.swg.network.soe.buffer.SoeByteBuf;
-import com.ocdsoft.bacta.swg.server.game.message.outofband.WaypointDataBase;
+import com.ocdsoft.bacta.swg.precu.message.outofband.WaypointDataBase;
+
+import java.nio.ByteBuffer;
 
 /**
  * Created by crush on 8/13/2014.
@@ -9,7 +10,15 @@ import com.ocdsoft.bacta.swg.server.game.message.outofband.WaypointDataBase;
 public class WaypointData extends WaypointDataBase {
     private long networkId;
 
-    public WaypointData(SoeByteBuf buffer) {
-        super(buffer);
+    @Override
+    public void readFromBuffer(ByteBuffer buffer) {
+        super.readFromBuffer(buffer);
+        this.networkId = buffer.getLong();
+    }
+
+    @Override
+    public void writeToBuffer(ByteBuffer buffer) {
+        super.writeToBuffer(buffer);
+        buffer.putLong(networkId);
     }
 }

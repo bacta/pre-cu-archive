@@ -3,15 +3,15 @@ package com.ocdsoft.bacta.swg.precu.controller;
 import com.google.inject.Inject;
 import com.ocdsoft.bacta.swg.network.soe.buffer.SoeByteBuf;
 import com.ocdsoft.bacta.swg.network.swg.ServerType;
-import com.ocdsoft.bacta.swg.network.swg.SwgController;
-import com.ocdsoft.bacta.swg.network.swg.controller.SwgMessageController;
-import com.ocdsoft.bacta.swg.server.game.GameClient;
-import com.ocdsoft.bacta.swg.server.game.message.player.StomachRequestMessage;
+import com.ocdsoft.bacta.soe.GameNetworkMessageHandled;
+import com.ocdsoft.bacta.soe.GameNetworkMessageController;
+import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
+import com.ocdsoft.bacta.swg.precu.message.player.StomachRequestMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@SwgController(server = ServerType.GAME, handles = StomachRequestMessage.class)
-public class StomachRequestMessageController implements SwgMessageController<GameClient> {
+@GameNetworkMessageHandled(server = ServerType.GAME, handles = StomachRequestMessage.class)
+public class StomachRequestMessageController implements GameNetworkMessageController<GameClient> {
 
     private Logger logger = LoggerFactory.getLogger(getClass().getSimpleName());
 
@@ -21,7 +21,7 @@ public class StomachRequestMessageController implements SwgMessageController<Gam
     }
 
     @Override
-    public void handleIncoming(GameClient client, SoeByteBuf message) {
+    public void handleIncoming(SoeUdpConnection connection, SoeByteBuf message) {
         logger.info("Requested");
         //StomachResponseMessage stomachResponseMessage = new StomachResponseMessage();
         //This should call some type of method that updates the stomachs latest status.

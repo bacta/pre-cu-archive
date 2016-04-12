@@ -1,8 +1,8 @@
 package com.ocdsoft.bacta.swg.precu.message.chat;
 
-import com.ocdsoft.bacta.swg.network.swg.message.SwgMessage;
+import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
 
-public class ChatOnChangeIgnoreStatus extends SwgMessage {
+public class ChatOnChangeIgnoreStatus extends GameNetworkMessage {
 	
 	public ChatOnChangeIgnoreStatus() {
 		super(0x06, 0x70E9DA0F);

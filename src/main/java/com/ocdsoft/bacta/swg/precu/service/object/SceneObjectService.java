@@ -2,15 +2,15 @@ package com.ocdsoft.bacta.swg.precu.service.object;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.ocdsoft.bacta.swg.server.game.object.SceneObject;
-import com.ocdsoft.bacta.swg.server.game.object.archive.OnDirtyCallbackBase;
-import com.ocdsoft.bacta.swg.server.game.service.container.ContainerService;
-import com.ocdsoft.bacta.swg.server.game.service.data.ObjectTemplateService;
+import com.ocdsoft.bacta.engine.data.GameDatabaseConnector;
+import com.ocdsoft.bacta.engine.service.object.ObjectService;
+import com.ocdsoft.bacta.engine.service.objectfactory.NetworkObjectFactory;
+import com.ocdsoft.bacta.swg.precu.object.SceneObject;
+import com.ocdsoft.bacta.swg.precu.object.archive.OnDirtyCallbackBase;
+import com.ocdsoft.bacta.swg.precu.service.container.ContainerService;
+import com.ocdsoft.bacta.swg.precu.service.data.ObjectTemplateService;
 import com.ocdsoft.bacta.swg.shared.object.template.ObjectTemplate;
-import com.ocdsoft.conf.BactaConfiguration;
-import com.ocdsoft.network.data.DatabaseConnector;
-import com.ocdsoft.network.service.object.ObjectService;
-import com.ocdsoft.network.service.objectfactory.NetworkObjectFactory;
+import com.ocdsoft.bacta.engine.conf.BactaConfiguration;
 import gnu.trove.map.TLongObjectMap;
 import gnu.trove.map.hash.TLongObjectHashMap;
 import org.slf4j.Logger;
@@ -36,7 +36,7 @@ public class SceneObjectService implements ObjectService<SceneObject> {
     private final NetworkObjectFactory networkObjectFactory;
     private final int deltaUpdateInterval;
     private final DeltaNetworkDispatcher deltaDispatcher;
-    private final DatabaseConnector databaseConnector;
+    private final GameDatabaseConnector databaseConnector;
     private final ObjectTemplateService objectTemplateService;
 
     @Inject
@@ -45,7 +45,7 @@ public class SceneObjectService implements ObjectService<SceneObject> {
     @Inject
     public SceneObjectService(BactaConfiguration configuration,
                               NetworkObjectFactory networkObjectFactory,
-                              DatabaseConnector databaseConnector,
+                              GameDatabaseConnector databaseConnector,
                               ObjectTemplateService objectTemplateService) {
 
         this.networkObjectFactory = networkObjectFactory;
@@ -59,7 +59,8 @@ public class SceneObjectService implements ObjectService<SceneObject> {
     @Override
     public <T extends SceneObject> T createObject(long creator, String templatePath) {
 
-        ObjectTemplate template = objectTemplateService.getObjectTemplate(templatePath);
+        //TODO: Implement this
+        ObjectTemplate template = null;// objectTemplateService.getObjectTemplate(templatePath);
         Class<? extends SceneObject> objectClass = objectTemplateService.getClassForTemplate(template);
 
         T newObject = (T) networkObjectFactory.createNetworkObject(objectClass);

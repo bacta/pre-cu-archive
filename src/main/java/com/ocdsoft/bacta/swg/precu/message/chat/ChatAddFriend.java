@@ -1,9 +1,9 @@
 package com.ocdsoft.bacta.swg.precu.message.chat;
 
-import com.ocdsoft.bacta.swg.network.soe.object.chat.ChatAvatarId;
-import com.ocdsoft.bacta.swg.network.swg.message.SwgMessage;
+import com.ocdsoft.bacta.soe.object.chat.ChatAvatarId;
+import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
 
-public class ChatAddFriend extends SwgMessage {
+public class ChatAddFriend extends GameNetworkMessage {
     public ChatAddFriend(ChatAvatarId avatarId, String friendName) {
         super(0x04, 0x6FE7BD90);
 

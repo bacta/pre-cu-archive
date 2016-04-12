@@ -193,7 +193,7 @@ public class ContainerService {
 
     public final int transferItemToContainer(SceneObject container, SceneObject item) {
         try {
-            Container actualContainer = (Container) containerField.get(container);
+            Container<SceneObject> actualContainer = (Container) containerField.get(container);
 
             logger.debug("Transferring object <{}> with template <{}> to container of item <{}> with template <{}>.",
                     item.getNetworkId(),
@@ -231,7 +231,7 @@ public class ContainerService {
         }
     }
 
-    private final int transferItemToSlottedContainer(SlottedContainer container, SceneObject item) {
+    private final int transferItemToSlottedContainer(SlottedContainer<SceneObject> container, SceneObject item) {
         SharedObjectTemplate shot = (SharedObjectTemplate) item.getObjectTemplate();
 
         if (shot != null) {

@@ -3,25 +3,25 @@ package com.ocdsoft.bacta.swg.precu.controller;
 import com.google.inject.Inject;
 import com.ocdsoft.bacta.swg.network.soe.buffer.SoeByteBuf;
 import com.ocdsoft.bacta.swg.network.swg.ServerType;
-import com.ocdsoft.bacta.swg.network.swg.SwgController;
-import com.ocdsoft.bacta.swg.network.swg.controller.SwgMessageController;
-import com.ocdsoft.bacta.swg.server.game.GameClient;
-import com.ocdsoft.bacta.swg.server.game.GameServerState;
-import com.ocdsoft.bacta.swg.server.game.message.SelectCharacter;
-import com.ocdsoft.bacta.swg.server.game.message.chat.ChatOnConnectAvatar;
-import com.ocdsoft.bacta.swg.server.game.message.zone.CmdStartSceneMessage;
-import com.ocdsoft.bacta.swg.server.game.message.zone.ParametersMessage;
-import com.ocdsoft.bacta.swg.server.game.message.zone.UnkByteFlag;
-import com.ocdsoft.bacta.swg.server.game.object.SceneObject;
-import com.ocdsoft.bacta.swg.server.game.object.tangible.creature.CreatureObject;
-import com.ocdsoft.bacta.swg.server.game.zone.Zone;
-import com.ocdsoft.bacta.swg.server.game.zone.ZoneMap;
+import com.ocdsoft.bacta.soe.GameNetworkMessageHandled;
+import com.ocdsoft.bacta.soe.GameNetworkMessageController;
+import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
+import com.ocdsoft.bacta.swg.precu.GameServerState;
+import com.ocdsoft.bacta.swg.precu.message.SelectCharacter;
+import com.ocdsoft.bacta.swg.precu.message.chat.ChatOnConnectAvatar;
+import com.ocdsoft.bacta.swg.precu.message.zone.CmdStartSceneMessage;
+import com.ocdsoft.bacta.swg.precu.message.zone.ParametersMessage;
+import com.ocdsoft.bacta.swg.precu.message.zone.UnkByteFlag;
+import com.ocdsoft.bacta.swg.precu.object.SceneObject;
+import com.ocdsoft.bacta.swg.precu.object.tangible.creature.CreatureObject;
+import com.ocdsoft.bacta.swg.precu.zone.Zone;
+import com.ocdsoft.bacta.swg.precu.zone.ZoneMap;
 import com.ocdsoft.network.service.object.ObjectService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@SwgController(server = ServerType.GAME, handles = SelectCharacter.class)
-public class SelectCharacterController implements SwgMessageController<GameClient> {
+@GameNetworkMessageHandled(server = ServerType.GAME, handles = SelectCharacter.class)
+public class SelectCharacterController implements GameNetworkMessageController<GameClient> {
 
     private Logger logger = LoggerFactory.getLogger(getClass().getSimpleName());
 
@@ -35,14 +35,16 @@ public class SelectCharacterController implements SwgMessageController<GameClien
     private ZoneMap zoneMap;
 
     @Override
-    public void handleIncoming(GameClient client, SoeByteBuf message) {
+    public void handleIncoming(SoeUdpConnection connection, SoeByteBuf message) {
 
         long characterObjectId = message.readLong();
         CreatureObject character = objectService.get(characterObjectId);
 
         if (character != null) {
 
-            client.setCharacter(character);
+            connection.setCurrentNetworkId(character.getNetworkId());
+            connection.setCurrentCharName(character.getObjectName().getString());
+
             character.setClient(client);
 
             UnkByteFlag flag = new UnkByteFlag();

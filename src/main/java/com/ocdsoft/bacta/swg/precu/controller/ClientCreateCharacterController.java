@@ -1,44 +1,41 @@
 package com.ocdsoft.bacta.swg.precu.controller;
 
 import com.google.inject.Inject;
-import com.ocdsoft.bacta.swg.network.soe.buffer.SoeByteBuf;
-import com.ocdsoft.bacta.swg.network.soe.lang.UnicodeString;
-import com.ocdsoft.bacta.swg.network.soe.object.account.CharacterInfo;
-import com.ocdsoft.bacta.swg.network.soe.object.account.SoeAccount;
-import com.ocdsoft.bacta.swg.network.soe.object.chat.ChatAvatarId;
-import com.ocdsoft.bacta.swg.network.swg.ServerType;
-import com.ocdsoft.bacta.swg.network.swg.SwgController;
-import com.ocdsoft.bacta.swg.network.swg.controller.SwgMessageController;
-import com.ocdsoft.bacta.swg.server.game.GameClient;
-import com.ocdsoft.bacta.swg.server.game.GameServerState;
-import com.ocdsoft.bacta.swg.server.game.message.ClientCreateCharacter;
-import com.ocdsoft.bacta.swg.server.game.message.ClientCreateCharacterFailed;
-import com.ocdsoft.bacta.swg.server.game.message.ClientCreateCharacterSuccess;
-import com.ocdsoft.bacta.swg.server.game.object.SceneObject;
-import com.ocdsoft.bacta.swg.server.game.object.intangible.player.PlayerObject;
-import com.ocdsoft.bacta.swg.server.game.object.tangible.TangibleObject;
-import com.ocdsoft.bacta.swg.server.game.object.tangible.creature.CreatureObject;
-import com.ocdsoft.bacta.swg.server.game.service.container.ContainerService;
-import com.ocdsoft.bacta.swg.server.game.service.data.ObjectTemplateService;
-import com.ocdsoft.bacta.swg.server.game.service.data.creation.*;
-import com.ocdsoft.bacta.swg.server.game.service.data.customization.AllowBald;
-import com.ocdsoft.bacta.swg.server.game.service.name.NameService;
-import com.ocdsoft.bacta.swg.server.game.util.Gender;
-import com.ocdsoft.bacta.swg.server.game.util.Race;
-import com.ocdsoft.bacta.swg.server.game.zone.ZoneMap;
+
+import com.ocdsoft.bacta.engine.security.authenticator.AccountService;
+import com.ocdsoft.bacta.engine.service.object.ObjectService;
+import com.ocdsoft.bacta.soe.io.udp.game.GameServerState;
+import com.ocdsoft.bacta.soe.object.account.SoeAccount;
+import com.ocdsoft.bacta.soe.object.chat.ChatAvatarId;
+import com.ocdsoft.bacta.soe.GameNetworkMessageHandled;
+import com.ocdsoft.bacta.soe.GameNetworkMessageController;
+import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
+import com.ocdsoft.bacta.swg.precu.message.ClientCreateCharacter;
+import com.ocdsoft.bacta.swg.precu.message.ClientCreateCharacterFailed;
+import com.ocdsoft.bacta.swg.precu.message.ClientCreateCharacterSuccess;
+import com.ocdsoft.bacta.swg.precu.message.ErrorMessage;
+import com.ocdsoft.bacta.swg.precu.object.SceneObject;
+import com.ocdsoft.bacta.swg.precu.object.intangible.player.PlayerObject;
+import com.ocdsoft.bacta.swg.precu.object.tangible.TangibleObject;
+import com.ocdsoft.bacta.swg.precu.object.tangible.creature.CreatureObject;
+import com.ocdsoft.bacta.swg.precu.service.container.ContainerService;
+import com.ocdsoft.bacta.swg.precu.service.data.ObjectTemplateService;
+import com.ocdsoft.bacta.swg.precu.service.data.creation.*;
+import com.ocdsoft.bacta.swg.precu.service.data.customization.AllowBald;
+import com.ocdsoft.bacta.swg.precu.service.name.NameService;
+import com.ocdsoft.bacta.swg.precu.util.Gender;
+import com.ocdsoft.bacta.swg.precu.util.Race;
+import com.ocdsoft.bacta.swg.precu.zone.ZoneMap;
 import com.ocdsoft.bacta.swg.shared.object.template.SharedCreatureObjectTemplate;
-import com.ocdsoft.bacta.swg.shared.util.SOECRC32;
-import com.ocdsoft.conf.BactaConfiguration;
-import com.ocdsoft.network.security.authenticator.AccountService;
-import com.ocdsoft.network.service.object.ObjectService;
+import com.ocdsoft.bacta.engine.conf.BactaConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.HashSet;
 import java.util.Set;
 
-@SwgController(server= ServerType.GAME, handles=ClientCreateCharacter.class)
-public class ClientCreateCharacterController implements SwgMessageController<GameClient> {
+@GameNetworkMessageHandled(ClientCreateCharacter.class)
+public class ClientCreateCharacterController implements GameNetworkMessageController<ClientCreateCharacter> {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass().getSimpleName());
 	
@@ -111,36 +108,28 @@ public class ClientCreateCharacterController implements SwgMessageController<Gam
 	}
 	
 	@Override
-	public void handleIncoming(GameClient client, SoeByteBuf message) {
-        final SoeAccount account = accountService.getAccount(client.getAccountUsername());
+    public void handleIncoming(SoeUdpConnection connection, ClientCreateCharacter message) throws Exception {
+
+        final SoeAccount account = accountService.getAccount(connection.getAccountUsername());
 
         if (account == null) {
-            client.sendErrorMessage("Error", "Account not found.", false);
+            ErrorMessage errorMessage = new ErrorMessage("Error", "Account not found.", false);
+            connection.sendMessage(errorMessage);
             logger.info("Account <{}> with username {} was not found.",
                     account.getId(),
                     account.getUsername());
             return;
         }
 
-		String appearanceData = message.readAscii();
-		String characterName = message.readUnicode();
-		String templateName = message.readAscii();
-		String startingLocation = message.readAscii();  // City name
-		String hairTemplateName = message.readAscii();
-		String hairAppearanceData = message.readAscii();
-		String profession = message.readAscii();
-        boolean jedi = message.readBoolean();
-        float scaleFactor = message.readFloat();
-        String biography = message.readUnicode();
-        boolean useNewbieTutorial = message.readBoolean();
-
-        if (this.disabledProfessions.contains(profession))
-            profession = this.defaultProfession;
+        if (this.disabledProfessions.contains(message.getProfession())) {
+            message.setProfession(this.defaultProfession);
+        }
 
         //TODO: Remove this after service side hair templates have been created...
-        StringBuilder stringBuilder = new StringBuilder(hairTemplateName);
-        stringBuilder.insert(hairTemplateName.lastIndexOf('/') + 1, "shared_");
-        hairTemplateName = stringBuilder.toString();
+        String hairTemplate = message.getHairTemplateName();
+        StringBuilder stringBuilder = new StringBuilder(hairTemplate);
+        stringBuilder.insert(hairTemplate.lastIndexOf('/') + 1, "shared_");
+        message.setHairTemplateName(stringBuilder.toString());
 
         SharedCreatureObjectTemplate objectTemplate = templateService.getObjectTemplate(templateName);
         SharedCreatureObjectTemplate sharedTemplate = (SharedCreatureObjectTemplate) objectTemplate.getBaseData();

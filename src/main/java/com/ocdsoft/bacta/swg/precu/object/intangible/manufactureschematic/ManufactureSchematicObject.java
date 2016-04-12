@@ -1,6 +1,6 @@
 package com.ocdsoft.bacta.swg.precu.object.intangible.manufactureschematic;
 
-import com.ocdsoft.bacta.swg.server.game.object.intangible.IntangibleObject;
+import com.ocdsoft.bacta.swg.precu.object.intangible.IntangibleObject;
 
 /**
  * Created by crush on 9/4/2014.

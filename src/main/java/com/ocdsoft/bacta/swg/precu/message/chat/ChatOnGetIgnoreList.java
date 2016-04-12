@@ -1,8 +1,8 @@
 package com.ocdsoft.bacta.swg.precu.message.chat;
 
-import com.ocdsoft.bacta.swg.network.swg.message.SwgMessage;
+import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
 
-public class ChatOnGetIgnoreList extends SwgMessage {
+public class ChatOnGetIgnoreList extends GameNetworkMessage {
 	public ChatOnGetIgnoreList(long creoid) {
 		super(0x03, 0xF8C275B0);
 		

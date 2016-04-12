@@ -2,10 +2,10 @@ package com.ocdsoft.bacta.swg.precu.object.tangible;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
-import com.ocdsoft.bacta.swg.server.game.message.scene.UpdateTransformMessage;
-import com.ocdsoft.bacta.swg.server.game.object.SceneObject;
-import com.ocdsoft.bacta.swg.server.game.object.archive.delta.*;
-import com.ocdsoft.bacta.swg.server.game.zone.Zone;
+import com.ocdsoft.bacta.swg.precu.message.scene.UpdateTransformMessage;
+import com.ocdsoft.bacta.swg.precu.object.SceneObject;
+import com.ocdsoft.bacta.swg.precu.object.archive.delta.*;
+import com.ocdsoft.bacta.swg.precu.zone.Zone;
 import lombok.Getter;
 import lombok.Setter;
 import org.magnos.steer.SteerSubject;
@@ -14,6 +14,7 @@ import org.magnos.steer.vec.Vec3;
 import java.util.Set;
 
 public class TangibleObject extends SceneObject implements SteerSubject<Vec3> {
+
     public static final class Conditions {
         public final static int onOff = 0x1;
         public final static int vendor = 0x2;
@@ -88,89 +89,12 @@ public class TangibleObject extends SceneObject implements SteerSubject<Vec3> {
 
         craftingSessionManufacturingSchematic = new AutoDeltaLong(0L, uiPackage);
         craftingSessionPrototype = new AutoDeltaLong(0L, uiPackage);
-
-        position = new Vec3( 0, 0, 0 );
     }
 
 
 
     public TangibleObject[] getNearObjects() {
         return nearObjects.toArray(new TangibleObject[nearObjects.size()]);
-    }
-
-    @Override
-    public long getSpatialGroups() {
-        return 1;
-    }
-
-    @Override
-    public long getSpatialCollisionGroups() {
-        return 1;
-    }
-
-    @Override
-    public boolean isStatic() {
-        return false;
-    }
-
-    @Override
-    public void attach(Object attachment) {
-
-    }
-
-    @Override
-    public <T> T attachment() {
-        return null;
-    }
-
-    @Override
-    public <T> T attachment(Class<T> type) {
-        return null;
-    }
-
-    @Override
-    public Vec3 getTarget(SteerSubject subject) {
-        return null;
-    }
-
-    @Override
-    public Vec3 getDirection() {
-        return Vec3.UP;
-    }
-
-    @Override
-    public Vec3 getVelocity() {
-        return Vec3.UP;
-    }
-
-    @Override
-    public float getVelocityMax() {
-        return 10;
-    }
-
-    @Override
-    public Vec3 getAcceleration() {
-        return Vec3.UP;
-    }
-
-    @Override
-    public float getAccelerationMax() {
-        return 10;
-    }
-
-    @Override
-    public float getDistanceAndNormal(Vec3 origin, Vec3 lookahead, Vec3 outNormal) {
-        return 0;
-    }
-
-    @Override
-    public Vec3 getPosition(Vec3 out) {
-        return null;
-    }
-
-    @Override
-    public float getRadius() {
-        return 0;
     }
 
     @Override
@@ -222,7 +146,7 @@ public class TangibleObject extends SceneObject implements SteerSubject<Vec3> {
         }
 
         UpdateTransformCallback updateTransformCallback = new UpdateTransformCallback(this);
-        zone.contains(position, 160.f, Integer.MAX_VALUE, 1, updateTransformCallback);
+        zone.contains(transform.getPosition(), 160.f, Integer.MAX_VALUE, 1, updateTransformCallback);
 
         return updateTransformCallback.getNearObjects();
     }
@@ -233,10 +157,10 @@ public class TangibleObject extends SceneObject implements SteerSubject<Vec3> {
 
     public void addInRangeObject(TangibleObject tano) {
 
-        if(tano.getClient() != null && listeners.add(tano.getClient())) {
+        if(tano.getConnection() != null && listeners.add(tano.getConnection())) {
 
-            if (client != null) {
-                tano.sendTo(client);
+            if (getConnection() != null) {
+                tano.sendTo(getConnection());
             }
             tano.addInRangeObject(this);
         }
@@ -245,9 +169,9 @@ public class TangibleObject extends SceneObject implements SteerSubject<Vec3> {
 
     public void removeInRangeObject(TangibleObject tano) {
 
-        if(tano.getClient() != null && listeners.remove(tano.getClient())) {
-            if (client != null) {
-                tano.sendDestroyTo(client);
+        if(tano.getConnection() != null && listeners.remove(tano.getConnection())) {
+            if (getConnection() != null) {
+                tano.sendDestroyTo(getConnection());
             }
             tano.removeInRangeObject(this);
         }
@@ -257,5 +181,85 @@ public class TangibleObject extends SceneObject implements SteerSubject<Vec3> {
     public final void setCondition(int condition) {
         int currentCondition = this.condition.get();
         this.condition.set(currentCondition | condition);
+    }
+
+    @Override
+    public Vec3 getPosition() {
+        return null;
+    }
+
+    @Override
+    public Vec3 getPosition(Vec3 vec3) {
+        return null;
+    }
+
+    @Override
+    public float getRadius() {
+        return 0;
+    }
+
+    @Override
+    public float getDistanceAndNormal(Vec3 vec3, Vec3 v1, Vec3 v2) {
+        return 0;
+    }
+
+    @Override
+    public long getSpatialGroups() {
+        return 0;
+    }
+
+    @Override
+    public long getSpatialCollisionGroups() {
+        return 0;
+    }
+
+    @Override
+    public boolean isStatic() {
+        return false;
+    }
+
+    @Override
+    public void attach(Object o) {
+
+    }
+
+    @Override
+    public <T> T attachment() {
+        return null;
+    }
+
+    @Override
+    public <T> T attachment(Class<T> aClass) {
+        return null;
+    }
+
+    @Override
+    public Vec3 getDirection() {
+        return null;
+    }
+
+    @Override
+    public Vec3 getVelocity() {
+        return null;
+    }
+
+    @Override
+    public float getMaximumVelocity() {
+        return 0;
+    }
+
+    @Override
+    public Vec3 getAcceleration() {
+        return null;
+    }
+
+    @Override
+    public float getMaximumAcceleration() {
+        return 0;
+    }
+
+    @Override
+    public Vec3 getTarget(SteerSubject<Vec3> steerSubject) {
+        return null;
     }
 }

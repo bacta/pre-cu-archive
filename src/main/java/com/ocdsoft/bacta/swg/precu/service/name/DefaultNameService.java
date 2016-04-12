@@ -2,9 +2,9 @@ package com.ocdsoft.bacta.swg.precu.service.name;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.ocdsoft.bacta.swg.server.game.service.name.generator.CreatureNameGenerator;
-import com.ocdsoft.bacta.swg.server.game.service.name.generator.NameGenerator;
-import com.ocdsoft.bacta.swg.server.game.service.name.generator.PlayerNameGenerator;
+import com.ocdsoft.bacta.swg.precu.service.name.generator.CreatureNameGenerator;
+import com.ocdsoft.bacta.swg.precu.service.name.generator.NameGenerator;
+import com.ocdsoft.bacta.swg.precu.service.name.generator.PlayerNameGenerator;
 import com.ocdsoft.bacta.swg.shared.iff.IffReader;
 import com.ocdsoft.bacta.swg.shared.iff.chunk.ChunkReader;
 import com.ocdsoft.bacta.swg.shared.iff.datatable.DataTable;

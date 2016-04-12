@@ -1,6 +1,8 @@
 package com.ocdsoft.bacta.swg.precu.object.archive.delta;
 
-import com.ocdsoft.bacta.swg.network.soe.buffer.SoeByteBuf;
+import com.ocdsoft.bacta.engine.utils.BufferUtil;
+
+import java.nio.ByteBuffer;
 
 public class AutoDeltaBoolean extends AutoDeltaVariableBase {
     private boolean currentValue;
@@ -32,24 +34,24 @@ public class AutoDeltaBoolean extends AutoDeltaVariableBase {
     }
 
     @Override
-    public void packDelta(SoeByteBuf buffer) {
-        buffer.writeBoolean(this.currentValue);
+    public void packDelta(ByteBuffer buffer) {
+        BufferUtil.putBoolean(buffer, this.currentValue);
 
         clearDelta();
     }
 
     @Override
-    public void unpackDelta(SoeByteBuf buffer) {
-        this.currentValue = this.lastValue = buffer.readBoolean();
+    public void unpackDelta(ByteBuffer buffer) {
+        this.currentValue = this.lastValue = BufferUtil.getBoolean(buffer);
     }
 
     @Override
-    public void pack(SoeByteBuf buffer) {
-        buffer.writeBoolean(this.currentValue);
+    public void pack(ByteBuffer buffer) {
+        BufferUtil.putBoolean(buffer, this.currentValue);
     }
 
     @Override
-    public void unpack(SoeByteBuf buffer) {
-        this.currentValue = this.lastValue = buffer.readBoolean();
+    public void unpack(ByteBuffer buffer) {
+        this.currentValue = this.lastValue = BufferUtil.getBoolean(buffer);
     }
 }

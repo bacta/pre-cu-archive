@@ -1,7 +1,7 @@
 package com.ocdsoft.bacta.swg.precu.object.tangible.installation;
 
-import com.ocdsoft.bacta.swg.server.game.object.archive.delta.*;
-import com.ocdsoft.bacta.swg.server.game.object.tangible.TangibleObject;
+import com.ocdsoft.bacta.swg.precu.object.archive.delta.*;
+import com.ocdsoft.bacta.swg.precu.object.tangible.TangibleObject;
 
 public class InstallationObject extends TangibleObject {
     @Override

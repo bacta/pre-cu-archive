@@ -4,9 +4,9 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.ocdsoft.bacta.swg.network.soe.ServerState;
 import com.ocdsoft.bacta.swg.network.soe.data.CouchbaseDatabaseConnector;
-import com.ocdsoft.bacta.swg.server.game.service.name.NameService;
-import com.ocdsoft.bacta.swg.server.game.util.Gender;
-import com.ocdsoft.bacta.swg.server.game.util.Race;
+import com.ocdsoft.bacta.swg.precu.service.name.NameService;
+import com.ocdsoft.bacta.swg.precu.util.Gender;
+import com.ocdsoft.bacta.swg.precu.util.Race;
 
 import java.security.InvalidParameterException;
 import java.util.Set;

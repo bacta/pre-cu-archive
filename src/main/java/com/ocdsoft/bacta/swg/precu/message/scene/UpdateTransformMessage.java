@@ -1,10 +1,10 @@
 package com.ocdsoft.bacta.swg.precu.message.scene;
 
-import com.ocdsoft.bacta.swg.network.swg.message.SwgMessage;
-import com.ocdsoft.bacta.swg.server.game.object.tangible.TangibleObject;
+import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
+import com.ocdsoft.bacta.swg.precu.object.tangible.TangibleObject;
 import com.ocdsoft.bacta.swg.shared.util.Quaternion;
 
-public class UpdateTransformMessage extends SwgMessage {
+public class UpdateTransformMessage extends GameNetworkMessage {
 
     public UpdateTransformMessage(TangibleObject object) {
         super(0x08, 0x1B24F808);

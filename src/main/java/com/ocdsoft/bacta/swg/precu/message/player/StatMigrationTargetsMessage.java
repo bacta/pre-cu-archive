@@ -1,12 +1,12 @@
 package com.ocdsoft.bacta.swg.precu.message.player;
 
-import com.ocdsoft.bacta.swg.network.swg.message.SwgMessage;
-import com.ocdsoft.bacta.swg.server.game.object.tangible.creature.CreatureObject;
+import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
+import com.ocdsoft.bacta.swg.precu.object.tangible.creature.CreatureObject;
 
 /**
  * Created by crush on 8/18/2014.
  */
-public class StatMigrationTargetsMessage extends SwgMessage {
+public class StatMigrationTargetsMessage extends GameNetworkMessage {
     public StatMigrationTargetsMessage(CreatureObject creatureObject) {
         super(0x09, 0xEFAC38C4);
 

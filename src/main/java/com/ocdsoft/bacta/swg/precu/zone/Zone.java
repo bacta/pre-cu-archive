@@ -1,6 +1,10 @@
 package com.ocdsoft.bacta.swg.precu.zone;
 
 import com.ocdsoft.bacta.swg.precu.object.tangible.TangibleObject;
+import org.magnos.steer.spatial.CollisionCallback;
+import org.magnos.steer.spatial.SearchCallback;
+import org.magnos.steer.spatial.SpatialEntity;
+import org.magnos.steer.vec.Vec3;
 
 public interface Zone {
 

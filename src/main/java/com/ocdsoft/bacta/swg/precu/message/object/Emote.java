@@ -1,6 +1,6 @@
 package com.ocdsoft.bacta.swg.precu.message.object;
 
-import com.ocdsoft.bacta.swg.server.game.object.tangible.TangibleObject;
+import com.ocdsoft.bacta.swg.precu.object.tangible.TangibleObject;
 
 
 public class Emote extends ObjControllerMessage {

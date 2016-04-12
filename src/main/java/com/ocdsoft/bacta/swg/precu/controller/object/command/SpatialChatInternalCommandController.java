@@ -1,9 +1,9 @@
 package com.ocdsoft.bacta.swg.precu.controller.object.command;
 
-import com.ocdsoft.bacta.swg.annotations.Command;
-import com.ocdsoft.bacta.swg.server.game.GameClient;
-import com.ocdsoft.bacta.swg.server.game.message.object.SpatialChat;
-import com.ocdsoft.bacta.swg.server.game.object.tangible.TangibleObject;
+import com.ocdsoft.bacta.soe.controller.Command;
+import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
+import com.ocdsoft.bacta.swg.precu.message.object.SpatialChat;
+import com.ocdsoft.bacta.swg.precu.object.tangible.TangibleObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,7 +14,7 @@ public class SpatialChatInternalCommandController implements CommandController {
 
     private final Logger logger = LoggerFactory.getLogger(getClass().getSimpleName());
 
-    public void handleCommand(GameClient client, TangibleObject invoker, TangibleObject target, String params) {
+    public void handleCommand(SoeUdpConnection connection, TangibleObject invoker, TangibleObject target, String params) {
 		
 		try {
 

@@ -1,8 +1,8 @@
 package com.ocdsoft.bacta.swg.precu.message.zone;
 
-import com.ocdsoft.bacta.swg.network.swg.message.SwgMessage;
+import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
 
-public class ClientIdMsg extends SwgMessage {
+public class ClientIdMsg extends GameNetworkMessage {
 	
 	private int gameBitsToClear;
 	private int dataLen;

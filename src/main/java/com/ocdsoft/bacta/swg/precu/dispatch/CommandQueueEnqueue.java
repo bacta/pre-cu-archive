@@ -1,19 +1,15 @@
-package com.ocdsoft.bacta.swg.precu.router;
+package com.ocdsoft.bacta.swg.precu.dispatch;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;
-import com.ocdsoft.bacta.swg.annotations.Command;
-import com.ocdsoft.bacta.swg.annotations.ObjController;
-import com.ocdsoft.bacta.swg.network.soe.buffer.SoeByteBuf;
-import com.ocdsoft.bacta.swg.network.soe.message.util.SoeMessageUtil;
-import com.ocdsoft.bacta.swg.server.game.GameClient;
-import com.ocdsoft.bacta.swg.server.game.controller.object.ObjectController;
-import com.ocdsoft.bacta.swg.server.game.controller.object.command.CommandController;
-import com.ocdsoft.bacta.swg.server.game.object.SceneObject;
-import com.ocdsoft.bacta.swg.server.game.object.tangible.TangibleObject;
-import com.ocdsoft.bacta.swg.server.game.util.CommandNames;
-import com.ocdsoft.network.annotation.ControllerScan;
-import com.ocdsoft.network.service.object.ObjectService;
+import com.ocdsoft.bacta.engine.service.object.ObjectService;
+import com.ocdsoft.bacta.soe.controller.Command;
+import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
+import com.ocdsoft.bacta.swg.precu.controller.object.ObjectController;
+import com.ocdsoft.bacta.swg.precu.controller.object.command.CommandController;
+import com.ocdsoft.bacta.swg.precu.object.SceneObject;
+import com.ocdsoft.bacta.swg.precu.object.tangible.TangibleObject;
+import com.ocdsoft.bacta.swg.precu.util.CommandNames;
 import gnu.trove.map.TIntObjectMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
 import io.netty.buffer.ByteBuf;
@@ -32,8 +28,8 @@ import java.util.Iterator;
 import java.util.Set;
 
 /**
- * This class is a controller and a router
- * It handles all ObjectController messages with the ID of 0x116
+ * This class is a controller and a dispatch
+ * It handles all ObjectControllerController messages with the ID of 0x116
  * and routes the messages to the command implementation
  *
  * @author kyle
@@ -41,7 +37,7 @@ import java.util.Set;
 
 @ControllerScan(target = "com.ocdsoft.bacta")
 @ObjController(id = 0x116)
-public class CommandQueueEnqueue implements ObjectController, CommandRouter {
+public class CommandQueueEnqueue implements ObjectController, CommandDispatcher {
 
     private VelocityEngine ve = null;
 
@@ -61,7 +57,7 @@ public class CommandQueueEnqueue implements ObjectController, CommandRouter {
     }
 
     @Override
-    public void handleIncoming(GameClient client, SoeByteBuf message, TangibleObject invoker) {
+    public void handleIncoming(SoeUdpConnection connection, SoeByteBuf message, TangibleObject invoker) {
 
         //sequenceId
         //commandHash
@@ -88,7 +84,7 @@ public class CommandQueueEnqueue implements ObjectController, CommandRouter {
     }
 
     @Override
-    public void routeCommand(int opcode, GameClient client, SoeByteBuf message, TangibleObject invoker) {
+    public void routeCommand(int opcode, SoeUdpConnection connection, SoeByteBuf message, TangibleObject invoker) {
 
         CommandController controller = controllers.get(opcode);
 

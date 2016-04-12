@@ -1,8 +1,8 @@
 package com.ocdsoft.bacta.swg.precu.object.archive;
 
-import com.ocdsoft.bacta.swg.network.soe.buffer.SoeByteBuf;
-import com.ocdsoft.bacta.swg.network.swg.util.ByteAppender;
+import com.ocdsoft.bacta.swg.util.ByteAppender;
 
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,9 +13,9 @@ public class AutoArray<T> implements AutoVariableBase {
     private List<T> array = new ArrayList<>();
 
     @Override
-    public void pack(SoeByteBuf buffer) {
+    public void pack(ByteBuffer buffer) {
         try {
-            buffer.writeInt(array.size());
+            buffer.putInt(array.size());
 
             for (T item : array) {
                 ByteAppender.append(item, buffer);
@@ -26,7 +26,7 @@ public class AutoArray<T> implements AutoVariableBase {
     }
 
     @Override
-    public void unpack(SoeByteBuf buffer) {
+    public void unpack(ByteBuffer buffer) {
 
     }
 }

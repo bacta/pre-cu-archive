@@ -1,7 +1,7 @@
 package com.ocdsoft.bacta.swg.precu.message.chat;
 
 import com.ocdsoft.bacta.swg.network.soe.object.chat.ChatRoomData;
-import com.ocdsoft.bacta.swg.network.swg.message.SwgMessage;
+import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
 
 import java.util.Collection;
 
@@ -10,7 +10,7 @@ import java.util.Collection;
  *
  * @direction s->c
  */
-public class ChatRoomList extends SwgMessage {
+public class ChatRoomList extends GameNetworkMessage {
     //ChatRoomData[] roomData
 
     public ChatRoomList(Collection<ChatRoomData> rooms) throws Exception {

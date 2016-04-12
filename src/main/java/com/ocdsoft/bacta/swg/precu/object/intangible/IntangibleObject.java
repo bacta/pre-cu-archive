@@ -1,7 +1,7 @@
 package com.ocdsoft.bacta.swg.precu.object.intangible;
 
-import com.ocdsoft.bacta.swg.server.game.object.SceneObject;
-import com.ocdsoft.bacta.swg.server.game.object.archive.delta.AutoDeltaInt;
+import com.ocdsoft.bacta.swg.precu.object.SceneObject;
+import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaInt;
 
 public abstract class IntangibleObject extends SceneObject {
     @Override

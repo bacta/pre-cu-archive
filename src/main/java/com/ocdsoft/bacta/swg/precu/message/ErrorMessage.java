@@ -15,7 +15,12 @@ public final class ErrorMessage extends GameNetworkMessage {
     }
 
     @Override
-    public ByteBuffer toBuffer() {
-        return null;
+    public void readFromBuffer(ByteBuffer buffer) {
+
+    }
+
+    @Override
+    public void writeToBuffer(ByteBuffer buffer) {
+
     }
 }

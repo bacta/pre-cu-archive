@@ -5,7 +5,7 @@ import com.google.inject.Module;
 import com.ocdsoft.bacta.soe.io.udp.game.PingObjectSerializer;
 import com.ocdsoft.bacta.soe.io.udp.game.PingServerState;
 import com.ocdsoft.bacta.swg.network.soe.ServerState;
-import com.ocdsoft.conf.BactaConfiguration;
+import com.ocdsoft.bacta.engine.conf.BactaConfiguration;
 import com.ocdsoft.conf.ini.IniBactaConfiguration;
 import com.ocdsoft.network.data.serialization.NetworkSerializer;
 

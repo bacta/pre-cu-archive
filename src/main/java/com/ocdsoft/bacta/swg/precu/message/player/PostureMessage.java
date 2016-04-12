@@ -1,7 +1,7 @@
 package com.ocdsoft.bacta.swg.precu.message.player;
 
-import com.ocdsoft.bacta.swg.server.game.message.object.ObjControllerMessage;
-import com.ocdsoft.bacta.swg.server.game.object.SceneObject;
+import com.ocdsoft.bacta.swg.precu.message.object.ObjControllerMessage;
+import com.ocdsoft.bacta.swg.precu.object.SceneObject;
 
 /**
  * Created by Kyle on 3/24/14.

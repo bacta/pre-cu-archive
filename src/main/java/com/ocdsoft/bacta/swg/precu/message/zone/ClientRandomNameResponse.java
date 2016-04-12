@@ -2,13 +2,13 @@ package com.ocdsoft.bacta.swg.precu.message.zone;
 
 
 
-import com.ocdsoft.bacta.swg.network.swg.message.SwgMessage;
-import com.ocdsoft.bacta.swg.shared.localization.StringId;
+import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
+import com.ocdsoft.bacta.swg.localization.StringId;
 
 /**
  * Created by Kyle on 3/15/14.
  */
-public class ClientRandomNameResponse extends SwgMessage {
+public class ClientRandomNameResponse extends GameNetworkMessage {
 
 
     public ClientRandomNameResponse(String fullName, String race) {

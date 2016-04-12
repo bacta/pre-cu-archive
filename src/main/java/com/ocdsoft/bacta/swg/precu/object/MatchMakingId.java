@@ -1,15 +1,15 @@
 package com.ocdsoft.bacta.swg.precu.object;
 
-import com.ocdsoft.bacta.swg.network.soe.buffer.SoeByteBuf;
-import com.ocdsoft.bacta.swg.network.soe.buffer.SoeByteBufSerializable;
+import com.ocdsoft.bacta.engine.buffer.ByteBufferSerializable;
 
+import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.BitSet;
 
 /**
  * Created by crush on 8/13/2014.
  */
-public class MatchMakingId implements SoeByteBufSerializable {
+public class MatchMakingId implements ByteBufferSerializable {
     public static final int lookingForGroup = 0x0;
     public static final int helper = 0x1;
     public static final int rolePlay = 0x2;
@@ -30,9 +30,14 @@ public class MatchMakingId implements SoeByteBufSerializable {
     private BitSet bitSet = new BitSet(128);
 
     @Override
-    public void writeToBuffer(SoeByteBuf buffer) {
-        buffer.writeInt(4);
-        buffer.writeBytes(Arrays.copyOf(bitSet.toByteArray(), 16));
+    public void readFromBuffer(ByteBuffer buffer) {
+
+    }
+
+    @Override
+    public void writeToBuffer(ByteBuffer buffer) {
+        buffer.putInt(4);
+        buffer.put(Arrays.copyOf(bitSet.toByteArray(), 16));
     }
 
     public void flip(int index) {

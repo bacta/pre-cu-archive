@@ -1,8 +1,8 @@
 package com.ocdsoft.bacta.swg.precu.message.zone;
 
-import com.ocdsoft.bacta.swg.network.swg.message.SwgMessage;
+import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
 
-public class ParametersMessage extends SwgMessage {
+public class ParametersMessage extends GameNetworkMessage {
 
 	public ParametersMessage() {
 		super(0x02, 0x487652DA);

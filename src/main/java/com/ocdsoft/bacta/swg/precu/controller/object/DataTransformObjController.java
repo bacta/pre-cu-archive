@@ -1,26 +1,16 @@
 package com.ocdsoft.bacta.swg.precu.controller.object;
 
-import com.google.inject.Inject;
-import com.ocdsoft.bacta.swg.annotations.ObjController;
-import com.ocdsoft.bacta.swg.network.soe.buffer.SoeByteBuf;
-import com.ocdsoft.bacta.swg.server.game.GameClient;
-import com.ocdsoft.bacta.swg.server.game.object.tangible.TangibleObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.ocdsoft.bacta.soe.controller.ObjController;
+import com.ocdsoft.bacta.soe.controller.ObjControllerId;
+import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
+import com.ocdsoft.bacta.swg.precu.message.scene.DataTransformMessage;
+import com.ocdsoft.bacta.swg.precu.object.tangible.TangibleObject;
 
-@ObjController(id = 0x71)
-public class DataTransformObjController implements ObjectController {
-
-    private Logger logger = LoggerFactory.getLogger(getClass().getSimpleName());
-
-    @Inject
-    public DataTransformObjController() {
-
-    }
+@ObjControllerId(id = 0x71, handles = DataTransformMessage.class)
+public class DataTransformObjController implements ObjController<DataTransformMessage, TangibleObject> {
 
     @Override
-    public void handleIncoming(GameClient client, SoeByteBuf message, TangibleObject invoker) {
-
+    public void handleIncoming(SoeUdpConnection connection, DataTransformMessage dataTransformMessage, TangibleObject invoker) {
         int movementCounter = message.readInt();
 
         invoker.setMovementCounter(movementCounter);
