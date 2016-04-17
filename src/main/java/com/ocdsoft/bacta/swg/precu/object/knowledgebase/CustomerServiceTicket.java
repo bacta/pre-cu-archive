@@ -1,6 +1,7 @@
 package com.ocdsoft.bacta.swg.precu.object.knowledgebase;
 
-import com.ocdsoft.bacta.swg.network.soe.lang.UnicodeString;
+
+import com.ocdsoft.bacta.engine.lang.UnicodeString;
 
 /**
  * Created by crush on 8/14/2014.

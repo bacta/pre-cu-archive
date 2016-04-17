@@ -2,7 +2,7 @@ package com.ocdsoft.bacta.swg.precu.message.outofband;
 
 import com.ocdsoft.bacta.engine.buffer.ByteBufferSerializable;
 import com.ocdsoft.bacta.engine.utils.BufferUtil;
-import com.ocdsoft.bacta.swg.precu.object.Location;
+import com.ocdsoft.bacta.soe.object.Location;
 
 import java.nio.ByteBuffer;
 

@@ -1,5 +1,6 @@
 package com.ocdsoft.bacta.swg.precu.factory;
 
+
 import com.ocdsoft.bacta.swg.precu.message.object.ObjControllerMessage;
 
 /**

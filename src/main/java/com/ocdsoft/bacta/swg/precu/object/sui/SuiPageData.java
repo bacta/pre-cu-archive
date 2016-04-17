@@ -1,7 +1,7 @@
 package com.ocdsoft.bacta.swg.precu.object.sui;
 
-import com.ocdsoft.bacta.swg.network.soe.buffer.SoeByteBuf;
-import com.ocdsoft.bacta.swg.network.soe.buffer.SoeByteBufSerializable;
+import com.ocdsoft.bacta.engine.buffer.ByteBufferSerializable;
+import com.ocdsoft.bacta.engine.utils.BufferUtil;
 import gnu.trove.map.TByteObjectMap;
 import gnu.trove.map.hash.TByteObjectHashMap;
 import lombok.Getter;
@@ -9,11 +9,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.vecmath.Vector3f;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class SuiPageData implements SoeByteBufSerializable {
+public class SuiPageData implements ByteBufferSerializable {
     private static final AtomicInteger lastId = new AtomicInteger();
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
@@ -128,17 +129,25 @@ public class SuiPageData implements SoeByteBufSerializable {
         commands.add(command);
     }
 
+
+
     @Override
-    public void writeToBuffer(SoeByteBuf message) {
-        message.writeInt(pageId);
-        message.writeAscii(pageName);
-        message.writeInt(commands.size());
+    public void readFromBuffer(ByteBuffer buffer) {
 
-        for (int i = 0; i < commands.size(); i++)
-            commands.get(i).writeToBuffer(message);
+    }
 
-        message.writeLong(associatedObjectId);
-        message.writeFloat(maxRangeFromObject);
-        message.writeLong(0);
+    @Override
+    public void writeToBuffer(ByteBuffer buffer) {
+        buffer.putInt(pageId);
+        BufferUtil.putAscii(buffer, pageName);
+        buffer.putInt(commands.size());
+
+        for (int i = 0; i < commands.size(); i++) {
+            commands.get(i).writeToBuffer(buffer);
+        }
+
+        buffer.putLong(associatedObjectId);
+        buffer.putFloat(maxRangeFromObject);
+        buffer.putLong(0);
     }
 }

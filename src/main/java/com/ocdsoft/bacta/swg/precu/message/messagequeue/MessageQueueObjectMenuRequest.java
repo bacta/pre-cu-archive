@@ -1,9 +1,11 @@
 package com.ocdsoft.bacta.swg.precu.message.messagequeue;
 
-import com.ocdsoft.bacta.swg.network.soe.buffer.SoeByteBuf;
-import com.ocdsoft.bacta.swg.network.soe.buffer.SoeByteBufSerializable;
+import com.ocdsoft.bacta.engine.buffer.ByteBufferSerializable;
+import com.ocdsoft.bacta.engine.utils.BufferUtil;
 import lombok.Getter;
 
+import java.nio.Buffer;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -25,38 +27,45 @@ public class MessageQueueObjectMenuRequest extends MessageQueueData {
         this.sequence = sequence;
     }
 
-    public void pack(SoeByteBuf buffer) {
-        buffer.writeLong(targetId);
-        buffer.writeLong(requestorId);
+    public void pack(ByteBuffer buffer) {
+        buffer.putLong(targetId);
+        buffer.putLong(requestorId);
 
-        buffer.writeInt(data.size());
+        buffer.putInt(data.size());
 
-        for (ObjectMenuRequestData item : data)
+        for (ObjectMenuRequestData item : data) {
             item.writeToBuffer(buffer);
+        }
 
-        buffer.writeByte(sequence);
+        buffer.put(sequence);
     }
 
-    public void unpack(SoeByteBuf buffer) {
-        targetId = buffer.readLong();
-        requestorId = buffer.readLong();
+    public void unpack(ByteBuffer buffer) {
+        targetId = buffer.getLong();
+        requestorId = buffer.getLong();
 
-        int size = buffer.readInt();
+        int size = buffer.getInt();
 
         data = new ArrayList<>(size);
 
-        for (int i = 0; i < size; i++)
-            data.add(new ObjectMenuRequestData(buffer));
+        for (int i = 0; i < size; i++) {
+            ObjectMenuRequestData objectMenuRequestData = new ObjectMenuRequestData();
+            objectMenuRequestData.readFromBuffer(buffer);
 
-        sequence = buffer.readByte();
+            data.add(objectMenuRequestData);
+        }
+
+        sequence = buffer.get();
     }
 
-    public static final class ObjectMenuRequestData implements SoeByteBufSerializable {
+    public static final class ObjectMenuRequestData implements ByteBufferSerializable {
         @Getter private byte id;
         @Getter private byte parent;
         @Getter private byte menuItemType;
         @Getter private byte flags;
         @Getter private String label;
+
+        protected ObjectMenuRequestData() {}
 
         public ObjectMenuRequestData(byte id, byte parent, byte menuItemType, byte flags, String label) {
             this.id = id;
@@ -66,21 +75,22 @@ public class MessageQueueObjectMenuRequest extends MessageQueueData {
             this.label = label;
         }
 
-        public ObjectMenuRequestData(SoeByteBuf buffer) {
-            id = buffer.readByte();
-            parent = buffer.readByte();
-            menuItemType = buffer.readByte();
-            flags = buffer.readByte();
-            label = buffer.readUnicode();
+        @Override
+        public void readFromBuffer(ByteBuffer buffer) {
+            id = buffer.get();
+            parent = buffer.get();
+            menuItemType = buffer.get();
+            flags = buffer.get();
+            label = BufferUtil.getUnicode(buffer);
         }
 
         @Override
-        public void writeToBuffer(SoeByteBuf buffer) {
-            buffer.writeByte(id);
-            buffer.writeByte(parent);
-            buffer.writeByte(menuItemType);
-            buffer.writeByte(flags);
-            buffer.writeUnicode(label);
+        public void writeToBuffer(ByteBuffer buffer) {
+            buffer.put(id);
+            buffer.put(parent);
+            buffer.put(menuItemType);
+            buffer.put(flags);
+            BufferUtil.putUnicode(buffer, label);
         }
     }
 }

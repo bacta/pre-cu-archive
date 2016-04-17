@@ -2,7 +2,7 @@ package com.ocdsoft.bacta.swg.precu.object.tangible.creature;
 
 
 import com.ocdsoft.bacta.swg.precu.event.ObservableGameEvent;
-import com.ocdsoft.bacta.swg.precu.message.player.PostureMessage;
+import com.ocdsoft.bacta.swg.precu.message.object.PostureMessage;
 import com.ocdsoft.bacta.swg.precu.object.GroupInviter;
 import com.ocdsoft.bacta.swg.precu.object.archive.delta.*;
 import com.ocdsoft.bacta.swg.precu.object.tangible.TangibleObject;

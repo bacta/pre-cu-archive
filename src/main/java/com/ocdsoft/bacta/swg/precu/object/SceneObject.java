@@ -10,8 +10,6 @@ import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
 import com.ocdsoft.bacta.soe.object.Transform;
 import com.ocdsoft.bacta.soe.util.SoeMessageUtil;
 import com.ocdsoft.bacta.swg.precu.event.ObservableGameEvent;
-import com.ocdsoft.bacta.swg.precu.message.BaselinesMessage;
-import com.ocdsoft.bacta.swg.precu.message.DeltasMessage;
 import com.ocdsoft.bacta.swg.precu.message.object.ObjControllerMessage;
 import com.ocdsoft.bacta.swg.precu.message.scene.*;
 import com.ocdsoft.bacta.swg.precu.object.archive.OnDirtyCallbackBase;
@@ -25,11 +23,11 @@ import com.ocdsoft.bacta.swg.shared.object.template.ObjectTemplate;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.magnos.steer.vec.Vec3;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.vecmath.Quat4f;
-import javax.vecmath.Vector3f;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -37,7 +35,7 @@ import java.util.Set;
 
 public abstract class SceneObject extends NetworkObject implements Subject<ObservableGameEvent> {
 
-    private static final transient Logger logger = LoggerFactory.getLogger(SceneObject.class);
+    private static final transient Logger LOGGER = LoggerFactory.getLogger(SceneObject.class);
 
     public int getOpcode() {
         return 0x53434E4F;
@@ -118,7 +116,7 @@ public abstract class SceneObject extends NetworkObject implements Subject<Obser
         balanceCash = new AutoDeltaInt(0, authoritativeClientServerPackage);
 
         complexity = new AutoDeltaFloat(1.0f, sharedPackage);
-        nameStringId = new AutoDeltaVariable<>(StringId.Invalid, sharedPackage);
+        nameStringId = new AutoDeltaVariable<>(StringId.INVALID, sharedPackage);
         objectName = new AutoDeltaVariable<>(UnicodeString.EMPTY, sharedPackage);
         volume = new AutoDeltaInt(0, sharedPackage);
 
@@ -128,14 +126,14 @@ public abstract class SceneObject extends NetworkObject implements Subject<Obser
     }
 
     protected final void sendTo(SoeUdpConnection theirConnection) {
-        logger.trace("Sending baselines to {}.", getNetworkId());
+        LOGGER.trace("Sending baselines to {}.", getNetworkId());
 
         if (theirConnection == null) return;
 
         SceneCreateObjectByCrc msg = new SceneCreateObjectByCrc(this);
         theirConnection.sendMessage(msg);
 
-        UpdateContainmentMessage link = new UpdateContainmentMessage(this, containedBy, currentArrangement);
+        UpdateContainmentMessage link = new UpdateContainmentMessage(this);
         theirConnection.sendMessage(link);
 
         sendBaselinesTo(theirConnection);
@@ -233,7 +231,7 @@ public abstract class SceneObject extends NetworkObject implements Subject<Obser
         setPosition(x, z, y);
     }
 
-    public void setPosition(Vector3f position) {
+    public void setPosition(Vec3 position) {
         this.transform.setPosition(position);
         dirty = true;
     }
@@ -269,7 +267,7 @@ public abstract class SceneObject extends NetworkObject implements Subject<Obser
                 continue;
             }
             theirConnection.sendMessage(message);
-            logger.debug("Broadcasting message {} to {}", message.getClass().getSimpleName(), theirConnection.getCurrentCharName());
+            LOGGER.debug("Broadcasting message {} to {}", message.getClass().getSimpleName(), theirConnection.getCurrentCharName());
             System.out.println(SoeMessageUtil.bytesToHex(message));
         }
     }
@@ -285,7 +283,7 @@ public abstract class SceneObject extends NetworkObject implements Subject<Obser
             }
             theirConnection.sendMessage(message);
 
-            logger.debug("Broadcasting obj controller to {}", theirConnection.getCurrentCharName());
+            LOGGER.debug("Broadcasting obj controller to {}", theirConnection.getCurrentCharName());
             System.out.println(SoeMessageUtil.bytesToHex(message));
         }
     }

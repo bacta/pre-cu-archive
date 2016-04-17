@@ -1,12 +1,13 @@
 package com.ocdsoft.bacta.swg.precu.object.sui;
 
-import com.ocdsoft.bacta.swg.network.soe.buffer.SoeByteBuf;
-import com.ocdsoft.bacta.swg.network.soe.buffer.SoeByteBufSerializable;
+import com.ocdsoft.bacta.engine.buffer.ByteBufferSerializable;
+import com.ocdsoft.bacta.engine.utils.BufferUtil;
 
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SuiCommand implements SoeByteBufSerializable {
+public class SuiCommand implements ByteBufferSerializable {
     public static final byte SCT_clearDataSource = 0x01;
     public static final byte SCT_addChildWidget = 0x02;
     public static final byte SCT_setProperty = 0x03;
@@ -32,16 +33,23 @@ public class SuiCommand implements SoeByteBufSerializable {
     }
 
     @Override
-    public void writeToBuffer(SoeByteBuf message) {
-        message.writeByte(commandType);
-        message.writeInt(wideParameters.size());
+    public void readFromBuffer(ByteBuffer buffer) {
 
-        for (int i = 0; i < wideParameters.size(); i++)
-            message.writeUnicode(wideParameters.get(i));
+    }
 
-        message.writeInt(narrowParameters.size());
+    @Override
+    public void writeToBuffer(ByteBuffer buffer) {
+        buffer.put(commandType);
+        buffer.putInt(wideParameters.size());
 
-        for (int i = 0; i < narrowParameters.size(); i++)
-            message.writeAscii(narrowParameters.get(i));
+        for (int i = 0; i < wideParameters.size(); i++) {
+            BufferUtil.putUnicode(buffer, wideParameters.get(i));
+        }
+
+        buffer.putInt(narrowParameters.size());
+
+        for (int i = 0; i < narrowParameters.size(); i++) {
+            BufferUtil.putAscii(buffer, narrowParameters.get(i));
+        }
     }
 }

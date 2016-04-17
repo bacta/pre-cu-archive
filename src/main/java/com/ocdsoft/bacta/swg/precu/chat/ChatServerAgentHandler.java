@@ -1,11 +1,12 @@
 package com.ocdsoft.bacta.swg.precu.chat;
 
+import com.ocdsoft.bacta.soe.chat.message.ChatInstantMessageToClient;
+import com.ocdsoft.bacta.soe.chat.message.ChatOnAddFriend;
+import com.ocdsoft.bacta.soe.chat.message.ChatOnConnectAvatar;
+import com.ocdsoft.bacta.soe.chat.message.ChatOnSendInstantMessage;
 import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
 import com.ocdsoft.bacta.soe.object.chat.ChatAvatarId;
-import com.ocdsoft.bacta.swg.precu.message.chat.ChatInstantMessageToClient;
-import com.ocdsoft.bacta.swg.precu.message.chat.ChatOnAddFriend;
-import com.ocdsoft.bacta.swg.precu.message.chat.ChatOnConnectAvatar;
-import com.ocdsoft.bacta.swg.precu.message.chat.ChatOnSendInstantMessage;
+
 import org.slf4j.LoggerFactory;
 
 /**

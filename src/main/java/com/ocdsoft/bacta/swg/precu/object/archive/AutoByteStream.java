@@ -21,8 +21,9 @@ public class AutoByteStream {
     public void pack(ByteBuffer buffer) {
         buffer.putShort((short) getItemCount());
 
-        for (AutoVariableBase variable : members)
+        for (AutoVariableBase variable : members) {
             variable.pack(buffer);
+        }
     }
 
     public void unpack(ByteBuffer buffer) {

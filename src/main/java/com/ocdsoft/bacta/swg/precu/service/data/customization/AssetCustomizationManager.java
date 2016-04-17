@@ -122,10 +122,10 @@ public final class AssetCustomizationManager implements SharedFileLoader {
 //                parseLIDX(reader);
 //                parseCIDX(reader);
 //            } else {
-//                logger.error("Invalid version for asset customization manager file.");
+//                logger.error("INVALID version for asset customization manager file.");
 //            }
 //        } else {
-//            logger.error("Invalid asset customization manager file.");
+//            logger.error("INVALID asset customization manager file.");
 //        }
 
         logger.debug("Finished loading.");

@@ -3,33 +3,33 @@ package com.ocdsoft.bacta.swg.precu.message.scene;
 import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
 import com.ocdsoft.bacta.swg.precu.object.SceneObject;
 
+import java.nio.ByteBuffer;
+
 public class UpdateContainmentMessage extends GameNetworkMessage {
+
+    private long objectId;
+    private long containerId;
+    private int slotArrangement;
+
     public UpdateContainmentMessage(SceneObject object) {
         super(0x04, 0x56CBDE9E);
 
-        writeLong(object.getNetworkId());
-        writeLong(object.getContainedBy());
-        writeLong(object.getCurrentArrangement());
+        this.objectId = object.getNetworkId();
+        this.containerId = object.getContainedBy();
+        this.slotArrangement = object.getCurrentArrangement();
     }
 
-    public UpdateContainmentMessage(SceneObject scno, long parentId, int slotArrangement) {
-        super(0x04, 0x56CBDE9E);
-
-        //NetworkId networkId
-        //NetworkId containerId
-        //int slotArrangement
-
-        writeLong(scno.getNetworkId());  // ObjectID
-        writeLong(parentId);
-        writeInt(slotArrangement);
-
+    @Override
+    public void readFromBuffer(ByteBuffer buffer) {
+        this.objectId = buffer.getLong();
+        this.containerId = buffer.getLong();
+        this.slotArrangement = buffer.getInt();
     }
 
-    public UpdateContainmentMessage(SceneObject object, SceneObject container, int slotArrangement) {
-        super(0x04, 0x56CBDE9E);
-
-        writeLong(object.getNetworkId());
-        writeLong(container != null ? container.getNetworkId() : 0);
-        writeInt(slotArrangement);
+    @Override
+    public void writeToBuffer(ByteBuffer buffer) {
+        buffer.putLong(objectId);
+        buffer.putLong(containerId);
+        buffer.putInt(slotArrangement);
     }
 }

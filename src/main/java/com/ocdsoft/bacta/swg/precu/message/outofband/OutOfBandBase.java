@@ -1,11 +1,12 @@
 package com.ocdsoft.bacta.swg.precu.message.outofband;
 
-import com.ocdsoft.bacta.swg.network.soe.buffer.SoeByteBuf;
-import com.ocdsoft.bacta.swg.network.soe.buffer.SoeByteBufSerializable;
+import com.ocdsoft.bacta.engine.buffer.ByteBufferSerializable;
 import io.netty.buffer.ByteBuf;
 import lombok.Getter;
 
-public abstract class OutOfBandBase implements SoeByteBufSerializable {
+import java.nio.ByteBuffer;
+
+public abstract class OutOfBandBase implements ByteBufferSerializable {
     @Getter
     private final byte typeId;
     @Getter
@@ -25,8 +26,8 @@ public abstract class OutOfBandBase implements SoeByteBufSerializable {
     }
 
     @Override
-    public void writeToBuffer(SoeByteBuf message) {
-        message.writeByte(typeId);
-        message.writeInt(position);
+    public void writeToBuffer(ByteBuffer message) {
+        message.put(typeId);
+        message.putInt(position);
     }
 }

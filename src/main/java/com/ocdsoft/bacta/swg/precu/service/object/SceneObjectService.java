@@ -7,7 +7,7 @@ import com.ocdsoft.bacta.engine.service.object.ObjectService;
 import com.ocdsoft.bacta.engine.service.objectfactory.NetworkObjectFactory;
 import com.ocdsoft.bacta.swg.precu.object.SceneObject;
 import com.ocdsoft.bacta.swg.precu.object.archive.OnDirtyCallbackBase;
-import com.ocdsoft.bacta.swg.precu.service.container.ContainerService;
+import com.ocdsoft.bacta.swg.precu.service.container.PreCuContainerService;
 import com.ocdsoft.bacta.swg.precu.service.data.ObjectTemplateService;
 import com.ocdsoft.bacta.swg.shared.object.template.ObjectTemplate;
 import com.ocdsoft.bacta.engine.conf.BactaConfiguration;
@@ -40,7 +40,7 @@ public class SceneObjectService implements ObjectService<SceneObject> {
     private final ObjectTemplateService objectTemplateService;
 
     @Inject
-    private ContainerService containerService;
+    private PreCuContainerService containerService;
 
     @Inject
     public SceneObjectService(BactaConfiguration configuration,

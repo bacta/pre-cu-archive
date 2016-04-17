@@ -1,17 +1,19 @@
 package com.ocdsoft.bacta.swg.precu.message.outofband;
 
-import com.ocdsoft.bacta.swg.network.soe.buffer.SoeByteBuf;
-import com.ocdsoft.bacta.swg.network.soe.buffer.SoeByteBufSerializable;
+import com.ocdsoft.bacta.engine.buffer.ByteBufferSerializable;
+import com.ocdsoft.bacta.engine.utils.BufferUtil;
 import com.ocdsoft.bacta.swg.localization.StringId;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.nio.ByteBuffer;
 
 /**
  * A ProsePackage consists of different parameters that can be substituted into a message. Three of these parameters are
  * defined as {@link ProsePackageParticipant} and encompass a {@link StringId}, NetworkId, or UTF-16 String. A ProsePackage may also set
  * an Integer and Float parameter as well.
  */
-public class ProsePackage implements SoeByteBufSerializable {
+public class ProsePackage implements ByteBufferSerializable {
     @Getter
     private final StringId stringId;
     @Setter
@@ -31,24 +33,25 @@ public class ProsePackage implements SoeByteBufSerializable {
         this.stringId = stringId;
     }
 
-    public ProsePackage(SoeByteBuf message) {
-        this.stringId = new StringId(message);
-        this.actor = new ProsePackageParticipant(message);
-        this.target = new ProsePackageParticipant(message);
-        this.other = new ProsePackageParticipant(message);
-        this.digitInteger = message.readInt();
-        this.digitFloat = message.readFloat();
-        this.complexGrammar = message.readBoolean();
-    }
-
     @Override
-    public void writeToBuffer(SoeByteBuf buffer) {
+    public void writeToBuffer(ByteBuffer buffer) {
         stringId.writeToBuffer(buffer);
         actor.writeToBuffer(buffer);
         target.writeToBuffer(buffer);
         other.writeToBuffer(buffer);
-        buffer.writeInt(digitInteger);
-        buffer.writeFloat(digitFloat);
-        buffer.writeBoolean(complexGrammar);
+        buffer.putInt(digitInteger);
+        buffer.putFloat(digitFloat);
+        BufferUtil.putBoolean(buffer, complexGrammar);
+    }
+
+    @Override
+    public void readFromBuffer(ByteBuffer buffer) {
+        this.stringId.readFromBuffer(buffer);
+        this.actor.readFromBuffer(buffer);
+        this.target.readFromBuffer(buffer);
+        this.other.readFromBuffer(buffer);
+        this.digitInteger = buffer.getInt();
+        this.digitFloat = buffer.getFloat();
+        this.complexGrammar = BufferUtil.getBoolean(buffer);
     }
 }

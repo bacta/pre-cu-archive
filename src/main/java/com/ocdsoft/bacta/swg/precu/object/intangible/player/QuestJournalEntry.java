@@ -1,19 +1,24 @@
 package com.ocdsoft.bacta.swg.precu.object.intangible.player;
 
-import com.ocdsoft.bacta.swg.network.soe.buffer.SoeByteBuf;
-import com.ocdsoft.bacta.swg.network.soe.buffer.SoeByteBufSerializable;
+import com.ocdsoft.bacta.engine.buffer.ByteBufferSerializable;
 
-public class QuestJournalEntry implements SoeByteBufSerializable {
+import java.nio.ByteBuffer;
+
+public class QuestJournalEntry implements ByteBufferSerializable {
 
     @Override
-    public void writeToBuffer(SoeByteBuf message) {
-        message.writeByte(0);
-        message.writeInt(0);
-        message.writeLong(0);
-        message.writeShort(0);
-        message.writeShort(0);
-        message.writeByte(0);
-        message.writeInt(0);
+    public void readFromBuffer(ByteBuffer buffer) {
+
     }
 
+    @Override
+    public void writeToBuffer(ByteBuffer buffer) {
+        buffer.put((byte) 0);
+        buffer.putInt(0);
+        buffer.putLong(0);
+        buffer.putShort((short) 0);
+        buffer.putShort((short) 0);
+        buffer.put((byte) 0);
+        buffer.putInt(0);
+    }
 }

@@ -1,5 +1,6 @@
 package com.ocdsoft.bacta.swg.precu.object;
 
+
 import com.ocdsoft.bacta.swg.precu.message.outofband.WaypointDataBase;
 
 import java.nio.ByteBuffer;

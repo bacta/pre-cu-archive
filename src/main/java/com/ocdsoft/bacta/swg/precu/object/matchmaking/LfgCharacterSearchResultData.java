@@ -1,6 +1,7 @@
 package com.ocdsoft.bacta.swg.precu.object.matchmaking;
 
-import com.ocdsoft.bacta.swg.network.soe.lang.UnicodeString;
+
+import com.ocdsoft.bacta.engine.lang.UnicodeString;
 
 import java.util.Set;
 
