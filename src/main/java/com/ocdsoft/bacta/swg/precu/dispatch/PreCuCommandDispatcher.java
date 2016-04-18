@@ -2,6 +2,7 @@ package com.ocdsoft.bacta.swg.precu.dispatch;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;
+import com.google.inject.Singleton;
 import com.ocdsoft.bacta.engine.service.object.ObjectService;
 import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
 import com.ocdsoft.bacta.soe.controller.Command;
@@ -35,6 +36,7 @@ import java.nio.ByteBuffer;
  * @author kyle
  */
 
+@Singleton
 public class PreCuCommandDispatcher implements CommandDispatcher<TangibleObject> {
 
     private VelocityEngine ve = null;

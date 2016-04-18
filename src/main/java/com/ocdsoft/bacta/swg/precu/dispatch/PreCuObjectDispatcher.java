@@ -10,7 +10,7 @@ import com.ocdsoft.bacta.soe.controller.ObjControllerId;
 import com.ocdsoft.bacta.soe.dispatch.ObjectDispatcher;
 import com.ocdsoft.bacta.soe.util.SOECRC32;
 import com.ocdsoft.bacta.soe.util.SoeMessageUtil;
-import com.ocdsoft.bacta.swg.precu.factory.ObjControllerMessageFactory;
+import com.ocdsoft.bacta.soe.factory.ObjControllerMessageFactory;
 import com.ocdsoft.bacta.swg.precu.message.object.ObjControllerMessage;
 import com.ocdsoft.bacta.swg.precu.object.SceneObject;
 import com.ocdsoft.bacta.swg.precu.object.tangible.TangibleObject;
@@ -43,12 +43,12 @@ public class PreCuObjectDispatcher implements ObjectDispatcher<ObjControllerMess
 
     private ObjectService<SceneObject> objectService;
 
-    private final ObjControllerMessageFactory objControllerMessageFactory;
+    private final ObjControllerMessageFactory<ObjControllerMessage> objControllerMessageFactory;
 
     private Injector injector;
 
     @Inject
-    public PreCuObjectDispatcher(Injector injector, ObjectService<SceneObject> objectService, final ObjControllerMessageFactory objControllerMessageFactory) {
+    public PreCuObjectDispatcher(Injector injector, ObjectService<SceneObject> objectService, final ObjControllerMessageFactory<ObjControllerMessage> objControllerMessageFactory) {
         this.objectService = objectService;
         this.injector = injector;
         this.objControllerMessageFactory = objControllerMessageFactory;

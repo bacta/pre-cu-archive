@@ -11,7 +11,7 @@ import java.nio.ByteBuffer;
 public class PreCuGameNetworkMessageFactory implements GameNetworkMessageFactory {
 
     @Override
-    public GameNetworkMessage create(int opcode, ByteBuffer buffer) {
+    public GameNetworkMessage create(int gameMessageType, ByteBuffer buffer) {
         return null;
     }
 

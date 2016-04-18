@@ -13,14 +13,18 @@ public final class PreCuServer {
 
     public static void main(String[] args) {
 
+        System.setProperty("bacta.serverPath", "pre-cu");
+
         Injector injector = Guice.createInjector(new PreCuModule(), new LoginModule());
-        injector.getInstance(LoginServer.class);
+        LoginServer loginServer = injector.getInstance(LoginServer.class);
+        Thread loginThread = new Thread(loginServer);
+        loginThread.start();
 
-        injector = Guice.createInjector(new PreCuModule(), new ChatModule());
-        injector.getInstance(ChatServer.class);
+        //injector = Guice.createInjector(new PreCuModule(), new ChatModule());
+        //injector.getInstance(ChatServer.class);
 
-        injector = Guice.createInjector(new PreCuModule(), new GameModule(), new PingModule());
-        injector.getInstance(GameServer.class);
+        //injector = Guice.createInjector(new PreCuModule(), new GameModule(), new PingModule());
+        //injector.getInstance(GameServer.class);
 
 
     }
