@@ -17,7 +17,7 @@ public class ObjControllerMessage extends GameNetworkMessage {
 
     private ByteBuffer buffer;
 
-    protected ObjControllerMessage() {
+    public ObjControllerMessage() {
         super(0, 0);
     }
 

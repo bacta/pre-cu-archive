@@ -21,6 +21,7 @@ import com.ocdsoft.bacta.engine.service.objectfactory.NetworkObjectFactory;
 import com.ocdsoft.bacta.engine.service.objectfactory.impl.GuiceNetworkObjectFactory;
 import com.ocdsoft.bacta.engine.service.scheduler.SchedulerService;
 import com.ocdsoft.bacta.engine.service.scheduler.TaskSchedulerService;
+import com.ocdsoft.bacta.soe.controller.CommandController;
 import com.ocdsoft.bacta.soe.data.couchbase.CouchbaseAccountService;
 import com.ocdsoft.bacta.soe.data.couchbase.CouchbaseConnectionDatabaseConnector;
 import com.ocdsoft.bacta.soe.data.couchbase.CouchbaseGameDatabaseConnector;
@@ -43,6 +44,7 @@ import com.ocdsoft.bacta.soe.factory.ObjControllerMessageFactory;
 import com.ocdsoft.bacta.swg.precu.factory.PreCuGameNetworkMessageFactory;
 import com.ocdsoft.bacta.swg.precu.factory.PreCuObjControllerMessageFactory;
 import com.ocdsoft.bacta.swg.precu.message.object.ObjControllerMessage;
+import com.ocdsoft.bacta.swg.precu.message.object.command.CommandMessage;
 import com.ocdsoft.bacta.swg.precu.object.SceneObject;
 import com.ocdsoft.bacta.swg.precu.object.tangible.TangibleObject;
 import com.ocdsoft.bacta.swg.precu.service.container.PreCuContainerService;
@@ -76,9 +78,10 @@ public class PreCuModule extends AbstractModule implements Module {
         bind(new TypeLiteral<ObjectDispatcher<ObjControllerMessage>>(){}).to(PreCuObjectDispatcher.class);
         bind(SoeMessageDispatcher.class).to(SoeDevMessageDispatcher.class);
         bind(new TypeLiteral<ContainerService<SceneObject>>(){}).to(PreCuContainerService.class);
-        bind(new TypeLiteral<CommandDispatcher<TangibleObject>>(){}).to(PreCuCommandDispatcher.class);
+        bind(new TypeLiteral<CommandDispatcher<CommandMessage, TangibleObject>>(){}).to(PreCuCommandDispatcher.class);
         bind(GameNetworkMessageDispatcher.class).to(GameNetworkDevMessageDispatcher.class);
         bind(GameNetworkMessageFactory.class).to(PreCuGameNetworkMessageFactory.class);
+        bind(new TypeLiteral<ObjectDispatcher<ObjControllerMessage>>(){}).to(PreCuObjectDispatcher.class);
 
         install(new FactoryModuleBuilder()
                 .implement(ChatServerAgent.class, XmppChatServerAgent.class)

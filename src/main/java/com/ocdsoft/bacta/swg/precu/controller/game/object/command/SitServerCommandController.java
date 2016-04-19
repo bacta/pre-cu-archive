@@ -1,8 +1,8 @@
-package com.ocdsoft.bacta.swg.precu.controller.object.command;
+package com.ocdsoft.bacta.swg.precu.controller.game.object.command;
 
 import com.ocdsoft.bacta.soe.controller.Command;
 import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
-import com.ocdsoft.bacta.swg.precu.object.tangible.TangibleObject;
+import com.ocdsoft.bacta.soe.controller.CommandController;
 import com.ocdsoft.bacta.swg.precu.object.tangible.creature.CreatureObject;
 import com.ocdsoft.bacta.swg.precu.object.tangible.creature.CreaturePosture;
 import org.slf4j.Logger;
@@ -14,11 +14,8 @@ public class SitServerCommandController implements CommandController {
 	private Logger logger = LoggerFactory.getLogger(getClass().getSimpleName());
 
 	@Override
-	public void handleCommand(SoeUdpConnection connection, TangibleObject invoker, TangibleObject target, String params) {
-
-        CreatureObject player = (CreatureObject) invoker;
-        player.setPosture(CreaturePosture.SITTING);
-
+	public void handleCommand(SoeUdpConnection connection, Object invoker, Object target, String params) {
+		CreatureObject player = (CreatureObject) invoker;
+		player.setPosture(CreaturePosture.SITTING);
 	}
-	
 }

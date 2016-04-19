@@ -2,11 +2,15 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.ocdsoft.bacta.swg</groupId>
   <artifactId>pre-cu</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <packaging>jar</packaging>
 
+    <parent>
+        <groupId>com.ocdsoft.bacta.swg</groupId>
+        <artifactId>pre-cu-master</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
 
   <name>pre-cu</name>
     <url>https://github.com/bacta/pre-cu</url>
@@ -55,6 +59,14 @@
   </properties>
 
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <excludes>
+                    <exclude>**/script/*.*</exclude>
+                </excludes>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.sonatype.plugins</groupId>
@@ -94,79 +106,7 @@
                 <artifactId>versions-maven-plugin</artifactId>
                 <version>2.1</version>
             </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>build-helper-maven-plugin</artifactId>
-                <version>1.7</version>
-                <executions>
-                    <execution>
-                        <id>add-source</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>add-source</goal>
-                        </goals>
-                        <configuration>
-                            <sources>
-                                <source>target/java-gen</source>
-                            </sources>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+
         </plugins>
     </build>
-
-  <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
-      <dependency>
-          <groupId>org.igniterealtime.smack</groupId>
-          <artifactId>smack-core</artifactId>
-          <version>4.0.1</version>
-      </dependency>
-      <dependency>
-          <groupId>org.igniterealtime.smack</groupId>
-          <artifactId>smack-tcp</artifactId>
-          <version>4.0.1</version>
-      </dependency>
-      <dependency>
-          <groupId>com.ocdsoft.bacta</groupId>
-          <artifactId>engine</artifactId>
-          <version>1.0.0-SNAPSHOT</version>
-      </dependency>
-      <dependency>
-          <groupId>com.ocdsoft.bacta</groupId>
-          <artifactId>soe</artifactId>
-          <version>1.0.0-SNAPSHOT</version>
-      </dependency>
-      <dependency>
-          <groupId>com.ocdsoft.bacta</groupId>
-          <artifactId>swg</artifactId>
-          <version>1.0.0-SNAPSHOT</version>
-      </dependency>
-      <dependency>
-          <groupId>com.ocdsoft.bacta</groupId>
-          <artifactId>tre</artifactId>
-          <version>1.0.0-SNAPSHOT</version>
-      </dependency>
-      <dependency>
-          <groupId>com.ocdsoft.bacta.data.couchbase</groupId>
-          <artifactId>couchbase-connector</artifactId>
-          <version>1.0.0-SNAPSHOT</version>
-      </dependency>
-      <dependency>
-          <groupId>com.ocdsoft.bacta</groupId>
-          <artifactId>iff</artifactId>
-          <version>1.0.0-SNAPSHOT</version>
-      </dependency>
-      <dependency>
-          <groupId>com.ocdsoft.bacta.engine.serialization</groupId>
-          <artifactId>kryo</artifactId>
-          <version>1.0.0-SNAPSHOT</version>
-      </dependency>
-  </dependencies>
 </project>

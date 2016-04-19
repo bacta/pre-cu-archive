@@ -1,4 +1,4 @@
-package com.ocdsoft.bacta.swg.precu.controller.object.command;
+package com.ocdsoft.bacta.swg.precu.controller.game.object.command;
 
 import com.google.inject.Inject;
 import com.ocdsoft.bacta.engine.conf.BactaConfiguration;

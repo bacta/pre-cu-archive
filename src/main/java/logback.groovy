@@ -1,9 +1,11 @@
 
+
+import ch.qos.logback.classic.encoder.PatternLayoutEncoder
+import ch.qos.logback.core.ConsoleAppender
+
 /**
  * Created by kburkhardt on 12/9/14.
  */
-import ch.qos.logback.classic.encoder.PatternLayoutEncoder
-import ch.qos.logback.core.ConsoleAppender
 
 scan("10 seconds")
 
@@ -16,7 +18,6 @@ appender("STDOUT", ConsoleAppender) {
 logger("org.reflections",  WARN)
 logger("io.netty",  WARN)
 logger("com.couchbase",  WARN)
-logger("com.ocdsoft",  DEBUG)
 logger("com.ocdsoft.bacta.soe.controller.MultiController", TRACE)
 logger("com.ocdsoft.bacta.soe.controller.GroupMessageController", TRACE)
 
