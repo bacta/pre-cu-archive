@@ -1,4 +1,4 @@
-package com.ocdsoft.bacta.swg.precu.controller.object.command;
+package com.ocdsoft.bacta.swg.precu.controller.game.object.command;
 
 
 import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;

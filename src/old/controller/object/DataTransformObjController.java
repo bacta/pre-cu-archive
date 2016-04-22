@@ -1,4 +1,4 @@
-package com.ocdsoft.bacta.swg.precu.controller.object;
+package com.ocdsoft.bacta.swg.precu.controller.game.object;
 
 import com.ocdsoft.bacta.soe.controller.ObjController;
 import com.ocdsoft.bacta.soe.controller.ObjControllerId;

@@ -2,18 +2,34 @@ package com.ocdsoft.bacta.swg.precu.dispatch;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;
+import com.google.inject.Singleton;
 import com.ocdsoft.bacta.engine.service.object.ObjectService;
+import com.ocdsoft.bacta.engine.service.script.ScriptEngine;
 import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
+import com.ocdsoft.bacta.soe.controller.Command;
 import com.ocdsoft.bacta.soe.controller.CommandController;
 import com.ocdsoft.bacta.soe.dispatch.CommandDispatcher;
+import com.ocdsoft.bacta.swg.precu.message.object.ObjControllerMessage;
+import com.ocdsoft.bacta.swg.precu.message.object.command.CommandMessage;
 import com.ocdsoft.bacta.swg.precu.object.SceneObject;
 import com.ocdsoft.bacta.swg.precu.object.tangible.TangibleObject;
+import com.ocdsoft.bacta.swg.precu.util.CommandNames;
+
 import gnu.trove.map.TIntObjectMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
+import groovy.lang.Binding;
+import io.netty.buffer.ByteBuf;
+import org.apache.velocity.Template;
+import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
+import org.apache.velocity.runtime.RuntimeConstants;
+import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.nio.ByteBuffer;
 
 /**
@@ -24,27 +40,42 @@ import java.nio.ByteBuffer;
  * @author kyle
  */
 
-public class PreCuCommandDispatcher implements CommandDispatcher<TangibleObject> {
+@Singleton
+public class PreCuCommandDispatcher implements CommandDispatcher<CommandMessage, TangibleObject> {
 
     private VelocityEngine ve = null;
 
-    private Logger logger = LoggerFactory.getLogger(getClass().getSimpleName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(PreCuCommandDispatcher.class);
 
-    private TIntObjectMap<CommandController> controllers = new TIntObjectHashMap<CommandController>();
+    private final TIntObjectMap<CommandController> controllers = new TIntObjectHashMap<CommandController>();
 
-    private Injector injector;
+    private final Injector injector;
 
-    private ObjectService<SceneObject> objectService;
+    private final ObjectService<SceneObject> objectService;
+
+    private final ScriptEngine scriptEngine;
+
+    private final Binding binding;
 
     @Inject
-    public PreCuCommandDispatcher(Injector injector, ObjectService<SceneObject> objectService) {
+    public PreCuCommandDispatcher(final Injector injector,
+                                  final ObjectService<SceneObject> objectService,
+                                  final ScriptEngine scriptEngine) {
+
         this.injector = injector;
         this.objectService = objectService;
-        //loadControllers();
+        this.scriptEngine = scriptEngine;
+
+        this.binding = new Binding();
+
+        loadBindings();
+        loadControllers();
     }
 
     @Override
-    public void dispatchCommand(int opcode, SoeUdpConnection connection, ByteBuffer message, TangibleObject invoker) {
+    public void dispatchCommand(int commandType, SoeUdpConnection connection, CommandMessage message, TangibleObject invoker) {
+
+
 
         /*CommandController controller = controllers.get(opcode);
 
@@ -81,11 +112,24 @@ public class PreCuCommandDispatcher implements CommandDispatcher<TangibleObject>
         logger.error("Unhandled Command: '" + CommandNames.get(propertyName)
                 + "' 0x" + propertyName);
         logger.error(SoeMessageUtil.bytesToHex(message));
+    }*/
+
+    private void loadBindings() {
+
     }
 
     private void loadControllers() {
+        loadScriptedControllers();
+        loadStaticControllers();
+    }
 
-        ControllerScan scanAnnotiation = getClass().getAnnotation(
+    private void loadScriptedControllers() {
+
+    }
+
+    private void loadStaticControllers() {
+
+        /*ControllerScan scanAnnotiation = getClass().getAnnotation(
                 ControllerScan.class);
 
         if (scanAnnotiation == null) {
@@ -130,9 +174,9 @@ public class PreCuCommandDispatcher implements CommandDispatcher<TangibleObject>
             } catch (Exception e) {
                 logger.error("Unable to add controller", e);
             }
-        }
+        }*/
     }
-
+    /*
     private void writeTemplates(int opcode, ByteBuf message) {
 
         initializeTemplating();
