@@ -2,7 +2,7 @@ package com.ocdsoft.bacta.swg.precu.object.template.server;
 
 import bacta.iff.Iff;
 import com.google.common.base.Preconditions;
-import com.ocdsoft.bacta.swg.foundation.Tag;
+import com.ocdsoft.bacta.swg.shared.foundation.Tag;
 import com.ocdsoft.bacta.swg.template.ObjectTemplate;
 import com.ocdsoft.bacta.swg.template.ObjectTemplateList;
 import com.ocdsoft.bacta.swg.utility.*;
@@ -712,7 +712,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
         public static ArmorRating from(final long value) {
             for (final ArmorRating e : values)
                 if (e.value == value) return e;
-            throw new IllegalArgumentException(String.format("Unknown value %d for enum ArmorRating", value));
+            throw new IllegalArgumentException(String.format("UNKNOWN value %d for enum ArmorRating", value));
         }
     }
 
@@ -730,7 +730,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
         public static VisibleFlags from(final long value) {
             for (final VisibleFlags e : values)
                 if (e.value == value) return e;
-            throw new IllegalArgumentException(String.format("Unknown value %d for enum VisibleFlags", value));
+            throw new IllegalArgumentException(String.format("UNKNOWN value %d for enum VisibleFlags", value));
         }
     }
 
@@ -789,7 +789,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
         public static CraftingType from(final long value) {
             for (final CraftingType e : values)
                 if (e.value == value) return e;
-            throw new IllegalArgumentException(String.format("Unknown value %d for enum CraftingType", value));
+            throw new IllegalArgumentException(String.format("UNKNOWN value %d for enum CraftingType", value));
         }
     }
 
@@ -808,7 +808,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
         public static UpdateRanges from(final long value) {
             for (final UpdateRanges e : values)
                 if (e.value == value) return e;
-            throw new IllegalArgumentException(String.format("Unknown value %d for enum UpdateRanges", value));
+            throw new IllegalArgumentException(String.format("UNKNOWN value %d for enum UpdateRanges", value));
         }
     }
 
@@ -828,7 +828,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
         public static ArmorCategory from(final long value) {
             for (final ArmorCategory e : values)
                 if (e.value == value) return e;
-            throw new IllegalArgumentException(String.format("Unknown value %d for enum ArmorCategory", value));
+            throw new IllegalArgumentException(String.format("UNKNOWN value %d for enum ArmorCategory", value));
         }
     }
 
@@ -848,7 +848,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
         public static MentalStates from(final long value) {
             for (final MentalStates e : values)
                 if (e.value == value) return e;
-            throw new IllegalArgumentException(String.format("Unknown value %d for enum MentalStates", value));
+            throw new IllegalArgumentException(String.format("UNKNOWN value %d for enum MentalStates", value));
         }
     }
 
@@ -870,7 +870,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
         public static Attributes from(final long value) {
             for (final Attributes e : values)
                 if (e.value == value) return e;
-            throw new IllegalArgumentException(String.format("Unknown value %d for enum Attributes", value));
+            throw new IllegalArgumentException(String.format("UNKNOWN value %d for enum Attributes", value));
         }
     }
 
@@ -947,7 +947,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
         public static XpTypes from(final long value) {
             for (final XpTypes e : values)
                 if (e.value == value) return e;
-            throw new IllegalArgumentException(String.format("Unknown value %d for enum XpTypes", value));
+            throw new IllegalArgumentException(String.format("UNKNOWN value %d for enum XpTypes", value));
         }
     }
 
@@ -965,7 +965,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
         public static MoveFlags from(final long value) {
             for (final MoveFlags e : values)
                 if (e.value == value) return e;
-            throw new IllegalArgumentException(String.format("Unknown value %d for enum MoveFlags", value));
+            throw new IllegalArgumentException(String.format("UNKNOWN value %d for enum MoveFlags", value));
         }
     }
 
@@ -983,7 +983,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
         public static DeleteFlags from(final long value) {
             for (final DeleteFlags e : values)
                 if (e.value == value) return e;
-            throw new IllegalArgumentException(String.format("Unknown value %d for enum DeleteFlags", value));
+            throw new IllegalArgumentException(String.format("UNKNOWN value %d for enum DeleteFlags", value));
         }
     }
 
@@ -1013,7 +1013,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
         public static DamageType from(final long value) {
             for (final DamageType e : values)
                 if (e.value == value) return e;
-            throw new IllegalArgumentException(String.format("Unknown value %d for enum DamageType", value));
+            throw new IllegalArgumentException(String.format("UNKNOWN value %d for enum DamageType", value));
         }
     }
 
@@ -1032,7 +1032,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
         public static ArmorLevel from(final long value) {
             for (final ArmorLevel e : values)
                 if (e.value == value) return e;
-            throw new IllegalArgumentException(String.format("Unknown value %d for enum ArmorLevel", value));
+            throw new IllegalArgumentException(String.format("UNKNOWN value %d for enum ArmorLevel", value));
         }
     }
 

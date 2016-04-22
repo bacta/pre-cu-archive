@@ -11,7 +11,6 @@ import com.ocdsoft.bacta.soe.dispatch.CommandDispatcher;
 import com.ocdsoft.bacta.swg.precu.message.object.command.CommandMessage;
 import com.ocdsoft.bacta.swg.precu.object.SceneObject;
 import com.ocdsoft.bacta.swg.precu.object.tangible.TangibleObject;
-
 import gnu.trove.map.TIntObjectMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
 import groovy.lang.Binding;
@@ -171,7 +170,7 @@ public class PreCuCommandDispatcher implements CommandDispatcher<CommandMessage,
         String commandName = CommandNames.get(opcode);
 
         if (commandName.isEmpty() || commandName.equalsIgnoreCase("unknown")) {
-            logger.error("Unknown command opcode: " + commandName + " 0x"
+            logger.error("UNKNOWN command opcode: " + commandName + " 0x"
                     + Integer.toHexString(opcode));
             return;
         }

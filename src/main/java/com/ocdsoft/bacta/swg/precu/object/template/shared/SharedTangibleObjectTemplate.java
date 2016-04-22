@@ -2,7 +2,7 @@ package com.ocdsoft.bacta.swg.precu.object.template.shared;
 
 import bacta.iff.Iff;
 import com.google.common.base.Preconditions;
-import com.ocdsoft.bacta.swg.foundation.Tag;
+import com.ocdsoft.bacta.swg.shared.foundation.Tag;
 import com.ocdsoft.bacta.swg.template.ObjectTemplate;
 import com.ocdsoft.bacta.swg.template.ObjectTemplateList;
 import com.ocdsoft.bacta.swg.utility.BoolParam;
@@ -551,7 +551,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
         public static ClientVisabilityFlags from(final long value) {
             for (final ClientVisabilityFlags e : values)
                 if (e.value == value) return e;
-            throw new IllegalArgumentException(String.format("Unknown value %d for enum ClientVisabilityFlags", value));
+            throw new IllegalArgumentException(String.format("UNKNOWN value %d for enum ClientVisabilityFlags", value));
         }
     }
 

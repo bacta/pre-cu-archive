@@ -147,18 +147,18 @@ public class PreCuContainerService implements ContainerService<SceneObject> {
         try {
             //Are the item and the container the same object?
             if (item == container)
-                return ContainerErrorCode.AddSelf;
+                return ContainerErrorCode.ADD_SELF;
 
             Container actualContainer = (Container) containerField.get(container);
 
             //Check if the container contains the item somewhere in the object graph.
             //Check if the item contains the container somewhere in the object graph.
 
-            return ContainerErrorCode.Success;
+            return ContainerErrorCode.SUCCESS;
         } catch (IllegalAccessException ex) {
             logger.error("Unable to access the container field for object <{}>.",
                     container.getNetworkId());
-            return ContainerErrorCode.Unknown;
+            return ContainerErrorCode.UNKNOWN;
         }
     }
 
@@ -176,7 +176,7 @@ public class PreCuContainerService implements ContainerService<SceneObject> {
         SceneObject container = sceneObjectService.get(item.getContainedBy());
 
         if (container == null)
-            return ContainerErrorCode.NoContainer;
+            return ContainerErrorCode.NO_CONTAINER;
 
         try {
             Container actualContainer = (Container) containerField.get(container);
@@ -185,11 +185,11 @@ public class PreCuContainerService implements ContainerService<SceneObject> {
             item.setContainedBy(0);
             item.setCurrentArrangement(-1); //Not slotted in any arrangement
 
-            return ContainerErrorCode.Success;
+            return ContainerErrorCode.SUCCESS;
         } catch (IllegalAccessException ex) {
             logger.error("Unable to access the container field for object <{}>.",
                     container.getNetworkId());
-            return ContainerErrorCode.Unknown;
+            return ContainerErrorCode.UNKNOWN;
         }
     }
 
@@ -206,7 +206,7 @@ public class PreCuContainerService implements ContainerService<SceneObject> {
             //Make sure we can add the item to the container.
             int error = mayAdd(container, item);
 
-            if (error != ContainerErrorCode.Success)
+            if (error != ContainerErrorCode.SUCCESS)
                 return error;
 
             //Remove it from its current container
@@ -218,7 +218,7 @@ public class PreCuContainerService implements ContainerService<SceneObject> {
             if (actualContainer.isVolumeContainer())
                 error = transferItemToVolumeContainer((VolumeContainer) actualContainer, item);
 
-            if (error == ContainerErrorCode.Success) {
+            if (error == ContainerErrorCode.SUCCESS) {
                 logger.debug("Sending update containment message");
 
                 UpdateContainmentMessage updateContainmentMessage = new UpdateContainmentMessage(item);
@@ -229,7 +229,7 @@ public class PreCuContainerService implements ContainerService<SceneObject> {
         } catch (IllegalAccessException ex) {
             logger.error("Unable to access the container field for object <{}>.",
                     container.getNetworkId());
-            return ContainerErrorCode.Unknown;
+            return ContainerErrorCode.UNKNOWN;
         }
     }
 
@@ -265,7 +265,7 @@ public class PreCuContainerService implements ContainerService<SceneObject> {
             }
         }
 
-        return ContainerErrorCode.Success;
+        return ContainerErrorCode.SUCCESS;
     }
 
     private final int transferItemToVolumeContainer(VolumeContainer container, SceneObject item) {
@@ -275,7 +275,7 @@ public class PreCuContainerService implements ContainerService<SceneObject> {
         item.setCurrentArrangement(-1);
         container.add(item);
 
-        return ContainerErrorCode.Success;
+        return ContainerErrorCode.SUCCESS;
     }
 
     public final boolean transferItemToWorld(SceneObject item) {

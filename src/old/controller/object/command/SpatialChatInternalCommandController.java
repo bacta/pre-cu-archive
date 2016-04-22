@@ -44,7 +44,7 @@ public class SpatialChatInternalCommandController implements CommandController {
             invoker.broadcastMessage(chat, true);
 
 		} catch (Exception e) {
-			logger.error("Unknown error", e);
+			logger.error("UNKNOWN error", e);
 		}
 		
 	}

@@ -2,8 +2,8 @@ package com.ocdsoft.bacta.swg.precu.object.template.shared;
 
 import bacta.iff.Iff;
 import com.google.common.base.Preconditions;
-import com.ocdsoft.bacta.swg.foundation.Tag;
 import com.ocdsoft.bacta.swg.localization.StringId;
+import com.ocdsoft.bacta.swg.shared.foundation.Tag;
 import com.ocdsoft.bacta.swg.template.ObjectTemplate;
 import com.ocdsoft.bacta.swg.template.ObjectTemplateList;
 import com.ocdsoft.bacta.swg.utility.*;
@@ -912,7 +912,7 @@ public class SharedObjectTemplate extends ObjectTemplate {
         public static GameObjectType from(final long value) {
             for (final GameObjectType e : values)
                 if (e.value == value) return e;
-            throw new IllegalArgumentException(String.format("Unknown value %d for enum GameObjectType", value));
+            throw new IllegalArgumentException(String.format("UNKNOWN value %d for enum GameObjectType", value));
         }
     }
 
@@ -934,7 +934,7 @@ public class SharedObjectTemplate extends ObjectTemplate {
         public static ContainerType from(final long value) {
             for (final ContainerType e : values)
                 if (e.value == value) return e;
-            throw new IllegalArgumentException(String.format("Unknown value %d for enum ContainerType", value));
+            throw new IllegalArgumentException(String.format("UNKNOWN value %d for enum ContainerType", value));
         }
     }
 
@@ -958,7 +958,7 @@ public class SharedObjectTemplate extends ObjectTemplate {
         public static SurfaceType from(final long value) {
             for (final SurfaceType e : values)
                 if (e.value == value) return e;
-            throw new IllegalArgumentException(String.format("Unknown value %d for enum SurfaceType", value));
+            throw new IllegalArgumentException(String.format("UNKNOWN value %d for enum SurfaceType", value));
         }
     }
 

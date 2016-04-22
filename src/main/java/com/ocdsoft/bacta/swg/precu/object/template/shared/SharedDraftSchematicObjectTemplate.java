@@ -2,8 +2,8 @@ package com.ocdsoft.bacta.swg.precu.object.template.shared;
 
 import bacta.iff.Iff;
 import com.google.common.base.Preconditions;
-import com.ocdsoft.bacta.swg.foundation.Tag;
 import com.ocdsoft.bacta.swg.localization.StringId;
+import com.ocdsoft.bacta.swg.shared.foundation.Tag;
 import com.ocdsoft.bacta.swg.template.ObjectTemplate;
 import com.ocdsoft.bacta.swg.template.ObjectTemplateList;
 import com.ocdsoft.bacta.swg.utility.IntegerParam;
@@ -247,7 +247,7 @@ public class SharedDraftSchematicObjectTemplate extends SharedIntangibleObjectTe
         public static ArmorRating from(final long value) {
             for (final ArmorRating e : values)
                 if (e.value == value) return e;
-            throw new IllegalArgumentException(String.format("Unknown value %d for enum ArmorRating", value));
+            throw new IllegalArgumentException(String.format("UNKNOWN value %d for enum ArmorRating", value));
         }
     }
 
@@ -276,7 +276,7 @@ public class SharedDraftSchematicObjectTemplate extends SharedIntangibleObjectTe
         public static DamageType from(final long value) {
             for (final DamageType e : values)
                 if (e.value == value) return e;
-            throw new IllegalArgumentException(String.format("Unknown value %d for enum DamageType", value));
+            throw new IllegalArgumentException(String.format("UNKNOWN value %d for enum DamageType", value));
         }
     }
 

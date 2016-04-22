@@ -33,7 +33,7 @@ public class SocialInternalCommandController implements CommandController {
             invoker.broadcastMessage(emote, true);
 
         } catch (Exception e) {
-			logger.error("Unknown Error", e);
+			logger.error("UNKNOWN Error", e);
 		}
 		
 	}

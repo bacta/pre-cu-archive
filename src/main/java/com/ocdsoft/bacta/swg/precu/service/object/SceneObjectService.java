@@ -138,7 +138,7 @@ public class SceneObjectService implements ObjectService<SceneObject> {
                     nextIteration = currentTime + deltaUpdateInterval;
 
                 } catch(Exception e) {
-                    logger.error("Unknown", e);
+                    logger.error("UNKNOWN", e);
                 }
             }
         }
