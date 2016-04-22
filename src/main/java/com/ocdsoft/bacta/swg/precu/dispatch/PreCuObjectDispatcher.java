@@ -3,19 +3,17 @@ package com.ocdsoft.bacta.swg.precu.dispatch;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.ocdsoft.bacta.engine.service.object.ObjectService;
-
 import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
 import com.ocdsoft.bacta.soe.controller.ObjController;
 import com.ocdsoft.bacta.soe.controller.ObjControllerId;
 import com.ocdsoft.bacta.soe.dispatch.ObjectDispatcher;
 import com.ocdsoft.bacta.soe.util.SOECRC32;
 import com.ocdsoft.bacta.soe.util.SoeMessageUtil;
-import com.ocdsoft.bacta.soe.factory.ObjControllerMessageFactory;
+import com.ocdsoft.bacta.swg.precu.factory.ObjControllerMessageFactory;
 import com.ocdsoft.bacta.swg.precu.message.object.ObjControllerMessage;
 import com.ocdsoft.bacta.swg.precu.object.SceneObject;
 import com.ocdsoft.bacta.swg.precu.object.tangible.TangibleObject;
 import com.ocdsoft.bacta.swg.shared.util.ObjectControllerNames;
-
 import gnu.trove.map.TIntObjectMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
 import lombok.Getter;
@@ -43,12 +41,12 @@ public class PreCuObjectDispatcher implements ObjectDispatcher<ObjControllerMess
 
     private ObjectService<SceneObject> objectService;
 
-    private final ObjControllerMessageFactory<ObjControllerMessage> objControllerMessageFactory;
+    private final ObjControllerMessageFactory objControllerMessageFactory;
 
     private Injector injector;
 
     @Inject
-    public PreCuObjectDispatcher(Injector injector, ObjectService<SceneObject> objectService, final ObjControllerMessageFactory<ObjControllerMessage> objControllerMessageFactory) {
+    public PreCuObjectDispatcher(Injector injector, ObjectService<SceneObject> objectService, final ObjControllerMessageFactory objControllerMessageFactory) {
         this.objectService = objectService;
         this.injector = injector;
         this.objControllerMessageFactory = objControllerMessageFactory;

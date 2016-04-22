@@ -2,30 +2,18 @@ package com.ocdsoft.bacta.swg.precu.dispatch;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;
-import com.google.inject.Singleton;
 import com.ocdsoft.bacta.engine.service.object.ObjectService;
 import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
-import com.ocdsoft.bacta.soe.controller.Command;
 import com.ocdsoft.bacta.soe.controller.CommandController;
 import com.ocdsoft.bacta.soe.dispatch.CommandDispatcher;
 import com.ocdsoft.bacta.swg.precu.object.SceneObject;
 import com.ocdsoft.bacta.swg.precu.object.tangible.TangibleObject;
-import com.ocdsoft.bacta.swg.precu.util.CommandNames;
-
 import gnu.trove.map.TIntObjectMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
-import io.netty.buffer.ByteBuf;
-import org.apache.velocity.Template;
-import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
-import org.apache.velocity.runtime.RuntimeConstants;
-import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.nio.ByteBuffer;
 
 /**
@@ -36,7 +24,6 @@ import java.nio.ByteBuffer;
  * @author kyle
  */
 
-@Singleton
 public class PreCuCommandDispatcher implements CommandDispatcher<TangibleObject> {
 
     private VelocityEngine ve = null;

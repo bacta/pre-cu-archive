@@ -49,7 +49,7 @@ public class ConnectPlayerMessageController implements GameNetworkMessageControl
 
         //agent.connect();
 
-        //agent.cluster("test"); //TODO: Password for chat accounts?
+        //agent.login("test"); //TODO: Password for chat accounts?
 
         client.sendMessage(new ConnectPlayerResponseMessage());
     }
