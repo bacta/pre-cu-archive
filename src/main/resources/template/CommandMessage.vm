@@ -1,0 +1,27 @@
+package $packageName;
+
+import com.ocdsoft.bacta.swg.object.ObjControllerId;
+import $objectControllerName;
+import com.ocdsoft.bacta.soe.util.SOECRC32;
+
+import java.nio.ByteBuffer;
+
+@ObjControllerId(0x${controllerid})
+public class $messageName implements ObjectController {
+
+    public $messageName() {
+
+    }
+
+    public $messageName(final ByteBuffer buffer) {
+
+    }
+
+    @Override
+    public void writeToBuffer(final ByteBuffer buffer) {
+    
+    }
+    /**
+     $messageStruct
+     */
+}

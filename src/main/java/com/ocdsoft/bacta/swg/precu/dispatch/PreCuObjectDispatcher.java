@@ -8,9 +8,9 @@ import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
 import com.ocdsoft.bacta.soe.controller.ObjController;
 import com.ocdsoft.bacta.soe.controller.ObjControllerId;
 import com.ocdsoft.bacta.soe.dispatch.ObjectDispatcher;
+import com.ocdsoft.bacta.soe.util.GameNetworkMessageTemplateWriter;
 import com.ocdsoft.bacta.soe.util.SOECRC32;
 import com.ocdsoft.bacta.soe.util.SoeMessageUtil;
-import com.ocdsoft.bacta.soe.factory.ObjControllerMessageFactory;
 import com.ocdsoft.bacta.swg.precu.message.object.ObjControllerMessage;
 import com.ocdsoft.bacta.swg.precu.object.SceneObject;
 import com.ocdsoft.bacta.swg.precu.object.tangible.TangibleObject;
@@ -35,23 +35,24 @@ import java.util.Set;
 
 public class PreCuObjectDispatcher implements ObjectDispatcher<ObjControllerMessage> {
 
-    private VelocityEngine ve;
-
     private static final Logger LOGGER = LoggerFactory.getLogger(PreCuObjectDispatcher.class);
 
     private TIntObjectMap<ControllerData> controllers = new TIntObjectHashMap<ControllerData>();
 
-    private ObjectService<SceneObject> objectService;
+    private final GameNetworkMessageTemplateWriter templateWriter;
 
-    private final ObjControllerMessageFactory<ObjControllerMessage> objControllerMessageFactory;
+    private ObjectService<SceneObject> objectService;
 
     private Injector injector;
 
     @Inject
-    public PreCuObjectDispatcher(Injector injector, ObjectService<SceneObject> objectService, final ObjControllerMessageFactory<ObjControllerMessage> objControllerMessageFactory) {
+    public PreCuObjectDispatcher(Injector injector,
+                                 final GameNetworkMessageTemplateWriter templateWriter,
+                                 ObjectService<SceneObject> objectService) {
+
         this.objectService = objectService;
+        this.templateWriter = templateWriter;
         this.injector = injector;
-        this.objControllerMessageFactory = objControllerMessageFactory;
         loadControllers();
     }
 
@@ -60,40 +61,31 @@ public class PreCuObjectDispatcher implements ObjectDispatcher<ObjControllerMess
 
         ControllerData controllerData = controllers.get(message.getMessageType());
 
-        if (controllerData == null) {
+        if (controllerData != null) {
 
-            ObjController controller = controllerData.getObjController();
-            handleMissingController(message.getMessageType(), message);
+            try {
+
+                ObjController controller = controllerData.getObjController();
+                TangibleObject invoker = objectService.get(message.getReceiver());
+
+                // Compare to ping tick on client? For disconnects?
+                //int tickCount = message.getTickCount();
+
+                LOGGER.trace("Routing to {}", controller.getClass().getSimpleName());
+                controller.handleIncoming(client, message, invoker);
+
+            } catch (Exception e) {
+                LOGGER.error("SOE Routing {}", message.getMessageType(), e);
+            }
+
+        } else {
+
+            templateWriter.createObjFiles(message.getMessageType(), message.getBuffer());
 
             LOGGER.error("Unhandled ObjController: '" + ObjectControllerNames.get(message.getMessageType()) + "' 0x" + Integer.toHexString(message.getMessageType()));
             LOGGER.error(SoeMessageUtil.bytesToHex(message));
             return;
         }
-
-        try {
-
-            ObjController controller = controllerData.getObjController();
-            TangibleObject invoker = objectService.get(message.getReceiver());
-
-            // Compare to ping tick on client? For disconnects?
-            //int tickCount = message.getTickCount();
-
-            ObjControllerMessage objMessage = objControllerMessageFactory.create(controllerData.getClazz(), message);
-
-            LOGGER.trace("Routing to " + controller.getClass().getSimpleName());
-            controller.handleIncoming(client, objMessage, invoker);
-
-        } catch (Exception e) {
-            LOGGER.error("SOE Routing", e);
-        }
-    }
-
-    private void handleMissingController(int opcode, ObjControllerMessage message) {
-
-        writeTemplates(opcode, message);
-
-        LOGGER.error("Unhandled ObjectControllerController: '" + ObjectControllerNames.get(opcode) + "' 0x" + Integer.toHexString(opcode));
-        LOGGER.error(SoeMessageUtil.bytesToHex(message));
     }
 
     private void loadControllers() {
@@ -133,67 +125,6 @@ public class PreCuObjectDispatcher implements ObjectDispatcher<ObjControllerMess
                 }
             } catch (Exception e) {
                 LOGGER.error("Unable to add controller", e);
-            }
-        }
-    }
-
-    private void writeTemplates(int opcode, ObjControllerMessage message) {
-
-        initializeTemplating();
-
-        String controllerName = ObjectControllerNames.get(opcode);
-
-        if (controllerName.isEmpty() || controllerName.equalsIgnoreCase("unknown")) {
-            LOGGER.error("Unknown message opcode: 0x" + Integer.toHexString(opcode));
-            return;
-        }
-
-        try {
-            writeController(controllerName, opcode);
-        } catch (Exception e) {
-            LOGGER.error("Unable to write controller", e);
-        }
-
-    }
-
-    private void writeController(String controllerName, int opcode) throws Exception {
-
-        String className = controllerName + "ObjController";
-
-        Template t = ve.getTemplate("swg/src/main/resources/templates/objectcontroller.vm");
-
-        VelocityContext context = new VelocityContext();
-
-        context.put("packageName", "com.ocdsoft.bacta.swg.server.game.controller.object");
-        context.put("controllerid", ("0x" + Integer.toHexString(opcode)));
-        context.put("className", className);
-        
-        /* lets render a template */
-
-        String outFileName = System.getProperty("user.dir") + "/swg/src/main/java/com/ocdsoft/bacta/swg/server/game/controller/object/" + className + ".java";
-        BufferedWriter writer = new BufferedWriter(new FileWriter(new File(outFileName)));
-
-        if (!ve.evaluate(context, writer, t.getName(), "")) {
-            throw new Exception("Failed to convert the template into class.");
-        }
-
-        t.merge(context, writer);
-
-        writer.flush();
-        writer.close();
-    }
-
-
-    private void initializeTemplating() {
-        synchronized (controllers) {
-            if (ve == null) {
-                ve = new VelocityEngine();
-                ve.setProperty(RuntimeConstants.RUNTIME_LOG_LOGSYSTEM_CLASS, LOGGER);
-                ve.setProperty(RuntimeConstants.RESOURCE_LOADER, "file");
-
-
-                ve.setProperty(RuntimeConstants.FILE_RESOURCE_LOADER_CACHE, "true");
-                ve.init();
             }
         }
     }

@@ -1,0 +1,23 @@
+package $packageName;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.ocdsoft.bacta.swg.object.ObjController;
+import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
+import $tangibleClassPath;
+import com.ocdsoft.bacta.swg.object.ObjControllerHandled;
+import ${messageClasspath}.${messageName};
+
+@ObjControllerHandled(${messageName}.class)
+public class $className implements ObjController<$messageName, TangibleObject> {
+
+	private static final Logger logger = LoggerFactory.getLogger(${className}.class);
+	
+	@Override
+	public void handleIncoming(final SoeUdpConnection connection, final $messageName message, final TangibleObject invoker) {
+
+		logger.warn("This object controller is not implemented");
+		
+	}
+}

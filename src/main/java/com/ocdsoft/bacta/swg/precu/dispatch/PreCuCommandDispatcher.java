@@ -6,31 +6,18 @@ import com.google.inject.Singleton;
 import com.ocdsoft.bacta.engine.service.object.ObjectService;
 import com.ocdsoft.bacta.engine.service.script.ScriptEngine;
 import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
-import com.ocdsoft.bacta.soe.controller.Command;
 import com.ocdsoft.bacta.soe.controller.CommandController;
 import com.ocdsoft.bacta.soe.dispatch.CommandDispatcher;
-import com.ocdsoft.bacta.swg.precu.message.object.ObjControllerMessage;
 import com.ocdsoft.bacta.swg.precu.message.object.command.CommandMessage;
 import com.ocdsoft.bacta.swg.precu.object.SceneObject;
 import com.ocdsoft.bacta.swg.precu.object.tangible.TangibleObject;
-import com.ocdsoft.bacta.swg.precu.util.CommandNames;
 
 import gnu.trove.map.TIntObjectMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
 import groovy.lang.Binding;
-import io.netty.buffer.ByteBuf;
-import org.apache.velocity.Template;
-import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
-import org.apache.velocity.runtime.RuntimeConstants;
-import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.nio.ByteBuffer;
 
 /**
  * This class is a controller and a dispatch
@@ -202,7 +189,7 @@ public class PreCuCommandDispatcher implements CommandDispatcher<CommandMessage,
 
         String className = commandName + "CommandController";
 
-        Template t = ve.getTemplate("swg/src/main/resources/templates/commandcontroller.vm");
+        Template t = ve.getTemplate("swg/src/main/resources/templates/CommandController.vm");
 
         VelocityContext context = new VelocityContext();
 

@@ -21,7 +21,11 @@ public class ObjControllerMessage extends GameNetworkMessage {
         super(0, 0);
     }
 
-	public ObjControllerMessage(final int flag, final int messageType, final long receiver, final int tickCount) {
+	public ObjControllerMessage(final int flag,
+                                final int messageType,
+                                final long receiver,
+                                final int tickCount) {
+
 		super(0x05, 0x80CE5E46);
 
 		this.flag = flag;
