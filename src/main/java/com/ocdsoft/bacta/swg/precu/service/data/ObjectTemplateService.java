@@ -5,20 +5,24 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.ocdsoft.bacta.swg.precu.object.SceneObject;
 import com.ocdsoft.bacta.swg.shared.lang.NotImplementedException;
-import com.ocdsoft.bacta.swg.shared.object.template.*;
 import com.ocdsoft.bacta.swg.shared.slot.ArrangementDescriptorList;
 import com.ocdsoft.bacta.swg.shared.slot.SlotDescriptorList;
+import com.ocdsoft.bacta.swg.template.ObjectTemplate;
+import com.ocdsoft.bacta.swg.template.ObjectTemplateList;
 import com.ocdsoft.bacta.tre.TreeFile;
 import gnu.trove.map.TIntObjectMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
-
-import java.util.Collection;
+import net.spy.memcached.compat.log.Logger;
+import net.spy.memcached.compat.log.LoggerFactory;
 
 /**
  * Created by crush on 3/4/14.
  */
 @Singleton
 public class ObjectTemplateService extends ObjectTemplateList {
+
+    private final static Logger LOGGER = LoggerFactory.getLogger(ObjectTemplateService.class);
+
     private final TIntObjectMap<Class<? extends SceneObject>> templateClassMap = new TIntObjectHashMap<>();
     private final SlotDescriptorList slotDescriptorList;
     private final ArrangementDescriptorList arrangementDescriptorList;
@@ -156,7 +160,7 @@ public class ObjectTemplateService extends ObjectTemplateList {
     public <T extends SceneObject> Class<T> getClassForTemplate(ObjectTemplate template) {
         Class<T> clazz = (Class<T>) templateClassMap.get(template.getId());
         if(clazz == null) {
-            logger.error("Template with class mapping: " + Iff.getChunkName(template.getId()));
+            LOGGER.error("Template with class mapping: " + Iff.getChunkName(template.getId()));
             throw new NotImplementedException();
         }
         return clazz;

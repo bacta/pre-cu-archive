@@ -6,12 +6,12 @@ import com.ocdsoft.bacta.engine.conf.BactaConfiguration;
 import com.ocdsoft.bacta.soe.service.ContainerService;
 import com.ocdsoft.bacta.swg.precu.message.scene.UpdateContainmentMessage;
 import com.ocdsoft.bacta.swg.precu.object.SceneObject;
+import com.ocdsoft.bacta.swg.precu.object.template.shared.SharedObjectTemplate;
 import com.ocdsoft.bacta.swg.precu.service.object.SceneObjectService;
 import com.ocdsoft.bacta.swg.shared.container.Container;
 import com.ocdsoft.bacta.swg.shared.container.ContainerErrorCode;
 import com.ocdsoft.bacta.swg.shared.container.SlottedContainer;
 import com.ocdsoft.bacta.swg.shared.container.VolumeContainer;
-import com.ocdsoft.bacta.swg.shared.object.template.SharedObjectTemplate;
 import com.ocdsoft.bacta.swg.shared.slot.*;
 import gnu.trove.list.TIntList;
 import org.slf4j.Logger;
@@ -69,10 +69,11 @@ public class PreCuContainerService implements ContainerService<SceneObject> {
         try {
             SharedObjectTemplate shot = (SharedObjectTemplate) object.getObjectTemplate();
 
-            switch (shot.getContainerType()) {
+            switch ((int) shot.getContainerType().value) { //LOL
                 case 1:
                 case 5:
-                    SlotDescriptor slotDescriptor = shot.getSlotDescriptor();
+                    final String slotDescriptorFilename = shot.getSlotDescriptorFilename();
+                    final SlotDescriptor slotDescriptor = slotDescriptorList.fetch(slotDescriptorFilename);
 
                     if (slotDescriptor != null) {
                         TIntList slots = slotDescriptor.getSlots();
@@ -80,7 +81,7 @@ public class PreCuContainerService implements ContainerService<SceneObject> {
                         containerField.set(object, new SlottedContainer(object, slots));
                         logger.trace("Creating a slotted container for object <{}> with template <{}> and <{}> slots.",
                                 object.getNetworkId(),
-                                shot.getName(),
+                                shot.getResourceName(),
                                 slots.size());
                     }
                     break;
@@ -91,19 +92,19 @@ public class PreCuContainerService implements ContainerService<SceneObject> {
                     containerField.set(object, new VolumeContainer(object, volumeLimit));
                     logger.trace("Creating a volume container for object <{}> with template >{}> and a volume limit of <{}>.",
                             object.getNetworkId(),
-                            shot.getName(),
+                            shot.getResourceName(),
                             volumeLimit);
                     break;
                 case 0:
                     logger.trace("Object <{}> with template <{}> doesn't have a container because its container type is 0.",
                             object.getNetworkId(),
-                            shot.getName());
+                            shot.getResourceName());
                     break;
                 default:
                     logger.error("INVALID container type <{}> specified for object <{}> with template <{}>.",
                             shot.getContainerType(),
                             object.getNetworkId(),
-                            shot.getName());
+                            shot.getResourceName());
                     break;
             }
         } catch (IllegalAccessException ex) {
@@ -198,9 +199,9 @@ public class PreCuContainerService implements ContainerService<SceneObject> {
 
             logger.debug("Transferring object <{}> with template <{}> to container of item <{}> with template <{}>.",
                     item.getNetworkId(),
-                    item.getObjectTemplate().getName(),
+                    item.getObjectTemplate().getResourceName(),
                     container.getNetworkId(),
-                    container.getObjectTemplate().getName());
+                    container.getObjectTemplate().getResourceName());
 
             //Make sure we can add the item to the container.
             int error = mayAdd(container, item);
@@ -248,7 +249,7 @@ public class PreCuContainerService implements ContainerService<SceneObject> {
                     if (container.isSlotEmpty(slotId)) {
                         logger.trace("Slotting item <{}> with template <{}> into slot <{}:{}>.",
                                 item.getNetworkId(),
-                                item.getObjectTemplate().getName(),
+                                item.getObjectTemplate().getResourceName(),
                                 slotIdManager.getSlotName(slotId),
                                 slotId);
                         arrangementIndex = i;

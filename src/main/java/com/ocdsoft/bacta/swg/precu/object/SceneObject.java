@@ -9,6 +9,7 @@ import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
 import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
 import com.ocdsoft.bacta.soe.object.Transform;
 import com.ocdsoft.bacta.soe.util.SoeMessageUtil;
+import com.ocdsoft.bacta.swg.localization.StringId;
 import com.ocdsoft.bacta.swg.precu.event.ObservableGameEvent;
 import com.ocdsoft.bacta.swg.precu.message.object.ObjControllerMessage;
 import com.ocdsoft.bacta.swg.precu.message.scene.*;
@@ -18,9 +19,7 @@ import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaFloat;
 import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaInt;
 import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaVariable;
 import com.ocdsoft.bacta.swg.shared.container.Container;
-import com.ocdsoft.bacta.swg.localization.StringId;
-import com.ocdsoft.bacta.swg.shared.object.template.ObjectTemplate;
-
+import com.ocdsoft.bacta.swg.template.ObjectTemplate;
 import lombok.Getter;
 import lombok.Setter;
 import org.magnos.steer.vec.Vec3;

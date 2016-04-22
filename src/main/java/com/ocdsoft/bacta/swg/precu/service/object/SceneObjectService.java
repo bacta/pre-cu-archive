@@ -2,6 +2,7 @@ package com.ocdsoft.bacta.swg.precu.service.object;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import com.ocdsoft.bacta.engine.conf.BactaConfiguration;
 import com.ocdsoft.bacta.engine.data.GameDatabaseConnector;
 import com.ocdsoft.bacta.engine.service.object.ObjectService;
 import com.ocdsoft.bacta.engine.service.objectfactory.NetworkObjectFactory;
@@ -9,8 +10,7 @@ import com.ocdsoft.bacta.swg.precu.object.SceneObject;
 import com.ocdsoft.bacta.swg.precu.object.archive.OnDirtyCallbackBase;
 import com.ocdsoft.bacta.swg.precu.service.container.PreCuContainerService;
 import com.ocdsoft.bacta.swg.precu.service.data.ObjectTemplateService;
-import com.ocdsoft.bacta.swg.shared.object.template.ObjectTemplate;
-import com.ocdsoft.bacta.engine.conf.BactaConfiguration;
+import com.ocdsoft.bacta.swg.template.ObjectTemplate;
 import gnu.trove.map.TLongObjectMap;
 import gnu.trove.map.hash.TLongObjectHashMap;
 import org.slf4j.Logger;
@@ -26,7 +26,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Singleton
 public class SceneObjectService implements ObjectService<SceneObject> {
 
-    private final Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(SceneObjectService.class);
 
     private TLongObjectMap<SceneObject> internalMap = new TLongObjectHashMap<>();
 
