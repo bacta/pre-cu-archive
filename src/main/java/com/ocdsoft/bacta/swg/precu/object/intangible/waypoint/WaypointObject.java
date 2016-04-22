@@ -1,7 +1,7 @@
 package com.ocdsoft.bacta.swg.precu.object.intangible.waypoint;
 
 import com.ocdsoft.bacta.engine.lang.UnicodeString;
-import com.ocdsoft.bacta.soe.object.Location;
+import com.ocdsoft.bacta.swg.shared.math.Vector;
 import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaBoolean;
 import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaLong;
 import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaString;
@@ -16,7 +16,7 @@ public final class WaypointObject extends IntangibleObject {
     } //'WAYP'
 
     //WaypointObjectMessage03
-    private final AutoDeltaVariable<Location> location = new AutoDeltaVariable<>(new Location(), sharedPackage);
+    private final AutoDeltaVariable<Vector> location = new AutoDeltaVariable<>(new Vector(), sharedPackage);
     private final AutoDeltaBoolean waypointActive = new AutoDeltaBoolean(false, sharedPackage);
     private final AutoDeltaLong cell = new AutoDeltaLong(0L, sharedPackage);
     private final AutoDeltaString planetName = new AutoDeltaString("", sharedPackage);

@@ -21,6 +21,7 @@ import com.ocdsoft.bacta.engine.service.objectfactory.NetworkObjectFactory;
 import com.ocdsoft.bacta.engine.service.objectfactory.impl.GuiceNetworkObjectFactory;
 import com.ocdsoft.bacta.engine.service.scheduler.SchedulerService;
 import com.ocdsoft.bacta.engine.service.scheduler.TaskSchedulerService;
+import com.ocdsoft.bacta.soe.connection.ConnectionServerAgent;
 import com.ocdsoft.bacta.soe.data.couchbase.CouchbaseAccountService;
 import com.ocdsoft.bacta.soe.data.couchbase.CouchbaseConnectionDatabaseConnector;
 import com.ocdsoft.bacta.soe.data.couchbase.CouchbaseGameDatabaseConnector;
@@ -36,10 +37,11 @@ import com.ocdsoft.bacta.swg.name.NameService;
 import com.ocdsoft.bacta.swg.precu.chat.ChatServerAgent;
 import com.ocdsoft.bacta.swg.precu.chat.ChatServerAgentFactory;
 import com.ocdsoft.bacta.swg.precu.chat.xmpp.XmppChatServerAgent;
+import com.ocdsoft.bacta.swg.precu.connection.PreCuConnectionServerAgent;
 import com.ocdsoft.bacta.swg.precu.data.GameObjectSerializer;
 import com.ocdsoft.bacta.swg.precu.dispatch.PreCuCommandDispatcher;
 import com.ocdsoft.bacta.swg.precu.dispatch.PreCuObjectDispatcher;
-import com.ocdsoft.bacta.swg.precu.factory.PreCuGameNetworkMessageFactory;
+import com.ocdsoft.bacta.soe.factory.GameNetworkMessageFactoryImpl;
 import com.ocdsoft.bacta.swg.precu.message.object.ObjControllerMessage;
 import com.ocdsoft.bacta.swg.precu.message.object.command.CommandMessage;
 import com.ocdsoft.bacta.swg.precu.object.SceneObject;
@@ -76,9 +78,10 @@ public class PreCuModule extends AbstractModule implements Module {
         bind(SoeMessageDispatcher.class).to(SoeDevMessageDispatcher.class);
         bind(new TypeLiteral<ContainerService<SceneObject>>(){}).to(PreCuContainerService.class);
         bind(new TypeLiteral<CommandDispatcher<CommandMessage, TangibleObject>>(){}).to(PreCuCommandDispatcher.class);
-        bind(GameNetworkMessageDispatcher.class).to(GameNetworkDevMessageDispatcher.class);
-        bind(GameNetworkMessageFactory.class).to(PreCuGameNetworkMessageFactory.class);
+        bind(GameNetworkMessageFactory.class).to(GameNetworkMessageFactoryImpl.class);
         bind(new TypeLiteral<ObjectDispatcher<ObjControllerMessage>>(){}).to(PreCuObjectDispatcher.class);
+
+        bind(ConnectionServerAgent.class).to(PreCuConnectionServerAgent.class);
 
         install(new FactoryModuleBuilder()
                 .implement(ChatServerAgent.class, XmppChatServerAgent.class)

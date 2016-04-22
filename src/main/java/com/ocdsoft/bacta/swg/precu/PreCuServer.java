@@ -5,6 +5,7 @@ import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.core.util.StatusPrinter;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.ocdsoft.bacta.soe.io.udp.game.GameServer;
 import com.ocdsoft.bacta.soe.io.udp.login.LoginServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,9 +31,10 @@ public final class PreCuServer {
         //injector = Guice.createInjector(new PreCuModule(), new ChatModule());
         //injector.getInstance(ChatServer.class);
 
-        //injector = Guice.createInjector(new PreCuModule(), new GameModule(), new PingModule());
-        //injector.getInstance(GameServer.class);
-
+        injector = Guice.createInjector(new PreCuModule(), new GameModule(), new PingModule());
+        GameServer gameServer = injector.getInstance(GameServer.class);
+        Thread gameThread = new Thread(gameServer);
+        gameThread.start();
 
     }
 }

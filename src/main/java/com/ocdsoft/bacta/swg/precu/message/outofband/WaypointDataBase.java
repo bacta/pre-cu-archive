@@ -2,20 +2,20 @@ package com.ocdsoft.bacta.swg.precu.message.outofband;
 
 import com.ocdsoft.bacta.engine.buffer.ByteBufferSerializable;
 import com.ocdsoft.bacta.engine.utils.BufferUtil;
-import com.ocdsoft.bacta.soe.object.Location;
+import com.ocdsoft.bacta.swg.shared.math.Vector;
 
 import java.nio.ByteBuffer;
 
 public class WaypointDataBase implements ByteBufferSerializable {
 
     private int appearanceNameCrc;
-    private Location location;
+    private Vector location;
     private String name;
     private byte color;
     private boolean active;
 
     public WaypointDataBase() {
-        location = new Location();
+        location = new Vector();
     }
 
     @Override

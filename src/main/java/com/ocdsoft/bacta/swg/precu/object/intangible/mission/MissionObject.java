@@ -11,11 +11,11 @@ public class MissionObject extends IntangibleObject {
 
     //private final AutoDeltaVariable<StringId> description;
     //private final AutoDeltaInt difficulty;
-    //private final AutoDeltaVariable<Location> location;
+    //private final AutoDeltaVariable<Vector> location;
     //private final AutoDeltaVariable<UnicodeString> missionCreator;
     //private final AutoDeltaInt missionType;
     //private final AutoDeltaInt reward;
-    //private final AutoDeltaVariable<Location> startLocation;
+    //private final AutoDeltaVariable<Vector> startLocation;
     //private final AutoDeltaInt targetAppearanceCrc;
     //private final AutoDeltaVariable<StringId> title;
     //private final AutoDeltaInt status;

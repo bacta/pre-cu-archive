@@ -10,7 +10,7 @@ public class PingModule extends AbstractModule implements Module {
 
 	@Override
 	protected void configure() {
-        bind(ServerState.class).to(PingServerState.class);
+
 	}
 
 }

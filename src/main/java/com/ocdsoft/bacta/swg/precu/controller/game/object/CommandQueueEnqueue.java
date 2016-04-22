@@ -1,19 +1,13 @@
 package com.ocdsoft.bacta.swg.precu.controller.game.object;
 
 import com.google.inject.Inject;
-import com.google.inject.Injector;
-import com.ocdsoft.bacta.engine.service.object.ObjectService;
 import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
-import com.ocdsoft.bacta.soe.controller.CommandController;
+import com.ocdsoft.bacta.soe.controller.MessageHandled;
 import com.ocdsoft.bacta.soe.controller.ObjController;
-import com.ocdsoft.bacta.soe.controller.ObjControllerHandled;
-import com.ocdsoft.bacta.soe.controller.ObjControllerId;
 import com.ocdsoft.bacta.soe.dispatch.CommandDispatcher;
 import com.ocdsoft.bacta.swg.precu.message.object.ObjControllerMessage;
 import com.ocdsoft.bacta.swg.precu.message.object.command.CommandMessage;
-import com.ocdsoft.bacta.swg.precu.object.SceneObject;
 import com.ocdsoft.bacta.swg.precu.object.tangible.TangibleObject;
-import org.apache.velocity.app.VelocityEngine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,7 +19,7 @@ import org.slf4j.LoggerFactory;
  * @author kyle
  */
 
-@ObjControllerId(id = 0x116, handles = ObjControllerMessage.class)
+@MessageHandled(id = 0x116, handles = ObjControllerMessage.class)
 public class CommandQueueEnqueue implements ObjController<CommandMessage, TangibleObject> {
     private static final Logger LOGGER = LoggerFactory.getLogger(CommandQueueEnqueue.class);
 
@@ -52,7 +46,7 @@ public class CommandQueueEnqueue implements ObjController<CommandMessage, Tangib
         int error = 0;    //TODO: State errors
         int action = 0;
 
-        commandDispatcher.dispatchCommand(commandHash, connection, message, invoker);
+        commandDispatcher.dispatchCommand(connection, message, invoker);
 
 //        CommandQueueRemove remove = new CommandQueueRemove(
 //                invoker.getNetworkId(),

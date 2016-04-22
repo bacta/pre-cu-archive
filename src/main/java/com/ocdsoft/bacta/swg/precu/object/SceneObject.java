@@ -7,7 +7,7 @@ import com.ocdsoft.bacta.engine.lang.UnicodeString;
 import com.ocdsoft.bacta.engine.object.NetworkObject;
 import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
 import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
-import com.ocdsoft.bacta.soe.object.Transform;
+import com.ocdsoft.bacta.swg.shared.math.Transform;
 import com.ocdsoft.bacta.soe.util.SoeMessageUtil;
 import com.ocdsoft.bacta.swg.localization.StringId;
 import com.ocdsoft.bacta.swg.precu.event.ObservableGameEvent;

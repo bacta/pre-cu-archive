@@ -6,5 +6,5 @@ package com.ocdsoft.bacta.swg.precu.message.messagequeue;
 public class MessageQueueQuestTaskLocationMessage {
     //string questName
     //int taskId
-    //Location location
+    //Vector location
 }
