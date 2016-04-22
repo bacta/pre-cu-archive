@@ -21,7 +21,6 @@ import com.ocdsoft.bacta.engine.service.objectfactory.NetworkObjectFactory;
 import com.ocdsoft.bacta.engine.service.objectfactory.impl.GuiceNetworkObjectFactory;
 import com.ocdsoft.bacta.engine.service.scheduler.SchedulerService;
 import com.ocdsoft.bacta.engine.service.scheduler.TaskSchedulerService;
-import com.ocdsoft.bacta.soe.controller.CommandController;
 import com.ocdsoft.bacta.soe.data.couchbase.CouchbaseAccountService;
 import com.ocdsoft.bacta.soe.data.couchbase.CouchbaseConnectionDatabaseConnector;
 import com.ocdsoft.bacta.soe.data.couchbase.CouchbaseGameDatabaseConnector;
@@ -40,9 +39,7 @@ import com.ocdsoft.bacta.swg.precu.chat.xmpp.XmppChatServerAgent;
 import com.ocdsoft.bacta.swg.precu.data.GameObjectSerializer;
 import com.ocdsoft.bacta.swg.precu.dispatch.PreCuCommandDispatcher;
 import com.ocdsoft.bacta.swg.precu.dispatch.PreCuObjectDispatcher;
-import com.ocdsoft.bacta.soe.factory.ObjControllerMessageFactory;
 import com.ocdsoft.bacta.swg.precu.factory.PreCuGameNetworkMessageFactory;
-import com.ocdsoft.bacta.swg.precu.factory.PreCuObjControllerMessageFactory;
 import com.ocdsoft.bacta.swg.precu.message.object.ObjControllerMessage;
 import com.ocdsoft.bacta.swg.precu.message.object.command.CommandMessage;
 import com.ocdsoft.bacta.swg.precu.object.SceneObject;
@@ -91,7 +88,6 @@ public class PreCuModule extends AbstractModule implements Module {
         bind(NameService.class).to(DefaultNameService.class);
 
         // Pre-cu specific bindings
-        bind(new TypeLiteral<ObjControllerMessageFactory<ObjControllerMessage>>(){}).to(PreCuObjControllerMessageFactory.class);
         bind(ZoneMap.class).to(PlanetMap.class);
 
 
