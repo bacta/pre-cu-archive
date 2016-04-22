@@ -2,7 +2,7 @@ package com.ocdsoft.bacta.swg.precu.object.template.shared;
 
 import bacta.iff.Iff;
 import com.google.common.base.Preconditions;
-import com.ocdsoft.bacta.swg.foundation.Tag;
+import com.ocdsoft.bacta.swg.shared.foundation.Tag;
 import com.ocdsoft.bacta.swg.template.ObjectTemplate;
 import com.ocdsoft.bacta.swg.template.ObjectTemplateList;
 import com.ocdsoft.bacta.swg.utility.BoolParam;
@@ -895,7 +895,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
         public static Postures from(final long value) {
             for (final Postures e : values)
                 if (e.value == value) return e;
-            throw new IllegalArgumentException(String.format("Unknown value %d for enum Postures", value));
+            throw new IllegalArgumentException(String.format("UNKNOWN value %d for enum Postures", value));
         }
     }
 
@@ -930,7 +930,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
         public static Race from(final long value) {
             for (final Race e : values)
                 if (e.value == value) return e;
-            throw new IllegalArgumentException(String.format("Unknown value %d for enum Race", value));
+            throw new IllegalArgumentException(String.format("UNKNOWN value %d for enum Race", value));
         }
     }
 
@@ -957,7 +957,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
         public static Niche from(final long value) {
             for (final Niche e : values)
                 if (e.value == value) return e;
-            throw new IllegalArgumentException(String.format("Unknown value %d for enum Niche", value));
+            throw new IllegalArgumentException(String.format("UNKNOWN value %d for enum Niche", value));
         }
     }
 
@@ -976,7 +976,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
         public static Gender from(final long value) {
             for (final Gender e : values)
                 if (e.value == value) return e;
-            throw new IllegalArgumentException(String.format("Unknown value %d for enum Gender", value));
+            throw new IllegalArgumentException(String.format("UNKNOWN value %d for enum Gender", value));
         }
     }
 
@@ -1221,7 +1221,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
         public static Species from(final long value) {
             for (final Species e : values)
                 if (e.value == value) return e;
-            throw new IllegalArgumentException(String.format("Unknown value %d for enum Species", value));
+            throw new IllegalArgumentException(String.format("UNKNOWN value %d for enum Species", value));
         }
     }
 
@@ -1239,7 +1239,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
         public static MovementTypes from(final long value) {
             for (final MovementTypes e : values)
                 if (e.value == value) return e;
-            throw new IllegalArgumentException(String.format("Unknown value %d for enum MovementTypes", value));
+            throw new IllegalArgumentException(String.format("UNKNOWN value %d for enum MovementTypes", value));
         }
     }
 

@@ -2,7 +2,7 @@ package com.ocdsoft.bacta.swg.precu.object.template.server;
 
 import bacta.iff.Iff;
 import com.google.common.base.Preconditions;
-import com.ocdsoft.bacta.swg.foundation.Tag;
+import com.ocdsoft.bacta.swg.shared.foundation.Tag;
 import com.ocdsoft.bacta.swg.template.ObjectTemplate;
 import com.ocdsoft.bacta.swg.template.ObjectTemplateList;
 import com.ocdsoft.bacta.swg.utility.FloatParam;
@@ -616,7 +616,7 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
         public static WeaponType from(final long value) {
             for (final WeaponType e : values)
                 if (e.value == value) return e;
-            throw new IllegalArgumentException(String.format("Unknown value %d for enum WeaponType", value));
+            throw new IllegalArgumentException(String.format("UNKNOWN value %d for enum WeaponType", value));
         }
     }
 
@@ -635,7 +635,7 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
         public static AttribModDecaySpecial from(final long value) {
             for (final AttribModDecaySpecial e : values)
                 if (e.value == value) return e;
-            throw new IllegalArgumentException(String.format("Unknown value %d for enum AttribModDecaySpecial", value));
+            throw new IllegalArgumentException(String.format("UNKNOWN value %d for enum AttribModDecaySpecial", value));
         }
     }
 
@@ -654,7 +654,7 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
         public static AttackType from(final long value) {
             for (final AttackType e : values)
                 if (e.value == value) return e;
-            throw new IllegalArgumentException(String.format("Unknown value %d for enum AttackType", value));
+            throw new IllegalArgumentException(String.format("UNKNOWN value %d for enum AttackType", value));
         }
     }
 

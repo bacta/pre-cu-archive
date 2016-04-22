@@ -2,8 +2,8 @@ package com.ocdsoft.bacta.swg.precu.object.template.server;
 
 import bacta.iff.Iff;
 import com.google.common.base.Preconditions;
-import com.ocdsoft.bacta.swg.foundation.Tag;
 import com.ocdsoft.bacta.swg.localization.StringId;
+import com.ocdsoft.bacta.swg.shared.foundation.Tag;
 import com.ocdsoft.bacta.swg.template.ObjectTemplate;
 import com.ocdsoft.bacta.swg.template.ObjectTemplateList;
 import com.ocdsoft.bacta.swg.utility.*;
@@ -138,7 +138,7 @@ public class ServerIntangibleObjectTemplate extends ServerObjectTemplate {
         public static IngredientType from(final long value) {
             for (final IngredientType e : values)
                 if (e.value == value) return e;
-            throw new IllegalArgumentException(String.format("Unknown value %d for enum IngredientType", value));
+            throw new IllegalArgumentException(String.format("UNKNOWN value %d for enum IngredientType", value));
         }
     }
 
