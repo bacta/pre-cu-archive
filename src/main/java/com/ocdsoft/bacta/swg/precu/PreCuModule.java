@@ -65,6 +65,7 @@ public class PreCuModule extends AbstractModule implements Module {
         bind(NetworkSerializer.class).to(GameObjectSerializer.class);
             bind(new TypeLiteral<ObjectService<ServerObject>>() {
             }).to(SceneObjectService.class);
+        
         bind(new TypeLiteral<AccountService<SoeAccount>>(){}).to(new TypeLiteral<CouchbaseAccountService<SoeAccount>>(){});
         bind(Account.class).to(SoeAccount.class);
             bind(new TypeLiteral<ObjectService<ServerObject>>() {

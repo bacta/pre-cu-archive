@@ -24,19 +24,18 @@ public class ObjectTemplateService extends ObjectTemplateList {
     private final static Logger LOGGER = LoggerFactory.getLogger(ObjectTemplateService.class);
 
     private final TIntObjectMap<Class<? extends ServerObject>> templateClassMap = new TIntObjectHashMap<>();
-    private final SlotDescriptorList slotDescriptorList;
+    //private final SlotDescriptorList slotDescriptorList;
     private final ArrangementDescriptorList arrangementDescriptorList;
 
     @Inject
     public ObjectTemplateService(
             SetupSharedFile sharedFile,
-            TreeFile treeFile,
-            SlotDescriptorList slotDescriptorList,
+            //SlotDescriptorList slotDescriptorList,
             ArrangementDescriptorList arrangementDescriptorList) {
 
         //super(treeFile);
 
-        this.slotDescriptorList = slotDescriptorList;
+        //this.slotDescriptorList = slotDescriptorList;
         this.arrangementDescriptorList = arrangementDescriptorList;
 
         configureBindings();
