@@ -4,10 +4,8 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.ocdsoft.bacta.engine.conf.BactaConfiguration;
 import com.ocdsoft.bacta.engine.network.client.ServerStatus;
-import com.ocdsoft.bacta.soe.ServerState;
 import com.ocdsoft.bacta.soe.ServerType;
 import com.ocdsoft.bacta.soe.io.udp.game.GameServerState;
-import com.ocdsoft.bacta.soe.object.ClusterEntryItem;
 import com.ocdsoft.bacta.swg.precu.object.login.ClusterEntry;
 import lombok.Data;
 
@@ -27,5 +25,15 @@ public final class PreCuGameServerState implements GameServerState<ClusterEntry>
         this.serverStatus = ServerStatus.LOADING;
         this.serverType = ServerType.GAME;
         clusterEntry = new ClusterEntry(configuration);
+    }
+
+    public void setServerStatus(ServerStatus serverStatus) {
+        this.serverStatus = serverStatus;
+        clusterEntry.getStatusClusterData().setStatus(serverStatus);
+    }
+
+    @Override
+    public void setOnlineUsers(int onlineUsers) {
+        clusterEntry.getStatusClusterData().setPopulationOnline(onlineUsers);
     }
 }

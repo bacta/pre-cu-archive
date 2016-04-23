@@ -2,7 +2,7 @@ package com.ocdsoft.bacta.swg.precu.object.tangible;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
-import com.ocdsoft.bacta.swg.precu.message.scene.UpdateTransformMessage;
+import com.ocdsoft.bacta.swg.precu.message.game.scene.UpdateTransformMessage;
 import com.ocdsoft.bacta.swg.precu.object.ServerObject;
 import com.ocdsoft.bacta.swg.precu.object.archive.delta.*;
 import com.ocdsoft.bacta.swg.precu.zone.Zone;

@@ -1,4 +1,4 @@
-package com.ocdsoft.bacta.swg.precu.message.outofband;
+package com.ocdsoft.bacta.swg.precu.message.game.outofband;
 
 import com.ocdsoft.bacta.engine.buffer.ByteBufferSerializable;
 import com.ocdsoft.bacta.engine.utils.BufferUtil;

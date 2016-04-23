@@ -1,4 +1,4 @@
-package com.ocdsoft.bacta.swg.precu.message.messagequeue;
+package com.ocdsoft.bacta.swg.precu.message.game.messagequeue;
 
 import java.util.List;
 

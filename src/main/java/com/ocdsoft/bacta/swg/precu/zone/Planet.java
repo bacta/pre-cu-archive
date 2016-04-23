@@ -1,6 +1,6 @@
 package com.ocdsoft.bacta.swg.precu.zone;
 
-import com.ocdsoft.bacta.swg.precu.message.scene.SceneObjectDestroyMessage;
+import com.ocdsoft.bacta.swg.precu.message.game.scene.SceneObjectDestroyMessage;
 import com.ocdsoft.bacta.swg.precu.object.tangible.TangibleObject;
 import lombok.Getter;
 import org.magnos.steer.spatial.CollisionCallback;

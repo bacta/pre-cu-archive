@@ -13,7 +13,7 @@ import com.ocdsoft.bacta.soe.factory.GameNetworkMessageFactory;
 import com.ocdsoft.bacta.soe.util.CommandNames;
 import com.ocdsoft.bacta.soe.util.GameNetworkMessageTemplateWriter;
 import com.ocdsoft.bacta.soe.util.SoeMessageUtil;
-import com.ocdsoft.bacta.swg.precu.message.object.command.CommandMessage;
+import com.ocdsoft.bacta.swg.precu.message.game.object.command.CommandMessage;
 import com.ocdsoft.bacta.swg.precu.object.ServerObject;
 import com.ocdsoft.bacta.swg.precu.object.tangible.TangibleObject;
 import gnu.trove.map.TIntObjectMap;

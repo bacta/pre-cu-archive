@@ -1,6 +1,6 @@
-package com.ocdsoft.bacta.swg.precu.message.scene;
+package com.ocdsoft.bacta.swg.precu.message.game.scene;
 
-import com.ocdsoft.bacta.swg.precu.message.object.ObjControllerMessage;
+import com.ocdsoft.bacta.swg.precu.message.game.object.ObjControllerMessage;
 import com.ocdsoft.bacta.swg.precu.object.tangible.TangibleObject;
 import org.magnos.steer.vec.Vec3;
 

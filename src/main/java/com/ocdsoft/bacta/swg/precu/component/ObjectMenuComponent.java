@@ -1,6 +1,6 @@
 package com.ocdsoft.bacta.swg.precu.component;
 
-import com.ocdsoft.bacta.swg.precu.message.messagequeue.MessageQueueObjectMenuRequest;
+import com.ocdsoft.bacta.swg.precu.message.game.messagequeue.MessageQueueObjectMenuRequest;
 import com.ocdsoft.bacta.swg.precu.object.ServerObject;
 
 /**

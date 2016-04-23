@@ -10,7 +10,7 @@ import com.ocdsoft.bacta.soe.dispatch.ControllerData;
 import com.ocdsoft.bacta.soe.dispatch.ObjectDispatcher;
 import com.ocdsoft.bacta.soe.util.GameNetworkMessageTemplateWriter;
 import com.ocdsoft.bacta.soe.util.SoeMessageUtil;
-import com.ocdsoft.bacta.swg.precu.message.object.ObjControllerMessage;
+import com.ocdsoft.bacta.swg.precu.message.game.object.ObjControllerMessage;
 import com.ocdsoft.bacta.swg.precu.object.ServerObject;
 import com.ocdsoft.bacta.swg.precu.object.tangible.TangibleObject;
 import com.ocdsoft.bacta.swg.shared.util.ObjectControllerNames;

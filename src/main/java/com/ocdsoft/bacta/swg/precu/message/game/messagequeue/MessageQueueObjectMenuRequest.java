@@ -1,10 +1,9 @@
-package com.ocdsoft.bacta.swg.precu.message.messagequeue;
+package com.ocdsoft.bacta.swg.precu.message.game.messagequeue;
 
 import com.ocdsoft.bacta.engine.buffer.ByteBufferSerializable;
 import com.ocdsoft.bacta.engine.utils.BufferUtil;
 import lombok.Getter;
 
-import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Collection;

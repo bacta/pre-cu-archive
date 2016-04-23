@@ -1,10 +1,8 @@
-package com.ocdsoft.bacta.swg.precu.message.object.command;
+package com.ocdsoft.bacta.swg.precu.message.game.object.command;
 
-import com.ocdsoft.bacta.engine.buffer.ByteBufferSerializable;
 import com.ocdsoft.bacta.engine.lang.UnicodeString;
-import com.ocdsoft.bacta.swg.precu.message.object.ObjControllerMessage;
+import com.ocdsoft.bacta.swg.precu.message.game.object.ObjControllerMessage;
 import lombok.Data;
-import lombok.Getter;
 
 /**
  * Created by kyle on 4/17/2016.

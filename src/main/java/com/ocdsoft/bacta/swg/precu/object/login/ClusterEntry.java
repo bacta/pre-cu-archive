@@ -2,11 +2,12 @@ package com.ocdsoft.bacta.swg.precu.object.login;
 
 import com.google.inject.Inject;
 import com.ocdsoft.bacta.engine.buffer.ByteBufferSerializable;
-import com.ocdsoft.bacta.engine.buffer.ByteBufferWritable;
 import com.ocdsoft.bacta.engine.conf.BactaConfiguration;
 import com.ocdsoft.bacta.engine.utils.BufferUtil;
 import com.ocdsoft.bacta.soe.object.ClusterEntryItem;
 import com.ocdsoft.bacta.soe.util.SoeMessageUtil;
+import com.ocdsoft.bacta.swg.precu.message.login.LoginClusterStatus;
+import com.ocdsoft.bacta.swg.precu.message.login.LoginEnumCluster;
 import lombok.Getter;
 
 import java.nio.ByteBuffer;
@@ -24,10 +25,10 @@ public class ClusterEntry implements ClusterEntryItem, ByteBufferSerializable, C
     private String name;
 
     @Getter
-    private ClusterStatus clusterStatus;
+    private LoginClusterStatus.ClusterData statusClusterData;
 
     @Getter
-    private ClusterData clusterData;
+    private LoginEnumCluster.ClusterData clusterData;
 
     /**
      * This constructor is used in Cluster Service to load constructors from
@@ -38,14 +39,14 @@ public class ClusterEntry implements ClusterEntryItem, ByteBufferSerializable, C
         secret = "";
         name = "";
 
-        clusterStatus = null;
+        clusterData = null;
         clusterData = null;
     }
     
     @Override
     public void setId(int id) {
         this.id = id;
-        clusterStatus.setId(id);
+        statusClusterData.setId(id);
         clusterData.setId(id);
     }
 
@@ -55,8 +56,8 @@ public class ClusterEntry implements ClusterEntryItem, ByteBufferSerializable, C
         secret = configuration.getString("Bacta/GameServer", "Secret");
         name = configuration.getString("Bacta/GameServer", "Name");
 
-        clusterStatus = new ClusterStatus(configuration);
-        clusterData = new ClusterData(id, name);
+        statusClusterData = new LoginClusterStatus.ClusterData(configuration);
+        clusterData = new LoginEnumCluster.ClusterData(id, name);
     }
 
     /**
@@ -70,11 +71,11 @@ public class ClusterEntry implements ClusterEntryItem, ByteBufferSerializable, C
         secret = (String) clusterInfo.get("secret");
         name = (String) clusterInfo.get("name");
 
-        Map<String, Object> status = (Map<String, Object>) clusterInfo.get("clusterStatus");
+        Map<String, Object> status = (Map<String, Object>) clusterInfo.get("statusClusterData");
         status.put("id", id);
 
-        clusterStatus = new ClusterStatus(status);
-        clusterData = new ClusterData(id, name);
+        statusClusterData = new LoginClusterStatus.ClusterData(status);
+        clusterData = new LoginEnumCluster.ClusterData(id, name);
     }
 
     @Override
@@ -88,8 +89,12 @@ public class ClusterEntry implements ClusterEntryItem, ByteBufferSerializable, C
         secret = BufferUtil.getAscii(buffer);
         name = BufferUtil.getAscii(buffer);
 
-        clusterStatus = new ClusterStatus(buffer);
-        clusterData = new ClusterData(buffer);
+        statusClusterData = new LoginClusterStatus.ClusterData();
+        statusClusterData.readFromBuffer(buffer);
+
+        clusterData = new LoginEnumCluster.ClusterData();
+        clusterData.readFromBuffer(buffer);
+
     }
 
     @Override
@@ -98,7 +103,7 @@ public class ClusterEntry implements ClusterEntryItem, ByteBufferSerializable, C
         BufferUtil.putAscii(buffer, secret);
         BufferUtil.putAscii(buffer, name);
 
-        clusterStatus.writeToBuffer(buffer);
+        statusClusterData.writeToBuffer(buffer);
         clusterData.writeToBuffer(buffer);
     }
 
@@ -117,7 +122,7 @@ public class ClusterEntry implements ClusterEntryItem, ByteBufferSerializable, C
         int result = id;
         result = 31 * result + (secret != null ? secret.hashCode() : 0);
         result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (clusterStatus != null ? clusterStatus.hashCode() : 0);
+        result = 31 * result + (clusterData != null ? clusterData.hashCode() : 0);
         result = 31 * result + (clusterData != null ? clusterData.hashCode() : 0);
         return result;
     }
@@ -127,8 +132,8 @@ public class ClusterEntry implements ClusterEntryItem, ByteBufferSerializable, C
         return "ClusterEntry{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", status='" + clusterStatus.getStatus() + '\'' +
-                ", timezone='" + SoeMessageUtil.getTimeZoneOffsetFromValue(clusterStatus.getTimeZone()) + '\'' +
+                ", status='" + statusClusterData.getStatus() + '\'' +
+                ", timezone='" + SoeMessageUtil.getTimeZoneOffsetFromValue(clusterData.getTimezone()) + '\'' +
                 '}';
     }
 

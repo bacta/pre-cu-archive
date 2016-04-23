@@ -1,6 +1,6 @@
 package com.ocdsoft.bacta.swg.precu.object.intangible.player;
 
-import com.ocdsoft.bacta.swg.precu.message.outofband.WaypointDataBase;
+import com.ocdsoft.bacta.swg.precu.message.game.outofband.WaypointDataBase;
 import com.ocdsoft.bacta.swg.precu.object.MatchMakingId;
 import com.ocdsoft.bacta.swg.precu.object.archive.delta.*;
 import com.ocdsoft.bacta.swg.precu.object.intangible.IntangibleObject;

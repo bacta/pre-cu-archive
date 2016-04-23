@@ -1,4 +1,4 @@
-package com.ocdsoft.bacta.swg.precu.message.outofband;
+package com.ocdsoft.bacta.swg.precu.message.game.outofband;
 
 import io.netty.util.CharsetUtil;
 import org.slf4j.Logger;

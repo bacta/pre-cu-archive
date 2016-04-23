@@ -1,4 +1,4 @@
-package com.ocdsoft.bacta.swg.precu.message.outofband;
+package com.ocdsoft.bacta.swg.precu.message.game.outofband;
 
 /**
  * Created by crush on 9/3/2014.

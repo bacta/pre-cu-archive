@@ -1,4 +1,4 @@
-package com.ocdsoft.bacta.swg.precu.message.messagequeue;
+package com.ocdsoft.bacta.swg.precu.message.game.messagequeue;
 
 /**
  * Created by crush on 8/14/2014.

@@ -1,4 +1,4 @@
-package com.ocdsoft.bacta.swg.precu.message.object;
+package com.ocdsoft.bacta.swg.precu.message.game.object;
 
 import com.ocdsoft.bacta.swg.precu.object.ServerObject;
 

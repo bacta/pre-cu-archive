@@ -1,4 +1,4 @@
-package com.ocdsoft.bacta.swg.precu.message.scene;
+package com.ocdsoft.bacta.swg.precu.message.game.scene;
 
 import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
 import com.ocdsoft.bacta.swg.precu.object.ServerObject;
