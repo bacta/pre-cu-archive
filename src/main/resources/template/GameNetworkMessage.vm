@@ -7,7 +7,7 @@ import com.ocdsoft.bacta.soe.util.SOECRC32;
 import java.nio.ByteBuffer;
 
 /**
-  *  $messageStruct
+  $messageStruct
   */
 public class $messageName extends GameNetworkMessage {
 
@@ -20,12 +20,12 @@ public class $messageName extends GameNetworkMessage {
     }
 
     @Override
-    public void writeToBuffer(ByteBuffer buffer) {
+    public void readFromBuffer(ByteBuffer buffer) {
 
     }
 
     @Override
-    public void readFromBuffer(ByteBuffer buffer) {
+    public void writeToBuffer(ByteBuffer buffer) {
 
     }
 }
