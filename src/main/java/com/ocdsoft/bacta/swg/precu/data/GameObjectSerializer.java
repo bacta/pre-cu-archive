@@ -7,14 +7,14 @@ import com.google.inject.Singleton;
 import com.ocdsoft.bacta.engine.lang.UnicodeString;
 import com.ocdsoft.bacta.serialization.KryoSerializer;
 import com.ocdsoft.bacta.serialization.NetworkObjectSerializer;
+import com.ocdsoft.bacta.swg.localization.StringId;
 import com.ocdsoft.bacta.swg.precu.object.GroupInviter;
 import com.ocdsoft.bacta.swg.precu.object.MatchMakingId;
-import com.ocdsoft.bacta.swg.precu.object.SceneObject;
+import com.ocdsoft.bacta.swg.precu.object.ServerObject;
 import com.ocdsoft.bacta.swg.precu.object.archive.delta.*;
 import com.ocdsoft.bacta.swg.precu.object.intangible.player.PlayerObject;
 import com.ocdsoft.bacta.swg.precu.object.tangible.TangibleObject;
 import com.ocdsoft.bacta.swg.precu.object.tangible.creature.CreatureObject;
-import com.ocdsoft.bacta.swg.localization.StringId;
 import de.javakaffee.kryoserializers.BitSetSerializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,7 +45,7 @@ public final class GameObjectSerializer extends KryoSerializer {
         kryo.register(HashMap.class);
         kryo.register(TreeSet.class);
 
-        kryo.register(SceneObject.class, injector.getInstance(NetworkObjectSerializer.class));
+        kryo.register(ServerObject.class, injector.getInstance(NetworkObjectSerializer.class));
         kryo.register(TangibleObject.class, injector.getInstance(NetworkObjectSerializer.class));
         kryo.register(CreatureObject.class, injector.getInstance(NetworkObjectSerializer.class));
         kryo.register(PlayerObject.class, injector.getInstance(NetworkObjectSerializer.class));

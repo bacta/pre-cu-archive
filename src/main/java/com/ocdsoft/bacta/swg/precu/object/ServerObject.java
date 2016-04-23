@@ -4,10 +4,8 @@ import com.ocdsoft.bacta.engine.lang.ObservableEventRegistry;
 import com.ocdsoft.bacta.engine.lang.Observer;
 import com.ocdsoft.bacta.engine.lang.Subject;
 import com.ocdsoft.bacta.engine.lang.UnicodeString;
-import com.ocdsoft.bacta.engine.object.NetworkObject;
 import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
 import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
-import com.ocdsoft.bacta.swg.shared.math.Transform;
 import com.ocdsoft.bacta.soe.util.SoeMessageUtil;
 import com.ocdsoft.bacta.swg.localization.StringId;
 import com.ocdsoft.bacta.swg.precu.event.ObservableGameEvent;
@@ -19,7 +17,9 @@ import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaFloat;
 import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaInt;
 import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaVariable;
 import com.ocdsoft.bacta.swg.shared.container.Container;
-import com.ocdsoft.bacta.swg.template.ObjectTemplate;
+import com.ocdsoft.bacta.swg.shared.object.GameObject;
+import com.ocdsoft.bacta.swg.shared.template.ObjectTemplate;
+import com.ocdsoft.bacta.swg.shared.utility.Transform;
 import lombok.Getter;
 import lombok.Setter;
 import org.magnos.steer.vec.Vec3;
@@ -29,12 +29,13 @@ import org.slf4j.LoggerFactory;
 import javax.vecmath.Quat4f;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 
-public abstract class SceneObject extends NetworkObject implements Subject<ObservableGameEvent> {
+public abstract class ServerObject extends GameObject implements Subject<ObservableGameEvent> {
 
-    private static final transient Logger LOGGER = LoggerFactory.getLogger(SceneObject.class);
+    private static final transient Logger LOGGER = LoggerFactory.getLogger(ServerObject.class);
 
     public int getOpcode() {
         return 0x53434E4F;
@@ -50,7 +51,7 @@ public abstract class SceneObject extends NetworkObject implements Subject<Obser
     @Getter
     protected Transform transform = new Transform();
 
-    protected transient Container<SceneObject> container;
+    protected transient Container container;
 
     @Getter
     @Setter
@@ -107,7 +108,7 @@ public abstract class SceneObject extends NetworkObject implements Subject<Obser
 
     protected final transient ObservableEventRegistry<ObservableGameEvent> eventRegistry;
 
-    protected SceneObject() {
+    protected ServerObject() {
         listeners = Collections.synchronizedSet(new HashSet<>());
         connection = null;
 
@@ -138,11 +139,15 @@ public abstract class SceneObject extends NetworkObject implements Subject<Obser
         sendBaselinesTo(theirConnection);
 
         if (container != null) {
-            for (SceneObject containedObject : container) {
+            final Iterator<GameObject> containerIterator = container.iterator();
+
+            while (containerIterator.hasNext()) {
                 //TODO: Remove this if block when refactored to have contents list on Container.
                 //At that point, there should never be a null object in the list...
-                if (containedObject != null)
-                    containedObject.sendTo(theirConnection);
+
+                //TODO: we aren't sending contained objects now...
+                //if (containedObject != null)
+                //containedObject.sendTo(theirConnection);
             }
         }
 

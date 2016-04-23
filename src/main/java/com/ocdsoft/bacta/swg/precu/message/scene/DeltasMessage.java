@@ -1,7 +1,7 @@
 package com.ocdsoft.bacta.swg.precu.message.scene;
 
 import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
-import com.ocdsoft.bacta.swg.precu.object.SceneObject;
+import com.ocdsoft.bacta.swg.precu.object.ServerObject;
 import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaByteStream;
 
 import java.nio.ByteBuffer;
@@ -13,7 +13,7 @@ public final class DeltasMessage extends GameNetworkMessage {
     private final AutoDeltaByteStream stream;
     private final byte packageId;
 
-    public DeltasMessage(SceneObject object, AutoDeltaByteStream stream, int packageId) {
+    public DeltasMessage(ServerObject object, AutoDeltaByteStream stream, int packageId) {
         super(0x05, 0x12862153);
 
         this.objectId = object.getNetworkId();

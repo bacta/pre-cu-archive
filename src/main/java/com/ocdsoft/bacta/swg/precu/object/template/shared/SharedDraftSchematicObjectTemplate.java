@@ -4,12 +4,12 @@ import bacta.iff.Iff;
 import com.google.common.base.Preconditions;
 import com.ocdsoft.bacta.swg.localization.StringId;
 import com.ocdsoft.bacta.swg.shared.foundation.Tag;
-import com.ocdsoft.bacta.swg.template.ObjectTemplate;
-import com.ocdsoft.bacta.swg.template.ObjectTemplateList;
-import com.ocdsoft.bacta.swg.utility.IntegerParam;
-import com.ocdsoft.bacta.swg.utility.StringIdParam;
-import com.ocdsoft.bacta.swg.utility.StringParam;
-import com.ocdsoft.bacta.swg.utility.StructParam;
+import com.ocdsoft.bacta.swg.shared.template.ObjectTemplate;
+import com.ocdsoft.bacta.swg.shared.template.ObjectTemplateList;
+import com.ocdsoft.bacta.swg.shared.utility.IntegerParam;
+import com.ocdsoft.bacta.swg.shared.utility.StringIdParam;
+import com.ocdsoft.bacta.swg.shared.utility.StringParam;
+import com.ocdsoft.bacta.swg.shared.utility.StructParam;
 import lombok.Getter;
 
 import java.util.ArrayList;

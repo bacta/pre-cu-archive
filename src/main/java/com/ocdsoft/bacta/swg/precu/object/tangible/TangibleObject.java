@@ -3,7 +3,7 @@ package com.ocdsoft.bacta.swg.precu.object.tangible;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import com.ocdsoft.bacta.swg.precu.message.scene.UpdateTransformMessage;
-import com.ocdsoft.bacta.swg.precu.object.SceneObject;
+import com.ocdsoft.bacta.swg.precu.object.ServerObject;
 import com.ocdsoft.bacta.swg.precu.object.archive.delta.*;
 import com.ocdsoft.bacta.swg.precu.zone.Zone;
 import lombok.Getter;
@@ -13,7 +13,7 @@ import org.magnos.steer.vec.Vec3;
 
 import java.util.Set;
 
-public class TangibleObject extends SceneObject implements SteerSubject<Vec3> {
+public class TangibleObject extends ServerObject implements SteerSubject<Vec3> {
 
     public static final class Conditions {
         public final static int onOff = 0x1;

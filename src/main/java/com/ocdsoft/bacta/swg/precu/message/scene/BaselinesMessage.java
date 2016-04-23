@@ -1,7 +1,7 @@
 package com.ocdsoft.bacta.swg.precu.message.scene;
 
 import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
-import com.ocdsoft.bacta.swg.precu.object.SceneObject;
+import com.ocdsoft.bacta.swg.precu.object.ServerObject;
 import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaByteStream;
 
 import java.nio.ByteBuffer;
@@ -13,7 +13,7 @@ public final class BaselinesMessage extends GameNetworkMessage {
     private final AutoDeltaByteStream stream;
     private final byte packageId;
 
-    public BaselinesMessage(SceneObject object, AutoDeltaByteStream stream, int packageId) {
+    public BaselinesMessage(ServerObject object, AutoDeltaByteStream stream, int packageId) {
         super(0x05, 0x68A75F0C);
 
         this.objectId = object.getNetworkId();

@@ -1,9 +1,9 @@
 package com.ocdsoft.bacta.swg.precu.message.scene;
 
 import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
-import com.ocdsoft.bacta.swg.shared.math.Transform;
 import com.ocdsoft.bacta.swg.precu.object.tangible.TangibleObject;
 import com.ocdsoft.bacta.swg.shared.util.Quaternion;
+import com.ocdsoft.bacta.swg.shared.utility.Transform;
 
 import java.nio.ByteBuffer;
 

@@ -1,6 +1,6 @@
 package com.ocdsoft.bacta.swg.precu.object.archive.delta;
 
-import com.ocdsoft.bacta.swg.shared.lang.NotImplementedException;
+import com.ocdsoft.bacta.swg.lang.NotImplementedException;
 import com.ocdsoft.bacta.swg.util.ByteAppender;
 import lombok.Getter;
 

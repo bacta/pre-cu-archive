@@ -3,12 +3,12 @@ package com.ocdsoft.bacta.swg.precu.service.data;
 import bacta.iff.Iff;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.ocdsoft.bacta.swg.precu.object.SceneObject;
-import com.ocdsoft.bacta.swg.shared.lang.NotImplementedException;
-import com.ocdsoft.bacta.swg.shared.slot.ArrangementDescriptorList;
-import com.ocdsoft.bacta.swg.shared.slot.SlotDescriptorList;
-import com.ocdsoft.bacta.swg.template.ObjectTemplate;
-import com.ocdsoft.bacta.swg.template.ObjectTemplateList;
+import com.ocdsoft.bacta.swg.lang.NotImplementedException;
+import com.ocdsoft.bacta.swg.precu.object.ServerObject;
+import com.ocdsoft.bacta.swg.shared.container.ArrangementDescriptorList;
+import com.ocdsoft.bacta.swg.shared.container.SlotDescriptorList;
+import com.ocdsoft.bacta.swg.shared.template.ObjectTemplate;
+import com.ocdsoft.bacta.swg.shared.template.ObjectTemplateList;
 import com.ocdsoft.bacta.tre.TreeFile;
 import gnu.trove.map.TIntObjectMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
@@ -23,7 +23,7 @@ public class ObjectTemplateService extends ObjectTemplateList {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(ObjectTemplateService.class);
 
-    private final TIntObjectMap<Class<? extends SceneObject>> templateClassMap = new TIntObjectHashMap<>();
+    private final TIntObjectMap<Class<? extends ServerObject>> templateClassMap = new TIntObjectHashMap<>();
     private final SlotDescriptorList slotDescriptorList;
     private final ArrangementDescriptorList arrangementDescriptorList;
 
@@ -106,7 +106,7 @@ public class ObjectTemplateService extends ObjectTemplateList {
 //            //templateClassMap.put(ObjectTemplate.SFOT, SharedFactoryObjectTemplate.class);
 //            templateClassMap.put(ObjectTemplate.ID_SGLD, GuildObject.class);
 //            templateClassMap.put(ObjectTemplate.ID_SGRP, GroupObject.class);
-//            templateClassMap.put(ObjectTemplate.ID_SHOT, SceneObject.class);
+//            templateClassMap.put(ObjectTemplate.ID_SHOT, ServerObject.class);
 //            templateClassMap.put(ObjectTemplate.ID_SIOT, InstallationObject.class);
 //            templateClassMap.put(ObjectTemplate.ID_SITN, IntangibleObject.class);
 //            //templateClassMap.put(ObjectTemplate.SMSC, SharedManufactureSchematicObjectTemplate.class);
@@ -157,7 +157,7 @@ public class ObjectTemplateService extends ObjectTemplateList {
      * @return Class object related to the specified type
      * @throws NotImplementedException when chunk type is not mapped to a class
      */
-    public <T extends SceneObject> Class<T> getClassForTemplate(ObjectTemplate template) {
+    public <T extends ServerObject> Class<T> getClassForTemplate(ObjectTemplate template) {
         Class<T> clazz = (Class<T>) templateClassMap.get(template.getId());
         if(clazz == null) {
             LOGGER.error("Template with class mapping: " + Iff.getChunkName(template.getId()));

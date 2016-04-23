@@ -1,13 +1,11 @@
 package com.ocdsoft.bacta.swg.precu.dispatch;
 
 import com.google.inject.Inject;
-import com.google.inject.Injector;
 import com.google.inject.Singleton;
 import com.ocdsoft.bacta.engine.service.object.ObjectService;
 import com.ocdsoft.bacta.engine.service.script.ScriptEngine;
 import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
 import com.ocdsoft.bacta.soe.controller.CommandController;
-import com.ocdsoft.bacta.soe.controller.ObjController;
 import com.ocdsoft.bacta.soe.dispatch.ClasspathControllerLoader;
 import com.ocdsoft.bacta.soe.dispatch.CommandDispatcher;
 import com.ocdsoft.bacta.soe.dispatch.ControllerData;
@@ -16,11 +14,9 @@ import com.ocdsoft.bacta.soe.util.CommandNames;
 import com.ocdsoft.bacta.soe.util.GameNetworkMessageTemplateWriter;
 import com.ocdsoft.bacta.soe.util.SoeMessageUtil;
 import com.ocdsoft.bacta.swg.precu.message.object.command.CommandMessage;
-import com.ocdsoft.bacta.swg.precu.object.SceneObject;
+import com.ocdsoft.bacta.swg.precu.object.ServerObject;
 import com.ocdsoft.bacta.swg.precu.object.tangible.TangibleObject;
-
 import gnu.trove.map.TIntObjectMap;
-import gnu.trove.map.hash.TIntObjectHashMap;
 import groovy.lang.Binding;
 import org.apache.velocity.app.VelocityEngine;
 import org.slf4j.Logger;
@@ -47,7 +43,7 @@ public class PreCuCommandDispatcher implements CommandDispatcher<CommandMessage,
 
     private final GameNetworkMessageFactory gameNetworkMessageFactory;
 
-    private final ObjectService<SceneObject> objectService;
+    private final ObjectService<ServerObject> objectService;
 
     private final ScriptEngine scriptEngine;
 
@@ -57,7 +53,7 @@ public class PreCuCommandDispatcher implements CommandDispatcher<CommandMessage,
     public PreCuCommandDispatcher(final ClasspathControllerLoader<CommandController> controllerLoader,
                                   final GameNetworkMessageFactory gameNetworkMessageFactory,
                                   final GameNetworkMessageTemplateWriter templateWriter,
-                                  final ObjectService<SceneObject> objectService,
+                                  final ObjectService<ServerObject> objectService,
                                   final ScriptEngine scriptEngine) {
 
         this.gameNetworkMessageFactory = gameNetworkMessageFactory;

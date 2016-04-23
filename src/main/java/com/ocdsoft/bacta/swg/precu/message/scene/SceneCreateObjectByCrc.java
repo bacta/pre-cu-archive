@@ -1,8 +1,8 @@
 package com.ocdsoft.bacta.swg.precu.message.scene;
 
 import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
-import com.ocdsoft.bacta.swg.shared.math.Transform;
-import com.ocdsoft.bacta.swg.precu.object.SceneObject;
+import com.ocdsoft.bacta.swg.precu.object.ServerObject;
+import com.ocdsoft.bacta.swg.shared.utility.Transform;
 
 import java.nio.ByteBuffer;
 
@@ -24,7 +24,7 @@ public final class SceneCreateObjectByCrc extends GameNetworkMessage {
         hyperspace = 0;
     }
 
-    public SceneCreateObjectByCrc(SceneObject scno) {
+    public SceneCreateObjectByCrc(ServerObject scno) {
         super(0x05, 0xFE89DDEA);
 
         networkId = scno.getNetworkId();

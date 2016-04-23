@@ -1,7 +1,7 @@
 package com.ocdsoft.bacta.swg.precu.message.scene;
 
 import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
-import com.ocdsoft.bacta.swg.precu.object.SceneObject;
+import com.ocdsoft.bacta.swg.precu.object.ServerObject;
 
 import java.nio.ByteBuffer;
 
@@ -19,7 +19,7 @@ public class SceneEndBaselines extends GameNetworkMessage {
 
     }
 
-	public SceneEndBaselines(SceneObject scno) {
+	public SceneEndBaselines(ServerObject scno) {
 		this(scno.getNetworkId());
 	}
 

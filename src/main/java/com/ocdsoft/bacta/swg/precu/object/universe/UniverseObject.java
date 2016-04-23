@@ -1,9 +1,9 @@
 package com.ocdsoft.bacta.swg.precu.object.universe;
 
-import com.ocdsoft.bacta.swg.precu.object.SceneObject;
+import com.ocdsoft.bacta.swg.precu.object.ServerObject;
 
 /**
  * Created by crush on 9/3/2014.
  */
-public abstract class UniverseObject extends SceneObject {
+public abstract class UniverseObject extends ServerObject {
 }

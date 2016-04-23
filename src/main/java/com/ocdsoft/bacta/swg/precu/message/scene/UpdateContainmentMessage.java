@@ -1,7 +1,7 @@
 package com.ocdsoft.bacta.swg.precu.message.scene;
 
 import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
-import com.ocdsoft.bacta.swg.precu.object.SceneObject;
+import com.ocdsoft.bacta.swg.precu.object.ServerObject;
 
 import java.nio.ByteBuffer;
 
@@ -11,7 +11,7 @@ public class UpdateContainmentMessage extends GameNetworkMessage {
     private long containerId;
     private int slotArrangement;
 
-    public UpdateContainmentMessage(SceneObject object) {
+    public UpdateContainmentMessage(ServerObject object) {
         super(0x04, 0x56CBDE9E);
 
         this.objectId = object.getNetworkId();

@@ -1,7 +1,7 @@
 package com.ocdsoft.bacta.swg.precu.message.scene;
 
 import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
-import com.ocdsoft.bacta.swg.precu.object.SceneObject;
+import com.ocdsoft.bacta.swg.precu.object.ServerObject;
 
 import java.nio.ByteBuffer;
 
@@ -10,7 +10,7 @@ public class SceneObjectDestroyMessage extends GameNetworkMessage {
 	private long objectId;
     private byte unknown;
 
-	public SceneObjectDestroyMessage(SceneObject scno) {
+	public SceneObjectDestroyMessage(ServerObject scno) {
 		super(0x03, 0x4D45D504);
 
         this.objectId = scno.getNetworkId();

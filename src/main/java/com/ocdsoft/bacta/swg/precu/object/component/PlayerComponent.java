@@ -22,7 +22,7 @@ public class PlayerComponent { //implements GhostComponent {
 //				server->getZoneServer()->getGuildManager();
 //		guildManager->sendBaselinesTo(_this.get());
 //
-//		ManagedReference<SceneObject*> grandParent = getRootParent();
+//		ManagedReference<ServerObject*> grandParent = getRootParent();
 //
 //		if (grandParent != NULL) {
 //			grandParent->sendTo(_this.get(), true);
@@ -33,7 +33,7 @@ public class PlayerComponent { //implements GhostComponent {
 //		= getCloseObjects();
 //
 //		for (int i = 0; i < closeObjects->size(); ++i) {
-//			SceneObject* obj = cast<SceneObject*> (closeObjects->get(i).get());
+//			ServerObject* obj = cast<ServerObject*> (closeObjects->get(i).get());
 //
 //			if (obj != _this.get()) {
 //				if (obj != grandParent) {

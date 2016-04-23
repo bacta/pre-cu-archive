@@ -1,7 +1,6 @@
 package com.ocdsoft.bacta.swg.precu.message.object;
 
-import com.ocdsoft.bacta.swg.precu.message.object.ObjControllerMessage;
-import com.ocdsoft.bacta.swg.precu.object.SceneObject;
+import com.ocdsoft.bacta.swg.precu.object.ServerObject;
 
 import java.nio.ByteBuffer;
 
@@ -12,7 +11,7 @@ public class PostureMessage extends ObjControllerMessage {
 
     private byte postureId;
 
-    public PostureMessage(SceneObject scno, byte postureId) {
+    public PostureMessage(ServerObject scno, byte postureId) {
         super(0x1B, 0x131, scno.getNetworkId(), 0);
 
 

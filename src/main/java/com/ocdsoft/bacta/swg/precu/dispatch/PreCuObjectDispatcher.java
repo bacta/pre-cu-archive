@@ -1,20 +1,17 @@
 package com.ocdsoft.bacta.swg.precu.dispatch;
 
 import com.google.inject.Inject;
-import com.google.inject.Injector;
 import com.google.inject.Singleton;
 import com.ocdsoft.bacta.engine.service.object.ObjectService;
 import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
-import com.ocdsoft.bacta.soe.controller.GameNetworkMessageController;
 import com.ocdsoft.bacta.soe.controller.ObjController;
 import com.ocdsoft.bacta.soe.dispatch.ClasspathControllerLoader;
 import com.ocdsoft.bacta.soe.dispatch.ControllerData;
 import com.ocdsoft.bacta.soe.dispatch.ObjectDispatcher;
-import com.ocdsoft.bacta.soe.factory.GameNetworkMessageFactory;
 import com.ocdsoft.bacta.soe.util.GameNetworkMessageTemplateWriter;
 import com.ocdsoft.bacta.soe.util.SoeMessageUtil;
 import com.ocdsoft.bacta.swg.precu.message.object.ObjControllerMessage;
-import com.ocdsoft.bacta.swg.precu.object.SceneObject;
+import com.ocdsoft.bacta.swg.precu.object.ServerObject;
 import com.ocdsoft.bacta.swg.precu.object.tangible.TangibleObject;
 import com.ocdsoft.bacta.swg.shared.util.ObjectControllerNames;
 import gnu.trove.map.TIntObjectMap;
@@ -27,14 +24,14 @@ public final class PreCuObjectDispatcher implements ObjectDispatcher<ObjControll
     private static final Logger LOGGER = LoggerFactory.getLogger(PreCuObjectDispatcher.class);
 
     private final GameNetworkMessageTemplateWriter templateWriter;
-    private ObjectService<SceneObject> objectService;
+    private ObjectService<ServerObject> objectService;
     private final TIntObjectMap<ControllerData> controllers;
 
 
     @Inject
     public PreCuObjectDispatcher(final ClasspathControllerLoader<ObjController> controllerLoader,
                                  final GameNetworkMessageTemplateWriter templateWriter,
-                                 final ObjectService<SceneObject> objectService) {
+                                 final ObjectService<ServerObject> objectService) {
 
         this.objectService = objectService;
         this.templateWriter = templateWriter;

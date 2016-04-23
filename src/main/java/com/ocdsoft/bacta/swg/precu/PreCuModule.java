@@ -5,7 +5,6 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Module;
 import com.google.inject.Singleton;
 import com.google.inject.TypeLiteral;
-import com.google.inject.assistedinject.FactoryModuleBuilder;
 import com.ocdsoft.bacta.engine.conf.BactaConfiguration;
 import com.ocdsoft.bacta.engine.conf.ini.IniBactaConfiguration;
 import com.ocdsoft.bacta.engine.data.ConnectionDatabaseConnector;
@@ -26,27 +25,25 @@ import com.ocdsoft.bacta.soe.data.couchbase.CouchbaseAccountService;
 import com.ocdsoft.bacta.soe.data.couchbase.CouchbaseConnectionDatabaseConnector;
 import com.ocdsoft.bacta.soe.data.couchbase.CouchbaseGameDatabaseConnector;
 import com.ocdsoft.bacta.soe.data.couchbase.CouchbaseNetworkIdGenerator;
-import com.ocdsoft.bacta.soe.dispatch.*;
+import com.ocdsoft.bacta.soe.dispatch.CommandDispatcher;
+import com.ocdsoft.bacta.soe.dispatch.ObjectDispatcher;
+import com.ocdsoft.bacta.soe.dispatch.SoeDevMessageDispatcher;
+import com.ocdsoft.bacta.soe.dispatch.SoeMessageDispatcher;
 import com.ocdsoft.bacta.soe.factory.GameNetworkMessageFactory;
+import com.ocdsoft.bacta.soe.factory.GameNetworkMessageFactoryImpl;
 import com.ocdsoft.bacta.soe.object.account.SoeAccount;
-import com.ocdsoft.bacta.soe.service.ContainerService;
 import com.ocdsoft.bacta.soe.service.SWGSessionKeyService;
 import com.ocdsoft.bacta.soe.service.SessionKeyService;
 import com.ocdsoft.bacta.swg.name.DefaultNameService;
 import com.ocdsoft.bacta.swg.name.NameService;
-import com.ocdsoft.bacta.swg.precu.chat.ChatServerAgent;
-import com.ocdsoft.bacta.swg.precu.chat.ChatServerAgentFactory;
-import com.ocdsoft.bacta.swg.precu.chat.xmpp.XmppChatServerAgent;
 import com.ocdsoft.bacta.swg.precu.connection.PreCuConnectionServerAgent;
 import com.ocdsoft.bacta.swg.precu.data.GameObjectSerializer;
 import com.ocdsoft.bacta.swg.precu.dispatch.PreCuCommandDispatcher;
 import com.ocdsoft.bacta.swg.precu.dispatch.PreCuObjectDispatcher;
-import com.ocdsoft.bacta.soe.factory.GameNetworkMessageFactoryImpl;
 import com.ocdsoft.bacta.swg.precu.message.object.ObjControllerMessage;
 import com.ocdsoft.bacta.swg.precu.message.object.command.CommandMessage;
-import com.ocdsoft.bacta.swg.precu.object.SceneObject;
+import com.ocdsoft.bacta.swg.precu.object.ServerObject;
 import com.ocdsoft.bacta.swg.precu.object.tangible.TangibleObject;
-import com.ocdsoft.bacta.swg.precu.service.container.PreCuContainerService;
 import com.ocdsoft.bacta.swg.precu.service.object.SceneObjectService;
 import com.ocdsoft.bacta.swg.precu.zone.PlanetMap;
 import com.ocdsoft.bacta.swg.precu.zone.ZoneMap;
@@ -66,26 +63,24 @@ public class PreCuModule extends AbstractModule implements Module {
         bind(NetworkIdGenerator.class).to(CouchbaseNetworkIdGenerator.class);
         bind(PasswordHash.class).to(Pbkdf2SaltedPasswordHash.class);
         bind(NetworkSerializer.class).to(GameObjectSerializer.class);
-        bind(new TypeLiteral<ObjectService<SceneObject>>() {}).to(SceneObjectService.class);
+            bind(new TypeLiteral<ObjectService<ServerObject>>() {
+            }).to(SceneObjectService.class);
         bind(new TypeLiteral<AccountService<SoeAccount>>(){}).to(new TypeLiteral<CouchbaseAccountService<SoeAccount>>(){});
         bind(Account.class).to(SoeAccount.class);
-        bind(new TypeLiteral<ObjectService<SceneObject>>(){}).to(SceneObjectService.class);
+            bind(new TypeLiteral<ObjectService<ServerObject>>() {
+            }).to(SceneObjectService.class);
         bind(ObjectService.class).to(SceneObjectService.class);
 
         // SOE Level Bindings
         bind(SessionKeyService.class).to(SWGSessionKeyService.class);
         bind(new TypeLiteral<ObjectDispatcher<ObjControllerMessage>>(){}).to(PreCuObjectDispatcher.class);
         bind(SoeMessageDispatcher.class).to(SoeDevMessageDispatcher.class);
-        bind(new TypeLiteral<ContainerService<SceneObject>>(){}).to(PreCuContainerService.class);
+            //bind(new TypeLiteral<ContainerService<ServerObject>>(){}).to(PreCuContainerService.class);
         bind(new TypeLiteral<CommandDispatcher<CommandMessage, TangibleObject>>(){}).to(PreCuCommandDispatcher.class);
         bind(GameNetworkMessageFactory.class).to(GameNetworkMessageFactoryImpl.class);
         bind(new TypeLiteral<ObjectDispatcher<ObjControllerMessage>>(){}).to(PreCuObjectDispatcher.class);
 
         bind(ConnectionServerAgent.class).to(PreCuConnectionServerAgent.class);
-
-        install(new FactoryModuleBuilder()
-                .implement(ChatServerAgent.class, XmppChatServerAgent.class)
-                .build(ChatServerAgentFactory.class));
 
         // SWG Level Bindings
         bind(NameService.class).to(DefaultNameService.class);

@@ -1,6 +1,6 @@
 package com.ocdsoft.bacta.swg.precu.object.archive.delta;
 
-import com.ocdsoft.bacta.swg.precu.object.SceneObject;
+import com.ocdsoft.bacta.swg.precu.object.ServerObject;
 import com.ocdsoft.bacta.swg.precu.object.archive.AutoByteStream;
 import com.ocdsoft.bacta.swg.precu.object.archive.OnDirtyCallbackBase;
 
@@ -12,11 +12,11 @@ import java.util.TreeSet;
  * Created by crush on 8/14/2014.
  */
 public class AutoDeltaByteStream extends AutoByteStream {
-    private transient final SceneObject parent;
+    private transient final ServerObject parent;
     private transient final Set<AutoDeltaVariableBase> dirtyList = new TreeSet<>();
     private transient OnDirtyCallbackBase onDirtyCallback;
 
-    public AutoDeltaByteStream(SceneObject parent) {
+    public AutoDeltaByteStream(ServerObject parent) {
         this.parent = parent;
     }
 

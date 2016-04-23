@@ -1,12 +1,10 @@
 package com.ocdsoft.bacta.swg.precu.object.intangible.player;
 
-import com.ocdsoft.bacta.swg.precu.chat.ChatServerAgent;
 import com.ocdsoft.bacta.swg.precu.message.outofband.WaypointDataBase;
 import com.ocdsoft.bacta.swg.precu.object.MatchMakingId;
 import com.ocdsoft.bacta.swg.precu.object.archive.delta.*;
 import com.ocdsoft.bacta.swg.precu.object.intangible.IntangibleObject;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -17,8 +15,6 @@ public final class PlayerObject extends IntangibleObject {
     public int getOpcode() {
         return 0x504C4159;
     } //'PLAY'
-
-    @Getter @Setter private transient ChatServerAgent chatServerAgent;
 
     private String biography = "";
 
