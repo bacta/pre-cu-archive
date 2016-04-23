@@ -1,6 +1,7 @@
 package com.ocdsoft.bacta.swg.precu.controller.game.object.command;
 
 import com.ocdsoft.bacta.engine.lang.UnicodeString;
+import com.ocdsoft.bacta.soe.ServerType;
 import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
 import com.ocdsoft.bacta.soe.controller.CommandController;
 import com.ocdsoft.bacta.soe.controller.MessageHandled;

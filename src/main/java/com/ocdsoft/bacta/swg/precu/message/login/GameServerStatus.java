@@ -1,6 +1,6 @@
-package com.ocdsoft.bacta.swg.precu.message;
+package com.ocdsoft.bacta.swg.precu.message.login;
 
-import com.ocdsoft.bacta.soe.ServerState;
+import com.google.inject.Inject;
 import com.ocdsoft.bacta.soe.io.udp.game.GameServerState;
 import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
 import com.ocdsoft.bacta.soe.util.SOECRC32;
@@ -17,17 +17,17 @@ public class GameServerStatus extends GameNetworkMessage {
     @Getter
     private final ClusterEntry clusterEntry;
 
+    @Inject
+    public GameServerStatus() {
+        super(priority, messageType);
+        this.clusterEntry = new ClusterEntry();
+    }
+
     public GameServerStatus(GameServerState<ClusterEntry> gameServerState) {
         super(priority, messageType);
 
         this.clusterEntry = gameServerState.getClusterEntry();
 	}
-
-    public GameServerStatus(ByteBuffer buffer) {
-        super(priority, messageType);
-
-        this.clusterEntry = new ClusterEntry(buffer);
-    }
 
     @Override
     public void writeToBuffer(ByteBuffer buffer) {
@@ -36,6 +36,6 @@ public class GameServerStatus extends GameNetworkMessage {
 
     @Override
     public void readFromBuffer(ByteBuffer buffer) {
-
+        this.clusterEntry.readFromBuffer(buffer);
     }
 }

@@ -1,14 +1,12 @@
 package com.ocdsoft.bacta.swg.precu.connection;
 
 import com.google.inject.Inject;
-import com.google.inject.Injector;
 import com.ocdsoft.bacta.engine.conf.BactaConfiguration;
-import com.ocdsoft.bacta.soe.ServerState;
 import com.ocdsoft.bacta.soe.connection.ConnectionServerAgent;
 import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
 import com.ocdsoft.bacta.soe.io.udp.game.GameServerState;
 import com.ocdsoft.bacta.soe.service.OutgoingConnectionService;
-import com.ocdsoft.bacta.swg.precu.message.GameServerStatus;
+import com.ocdsoft.bacta.swg.precu.message.login.GameServerStatus;
 import com.ocdsoft.bacta.swg.precu.object.login.ClusterEntry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

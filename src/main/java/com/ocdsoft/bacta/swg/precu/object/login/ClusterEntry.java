@@ -1,6 +1,7 @@
 package com.ocdsoft.bacta.swg.precu.object.login;
 
 import com.google.inject.Inject;
+import com.ocdsoft.bacta.engine.buffer.ByteBufferSerializable;
 import com.ocdsoft.bacta.engine.buffer.ByteBufferWritable;
 import com.ocdsoft.bacta.engine.conf.BactaConfiguration;
 import com.ocdsoft.bacta.engine.utils.BufferUtil;
@@ -11,27 +12,27 @@ import lombok.Getter;
 import java.nio.ByteBuffer;
 import java.util.Map;
 
-public class ClusterEntry implements ClusterEntryItem, ByteBufferWritable, Comparable<ClusterEntry> {
+public class ClusterEntry implements ClusterEntryItem, ByteBufferSerializable, Comparable<ClusterEntry> {
 
     @Getter
     private int id;
 
     @Getter
-    private final String secret;
+    private String secret;
 
     @Getter
-    private final String name;
+    private String name;
 
     @Getter
-    private final ClusterStatus clusterStatus;
+    private ClusterStatus clusterStatus;
 
     @Getter
-    private final ClusterData clusterData;
+    private ClusterData clusterData;
 
     /**
      * This constructor is used in Cluster Service to load constructors from
      */
-    @Inject
+
     public ClusterEntry() {
         id = 0;
         secret = "";
@@ -48,7 +49,7 @@ public class ClusterEntry implements ClusterEntryItem, ByteBufferWritable, Compa
         clusterData.setId(id);
     }
 
-
+    @Inject
     public ClusterEntry(BactaConfiguration configuration) {
         id = -1;
         secret = configuration.getString("Bacta/GameServer", "Secret");
@@ -56,16 +57,6 @@ public class ClusterEntry implements ClusterEntryItem, ByteBufferWritable, Compa
 
         clusterStatus = new ClusterStatus(configuration);
         clusterData = new ClusterData(id, name);
-    }
-
-    public ClusterEntry(ByteBuffer buffer) {
-
-        id = buffer.getInt();
-        secret = BufferUtil.getAscii(buffer);
-        name = BufferUtil.getAscii(buffer);
-
-        clusterStatus = new ClusterStatus(buffer);
-        clusterData = new ClusterData(buffer);
     }
 
     /**
@@ -89,6 +80,16 @@ public class ClusterEntry implements ClusterEntryItem, ByteBufferWritable, Compa
     @Override
     public int compareTo(ClusterEntry o) {
         return o.getName().compareTo(getName());
+    }
+
+    @Override
+    public void readFromBuffer(ByteBuffer buffer) {
+        id = buffer.getInt();
+        secret = BufferUtil.getAscii(buffer);
+        name = BufferUtil.getAscii(buffer);
+
+        clusterStatus = new ClusterStatus(buffer);
+        clusterData = new ClusterData(buffer);
     }
 
     @Override
@@ -130,4 +131,6 @@ public class ClusterEntry implements ClusterEntryItem, ByteBufferWritable, Compa
                 ", timezone='" + SoeMessageUtil.getTimeZoneOffsetFromValue(clusterStatus.getTimeZone()) + '\'' +
                 '}';
     }
+
+
 }

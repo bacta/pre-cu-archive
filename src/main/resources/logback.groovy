@@ -20,6 +20,6 @@ logger("io.netty",  WARN)
 logger("com.couchbase",  WARN)
 logger("com.ocdsoft.bacta.soe.controller.MultiController", TRACE)
 logger("com.ocdsoft.bacta.soe.controller.GroupMessageController", TRACE)
-logger("com.ocdsoft.bacta.soe.dispatch", DEBUG)
+logger("com.ocdsoft.bacta.soe.dispatch.ClasspathControllerLoader", DEBUG)
 
 root(INFO, ["STDOUT"])

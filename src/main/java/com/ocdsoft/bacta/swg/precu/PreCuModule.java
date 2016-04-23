@@ -31,6 +31,7 @@ import com.ocdsoft.bacta.soe.dispatch.SoeDevMessageDispatcher;
 import com.ocdsoft.bacta.soe.dispatch.SoeMessageDispatcher;
 import com.ocdsoft.bacta.soe.factory.GameNetworkMessageFactory;
 import com.ocdsoft.bacta.soe.factory.GameNetworkMessageFactoryImpl;
+import com.ocdsoft.bacta.soe.io.udp.game.GameServerState;
 import com.ocdsoft.bacta.soe.object.account.SoeAccount;
 import com.ocdsoft.bacta.soe.service.SWGSessionKeyService;
 import com.ocdsoft.bacta.soe.service.SessionKeyService;
@@ -43,6 +44,7 @@ import com.ocdsoft.bacta.swg.precu.dispatch.PreCuObjectDispatcher;
 import com.ocdsoft.bacta.swg.precu.message.object.ObjControllerMessage;
 import com.ocdsoft.bacta.swg.precu.message.object.command.CommandMessage;
 import com.ocdsoft.bacta.swg.precu.object.ServerObject;
+import com.ocdsoft.bacta.swg.precu.object.login.ClusterEntry;
 import com.ocdsoft.bacta.swg.precu.object.tangible.TangibleObject;
 import com.ocdsoft.bacta.swg.precu.service.object.SceneObjectService;
 import com.ocdsoft.bacta.swg.precu.zone.PlanetMap;
@@ -65,7 +67,7 @@ public class PreCuModule extends AbstractModule implements Module {
         bind(NetworkSerializer.class).to(GameObjectSerializer.class);
             bind(new TypeLiteral<ObjectService<ServerObject>>() {
             }).to(SceneObjectService.class);
-        
+
         bind(new TypeLiteral<AccountService<SoeAccount>>(){}).to(new TypeLiteral<CouchbaseAccountService<SoeAccount>>(){});
         bind(Account.class).to(SoeAccount.class);
             bind(new TypeLiteral<ObjectService<ServerObject>>() {
@@ -80,7 +82,8 @@ public class PreCuModule extends AbstractModule implements Module {
         bind(new TypeLiteral<CommandDispatcher<CommandMessage, TangibleObject>>(){}).to(PreCuCommandDispatcher.class);
         bind(GameNetworkMessageFactory.class).to(GameNetworkMessageFactoryImpl.class);
         bind(new TypeLiteral<ObjectDispatcher<ObjControllerMessage>>(){}).to(PreCuObjectDispatcher.class);
-
+        bind(new TypeLiteral<GameServerState<ClusterEntry>>(){}).to(PreCuGameServerState.class);
+        bind(GameServerState.class).to(PreCuGameServerState.class);
         bind(ConnectionServerAgent.class).to(PreCuConnectionServerAgent.class);
 
         // SWG Level Bindings
