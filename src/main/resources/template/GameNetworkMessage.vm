@@ -1,0 +1,31 @@
+package $packageName;
+
+import com.google.inject.Inject;
+import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
+import com.ocdsoft.bacta.soe.util.SOECRC32;
+
+import java.nio.ByteBuffer;
+
+/**
+  *  $messageStruct
+  */
+public class $messageName extends GameNetworkMessage {
+
+    private static final short priority = $priority;
+    private static final int messageType = $messageSimpleName; // $opcode
+
+    @Inject
+    public $messageName() {
+        super(priority, messageType);
+    }
+
+    @Override
+    public void writeToBuffer(ByteBuffer buffer) {
+
+    }
+
+    @Override
+    public void readFromBuffer(ByteBuffer buffer) {
+
+    }
+}
