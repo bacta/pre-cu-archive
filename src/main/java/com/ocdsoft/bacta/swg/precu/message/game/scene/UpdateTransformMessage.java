@@ -1,6 +1,7 @@
 package com.ocdsoft.bacta.swg.precu.message.game.scene;
 
 import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
+import com.ocdsoft.bacta.soe.message.Priority;
 import com.ocdsoft.bacta.soe.util.SOECRC32;
 import com.ocdsoft.bacta.swg.precu.object.tangible.TangibleObject;
 import com.ocdsoft.bacta.swg.shared.util.Quaternion;
@@ -8,12 +9,8 @@ import com.ocdsoft.bacta.swg.shared.utility.Transform;
 
 import java.nio.ByteBuffer;
 
+@Priority(0x8)
 public final class UpdateTransformMessage extends GameNetworkMessage {
-
-    static {
-        priority = 0x08;
-        messageType = SOECRC32.hashCode(UpdateContainmentMessage.class.getSimpleName()); // 0x1B24F808
-    }
 
     private final long objectId;
     private final int movementCounter;

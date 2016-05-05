@@ -30,11 +30,6 @@ public class GameServerStatusResponseController implements GameNetworkMessageCon
     
     @Override
     public void handleIncoming(SoeUdpConnection loginConnection, GameServerStatusResponse message) throws Exception {
-
-        if(serverState.getId() < 2) {
-            serverState.setId(message.getClusterId());
-        }
-        
         loginConnection.terminate(TerminateReason.NONE);
     }
 }

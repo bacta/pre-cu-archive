@@ -1,12 +1,11 @@
 package com.ocdsoft.bacta.swg.precu.message.game.client;
 
-import com.google.inject.Inject;
 import com.ocdsoft.bacta.engine.utils.BufferUtil;
+import com.ocdsoft.bacta.soe.message.Priority;
 import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
 import com.ocdsoft.bacta.soe.util.SOECRC32;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.nio.ByteBuffer;
 
@@ -49,12 +48,8 @@ import java.nio.ByteBuffer;
   */
 @Getter
 @AllArgsConstructor
+@Priority(0xc)
 public final class ClientCreateCharacter extends GameNetworkMessage {
-
-    static {
-        priority = 0xc;
-        messageType = SOECRC32.hashCode(ClientCreateCharacter.class.getSimpleName()); // 0xb97f3074
-    }
 
     private final String appearanceData;
     private final String characterName; // UnicodeString

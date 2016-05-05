@@ -3,6 +3,7 @@ package com.ocdsoft.bacta.swg.precu.message.game;
 import com.google.inject.Inject;
 import com.ocdsoft.bacta.engine.utils.BufferUtil;
 import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
+import com.ocdsoft.bacta.soe.message.Priority;
 import com.ocdsoft.bacta.soe.util.SOECRC32;
 import com.ocdsoft.bacta.swg.precu.message.game.scene.UpdateContainmentMessage;
 import lombok.AllArgsConstructor;
@@ -28,12 +29,8 @@ import java.nio.ByteBuffer;
   */
 @Getter
 @AllArgsConstructor
+@Priority(0x4)
 public class ClientIdMsg extends GameNetworkMessage {
-
-    static {
-        priority = 0x4;
-        messageType = SOECRC32.hashCode(ClientIdMsg.class.getSimpleName()); // 0xd5899226
-    }
 
     private final int gameBitsToClear;
     private final String token;

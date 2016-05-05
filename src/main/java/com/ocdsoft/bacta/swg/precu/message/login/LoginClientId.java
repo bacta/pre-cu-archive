@@ -2,6 +2,7 @@ package com.ocdsoft.bacta.swg.precu.message.login;
 
 import com.ocdsoft.bacta.engine.utils.BufferUtil;
 import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
+import com.ocdsoft.bacta.soe.message.Priority;
 import com.ocdsoft.bacta.soe.util.SOECRC32;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,12 +16,8 @@ import java.nio.ByteBuffer;
   */
 @Getter
 @AllArgsConstructor
+@Priority(0x4)
 public final class LoginClientId extends GameNetworkMessage {
-
-    static {
-        priority = 0x4;
-        messageType = SOECRC32.hashCode(LoginClientId.class.getSimpleName());// 0x41131f96
-    }
 
     private final String username;
     private final String password;

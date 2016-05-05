@@ -2,6 +2,7 @@ package com.ocdsoft.bacta.swg.precu.message.game;
 
 import com.google.inject.Inject;
 import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
+import com.ocdsoft.bacta.soe.message.Priority;
 import com.ocdsoft.bacta.soe.util.SOECRC32;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,12 +15,8 @@ import java.nio.ByteBuffer;
   */
 @Getter
 @AllArgsConstructor
+@Priority(0x2)
 public class LagReport extends GameNetworkMessage {
-
-    static {
-        priority = 0x2;
-        messageType = SOECRC32.hashCode(LagReport.class.getSimpleName());
-    }
 
     private final int value1;
     private final int value2;

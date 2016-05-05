@@ -8,6 +8,7 @@ import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
 import com.ocdsoft.bacta.soe.controller.ConnectionRolesAllowed;
 import com.ocdsoft.bacta.soe.controller.GameNetworkMessageController;
 import com.ocdsoft.bacta.soe.controller.MessageHandled;
+import com.ocdsoft.bacta.soe.message.TerminateReason;
 import com.ocdsoft.bacta.soe.object.ClusterEntryItem;
 import com.ocdsoft.bacta.soe.service.ClusterService;
 import com.ocdsoft.bacta.swg.precu.message.login.GameServerStatus;
@@ -29,10 +30,11 @@ public class GameServerStatusController implements GameNetworkMessageController<
     }
 
     @Override
-    public void handleIncoming(SoeUdpConnection loginConnection, GameServerStatus message) throws Exception {
+    public void handleIncoming(SoeUdpConnection gameConnection, GameServerStatus message) throws Exception {
         ClusterEntryItem clusterEntryItem = clusterService.updateClusterInfo(message.getClusterEntry());
         
         GameServerStatusResponse gameServerStatusResponse = new GameServerStatusResponse(clusterEntryItem.getId());
-        loginConnection.sendMessage(gameServerStatusResponse);
+        gameConnection.sendMessage(gameServerStatusResponse);
+        //gameConnection.terminate(TerminateReason.NONE);
     }
 }

@@ -29,8 +29,6 @@ import com.ocdsoft.bacta.soe.dispatch.CommandDispatcher;
 import com.ocdsoft.bacta.soe.dispatch.ObjectDispatcher;
 import com.ocdsoft.bacta.soe.dispatch.SoeDevMessageDispatcher;
 import com.ocdsoft.bacta.soe.dispatch.SoeMessageDispatcher;
-import com.ocdsoft.bacta.soe.factory.GameNetworkMessageFactory;
-import com.ocdsoft.bacta.soe.factory.GameNetworkMessageFactoryImpl;
 import com.ocdsoft.bacta.soe.io.udp.game.GameServerState;
 import com.ocdsoft.bacta.soe.object.account.SoeAccount;
 import com.ocdsoft.bacta.soe.serialize.GameNetworkMessageSerializer;
@@ -82,7 +80,6 @@ public class PreCuModule extends AbstractModule implements Module {
         bind(SoeMessageDispatcher.class).to(SoeDevMessageDispatcher.class);
             //bind(new TypeLiteral<ContainerService<ServerObject>>(){}).to(PreCuContainerService.class);
         bind(new TypeLiteral<CommandDispatcher<CommandMessage, TangibleObject>>(){}).to(PreCuCommandDispatcher.class);
-        bind(GameNetworkMessageFactory.class).to(GameNetworkMessageFactoryImpl.class);
         bind(new TypeLiteral<ObjectDispatcher<ObjControllerMessage>>(){}).to(PreCuObjectDispatcher.class);
         bind(new TypeLiteral<GameServerState<ClusterEntry>>(){}).to(PreCuGameServerState.class);
         bind(GameServerState.class).to(PreCuGameServerState.class);

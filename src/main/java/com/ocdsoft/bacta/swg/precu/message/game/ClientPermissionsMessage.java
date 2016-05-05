@@ -3,6 +3,7 @@ package com.ocdsoft.bacta.swg.precu.message.game;
 import com.google.inject.Inject;
 import com.ocdsoft.bacta.engine.utils.BufferUtil;
 import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
+import com.ocdsoft.bacta.soe.message.Priority;
 import com.ocdsoft.bacta.soe.util.SOECRC32;
 import lombok.AllArgsConstructor;
 
@@ -20,12 +21,8 @@ import java.nio.ByteBuffer;
  }; 
  */
 @AllArgsConstructor
+@Priority(0x4)
 public final class ClientPermissionsMessage extends GameNetworkMessage {
-
-    static {
-        priority = 0x4;
-        messageType = SOECRC32.hashCode(ClientPermissionsMessage.class.getSimpleName());
-    }
 
     private final boolean canLogin;
     private final boolean canCreateRegularCharacter;

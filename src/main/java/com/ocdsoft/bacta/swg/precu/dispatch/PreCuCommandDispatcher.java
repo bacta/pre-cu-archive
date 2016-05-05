@@ -9,10 +9,9 @@ import com.ocdsoft.bacta.soe.controller.CommandController;
 import com.ocdsoft.bacta.soe.dispatch.ClasspathControllerLoader;
 import com.ocdsoft.bacta.soe.dispatch.CommandDispatcher;
 import com.ocdsoft.bacta.soe.dispatch.ControllerData;
-import com.ocdsoft.bacta.soe.factory.GameNetworkMessageFactory;
+import com.ocdsoft.bacta.soe.serialize.GameNetworkMessageSerializer;
 import com.ocdsoft.bacta.soe.util.CommandNames;
 import com.ocdsoft.bacta.soe.util.GameNetworkMessageTemplateWriter;
-import com.ocdsoft.bacta.soe.util.SoeMessageUtil;
 import com.ocdsoft.bacta.swg.precu.message.game.object.command.CommandMessage;
 import com.ocdsoft.bacta.swg.precu.object.ServerObject;
 import com.ocdsoft.bacta.swg.precu.object.tangible.TangibleObject;
@@ -41,7 +40,7 @@ public class PreCuCommandDispatcher implements CommandDispatcher<CommandMessage,
 
     private final GameNetworkMessageTemplateWriter templateWriter;
 
-    private final GameNetworkMessageFactory gameNetworkMessageFactory;
+    private final GameNetworkMessageSerializer gameNetworkMessageSerializer;
 
     private final ObjectService<ServerObject> objectService;
 
@@ -51,12 +50,12 @@ public class PreCuCommandDispatcher implements CommandDispatcher<CommandMessage,
 
     @Inject
     public PreCuCommandDispatcher(final ClasspathControllerLoader<CommandController> controllerLoader,
-                                  final GameNetworkMessageFactory gameNetworkMessageFactory,
+                                  final GameNetworkMessageSerializer gameNetworkMessageSerializer,
                                   final GameNetworkMessageTemplateWriter templateWriter,
                                   final ObjectService<ServerObject> objectService,
                                   final ScriptEngine scriptEngine) {
 
-        this.gameNetworkMessageFactory = gameNetworkMessageFactory;
+        this.gameNetworkMessageSerializer = gameNetworkMessageSerializer;
         this.objectService = objectService;
         this.templateWriter = templateWriter;
         this.scriptEngine = scriptEngine;

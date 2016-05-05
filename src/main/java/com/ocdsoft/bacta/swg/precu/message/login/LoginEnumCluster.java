@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import com.ocdsoft.bacta.engine.buffer.ByteBufferWritable;
 import com.ocdsoft.bacta.engine.utils.BufferUtil;
 import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
+import com.ocdsoft.bacta.soe.message.Priority;
 import com.ocdsoft.bacta.soe.util.SOECRC32;
 import com.ocdsoft.bacta.swg.precu.object.login.ClusterEntry;
 import lombok.Getter;
@@ -14,12 +15,8 @@ import java.nio.ByteBuffer;
 import java.util.Set;
 import java.util.TreeSet;
 
+@Priority(0x2)
 public class LoginEnumCluster extends GameNetworkMessage {
-
-    static {
-        priority = 0x2;
-        messageType = SOECRC32.hashCode(LoginEnumCluster.class.getSimpleName());
-    }
 
     private final Set<ClusterData> clusterDataSet;
     private int maxCharactersPerAccount;

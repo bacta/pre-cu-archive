@@ -1,18 +1,15 @@
 package com.ocdsoft.bacta.swg.precu.message.game.scene;
 
 import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
+import com.ocdsoft.bacta.soe.message.Priority;
 import com.ocdsoft.bacta.soe.util.SOECRC32;
 import com.ocdsoft.bacta.swg.precu.object.ServerObject;
 import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaByteStream;
 
 import java.nio.ByteBuffer;
 
+@Priority(0x5)
 public final class DeltasMessage extends GameNetworkMessage {
-
-    static {
-        priority = 0x5;
-        messageType = SOECRC32.hashCode(DeltasMessage.class.getSimpleName()); // 0x12862153
-    }
 
     private final long objectId;
     private final int opcode;

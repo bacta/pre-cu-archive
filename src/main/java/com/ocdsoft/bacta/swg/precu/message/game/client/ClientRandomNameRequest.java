@@ -2,6 +2,7 @@ package com.ocdsoft.bacta.swg.precu.message.game.client;
 
 import com.ocdsoft.bacta.engine.utils.BufferUtil;
 import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
+import com.ocdsoft.bacta.soe.message.Priority;
 import com.ocdsoft.bacta.soe.util.SOECRC32;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,12 +20,8 @@ import java.nio.ByteBuffer;
   */
 @Getter
 @AllArgsConstructor
+@Priority(0x2)
 public final class ClientRandomNameRequest extends GameNetworkMessage {
-
-    static {
-        priority = 0x2;
-        messageType = SOECRC32.hashCode(ClientRandomNameRequest.class.getSimpleName()); // 0xd6d1b6d1
-    }
 
     private final String creatureTemplate;
 

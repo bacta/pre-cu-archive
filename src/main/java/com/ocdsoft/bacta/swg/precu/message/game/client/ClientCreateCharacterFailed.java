@@ -3,6 +3,7 @@ package com.ocdsoft.bacta.swg.precu.message.game.client;
 import com.google.inject.Inject;
 import com.ocdsoft.bacta.engine.utils.BufferUtil;
 import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
+import com.ocdsoft.bacta.soe.message.Priority;
 import com.ocdsoft.bacta.soe.util.SOECRC32;
 import com.ocdsoft.bacta.swg.localization.StringId;
 import lombok.AllArgsConstructor;
@@ -18,12 +19,8 @@ import java.nio.ByteBuffer;
  Archive::AutoVariable<StringId> m_errorMessage;
  };
  */
+@Priority(0x3)
 public final class ClientCreateCharacterFailed extends GameNetworkMessage {
-
-    static {
-        priority = 0x3;
-        messageType = SOECRC32.hashCode(ClientCreateCharacterFailed.class.getSimpleName());
-    }
 
     private final String name;
     private final StringId errorMessage;

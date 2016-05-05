@@ -2,6 +2,7 @@ package com.ocdsoft.bacta.swg.precu.message.login;
 
 
 import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
+import com.ocdsoft.bacta.soe.message.Priority;
 import com.ocdsoft.bacta.soe.object.account.CharacterInfo;
 import com.ocdsoft.bacta.soe.object.account.SoeAccount;
 import com.ocdsoft.bacta.soe.util.SOECRC32;
@@ -10,12 +11,8 @@ import java.nio.ByteBuffer;
 import java.util.Set;
 import java.util.TreeSet;
 
+@Priority(0x2)
 public final class EnumerateCharacterId extends GameNetworkMessage {
-
-    static {
-        priority = 0x2;
-        messageType = SOECRC32.hashCode(EnumerateCharacterId.class.getSimpleName());
-    }
 
     private final Set<CharacterInfo> characterInfoList;
 

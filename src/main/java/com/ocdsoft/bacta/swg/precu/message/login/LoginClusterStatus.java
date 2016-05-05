@@ -6,6 +6,7 @@ import com.ocdsoft.bacta.engine.conf.BactaConfiguration;
 import com.ocdsoft.bacta.engine.network.client.ServerStatus;
 import com.ocdsoft.bacta.engine.utils.BufferUtil;
 import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
+import com.ocdsoft.bacta.soe.message.Priority;
 import com.ocdsoft.bacta.soe.util.SOECRC32;
 import com.ocdsoft.bacta.soe.util.SoeMessageUtil;
 import com.ocdsoft.bacta.swg.precu.object.login.ClusterEntry;
@@ -18,12 +19,8 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
+@Priority(0x3)
 public class LoginClusterStatus extends GameNetworkMessage {
-
-    static {
-        priority = 0x3;
-        messageType = SOECRC32.hashCode(LoginClusterStatus.class.getSimpleName());// 0x41131f96
-    }
 
     private final Set<ClusterData> clusterDataSet;
 

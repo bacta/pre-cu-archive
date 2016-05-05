@@ -1,17 +1,14 @@
 package com.ocdsoft.bacta.swg.precu.message.game.scene;
 
 import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
+import com.ocdsoft.bacta.soe.message.Priority;
 import com.ocdsoft.bacta.soe.util.SOECRC32;
 import com.ocdsoft.bacta.swg.precu.object.ServerObject;
 
 import java.nio.ByteBuffer;
 
+@Priority(0x4)
 public final class UpdateContainmentMessage extends GameNetworkMessage {
-
-    static {
-        priority = 0x04;
-        messageType = SOECRC32.hashCode(UpdateContainmentMessage.class.getSimpleName()); // 0x56CBDE9E
-    }
 
     private final long objectId;
     private final long containerId;

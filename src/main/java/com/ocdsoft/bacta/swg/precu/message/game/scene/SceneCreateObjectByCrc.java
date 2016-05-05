@@ -1,6 +1,7 @@
 package com.ocdsoft.bacta.swg.precu.message.game.scene;
 
 import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
+import com.ocdsoft.bacta.soe.message.Priority;
 import com.ocdsoft.bacta.soe.util.SOECRC32;
 import com.ocdsoft.bacta.swg.precu.object.ServerObject;
 import com.ocdsoft.bacta.swg.shared.utility.Transform;
@@ -9,12 +10,8 @@ import lombok.AllArgsConstructor;
 import java.nio.ByteBuffer;
 
 @AllArgsConstructor
+@Priority(0x5)
 public final class SceneCreateObjectByCrc extends GameNetworkMessage {
-
-    static {
-        priority = 0x5;
-        messageType = SOECRC32.hashCode(SceneCreateObjectByCrc.class.getSimpleName()); // 0xFE89DDEA
-    }
 
     private final long networkId;
     private final Transform transform;

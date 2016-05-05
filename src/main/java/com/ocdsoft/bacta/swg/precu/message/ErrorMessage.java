@@ -2,18 +2,15 @@ package com.ocdsoft.bacta.swg.precu.message;
 
 import com.ocdsoft.bacta.engine.utils.BufferUtil;
 import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
+import com.ocdsoft.bacta.soe.message.Priority;
 import com.ocdsoft.bacta.soe.util.SOECRC32;
 import lombok.AllArgsConstructor;
 
 import java.nio.ByteBuffer;
 
 @AllArgsConstructor
+@Priority(0x3)
 public final class ErrorMessage extends GameNetworkMessage {
-
-    static {
-        priority = 0x3;
-        messageType = SOECRC32.hashCode(ErrorMessage.class.getSimpleName()); //0xB5ABF91A
-    }
 
     private final String errorName;
     private final String description;
