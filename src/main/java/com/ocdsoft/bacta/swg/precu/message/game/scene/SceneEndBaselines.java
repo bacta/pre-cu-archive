@@ -1,32 +1,24 @@
 package com.ocdsoft.bacta.swg.precu.message.game.scene;
 
 import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
+import com.ocdsoft.bacta.soe.util.SOECRC32;
 import com.ocdsoft.bacta.swg.precu.object.ServerObject;
+import lombok.AllArgsConstructor;
 
 import java.nio.ByteBuffer;
 
-public class SceneEndBaselines extends GameNetworkMessage {
+@AllArgsConstructor
+public final class SceneEndBaselines extends GameNetworkMessage {
 
-	private long objectId;
-
-    public SceneEndBaselines(long oid) {
-        super(0x02, 0x2C436037);  // CRC
-        this.objectId = oid;
-
-		/*StringBuffer msg;
-		msg << hex << "SceneObjectCloseMessage [Object = " << oid  << "]\n";
-		System::out << msg.toString(); */
-
-    }
-
-	public SceneEndBaselines(ServerObject scno) {
-		this(scno.getNetworkId());
+	static {
+		priority = 0x2;
+		messageType = SOECRC32.hashCode(SceneEndBaselines.class.getSimpleName()); // 0x2C436037
 	}
 
+	private final long objectId;
 
-	@Override
-	public void readFromBuffer(ByteBuffer buffer) {
-
+	public SceneEndBaselines(ByteBuffer buffer) {
+        objectId = buffer.getLong();
 	}
 
 	@Override

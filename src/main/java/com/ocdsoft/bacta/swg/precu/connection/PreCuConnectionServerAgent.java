@@ -73,7 +73,7 @@ public class PreCuConnectionServerAgent implements ConnectionServerAgent {
     
 
     private void onConnect(SoeUdpConnection connection) {
-        GameServerStatus gameServerStatus = new GameServerStatus(serverState);
+        GameServerStatus gameServerStatus = new GameServerStatus(serverState.getClusterEntry());
         connection.sendMessage(gameServerStatus);
     }
 }

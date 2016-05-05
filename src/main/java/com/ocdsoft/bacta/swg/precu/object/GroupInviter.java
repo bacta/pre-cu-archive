@@ -1,6 +1,7 @@
 package com.ocdsoft.bacta.swg.precu.object;
 
-import com.ocdsoft.bacta.engine.buffer.ByteBufferSerializable;
+import com.ocdsoft.bacta.engine.buffer.ByteBufferWritable;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,19 +10,14 @@ import java.nio.ByteBuffer;
 /**
  * Created by crush on 8/12/2014.
  */
-public class GroupInviter implements ByteBufferSerializable {
+@Getter
+@AllArgsConstructor
+public class GroupInviter implements ByteBufferWritable {
 
-    @Getter
-    @Setter
-    private long inviterId = 0;
+    private final long inviterId;
+    private final long inviteCounter;
 
-    @Getter
-    @Setter
-    private long inviteCounter = 0;
-
-
-    @Override
-    public void readFromBuffer(ByteBuffer buffer) {
+    public GroupInviter(ByteBuffer buffer) {
         inviterId = buffer.getLong();
         inviteCounter = buffer.getLong();
     }

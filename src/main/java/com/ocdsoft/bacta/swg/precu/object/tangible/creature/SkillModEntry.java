@@ -1,23 +1,19 @@
 package com.ocdsoft.bacta.swg.precu.object.tangible.creature;
 
-import com.ocdsoft.bacta.engine.buffer.ByteBufferSerializable;
+import com.ocdsoft.bacta.engine.buffer.ByteBufferWritable;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.nio.ByteBuffer;
 
 @Getter
-public class SkillModEntry implements ByteBufferSerializable {
+@AllArgsConstructor
+public class SkillModEntry implements ByteBufferWritable {
 
-    private int modifier;
-    private int bonus;
+    private final int modifier;
+    private final int bonus;
 
-    public SkillModEntry(final int modifier, final int bonus) {
-        this.modifier = modifier;
-        this.bonus = bonus;
-    }
-
-    @Override
-    public void readFromBuffer(ByteBuffer buffer) {
+    public SkillModEntry(ByteBuffer buffer) {
         modifier = buffer.getInt();
         bonus = buffer.getInt();
     }

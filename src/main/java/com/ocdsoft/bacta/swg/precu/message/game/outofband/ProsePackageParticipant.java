@@ -1,17 +1,17 @@
 package com.ocdsoft.bacta.swg.precu.message.game.outofband;
 
-import com.ocdsoft.bacta.engine.buffer.ByteBufferSerializable;
+import com.ocdsoft.bacta.engine.buffer.ByteBufferWritable;
 import com.ocdsoft.bacta.engine.utils.BufferUtil;
 import com.ocdsoft.bacta.swg.localization.StringId;
 
 import java.nio.ByteBuffer;
 
-public final class ProsePackageParticipant implements ByteBufferSerializable {
+public final class ProsePackageParticipant implements ByteBufferWritable {
     public static final ProsePackageParticipant empty = new ProsePackageParticipant();
 
-    private long id;
-    private StringId stringId;
-    private String unicodeString;
+    private final long id;
+    private final StringId stringId;
+    private final String unicodeString;
 
     private ProsePackageParticipant() {
         this.id = 0;
@@ -37,10 +37,9 @@ public final class ProsePackageParticipant implements ByteBufferSerializable {
         this.stringId = StringId.INVALID;
     }
 
-    @Override
-    public void readFromBuffer(ByteBuffer buffer) {
+    public ProsePackageParticipant(ByteBuffer buffer) {
         this.id = buffer.getLong();
-        this.stringId.readFromBuffer(buffer);
+        this.stringId = new StringId(buffer);
         this.unicodeString = BufferUtil.getUnicode(buffer);
     }
 

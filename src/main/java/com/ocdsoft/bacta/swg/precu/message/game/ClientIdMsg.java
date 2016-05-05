@@ -4,6 +4,8 @@ import com.google.inject.Inject;
 import com.ocdsoft.bacta.engine.utils.BufferUtil;
 import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
 import com.ocdsoft.bacta.soe.util.SOECRC32;
+import com.ocdsoft.bacta.swg.precu.message.game.scene.UpdateContainmentMessage;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.nio.ByteBuffer;
@@ -25,32 +27,19 @@ import java.nio.ByteBuffer;
      };
   */
 @Getter
+@AllArgsConstructor
 public class ClientIdMsg extends GameNetworkMessage {
 
-    private static final short priority = 0x4;
-    private static final int messageType = SOECRC32.hashCode(ClientIdMsg.class.getSimpleName()); // 0xd5899226
-
-    private int gameBitsToClear;
-    private String token;
-    private String clientVersion;
-
-    @Inject
-    public ClientIdMsg() {
-        super(priority, messageType);
+    static {
+        priority = 0x4;
+        messageType = SOECRC32.hashCode(ClientIdMsg.class.getSimpleName()); // 0xd5899226
     }
 
-    public ClientIdMsg(final int gameBitsToClear,
-                       final String token,
-                       final String clientVersion) {
-        super(priority, messageType);
+    private final int gameBitsToClear;
+    private final String token;
+    private final String clientVersion;
 
-        this.gameBitsToClear = gameBitsToClear;
-        this.token = token;
-        this.clientVersion = clientVersion;
-    }
-
-    @Override
-    public void readFromBuffer(ByteBuffer buffer) {
+    public ClientIdMsg(ByteBuffer buffer) {
         gameBitsToClear = buffer.getInt();
         token = BufferUtil.getBinaryString(buffer);
         clientVersion = BufferUtil.getAscii(buffer);

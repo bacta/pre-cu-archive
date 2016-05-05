@@ -1,6 +1,7 @@
 package com.ocdsoft.bacta.swg.precu.object;
 
-import com.ocdsoft.bacta.engine.buffer.ByteBufferSerializable;
+import com.ocdsoft.bacta.engine.buffer.ByteBufferWritable;
+import lombok.NoArgsConstructor;
 
 import java.nio.ByteBuffer;
 import java.util.Arrays;
@@ -9,7 +10,8 @@ import java.util.BitSet;
 /**
  * Created by crush on 8/13/2014.
  */
-public class MatchMakingId implements ByteBufferSerializable {
+@NoArgsConstructor
+public class MatchMakingId implements ByteBufferWritable {
     public static final int lookingForGroup = 0x0;
     public static final int helper = 0x1;
     public static final int rolePlay = 0x2;
@@ -29,8 +31,8 @@ public class MatchMakingId implements ByteBufferSerializable {
 
     private BitSet bitSet = new BitSet(128);
 
-    @Override
-    public void readFromBuffer(ByteBuffer buffer) {
+    // TODO: implement
+    public MatchMakingId(ByteBuffer buffer) {
 
     }
 

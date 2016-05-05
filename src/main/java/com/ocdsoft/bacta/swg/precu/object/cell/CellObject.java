@@ -14,5 +14,5 @@ public class CellObject extends ServerObject {
     private final AutoDeltaBoolean isPublic = new AutoDeltaBoolean(true, sharedPackage);
     private final AutoDeltaInt cellNumber = new AutoDeltaInt(0, sharedPackage);
     private final AutoDeltaVariable<UnicodeString> cellLabel = new AutoDeltaVariable<>(UnicodeString.EMPTY, sharedPackageNp);
-    private final AutoDeltaVariable<Vector> labelLocationOffset = new AutoDeltaVariable<>(new Vector(), sharedPackageNp);
+    private final AutoDeltaVariable<Vector> labelLocationOffset = new AutoDeltaVariable<>(new Vector(0, 0, 0), sharedPackageNp);
 }

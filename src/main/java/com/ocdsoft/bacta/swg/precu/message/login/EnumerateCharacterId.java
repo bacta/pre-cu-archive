@@ -1,7 +1,6 @@
 package com.ocdsoft.bacta.swg.precu.message.login;
 
 
-import com.google.inject.Inject;
 import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
 import com.ocdsoft.bacta.soe.object.account.CharacterInfo;
 import com.ocdsoft.bacta.soe.object.account.SoeAccount;
@@ -11,27 +10,26 @@ import java.nio.ByteBuffer;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class EnumerateCharacterId extends GameNetworkMessage {
+public final class EnumerateCharacterId extends GameNetworkMessage {
 
-    private static final short priority = 0x2;
-    private static final int messageType = SOECRC32.hashCode(EnumerateCharacterId.class.getSimpleName());
+    static {
+        priority = 0x2;
+        messageType = SOECRC32.hashCode(EnumerateCharacterId.class.getSimpleName());
+    }
 
     private final Set<CharacterInfo> characterInfoList;
 
-    @Inject
-    public EnumerateCharacterId() {
-        super(priority, messageType);
-
+    private EnumerateCharacterId() {
         characterInfoList = new TreeSet<>();
     }
 
-    public EnumerateCharacterId(SoeAccount account) {
+    public EnumerateCharacterId(final SoeAccount account) {
         this();
         characterInfoList.addAll(account.getCharacterList());
 	}
 
-    @Override
-    public void readFromBuffer(ByteBuffer buffer) {
+    public EnumerateCharacterId(final ByteBuffer buffer) {
+        this();
         for(int i = 0; i < buffer.getInt(); ++i) {
             CharacterInfo info = new CharacterInfo(buffer);
             characterInfoList.add(info);
@@ -39,7 +37,7 @@ public class EnumerateCharacterId extends GameNetworkMessage {
     }
 
     @Override
-    public void writeToBuffer(ByteBuffer buffer) {
+    public void writeToBuffer(final ByteBuffer buffer) {
 
         buffer.putInt(characterInfoList.size());
         for(CharacterInfo info : characterInfoList) {

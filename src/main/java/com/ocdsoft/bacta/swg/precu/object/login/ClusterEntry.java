@@ -1,7 +1,7 @@
 package com.ocdsoft.bacta.swg.precu.object.login;
 
 import com.google.inject.Inject;
-import com.ocdsoft.bacta.engine.buffer.ByteBufferSerializable;
+import com.ocdsoft.bacta.engine.buffer.ByteBufferWritable;
 import com.ocdsoft.bacta.engine.conf.BactaConfiguration;
 import com.ocdsoft.bacta.engine.utils.BufferUtil;
 import com.ocdsoft.bacta.soe.object.ClusterEntryItem;
@@ -13,51 +13,32 @@ import lombok.Getter;
 import java.nio.ByteBuffer;
 import java.util.Map;
 
-public class ClusterEntry implements ClusterEntryItem, ByteBufferSerializable, Comparable<ClusterEntry> {
+@Getter
+public class ClusterEntry implements ClusterEntryItem, ByteBufferWritable, Comparable<ClusterEntry> {
 
-    @Getter
-    private int id;
-
-    @Getter
-    private String secret;
-
-    @Getter
-    private String name;
-
-    @Getter
-    private LoginClusterStatus.ClusterData statusClusterData;
-
-    @Getter
-    private LoginEnumCluster.ClusterData clusterData;
-
-    /**
-     * This constructor is used in Cluster Service to load constructors from
-     */
-
-    public ClusterEntry() {
-        id = 0;
-        secret = "";
-        name = "";
-
-        clusterData = null;
-        clusterData = null;
-    }
-    
-    @Override
-    public void setId(int id) {
-        this.id = id;
-        statusClusterData.setId(id);
-        clusterData.setId(id);
-    }
+    private final int id;
+    private final String secret;
+    private final String name;
+    private final LoginClusterStatus.ClusterData statusClusterData;
+    private final LoginEnumCluster.ClusterData clusterData;
 
     @Inject
     public ClusterEntry(BactaConfiguration configuration) {
-        id = -1;
+        id = configuration.getInt("Bacta/GameServer", "ServerID");
         secret = configuration.getString("Bacta/GameServer", "Secret");
         name = configuration.getString("Bacta/GameServer", "Name");
 
         statusClusterData = new LoginClusterStatus.ClusterData(configuration);
         clusterData = new LoginEnumCluster.ClusterData(id, name);
+    }
+
+    public ClusterEntry(ByteBuffer buffer) {
+        id = buffer.getInt();
+        secret = BufferUtil.getAscii(buffer);
+        name = BufferUtil.getAscii(buffer);
+
+        statusClusterData = new LoginClusterStatus.ClusterData(buffer);
+        clusterData = new LoginEnumCluster.ClusterData(buffer);
     }
 
     /**
@@ -83,19 +64,6 @@ public class ClusterEntry implements ClusterEntryItem, ByteBufferSerializable, C
         return o.getName().compareTo(getName());
     }
 
-    @Override
-    public void readFromBuffer(ByteBuffer buffer) {
-        id = buffer.getInt();
-        secret = BufferUtil.getAscii(buffer);
-        name = BufferUtil.getAscii(buffer);
-
-        statusClusterData = new LoginClusterStatus.ClusterData();
-        statusClusterData.readFromBuffer(buffer);
-
-        clusterData = new LoginEnumCluster.ClusterData();
-        clusterData.readFromBuffer(buffer);
-
-    }
 
     @Override
     public void writeToBuffer(ByteBuffer buffer) {
@@ -114,7 +82,8 @@ public class ClusterEntry implements ClusterEntryItem, ByteBufferSerializable, C
 
         ClusterEntry that = (ClusterEntry) o;
 
-        return secret.equals(that.secret);
+        return id == that.id &&
+                secret.equals(that.secret);
     }
 
     @Override

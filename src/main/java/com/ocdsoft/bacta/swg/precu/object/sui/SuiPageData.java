@@ -1,6 +1,6 @@
 package com.ocdsoft.bacta.swg.precu.object.sui;
 
-import com.ocdsoft.bacta.engine.buffer.ByteBufferSerializable;
+import com.ocdsoft.bacta.engine.buffer.ByteBufferWritable;
 import com.ocdsoft.bacta.engine.utils.BufferUtil;
 import gnu.trove.map.TByteObjectMap;
 import gnu.trove.map.hash.TByteObjectHashMap;
@@ -14,24 +14,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class SuiPageData implements ByteBufferSerializable {
+@Getter
+public final class SuiPageData implements ByteBufferWritable {
+
+    private static final Logger logger = LoggerFactory.getLogger(SuiPageData.class);
     private static final AtomicInteger lastId = new AtomicInteger();
 
-    private final Logger logger = LoggerFactory.getLogger(getClass());
-
-    @Getter
     private final int pageId;
-    @Getter
     private final String pageName;
-    @Getter
     private final long associatedObjectId;
-    @Getter
     private final Vector3f associatedLocation;
-    @Getter
     private final float maxRangeFromObject;
 
-    protected List<SuiCommand> commands = new ArrayList<SuiCommand>();
-    protected TByteObjectMap<SuiCommand> callbacks = new TByteObjectHashMap<SuiCommand>();
+    protected final List<SuiCommand> commands = new ArrayList<SuiCommand>();
+    protected final TByteObjectMap<SuiCommand> callbacks = new TByteObjectHashMap<SuiCommand>();
 
     public SuiPageData(String rootPage) {
         this(rootPage, 0, 0);
@@ -45,6 +41,11 @@ public class SuiPageData implements ByteBufferSerializable {
         this.associatedLocation = new Vector3f(0f, 0f, 0f);
         this.maxRangeFromObject = forceCloseDistance;
     }
+
+    //TODO: Implement
+//    public SuiPageData(ByteBuffer buffer) {
+//
+//    }
 
     public void setProperty(String widget, String property, String value) {
         SuiCommand command = new SuiCommand(SuiCommand.SCT_setProperty);
@@ -129,12 +130,6 @@ public class SuiPageData implements ByteBufferSerializable {
         commands.add(command);
     }
 
-
-
-    @Override
-    public void readFromBuffer(ByteBuffer buffer) {
-
-    }
 
     @Override
     public void writeToBuffer(ByteBuffer buffer) {

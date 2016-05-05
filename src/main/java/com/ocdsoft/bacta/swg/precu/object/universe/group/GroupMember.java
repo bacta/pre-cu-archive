@@ -1,19 +1,20 @@
 package com.ocdsoft.bacta.swg.precu.object.universe.group;
 
-import com.ocdsoft.bacta.engine.buffer.ByteBufferSerializable;
+import com.ocdsoft.bacta.engine.buffer.ByteBufferWritable;
 import com.ocdsoft.bacta.engine.utils.BufferUtil;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.nio.Buffer;
 import java.nio.ByteBuffer;
 
-public class GroupMember implements ByteBufferSerializable {
-    @Getter private long memberId;
-    @Getter private String memberName;
+@Getter
+@AllArgsConstructor
+public final class GroupMember implements ByteBufferWritable {
+    private final long memberId;
+    private final String memberName;
 
-
-    @Override
-    public void readFromBuffer(ByteBuffer buffer) {
+    public GroupMember(ByteBuffer buffer) {
         memberId = buffer.getLong();
         memberName = BufferUtil.getAscii(buffer);
     }

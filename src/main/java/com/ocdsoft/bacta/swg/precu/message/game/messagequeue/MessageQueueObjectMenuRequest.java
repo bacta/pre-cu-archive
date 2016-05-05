@@ -1,7 +1,8 @@
 package com.ocdsoft.bacta.swg.precu.message.game.messagequeue;
 
-import com.ocdsoft.bacta.engine.buffer.ByteBufferSerializable;
+import com.ocdsoft.bacta.engine.buffer.ByteBufferWritable;
 import com.ocdsoft.bacta.engine.utils.BufferUtil;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.nio.ByteBuffer;
@@ -11,20 +12,12 @@ import java.util.Collection;
 /**
  * Created by crush on 9/5/2014.
  */
+@AllArgsConstructor
 public class MessageQueueObjectMenuRequest extends MessageQueueData {
     @Getter private Collection<ObjectMenuRequestData> data;
     @Getter private long requestorId;
     @Getter private long targetId;
     private byte sequence;
-
-    public MessageQueueObjectMenuRequest() { }
-
-    public MessageQueueObjectMenuRequest(long targetId, long requestorId, Collection<ObjectMenuRequestData> data, byte sequence) {
-        this.targetId = targetId;
-        this.requestorId = requestorId;
-        this.data = data;
-        this.sequence = sequence;
-    }
 
     public void pack(ByteBuffer buffer) {
         buffer.putLong(targetId);
@@ -48,34 +41,23 @@ public class MessageQueueObjectMenuRequest extends MessageQueueData {
         data = new ArrayList<>(size);
 
         for (int i = 0; i < size; i++) {
-            ObjectMenuRequestData objectMenuRequestData = new ObjectMenuRequestData();
-            objectMenuRequestData.readFromBuffer(buffer);
-
+            ObjectMenuRequestData objectMenuRequestData = new ObjectMenuRequestData(buffer);
             data.add(objectMenuRequestData);
         }
 
         sequence = buffer.get();
     }
 
-    public static final class ObjectMenuRequestData implements ByteBufferSerializable {
-        @Getter private byte id;
-        @Getter private byte parent;
-        @Getter private byte menuItemType;
-        @Getter private byte flags;
-        @Getter private String label;
+    @Getter
+    @AllArgsConstructor
+    public static final class ObjectMenuRequestData implements ByteBufferWritable {
+        private final byte id;
+        private final byte parent;
+        private final byte menuItemType;
+        private final byte flags;
+        private final String label;
 
-        protected ObjectMenuRequestData() {}
-
-        public ObjectMenuRequestData(byte id, byte parent, byte menuItemType, byte flags, String label) {
-            this.id = id;
-            this.parent = parent;
-            this.menuItemType = menuItemType;
-            this.flags = flags;
-            this.label = label;
-        }
-
-        @Override
-        public void readFromBuffer(ByteBuffer buffer) {
+        public ObjectMenuRequestData(ByteBuffer buffer) {
             id = buffer.get();
             parent = buffer.get();
             menuItemType = buffer.get();

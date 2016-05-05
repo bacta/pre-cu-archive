@@ -1,13 +1,16 @@
 package com.ocdsoft.bacta.swg.precu.object.intangible.player;
 
-import com.ocdsoft.bacta.engine.buffer.ByteBufferSerializable;
+import com.ocdsoft.bacta.engine.buffer.ByteBufferWritable;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 import java.nio.ByteBuffer;
 
-public class QuestJournalEntry implements ByteBufferSerializable {
+@AllArgsConstructor
+@Getter
+public class QuestJournalEntry implements ByteBufferWritable {
 
-    @Override
-    public void readFromBuffer(ByteBuffer buffer) {
+    public QuestJournalEntry(ByteBuffer buffer) {
 
     }
 

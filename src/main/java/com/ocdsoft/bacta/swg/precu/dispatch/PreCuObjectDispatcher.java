@@ -63,10 +63,10 @@ public final class PreCuObjectDispatcher implements ObjectDispatcher<ObjControll
 
         } else {
 
-            templateWriter.createObjFiles(message.getMessageType(), message.getBuffer());
+//            templateWriter.createObjFiles(message.getMessageType(), message.getBuffer());
 
             LOGGER.error("Unhandled ObjController: '" + ObjectControllerNames.get(message.getMessageType()) + "' 0x" + Integer.toHexString(message.getMessageType()));
-            LOGGER.error(SoeMessageUtil.bytesToHex(message.getBuffer()));
+//            LOGGER.error(SoeMessageUtil.bytesToHex(message.getBuffer()));
             return;
         }
     }

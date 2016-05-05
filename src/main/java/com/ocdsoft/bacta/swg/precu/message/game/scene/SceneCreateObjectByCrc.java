@@ -1,31 +1,29 @@
 package com.ocdsoft.bacta.swg.precu.message.game.scene;
 
 import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
+import com.ocdsoft.bacta.soe.util.SOECRC32;
 import com.ocdsoft.bacta.swg.precu.object.ServerObject;
 import com.ocdsoft.bacta.swg.shared.utility.Transform;
+import lombok.AllArgsConstructor;
 
 import java.nio.ByteBuffer;
 
+@AllArgsConstructor
 public final class SceneCreateObjectByCrc extends GameNetworkMessage {
 
-    private long networkId;
-    private Transform transform;
-    private int crc;
-
-    // This byte has to do with hyper space
-    private byte hyperspace;
-
-    public SceneCreateObjectByCrc() {
-        super(0x05, 0xFE89DDEA);
-
-        networkId = -1;
-        transform = new Transform();
-        crc = 0;
-        hyperspace = 0;
+    static {
+        priority = 0x5;
+        messageType = SOECRC32.hashCode(SceneCreateObjectByCrc.class.getSimpleName()); // 0xFE89DDEA
     }
 
+    private final long networkId;
+    private final Transform transform;
+    private final int crc;
+
+    // This byte has to do with hyper space
+    private final byte hyperspace;
+
     public SceneCreateObjectByCrc(ServerObject scno) {
-        super(0x05, 0xFE89DDEA);
 
         networkId = scno.getNetworkId();
         transform = scno.getTransform();
@@ -33,8 +31,14 @@ public final class SceneCreateObjectByCrc extends GameNetworkMessage {
         hyperspace = 0;
     }
 
+    public SceneCreateObjectByCrc(final ByteBuffer buffer) {
+        networkId = buffer.getLong();
+        transform = new Transform(buffer);
+        crc = buffer.getInt();
+        hyperspace = buffer.get();
+    }
     @Override
-    public void writeToBuffer(ByteBuffer buffer) {
+    public void writeToBuffer(final ByteBuffer buffer) {
 
         //NetworkId networkId
         //Transform transform
@@ -47,12 +51,5 @@ public final class SceneCreateObjectByCrc extends GameNetworkMessage {
         buffer.put(hyperspace);
     }
 
-    @Override
-    public void readFromBuffer(ByteBuffer buffer) {
-        networkId = buffer.getLong();
-        transform.readFromBuffer(buffer);
-        crc = buffer.getInt();
-        hyperspace = buffer.get();
-    }
 
 }

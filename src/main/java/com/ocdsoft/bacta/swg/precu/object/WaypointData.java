@@ -8,17 +8,16 @@ import java.nio.ByteBuffer;
 /**
  * Created by crush on 8/13/2014.
  */
-public class WaypointData extends WaypointDataBase {
-    private long networkId;
+public final class WaypointData extends WaypointDataBase {
+    private final long networkId;
 
-    @Override
-    public void readFromBuffer(ByteBuffer buffer) {
-        super.readFromBuffer(buffer);
+    public WaypointData(final ByteBuffer buffer) {
+        super(buffer);
         this.networkId = buffer.getLong();
     }
 
     @Override
-    public void writeToBuffer(ByteBuffer buffer) {
+    public void writeToBuffer(final ByteBuffer buffer) {
         super.writeToBuffer(buffer);
         buffer.putLong(networkId);
     }

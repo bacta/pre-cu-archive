@@ -1,13 +1,13 @@
 package com.ocdsoft.bacta.swg.precu.object.sui;
 
-import com.ocdsoft.bacta.engine.buffer.ByteBufferSerializable;
+import com.ocdsoft.bacta.engine.buffer.ByteBufferWritable;
 import com.ocdsoft.bacta.engine.utils.BufferUtil;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SuiCommand implements ByteBufferSerializable {
+public class SuiCommand implements ByteBufferWritable {
     public static final byte SCT_clearDataSource = 0x01;
     public static final byte SCT_addChildWidget = 0x02;
     public static final byte SCT_setProperty = 0x03;
@@ -32,10 +32,10 @@ public class SuiCommand implements ByteBufferSerializable {
         wideParameters.add(param);
     }
 
-    @Override
-    public void readFromBuffer(ByteBuffer buffer) {
-
-    }
+    // TODO: this
+//    public SuiCommand(ByteBuffer buffer) {
+//
+//    }
 
     @Override
     public void writeToBuffer(ByteBuffer buffer) {

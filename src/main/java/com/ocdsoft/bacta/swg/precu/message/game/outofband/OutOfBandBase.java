@@ -1,33 +1,30 @@
 package com.ocdsoft.bacta.swg.precu.message.game.outofband;
 
-import com.ocdsoft.bacta.engine.buffer.ByteBufferSerializable;
-import io.netty.buffer.ByteBuf;
+import com.ocdsoft.bacta.engine.buffer.ByteBufferWritable;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.nio.ByteBuffer;
 
-public abstract class OutOfBandBase implements ByteBufferSerializable {
-    @Getter
+@Getter
+@AllArgsConstructor
+public abstract class OutOfBandBase implements ByteBufferWritable {
+
     private final byte typeId;
-    @Getter
     private final int position; //-1 for everything but -3 for to put waypoints in the attachment window.
 
-    public OutOfBandBase(int type, int position) {
-        this.typeId = (byte) type;
-        this.position = position;
-    }
+    public OutOfBandBase(final ByteBuffer buffer) {
+        // TODO: what is this?
+//        int size = buffer.getInt();
+//        boolean odd = buffer.getShort() != 0;
 
-    public OutOfBandBase(ByteBuf message) {
-        int size = message.readInt();
-        boolean odd = message.readShort() != 0;
-
-        this.typeId = message.readByte();
-        this.position = message.readInt();
+        this.typeId = buffer.get();
+        this.position = buffer.getInt();
     }
 
     @Override
-    public void writeToBuffer(ByteBuffer message) {
-        message.put(typeId);
-        message.putInt(position);
+    public void writeToBuffer(final ByteBuffer buffer) {
+        buffer.put(typeId);
+        buffer.putInt(position);
     }
 }

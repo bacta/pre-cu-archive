@@ -1,7 +1,8 @@
 package com.ocdsoft.bacta.swg.precu.object.tangible.creature;
 
-import com.ocdsoft.bacta.engine.buffer.ByteBufferSerializable;
+import com.ocdsoft.bacta.engine.buffer.ByteBufferWritable;
 import com.ocdsoft.bacta.engine.utils.BufferUtil;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 
@@ -9,22 +10,15 @@ import java.nio.Buffer;
 import java.nio.ByteBuffer;
 
 @Getter
-public class WearableEntry implements ByteBufferSerializable {
+@AllArgsConstructor
+public final class WearableEntry implements ByteBufferWritable {
 
-    private String customizationString;
-    private int containmentType;
-    private long objectId;
-    private int templateCrc;
+    private final String customizationString;
+    private final int containmentType;
+    private final long objectId;
+    private final int templateCrc;
 
-    public WearableEntry(final String customizationString, final int containmentType, final long objectId, final int templateCrc) {
-        this.customizationString = customizationString;
-        this.containmentType = containmentType;
-        this.objectId = objectId;
-        this.templateCrc = templateCrc;
-    }
-
-    @Override
-    public void readFromBuffer(ByteBuffer buffer) {
+    public WearableEntry(final ByteBuffer buffer) {
         this.customizationString = BufferUtil.getAscii(buffer);
         this.containmentType = buffer.getInt();
         this.objectId = buffer.getLong();
@@ -32,7 +26,7 @@ public class WearableEntry implements ByteBufferSerializable {
     }
 
     @Override
-    public void writeToBuffer(ByteBuffer buffer) {
+    public void writeToBuffer(final ByteBuffer buffer) {
         BufferUtil.putAscii(buffer, customizationString);
         buffer.putInt(containmentType);
         buffer.putLong(objectId);

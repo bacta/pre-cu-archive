@@ -16,7 +16,7 @@ public final class WaypointObject extends IntangibleObject {
     } //'WAYP'
 
     //WaypointObjectMessage03
-    private final AutoDeltaVariable<Vector> location = new AutoDeltaVariable<>(new Vector(), sharedPackage);
+    private final AutoDeltaVariable<Vector> location = new AutoDeltaVariable<>(new Vector(0, 0, 0), sharedPackage);
     private final AutoDeltaBoolean waypointActive = new AutoDeltaBoolean(false, sharedPackage);
     private final AutoDeltaLong cell = new AutoDeltaLong(0L, sharedPackage);
     private final AutoDeltaString planetName = new AutoDeltaString("", sharedPackage);

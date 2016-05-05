@@ -14,7 +14,7 @@ import com.ocdsoft.bacta.engine.object.account.Account;
 import com.ocdsoft.bacta.engine.security.authenticator.AccountService;
 import com.ocdsoft.bacta.engine.security.password.PasswordHash;
 import com.ocdsoft.bacta.engine.security.password.Pbkdf2SaltedPasswordHash;
-import com.ocdsoft.bacta.engine.serialization.NetworkSerializer;
+import com.ocdsoft.bacta.engine.serialize.NetworkSerializer;
 import com.ocdsoft.bacta.engine.service.object.ObjectService;
 import com.ocdsoft.bacta.engine.service.objectfactory.NetworkObjectFactory;
 import com.ocdsoft.bacta.engine.service.objectfactory.impl.GuiceNetworkObjectFactory;
@@ -33,6 +33,8 @@ import com.ocdsoft.bacta.soe.factory.GameNetworkMessageFactory;
 import com.ocdsoft.bacta.soe.factory.GameNetworkMessageFactoryImpl;
 import com.ocdsoft.bacta.soe.io.udp.game.GameServerState;
 import com.ocdsoft.bacta.soe.object.account.SoeAccount;
+import com.ocdsoft.bacta.soe.serialize.GameNetworkMessageSerializer;
+import com.ocdsoft.bacta.soe.serialize.GameNetworkMessageSerializerImpl;
 import com.ocdsoft.bacta.soe.service.SWGSessionKeyService;
 import com.ocdsoft.bacta.soe.service.SessionKeyService;
 import com.ocdsoft.bacta.swg.name.DefaultNameService;
@@ -85,6 +87,7 @@ public class PreCuModule extends AbstractModule implements Module {
         bind(new TypeLiteral<GameServerState<ClusterEntry>>(){}).to(PreCuGameServerState.class);
         bind(GameServerState.class).to(PreCuGameServerState.class);
         bind(ConnectionServerAgent.class).to(PreCuConnectionServerAgent.class);
+        bind(GameNetworkMessageSerializer.class).to(GameNetworkMessageSerializerImpl.class);
 
         // SWG Level Bindings
         bind(NameService.class).to(DefaultNameService.class);

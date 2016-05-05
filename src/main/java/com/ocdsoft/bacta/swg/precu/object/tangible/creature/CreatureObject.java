@@ -100,7 +100,7 @@ public final class CreatureObject extends TangibleObject {
         animationMood = new AutoDeltaString("", sharedPackageNp);
         currentWeapon = new AutoDeltaLong(0L, sharedPackageNp);
         group = new AutoDeltaLong(0L, sharedPackageNp);
-        groupInviter = new AutoDeltaVariable<GroupInviter>(new GroupInviter(), sharedPackageNp);
+        groupInviter = new AutoDeltaVariable<GroupInviter>(new GroupInviter(0, 0), sharedPackageNp);
         guildId = new AutoDeltaInt(0, sharedPackageNp);
         lookAtTarget = new AutoDeltaLong(0L, sharedPackageNp);
         moodId = new AutoDeltaByte(0, sharedPackageNp);

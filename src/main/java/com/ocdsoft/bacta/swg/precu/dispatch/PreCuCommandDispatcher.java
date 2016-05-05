@@ -97,11 +97,10 @@ public class PreCuCommandDispatcher implements CommandDispatcher<CommandMessage,
 
         } else {
 
-            templateWriter.createCommandFiles(message.getCommandHash(), message.getBuffer());
+//            templateWriter.createCommandFiles(message.getCommandHash(), message.getBuffer());
 
             LOGGER.error("Unhandled Command: '" + CommandNames.get(message.getCommandHash()));
-            LOGGER.error(SoeMessageUtil.bytesToHex(message.getBuffer()));
-            return;
+//            LOGGER.error(SoeMessageUtil.bytesToHex(message.getBuffer()));
         }
     }
 

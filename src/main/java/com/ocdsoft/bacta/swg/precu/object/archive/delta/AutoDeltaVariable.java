@@ -1,11 +1,11 @@
 package com.ocdsoft.bacta.swg.precu.object.archive.delta;
 
 
-import com.ocdsoft.bacta.engine.buffer.ByteBufferSerializable;
+import com.ocdsoft.bacta.engine.buffer.ByteBufferWritable;
 
 import java.nio.ByteBuffer;
 
-public class AutoDeltaVariable<T extends ByteBufferSerializable> extends AutoDeltaVariableBase {
+public class AutoDeltaVariable<T extends ByteBufferWritable> extends AutoDeltaVariableBase {
     private T currentValue;
     private transient int lastValue;
 

@@ -4,46 +4,30 @@ import com.google.inject.Inject;
 import com.ocdsoft.bacta.engine.utils.BufferUtil;
 import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
 import com.ocdsoft.bacta.soe.util.SOECRC32;
+import lombok.AllArgsConstructor;
 
 import java.nio.ByteBuffer;
 
-public class LoginClientToken extends GameNetworkMessage {
+@AllArgsConstructor
+public final class LoginClientToken extends GameNetworkMessage {
 
-    private static final short priority = 0x4;
-    private static final int messageType = SOECRC32.hashCode(LoginClientToken.class.getSimpleName());
-
-    private String authToken;
-    private int accountId;
-    private String username;
-
-    @Inject
-    public LoginClientToken() {
-        super(priority, messageType);
-
-        this.authToken = "";
-        this.accountId = -1;
-        this.username = "";
-    }
-    public LoginClientToken(final String authToken,
-                            final int accountId,
-                            final String username) {
-        super(priority, messageType);
-
-
-        this.authToken = authToken;
-        this.accountId = accountId;
-        this.username = username;
+    static {
+        priority = 0x4;
+        messageType = SOECRC32.hashCode(LoginClientToken.class.getSimpleName());// 0x41131f96
     }
 
-    @Override
-    public void readFromBuffer(ByteBuffer buffer) {
+    private final String authToken;
+    private final int accountId;
+    private final String username;
+
+    public LoginClientToken(final ByteBuffer buffer) {
         authToken = BufferUtil.getBinaryString(buffer);
         accountId = buffer.getInt();
         username = BufferUtil.getAscii(buffer);
     }
 
     @Override
-    public void writeToBuffer(ByteBuffer buffer) {
+    public void writeToBuffer(final ByteBuffer buffer) {
         BufferUtil.putBinaryString(buffer, authToken);
         buffer.putInt(accountId);
         BufferUtil.putAscii(buffer, username);

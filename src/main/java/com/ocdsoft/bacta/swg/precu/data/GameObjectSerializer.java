@@ -4,9 +4,8 @@ import com.esotericsoftware.kryo.Kryo;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
-import com.ocdsoft.bacta.engine.lang.UnicodeString;
-import com.ocdsoft.bacta.serialization.KryoSerializer;
-import com.ocdsoft.bacta.serialization.NetworkObjectSerializer;
+import com.ocdsoft.bacta.engine.serialize.KryoSerializer;
+import com.ocdsoft.bacta.engine.serialize.NetworkObjectSerializer;
 import com.ocdsoft.bacta.swg.localization.StringId;
 import com.ocdsoft.bacta.swg.precu.object.GroupInviter;
 import com.ocdsoft.bacta.swg.precu.object.MatchMakingId;
@@ -69,6 +68,5 @@ public final class GameObjectSerializer extends KryoSerializer {
         kryo.register(Quat4f.class);
         kryo.register(Vector3f.class);
         kryo.register(StringId.class);
-        kryo.register(UnicodeString.class);
     }
 }

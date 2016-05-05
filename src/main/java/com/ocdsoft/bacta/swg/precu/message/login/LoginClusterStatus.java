@@ -1,8 +1,6 @@
 package com.ocdsoft.bacta.swg.precu.message.login;
 
-import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.ocdsoft.bacta.engine.buffer.ByteBufferSerializable;
 import com.ocdsoft.bacta.engine.buffer.ByteBufferWritable;
 import com.ocdsoft.bacta.engine.conf.BactaConfiguration;
 import com.ocdsoft.bacta.engine.network.client.ServerStatus;
@@ -22,14 +20,14 @@ import java.util.stream.Collectors;
 
 public class LoginClusterStatus extends GameNetworkMessage {
 
-    private static final short priority = 0x3;
-    private static final int messageType = SOECRC32.hashCode(LoginClusterStatus.class.getSimpleName());
+    static {
+        priority = 0x3;
+        messageType = SOECRC32.hashCode(LoginClusterStatus.class.getSimpleName());// 0x41131f96
+    }
 
     private final Set<ClusterData> clusterDataSet;
 
-    @Inject
-    public LoginClusterStatus() {
-        super(priority, messageType);
+    private LoginClusterStatus() {
         clusterDataSet = new TreeSet<>();
     }
 
@@ -38,12 +36,11 @@ public class LoginClusterStatus extends GameNetworkMessage {
         clusterDataSet.addAll(clusterEntrySet.stream().map(ClusterEntry::getStatusClusterData).collect(Collectors.toList()));
 	}
 
-    @Override
-    public void readFromBuffer(ByteBuffer buffer) {
+    public LoginClusterStatus(ByteBuffer buffer) {
+        this();
         int count = buffer.getInt();
         for(int i = 0; i < count; ++i) {
-            ClusterData status = new ClusterData();
-            status.readFromBuffer(buffer);
+            ClusterData status = new ClusterData(buffer);
             clusterDataSet.add(status);
         }
     }
@@ -80,58 +77,35 @@ public class LoginClusterStatus extends GameNetworkMessage {
      */
 
     @Singleton
-    public static class ClusterData implements ByteBufferSerializable, Comparable<ClusterData> {
+    @Getter
+    public static class ClusterData implements ByteBufferWritable, Comparable<ClusterData> {
 
-        @Getter
-        @Setter
         private int id;
-
-        @Getter
         private String connectionServerAddress;
-
-        @Getter
         private short connectionServerPort;
-
-        @Getter
         private short connectionServerPingPort;
-
-        @Getter
-        @Setter
-        private int populationOnline;
-
-        @Getter
-        @Setter
-        private int onlinePlayerLimit;
-
-        @Getter
+        @Setter private int populationOnline;
+        @Setter private int onlinePlayerLimit;
         private int maxCharactersPerAccount;
-
-        @Getter
         private int timeZone;
-
-        @Getter
-        @Setter
-        private ServerStatus status; //enum
-
+        @Setter private ServerStatus status; //enum
         private boolean dontRecommend;
 
-        @Inject
-        public ClusterData() {
-            id = -1;
-            connectionServerAddress = "";
-            connectionServerPort = -1;
-            connectionServerPingPort = -1;
-            populationOnline = -1;
-            onlinePlayerLimit = -1;
-            maxCharactersPerAccount = -1;
-            timeZone = -1;
-            status = ServerStatus.DOWN;
-            dontRecommend = true;
+        public ClusterData(final ByteBuffer buffer) {
+            id = buffer.getInt();
+            connectionServerAddress = BufferUtil.getAscii(buffer);
+            connectionServerPort = buffer.getShort();
+            connectionServerPingPort = buffer.getShort();
+            populationOnline = buffer.getInt();
+            onlinePlayerLimit = buffer.getInt();
+            maxCharactersPerAccount = buffer.getInt();
+            timeZone = buffer.getInt();
+            status = ServerStatus.values()[buffer.getInt()];
+            dontRecommend = BufferUtil.getBoolean(buffer);
         }
 
-        @Inject
-        public ClusterData(BactaConfiguration configuration) {
-            id = -1;
+        public ClusterData(final BactaConfiguration configuration) {
+            id = configuration.getInt("Bacta/GameServer", "ServerID");
             connectionServerAddress = configuration.getString("Bacta/GameServer", "PublicAddress");
             connectionServerPort = (short) configuration.getInt("Bacta/GameServer", "Port");
             connectionServerPingPort = (short) configuration.getInt("Bacta/GameServer", "Ping");
@@ -154,20 +128,6 @@ public class LoginClusterStatus extends GameNetworkMessage {
             timeZone = ((Double)clusterInfo.get("timeZone")).intValue();
             status = ServerStatus.DOWN;
             dontRecommend = (boolean) clusterInfo.get("dontRecommend");
-        }
-
-        @Override
-        public void readFromBuffer(ByteBuffer buffer) {
-            id = buffer.getInt();
-            connectionServerAddress = BufferUtil.getAscii(buffer);
-            connectionServerPort = buffer.getShort();
-            connectionServerPingPort = buffer.getShort();
-            populationOnline = buffer.getInt();
-            onlinePlayerLimit = buffer.getInt();
-            maxCharactersPerAccount = buffer.getInt();
-            timeZone = buffer.getInt();
-            status = ServerStatus.values()[buffer.getInt()];
-            dontRecommend = BufferUtil.getBoolean(buffer);
         }
 
         @Override

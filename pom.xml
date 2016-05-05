@@ -49,16 +49,16 @@
             <artifactId>soe</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.ocdsoft.bacta.engine.serialization</groupId>
-            <artifactId>kryo</artifactId>
-        </dependency>
-        <dependency>
             <groupId>com.ocdsoft.bacta</groupId>
             <artifactId>iff</artifactId>
         </dependency>
         <dependency>
             <groupId>com.ocdsoft.bacta</groupId>
             <artifactId>swg</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>steerio</groupId>
+            <artifactId>steerio</artifactId>
         </dependency>
         <dependency>
             <groupId>com.ocdsoft.bacta.data.couchbase</groupId>
@@ -69,8 +69,16 @@
             <artifactId>smack-core</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.ocdsoft.bacta</groupId>
+            <artifactId>tre</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.igniterealtime.smack</groupId>
             <artifactId>smack-tcp</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity</artifactId>
         </dependency>
         <dependency>
             <groupId>co.paralleluniverse</groupId>

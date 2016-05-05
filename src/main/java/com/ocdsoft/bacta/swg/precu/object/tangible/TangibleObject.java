@@ -6,6 +6,7 @@ import com.ocdsoft.bacta.swg.precu.message.game.scene.UpdateTransformMessage;
 import com.ocdsoft.bacta.swg.precu.object.ServerObject;
 import com.ocdsoft.bacta.swg.precu.object.archive.delta.*;
 import com.ocdsoft.bacta.swg.precu.zone.Zone;
+import com.ocdsoft.bacta.swg.shared.utility.Transform;
 import lombok.Getter;
 import lombok.Setter;
 import org.magnos.steer.SteerSubject;
@@ -97,17 +98,11 @@ public class TangibleObject extends ServerObject implements SteerSubject<Vec3> {
         return nearObjects.toArray(new TangibleObject[nearObjects.size()]);
     }
 
-    @Override
-    public final void setPosition(float x, float z, float y) {
-        setPosition(x, z, y, true);
-    }
-
     public String getAppearanceData() { return appearanceData.get(); }
     public void setAppearanceData(final String appearanceData) { this.appearanceData.set(appearanceData); setDirty(true); }
 
-    @Override
-    public final void setPosition(float x, float z, float y, boolean updateZone) {
-        super.setPosition(x, z, y);
+    public final void setPosition(final Transform transform, boolean updateZone) {
+        super.setTransform(transform);
 
         if (updateZone) {
             updateZone();

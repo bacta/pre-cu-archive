@@ -1,55 +1,32 @@
 package com.ocdsoft.bacta.swg.precu.message.game.object;
 
 import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.nio.ByteBuffer;
 
 @Getter
-public class ObjControllerMessage extends GameNetworkMessage {
-    private int flag;
-    private int messageType;
-    private long receiver;
-    private int tickCount;
+@AllArgsConstructor
+public abstract class ObjControllerMessage extends GameNetworkMessage {
+    private final int flag;
+    private final int messageType;
+    @Setter private long receiver;
+    private final int tickCount;
 
-    private ByteBuffer buffer;
-
-    public ObjControllerMessage() {
-        super(0, 0);
-    }
-
-	public ObjControllerMessage(final int flag,
-                                final int messageType,
-                                final long receiver,
-                                final int tickCount) {
-
-		super(0x05, 0x80CE5E46);
-
-		this.flag = flag;
-        this.messageType = messageType;
-        this.receiver = receiver;
-        this.tickCount = tickCount;
-	}
-
-    public void setReceiver(long receiver) {
-        this.receiver = receiver;
-    }
-
-	@Override
-	public void readFromBuffer(ByteBuffer buffer) {
-        buffer.putInt(flag);
-        buffer.putInt(messageType);
-        buffer.putLong(receiver);
-        buffer.putInt(tickCount);
-
-        this.buffer = buffer;
-	}
-
-	@Override
-	public void writeToBuffer(ByteBuffer buffer) {
+	public ObjControllerMessage(final ByteBuffer buffer) {
         this.flag = buffer.getInt();
         this.messageType = buffer.getInt();
         this.receiver = buffer.getLong();
         this.tickCount = buffer.getInt();
+	}
+
+	@Override
+	public void writeToBuffer(final ByteBuffer buffer) {
+        buffer.putInt(flag);
+        buffer.putInt(messageType);
+        buffer.putLong(receiver);
+        buffer.putInt(tickCount);
 	}
 }

@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import com.ocdsoft.bacta.engine.utils.BufferUtil;
 import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
 import com.ocdsoft.bacta.soe.util.SOECRC32;
+import lombok.AllArgsConstructor;
 
 import java.nio.ByteBuffer;
 
@@ -18,40 +19,20 @@ import java.nio.ByteBuffer;
      Archive::AutoVariable<bool> m_canSkipTutorial;
  }; 
  */
-public class ClientPermissionsMessage extends GameNetworkMessage {
+@AllArgsConstructor
+public final class ClientPermissionsMessage extends GameNetworkMessage {
 
-    private static final short priority = 0x4;
-    private static final int messageType = SOECRC32.hashCode(ClientPermissionsMessage.class.getSimpleName());
-
-    private boolean canLogin;
-    private boolean canCreateRegularCharacter;
-    private boolean canCreateJediCharacter;
-    private boolean canSkipTutorial;
-
-    @Inject
-    public ClientPermissionsMessage() {
-        super(priority, messageType);
-
-        this.canLogin = false;
-        this.canCreateRegularCharacter = false;
-        this.canCreateJediCharacter = false;
-        this.canSkipTutorial = false;
+    static {
+        priority = 0x4;
+        messageType = SOECRC32.hashCode(ClientPermissionsMessage.class.getSimpleName());
     }
 
-    public ClientPermissionsMessage(boolean canLogin,
-                                    boolean canCreateRegularCharacter,
-                                    boolean canCreateJediCharacter,
-                                    boolean canSkipTutorial) {
-        super(priority, messageType);
-        
-        this.canLogin = canLogin;
-        this.canCreateRegularCharacter = canCreateRegularCharacter;
-        this.canCreateJediCharacter = canCreateJediCharacter;
-        this.canSkipTutorial = canSkipTutorial;
-    }
+    private final boolean canLogin;
+    private final boolean canCreateRegularCharacter;
+    private final boolean canCreateJediCharacter;
+    private final boolean canSkipTutorial;
 
-    @Override
-    public void readFromBuffer(ByteBuffer buffer) {
+    public ClientPermissionsMessage(final ByteBuffer buffer) {
         this.canLogin = BufferUtil.getBoolean(buffer);
         this.canCreateRegularCharacter = BufferUtil.getBoolean(buffer);
         this.canCreateJediCharacter = BufferUtil.getBoolean(buffer);
@@ -59,7 +40,7 @@ public class ClientPermissionsMessage extends GameNetworkMessage {
     }
 
     @Override
-    public void writeToBuffer(ByteBuffer buffer) {
+    public void writeToBuffer(final ByteBuffer buffer) {
         BufferUtil.putBoolean(buffer, canLogin);
         BufferUtil.putBoolean(buffer, canCreateRegularCharacter);
         BufferUtil.putBoolean(buffer, canCreateJediCharacter);

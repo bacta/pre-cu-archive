@@ -1,36 +1,31 @@
 package com.ocdsoft.bacta.swg.precu.message.login;
 
+import com.google.inject.Inject;
 import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
 import com.ocdsoft.bacta.soe.util.SOECRC32;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.nio.ByteBuffer;
 
-public class GameServerStatusResponse extends GameNetworkMessage {
+@AllArgsConstructor
+@Getter
+public final class GameServerStatusResponse extends GameNetworkMessage {
 
-    private static final short priority = 0x2;
-    private static final int messageType = SOECRC32.hashCode(GameServerStatusResponse.class.getSimpleName());
-
-    @Getter
-    private int clusterId;
-
-    public GameServerStatusResponse() {
-        super(priority, messageType);
+    static {
+        priority = 0x2;
+        messageType = SOECRC32.hashCode(GameServerStatusResponse.class.getSimpleName());
     }
 
-	public GameServerStatusResponse(final int clusterId) {
-        super(priority, messageType);
+    private int clusterId;
 
-        this.clusterId = clusterId;
-	}
+    public GameServerStatusResponse(ByteBuffer buffer) {
+        clusterId = buffer.getInt();
+    }
 
     @Override
     public void writeToBuffer(ByteBuffer buffer) {
         buffer.putInt(clusterId);
     }
 
-    @Override
-    public void readFromBuffer(ByteBuffer buffer) {
-        clusterId = buffer.getInt();
-    }
 }

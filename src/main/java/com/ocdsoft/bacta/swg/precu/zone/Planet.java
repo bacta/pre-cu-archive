@@ -1,6 +1,6 @@
 package com.ocdsoft.bacta.swg.precu.zone;
 
-import com.ocdsoft.bacta.swg.precu.message.game.scene.SceneObjectDestroyMessage;
+import com.ocdsoft.bacta.swg.precu.message.game.scene.SceneDestroyObject;
 import com.ocdsoft.bacta.swg.precu.object.tangible.TangibleObject;
 import lombok.Getter;
 import org.magnos.steer.spatial.CollisionCallback;
@@ -48,7 +48,7 @@ public class Planet implements Zone {
         }
 
         obj.setZone(this);
-        obj.setPosition(obj.getPosition().x, obj.getPosition().z, obj.getPosition().y, false);
+        obj.setPosition(obj.getTransform(), false);
         obj.setInert(false);
 
         spatialDatabase.add(obj);
@@ -61,7 +61,7 @@ public class Planet implements Zone {
 
     @Override
     public void remove(TangibleObject obj) {
-        obj.broadcastMessage(new SceneObjectDestroyMessage(obj));
+        obj.broadcastMessage(new SceneDestroyObject(obj.getNetworkId(), false));
         obj.setInert(true);
         int count = spatialDatabase.refresh();
         logger.debug("Remove " + obj.getNetworkId() + " to "  + terrainName + " Now has " + count + " objects");

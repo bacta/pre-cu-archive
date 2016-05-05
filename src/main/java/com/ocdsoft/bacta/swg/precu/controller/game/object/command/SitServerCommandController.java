@@ -17,7 +17,7 @@ public class SitServerCommandController implements CommandController<TangibleObj
 	private Logger logger = LoggerFactory.getLogger(getClass().getSimpleName());
 
 	@Override
-	public void handleCommand(SoeUdpConnection connection, TangibleObject invoker, TangibleObject target, UnicodeString params) {
+	public void handleCommand(SoeUdpConnection connection, TangibleObject invoker, TangibleObject target, String params) {
 		CreatureObject player = (CreatureObject) invoker;
 		player.setPosture(CreaturePosture.SITTING);
 	}

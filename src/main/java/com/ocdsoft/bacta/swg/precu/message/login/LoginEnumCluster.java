@@ -1,7 +1,6 @@
 package com.ocdsoft.bacta.swg.precu.message.login;
 
 import com.google.inject.Inject;
-import com.ocdsoft.bacta.engine.buffer.ByteBufferSerializable;
 import com.ocdsoft.bacta.engine.buffer.ByteBufferWritable;
 import com.ocdsoft.bacta.engine.utils.BufferUtil;
 import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
@@ -17,16 +16,16 @@ import java.util.TreeSet;
 
 public class LoginEnumCluster extends GameNetworkMessage {
 
-    private static final short priority = 0x2;
-    private static final int messageType = SOECRC32.hashCode(LoginEnumCluster.class.getSimpleName());
+    static {
+        priority = 0x2;
+        messageType = SOECRC32.hashCode(LoginEnumCluster.class.getSimpleName());
+    }
 
     private final Set<ClusterData> clusterDataSet;
     private int maxCharactersPerAccount;
 
     @Inject
     public LoginEnumCluster() {
-        super(priority, messageType);
-
         clusterDataSet = new TreeSet<>();
     }
 
@@ -37,11 +36,10 @@ public class LoginEnumCluster extends GameNetworkMessage {
         this.maxCharactersPerAccount = maxCharactersPerAccount;
 	}
 
-    @Override
-    public void readFromBuffer(ByteBuffer buffer) {
+    public LoginEnumCluster(ByteBuffer buffer) {
+        this();
         for(int i = 0; i < buffer.getInt(); ++i) {
-            ClusterData data = new ClusterData();
-            data.readFromBuffer(buffer);
+            ClusterData data = new ClusterData(buffer);
             clusterDataSet.add(data);
         }
 
@@ -59,20 +57,11 @@ public class LoginEnumCluster extends GameNetworkMessage {
     }
 
     @Getter
-    public static class ClusterData implements ByteBufferSerializable, Comparable<ClusterData> {
+    public static class ClusterData implements ByteBufferWritable, Comparable<ClusterData> {
 
-        @Setter
-        private int id;
-
-        private String name;
-        private int timezone;  // Offset from GMT in seconds
-
-        @Inject
-        public ClusterData() {
-            this.id = -1;
-            this.name = "";
-            this.timezone = DateTimeZone.getDefault().getOffset(null) / 1000;
-        }
+        private final int id;
+        private final String name;
+        private final int timezone;  // Offset from GMT in seconds
 
         public ClusterData(final int id, final String name) {
             this.id = id;
@@ -80,8 +69,7 @@ public class LoginEnumCluster extends GameNetworkMessage {
             this.timezone = DateTimeZone.getDefault().getOffset(null) / 1000;
         }
 
-        @Override
-        public void readFromBuffer(ByteBuffer buffer) {
+        public ClusterData(ByteBuffer buffer) {
             id = buffer.getInt();
             name = BufferUtil.getAscii(buffer);
             timezone = buffer.getInt();

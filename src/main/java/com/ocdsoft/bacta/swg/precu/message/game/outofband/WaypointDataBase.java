@@ -1,27 +1,26 @@
 package com.ocdsoft.bacta.swg.precu.message.game.outofband;
 
-import com.ocdsoft.bacta.engine.buffer.ByteBufferSerializable;
+import com.ocdsoft.bacta.engine.buffer.ByteBufferWritable;
 import com.ocdsoft.bacta.engine.utils.BufferUtil;
 import com.ocdsoft.bacta.swg.shared.math.Vector;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 import java.nio.ByteBuffer;
 
-public class WaypointDataBase implements ByteBufferSerializable {
+@Getter
+@AllArgsConstructor
+public class WaypointDataBase implements ByteBufferWritable {
 
-    private int appearanceNameCrc;
-    private Vector location;
-    private String name;
-    private byte color;
-    private boolean active;
+    private final int appearanceNameCrc;
+    private final Vector location;
+    private final String name;
+    private final byte color;
+    private final boolean active;
 
-    public WaypointDataBase() {
-        location = new Vector();
-    }
-
-    @Override
-    public void readFromBuffer(ByteBuffer buffer) {
+    public WaypointDataBase(ByteBuffer buffer) {
         appearanceNameCrc = buffer.getInt();
-        location.readFromBuffer(buffer);
+        location = new Vector(buffer);
         name = BufferUtil.getUnicode(buffer);
         color = buffer.get();
         active = BufferUtil.getBoolean(buffer);

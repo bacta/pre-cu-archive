@@ -22,11 +22,9 @@ import com.ocdsoft.bacta.swg.shared.template.ObjectTemplate;
 import com.ocdsoft.bacta.swg.shared.utility.Transform;
 import lombok.Getter;
 import lombok.Setter;
-import org.magnos.steer.vec.Vec3;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.vecmath.Quat4f;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -151,13 +149,14 @@ public abstract class ServerObject extends GameObject implements Subject<Observa
             }
         }
 
-        SceneEndBaselines close = new SceneEndBaselines(this);
+        SceneEndBaselines close = new SceneEndBaselines(this.getNetworkId());
         theirConnection.sendMessage(close);
     }
 
     public final void sendDestroyTo(SoeUdpConnection theirConnection) {
         if (theirConnection != null) {
-            SceneObjectDestroyMessage msg = new SceneObjectDestroyMessage(this);
+            // TODO: hyperspace boolean
+            SceneDestroyObject msg = new SceneDestroyObject(this.getNetworkId(), false);
             theirConnection.sendMessage(msg);
         }
     }
@@ -226,27 +225,8 @@ public abstract class ServerObject extends GameObject implements Subject<Observa
         firstParentAuthClientServerPackageNp.clearDeltas();
     }
 
-    public void setPosition(float x, float z, float y) {
-        this.transform.setPosition(x, z, y);
-        dirty = true;
-    }
-
-    public void setPosition(float x, float z, float y, boolean updateZone) {
-        setPosition(x, z, y);
-    }
-
-    public void setPosition(Vec3 position) {
-        this.transform.setPosition(position);
-        dirty = true;
-    }
-
-    public final void setOrientation(float x, float y, float z, float w) {
-        this.transform.setOrientation(x, y, z, w);
-        dirty = true;
-    }
-
-    public final void setOrientation(Quat4f orientation) {
-        this.transform.setOrientation(orientation);
+    public void setTransform(final Transform transform) {
+        this.transform = transform;
         dirty = true;
     }
 
@@ -282,6 +262,7 @@ public abstract class ServerObject extends GameObject implements Subject<Observa
 
     public final void broadcastMessage(ObjControllerMessage message, boolean changeReceiver) {
         for (SoeUdpConnection theirConnection : listeners) {
+
             if(changeReceiver) {
                 message.setReceiver(theirConnection.getCurrentNetworkId());
             }
