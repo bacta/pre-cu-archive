@@ -34,7 +34,7 @@ public class SharedDraftSchematicObjectTemplate extends SharedIntangibleObjectTe
 	private final List<StructParam<ObjectTemplate>> attributes = new ArrayList<>(); //what attributes the schematic can affect
 	private boolean attributesLoaded;
 	private boolean attributesAppend;
-	private final StringParam craftedSharedTemplate = new StringParam();
+	private final StringParam craftedSharedTemplate = new StringParam(); 
 
 	public SharedDraftSchematicObjectTemplate(final String filename, final DataResourceList<ObjectTemplate> objectTemplateList) {
 		super(filename, objectTemplateList);
@@ -202,7 +202,7 @@ public class SharedDraftSchematicObjectTemplate extends SharedIntangibleObjectTe
 			iff.enterChunk();
 			final String parameterName = iff.readString();
 
-			if ("".equalsIgnoreCase(parameterName)) {
+			if ("slots".equalsIgnoreCase(parameterName)) {
 				slots.clear();
 				slotsAppend = iff.readBoolean();
 				int listCount = iff.readInt();
@@ -212,7 +212,7 @@ public class SharedDraftSchematicObjectTemplate extends SharedIntangibleObjectTe
 					slots.add(newData);
 				}
 				slotsLoaded = true;
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("attributes".equalsIgnoreCase(parameterName)) {
 				attributes.clear();
 				attributesAppend = iff.readBoolean();
 				int listCount = iff.readInt();
@@ -222,7 +222,7 @@ public class SharedDraftSchematicObjectTemplate extends SharedIntangibleObjectTe
 					attributes.add(newData);
 				}
 				attributesLoaded = true;
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("craftedSharedTemplate".equalsIgnoreCase(parameterName)) {
 				craftedSharedTemplate.loadFromIff(objectTemplateList, iff);
 			} else {
 				throw new IllegalStateException(String.format("Unexpected parameter %s", parameterName));
@@ -237,7 +237,7 @@ public class SharedDraftSchematicObjectTemplate extends SharedIntangibleObjectTe
 		AR_armorNone(0),
 		AR_armorLight(1),
 		AR_armorMedium(2),
-		AR_armorHeavy(3);
+		AR_armorHeavy(3); 
 
 		private static final ArmorRating[] values = values();
 		public final long value;
@@ -245,7 +245,6 @@ public class SharedDraftSchematicObjectTemplate extends SharedIntangibleObjectTe
 		ArmorRating(final long value) {
 			this.value = value;
 		}
-
 		public static ArmorRating from(final long value) {
 			for (final ArmorRating e : values)
 				if (e.value == value) return e;
@@ -266,7 +265,7 @@ public class SharedDraftSchematicObjectTemplate extends SharedIntangibleObjectTe
 		DT_environmental_heat(0x00000200),
 		DT_environmental_cold(0x00000400),
 		DT_environmental_acid(0x00000800),
-		DT_environmental_electrical(0x00001000);
+		DT_environmental_electrical(0x00001000); 
 
 		private static final DamageType[] values = values();
 		public final long value;
@@ -274,7 +273,6 @@ public class SharedDraftSchematicObjectTemplate extends SharedIntangibleObjectTe
 		DamageType(final long value) {
 			this.value = value;
 		}
-
 		public static DamageType from(final long value) {
 			for (final DamageType e : values)
 				if (e.value == value) return e;
@@ -350,9 +348,9 @@ public class SharedDraftSchematicObjectTemplate extends SharedIntangibleObjectTe
 				iff.enterChunk();
 				final String parameterName = iff.readString();
 
-				if ("	".equalsIgnoreCase(parameterName)) {
+				if ("name".equalsIgnoreCase(parameterName)) {
 					name.loadFromIff(objectTemplateList, iff);
-				} else if ("	".equalsIgnoreCase(parameterName)) {
+				} else if ("hardpoint".equalsIgnoreCase(parameterName)) {
 					hardpoint.loadFromIff(objectTemplateList, iff);
 				} else {
 					throw new IllegalStateException(String.format("Unexpected parameter %s", parameterName));
@@ -473,11 +471,11 @@ public class SharedDraftSchematicObjectTemplate extends SharedIntangibleObjectTe
 				iff.enterChunk();
 				final String parameterName = iff.readString();
 
-				if ("	".equalsIgnoreCase(parameterName)) {
+				if ("name".equalsIgnoreCase(parameterName)) {
 					name.loadFromIff(objectTemplateList, iff);
-				} else if ("	".equalsIgnoreCase(parameterName)) {
+				} else if ("experiment".equalsIgnoreCase(parameterName)) {
 					experiment.loadFromIff(objectTemplateList, iff);
-				} else if ("	".equalsIgnoreCase(parameterName)) {
+				} else if ("value".equalsIgnoreCase(parameterName)) {
 					value.loadFromIff(objectTemplateList, iff);
 				} else {
 					throw new IllegalStateException(String.format("Unexpected parameter %s", parameterName));

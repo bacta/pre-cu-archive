@@ -81,7 +81,7 @@ public class ServerPlanetObjectTemplate extends ServerUniverseObjectTemplate {
 			iff.enterChunk();
 			final String parameterName = iff.readString();
 
-			if ("".equalsIgnoreCase(parameterName)) {
+			if ("planetName".equalsIgnoreCase(parameterName)) {
 				planetName.loadFromIff(objectTemplateList, iff);
 			} else {
 				throw new IllegalStateException(String.format("Unexpected parameter %s", parameterName));

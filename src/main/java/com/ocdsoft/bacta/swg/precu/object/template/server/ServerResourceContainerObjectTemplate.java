@@ -100,7 +100,7 @@ public class ServerResourceContainerObjectTemplate extends ServerTangibleObjectT
 			iff.enterChunk();
 			final String parameterName = iff.readString();
 
-			if ("".equalsIgnoreCase(parameterName)) {
+			if ("maxResources".equalsIgnoreCase(parameterName)) {
 				maxResources.loadFromIff(objectTemplateList, iff);
 			} else {
 				throw new IllegalStateException(String.format("Unexpected parameter %s", parameterName));

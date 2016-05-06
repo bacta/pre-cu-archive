@@ -640,9 +640,9 @@ public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 			iff.enterChunk();
 			final String parameterName = iff.readString();
 
-			if ("".equalsIgnoreCase(parameterName)) {
+			if ("defaultWeapon".equalsIgnoreCase(parameterName)) {
 				defaultWeapon.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("attributes".equalsIgnoreCase(parameterName)) {
 				int listCount = iff.readInt();
 				int j;
 				for (j = 0; j < 6 && j < listCount; ++j)
@@ -651,7 +651,7 @@ public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 					final IntegerParam dummy = new IntegerParam();
 					dummy.loadFromIff(objectTemplateList, iff);
 				}
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("minAttributes".equalsIgnoreCase(parameterName)) {
 				int listCount = iff.readInt();
 				int j;
 				for (j = 0; j < 6 && j < listCount; ++j)
@@ -660,7 +660,7 @@ public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 					final IntegerParam dummy = new IntegerParam();
 					dummy.loadFromIff(objectTemplateList, iff);
 				}
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("maxAttributes".equalsIgnoreCase(parameterName)) {
 				int listCount = iff.readInt();
 				int j;
 				for (j = 0; j < 6 && j < listCount; ++j)
@@ -669,15 +669,15 @@ public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 					final IntegerParam dummy = new IntegerParam();
 					dummy.loadFromIff(objectTemplateList, iff);
 				}
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("minDrainModifier".equalsIgnoreCase(parameterName)) {
 				minDrainModifier.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("maxDrainModifier".equalsIgnoreCase(parameterName)) {
 				maxDrainModifier.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("minFaucetModifier".equalsIgnoreCase(parameterName)) {
 				minFaucetModifier.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("maxFaucetModifier".equalsIgnoreCase(parameterName)) {
 				maxFaucetModifier.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("attribMods".equalsIgnoreCase(parameterName)) {
 				attribMods.clear();
 				attribModsAppend = iff.readBoolean();
 				int listCount = iff.readInt();
@@ -687,15 +687,15 @@ public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 					attribMods.add(newData);
 				}
 				attribModsLoaded = true;
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("shockWounds".equalsIgnoreCase(parameterName)) {
 				shockWounds.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("canCreateAvatar".equalsIgnoreCase(parameterName)) {
 				canCreateAvatar.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("nameGeneratorType".equalsIgnoreCase(parameterName)) {
 				nameGeneratorType.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("approachTriggerRange".equalsIgnoreCase(parameterName)) {
 				approachTriggerRange.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("maxMentalStates".equalsIgnoreCase(parameterName)) {
 				int listCount = iff.readInt();
 				int j;
 				for (j = 0; j < 4 && j < listCount; ++j)
@@ -704,7 +704,7 @@ public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 					final FloatParam dummy = new FloatParam();
 					dummy.loadFromIff(objectTemplateList, iff);
 				}
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("mentalStatesDecay".equalsIgnoreCase(parameterName)) {
 				int listCount = iff.readInt();
 				int j;
 				for (j = 0; j < 4 && j < listCount; ++j)

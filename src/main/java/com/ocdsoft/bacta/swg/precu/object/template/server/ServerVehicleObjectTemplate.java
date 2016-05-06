@@ -196,13 +196,13 @@ public class ServerVehicleObjectTemplate extends ServerTangibleObjectTemplate {
 			iff.enterChunk();
 			final String parameterName = iff.readString();
 
-			if ("".equalsIgnoreCase(parameterName)) {
+			if ("fuelType".equalsIgnoreCase(parameterName)) {
 				fuelType.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("currentFuel".equalsIgnoreCase(parameterName)) {
 				currentFuel.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("maxFuel".equalsIgnoreCase(parameterName)) {
 				maxFuel.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("consumpsion".equalsIgnoreCase(parameterName)) {
 				consumpsion.loadFromIff(objectTemplateList, iff);
 			} else {
 				throw new IllegalStateException(String.format("Unexpected parameter %s", parameterName));

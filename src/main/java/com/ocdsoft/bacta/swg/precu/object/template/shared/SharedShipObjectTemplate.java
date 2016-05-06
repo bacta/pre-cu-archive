@@ -22,7 +22,7 @@ public class SharedShipObjectTemplate extends SharedTangibleObjectTemplate {
 	private final StringParam cockpitFilename = new StringParam();
 	private final BoolParam hasWings = new BoolParam();
 	private final BoolParam playerControlled = new BoolParam();
-	private final StringParam interiorLayoutFileName = new StringParam();
+	private final StringParam interiorLayoutFileName = new StringParam(); 
 
 	public SharedShipObjectTemplate(final String filename, final DataResourceList<ObjectTemplate> objectTemplateList) {
 		super(filename, objectTemplateList);
@@ -139,13 +139,13 @@ public class SharedShipObjectTemplate extends SharedTangibleObjectTemplate {
 			iff.enterChunk();
 			final String parameterName = iff.readString();
 
-			if ("".equalsIgnoreCase(parameterName)) {
+			if ("cockpitFilename".equalsIgnoreCase(parameterName)) {
 				cockpitFilename.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("hasWings".equalsIgnoreCase(parameterName)) {
 				hasWings.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("playerControlled".equalsIgnoreCase(parameterName)) {
 				playerControlled.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("interiorLayoutFileName".equalsIgnoreCase(parameterName)) {
 				interiorLayoutFileName.loadFromIff(objectTemplateList, iff);
 			} else {
 				throw new IllegalStateException(String.format("Unexpected parameter %s", parameterName));

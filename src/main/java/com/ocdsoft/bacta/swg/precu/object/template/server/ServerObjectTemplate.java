@@ -604,9 +604,9 @@ public class ServerObjectTemplate extends ObjectTemplate {
 			iff.enterChunk();
 			final String parameterName = iff.readString();
 
-			if ("".equalsIgnoreCase(parameterName)) {
+			if ("sharedTemplate".equalsIgnoreCase(parameterName)) {
 				sharedTemplate.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("scripts".equalsIgnoreCase(parameterName)) {
 				scripts.clear();
 				scriptsAppend = iff.readBoolean();
 				int listCount = iff.readInt();
@@ -616,11 +616,11 @@ public class ServerObjectTemplate extends ObjectTemplate {
 					scripts.add(newData);
 				}
 				scriptsLoaded = true;
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("objvars".equalsIgnoreCase(parameterName)) {
 				objvars.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("volume".equalsIgnoreCase(parameterName)) {
 				volume.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("visibleFlags".equalsIgnoreCase(parameterName)) {
 				visibleFlags.clear();
 				visibleFlagsAppend = iff.readBoolean();
 				int listCount = iff.readInt();
@@ -630,7 +630,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 					visibleFlags.add(newData);
 				}
 				visibleFlagsLoaded = true;
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("deleteFlags".equalsIgnoreCase(parameterName)) {
 				deleteFlags.clear();
 				deleteFlagsAppend = iff.readBoolean();
 				int listCount = iff.readInt();
@@ -640,7 +640,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 					deleteFlags.add(newData);
 				}
 				deleteFlagsLoaded = true;
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("moveFlags".equalsIgnoreCase(parameterName)) {
 				moveFlags.clear();
 				moveFlagsAppend = iff.readBoolean();
 				int listCount = iff.readInt();
@@ -650,13 +650,13 @@ public class ServerObjectTemplate extends ObjectTemplate {
 					moveFlags.add(newData);
 				}
 				moveFlagsLoaded = true;
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("invulnerable".equalsIgnoreCase(parameterName)) {
 				invulnerable.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("complexity".equalsIgnoreCase(parameterName)) {
 				complexity.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("tintIndex".equalsIgnoreCase(parameterName)) {
 				tintIndex.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("updateRanges".equalsIgnoreCase(parameterName)) {
 				int listCount = iff.readInt();
 				int j;
 				for (j = 0; j < 3 && j < listCount; ++j)
@@ -665,7 +665,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 					final FloatParam dummy = new FloatParam();
 					dummy.loadFromIff(objectTemplateList, iff);
 				}
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("contents".equalsIgnoreCase(parameterName)) {
 				contents.clear();
 				contentsAppend = iff.readBoolean();
 				int listCount = iff.readInt();
@@ -675,7 +675,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 					contents.add(newData);
 				}
 				contentsLoaded = true;
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("xpPoints".equalsIgnoreCase(parameterName)) {
 				xpPoints.clear();
 				xpPointsAppend = iff.readBoolean();
 				int listCount = iff.readInt();
@@ -685,9 +685,9 @@ public class ServerObjectTemplate extends ObjectTemplate {
 					xpPoints.add(newData);
 				}
 				xpPointsLoaded = true;
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("persistByDefault".equalsIgnoreCase(parameterName)) {
 				persistByDefault.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("persistContents".equalsIgnoreCase(parameterName)) {
 				persistContents.loadFromIff(objectTemplateList, iff);
 			} else {
 				throw new IllegalStateException(String.format("Unexpected parameter %s", parameterName));
@@ -702,7 +702,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		AR_armorNone(0),
 		AR_armorLight(1),
 		AR_armorMedium(2),
-		AR_armorHeavy(3);
+		AR_armorHeavy(3); 
 
 		private static final ArmorRating[] values = values();
 		public final long value;
@@ -710,7 +710,6 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		ArmorRating(final long value) {
 			this.value = value;
 		}
-
 		public static ArmorRating from(final long value) {
 			for (final ArmorRating e : values)
 				if (e.value == value) return e;
@@ -720,7 +719,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 
 	public enum VisibleFlags {
 		VF_gm(0),
-		VF_player(1);
+		VF_player(1); 
 
 		private static final VisibleFlags[] values = values();
 		public final long value;
@@ -728,7 +727,6 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		VisibleFlags(final long value) {
 			this.value = value;
 		}
-
 		public static VisibleFlags from(final long value) {
 			for (final VisibleFlags e : values)
 				if (e.value == value) return e;
@@ -779,7 +777,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		CT_spaceMission(0x80020000),
 		CT_reverseEngineeringMission(0x80040000),
 		CT_miscMission(0x80080000),
-		CT_spaceComponentMission(0x80100000);
+		CT_spaceComponentMission(0x80100000); 
 
 		private static final CraftingType[] values = values();
 		public final long value;
@@ -787,7 +785,6 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		CraftingType(final long value) {
 			this.value = value;
 		}
-
 		public static CraftingType from(final long value) {
 			for (final CraftingType e : values)
 				if (e.value == value) return e;
@@ -798,7 +795,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 	public enum UpdateRanges {
 		UR_near(0),
 		UR_normal(1),
-		UR_far(2);
+		UR_far(2); 
 
 		private static final UpdateRanges[] values = values();
 		public final long value;
@@ -806,7 +803,6 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		UpdateRanges(final long value) {
 			this.value = value;
 		}
-
 		public static UpdateRanges from(final long value) {
 			for (final UpdateRanges e : values)
 				if (e.value == value) return e;
@@ -817,7 +813,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 	public enum ArmorCategory {
 		AC_reconnaissance(0),
 		AC_battle(1),
-		AC_assault(2),
+		AC_assault(2), 
 		AC_psg(3); // personal shield generator
 
 		private static final ArmorCategory[] values = values();
@@ -826,7 +822,6 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		ArmorCategory(final long value) {
 			this.value = value;
 		}
-
 		public static ArmorCategory from(final long value) {
 			for (final ArmorCategory e : values)
 				if (e.value == value) return e;
@@ -838,7 +833,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		MS_fear(0),
 		MS_anger(1),
 		MS_interest(2),
-		MS_distress(3);
+		MS_distress(3); 
 
 		private static final MentalStates[] values = values();
 		public final long value;
@@ -846,7 +841,6 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		MentalStates(final long value) {
 			this.value = value;
 		}
-
 		public static MentalStates from(final long value) {
 			for (final MentalStates e : values)
 				if (e.value == value) return e;
@@ -860,7 +854,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		AT_action(2),
 		AT_stamina(3),
 		AT_mind(4),
-		AT_willpower(5);
+		AT_willpower(5); 
 
 		private static final Attributes[] values = values();
 		public final long value;
@@ -868,7 +862,6 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		Attributes(final long value) {
 			this.value = value;
 		}
-
 		public static Attributes from(final long value) {
 			for (final Attributes e : values)
 				if (e.value == value) return e;
@@ -937,7 +930,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		XP_craftingSpice(57),
 		XP_jediGeneral(58),
 		XP_shipwright(59),
-		XP_reverseEngineering(60);
+		XP_reverseEngineering(60); 
 
 		private static final XpTypes[] values = values();
 		public final long value;
@@ -945,7 +938,6 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		XpTypes(final long value) {
 			this.value = value;
 		}
-
 		public static XpTypes from(final long value) {
 			for (final XpTypes e : values)
 				if (e.value == value) return e;
@@ -955,7 +947,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 
 	public enum MoveFlags {
 		MF_gm(0),
-		MF_player(1);
+		MF_player(1); 
 
 		private static final MoveFlags[] values = values();
 		public final long value;
@@ -963,7 +955,6 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		MoveFlags(final long value) {
 			this.value = value;
 		}
-
 		public static MoveFlags from(final long value) {
 			for (final MoveFlags e : values)
 				if (e.value == value) return e;
@@ -973,7 +964,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 
 	public enum DeleteFlags {
 		DF_gm(0),
-		DF_player(1);
+		DF_player(1); 
 
 		private static final DeleteFlags[] values = values();
 		public final long value;
@@ -981,7 +972,6 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		DeleteFlags(final long value) {
 			this.value = value;
 		}
-
 		public static DeleteFlags from(final long value) {
 			for (final DeleteFlags e : values)
 				if (e.value == value) return e;
@@ -1003,7 +993,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		DT_environmental_heat(0x00000200),
 		DT_environmental_cold(0x00000400),
 		DT_environmental_acid(0x00000800),
-		DT_environmental_electrical(0x00001000);
+		DT_environmental_electrical(0x00001000); 
 
 		private static final DamageType[] values = values();
 		public final long value;
@@ -1011,7 +1001,6 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		DamageType(final long value) {
 			this.value = value;
 		}
-
 		public static DamageType from(final long value) {
 			for (final DamageType e : values)
 				if (e.value == value) return e;
@@ -1022,7 +1011,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 	public enum ArmorLevel {
 		AL_basic(0),
 		AL_standard(1),
-		AL_advanced(2);
+		AL_advanced(2); 
 
 		private static final ArmorLevel[] values = values();
 		public final long value;
@@ -1030,7 +1019,6 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		ArmorLevel(final long value) {
 			this.value = value;
 		}
-
 		public static ArmorLevel from(final long value) {
 			for (final ArmorLevel e : values)
 				if (e.value == value) return e;
@@ -1244,15 +1232,15 @@ public class ServerObjectTemplate extends ObjectTemplate {
 				iff.enterChunk();
 				final String parameterName = iff.readString();
 
-				if ("	".equalsIgnoreCase(parameterName)) {
+				if ("target".equalsIgnoreCase(parameterName)) {
 					target.loadFromIff(objectTemplateList, iff);
-				} else if ("	".equalsIgnoreCase(parameterName)) {
+				} else if ("value".equalsIgnoreCase(parameterName)) {
 					value.loadFromIff(objectTemplateList, iff);
-				} else if ("	".equalsIgnoreCase(parameterName)) {
+				} else if ("time".equalsIgnoreCase(parameterName)) {
 					time.loadFromIff(objectTemplateList, iff);
-				} else if ("	".equalsIgnoreCase(parameterName)) {
+				} else if ("timeAtValue".equalsIgnoreCase(parameterName)) {
 					timeAtValue.loadFromIff(objectTemplateList, iff);
-				} else if ("	".equalsIgnoreCase(parameterName)) {
+				} else if ("decay".equalsIgnoreCase(parameterName)) {
 					decay.loadFromIff(objectTemplateList, iff);
 				} else {
 					throw new IllegalStateException(String.format("Unexpected parameter %s", parameterName));
@@ -1471,15 +1459,15 @@ public class ServerObjectTemplate extends ObjectTemplate {
 				iff.enterChunk();
 				final String parameterName = iff.readString();
 
-				if ("	".equalsIgnoreCase(parameterName)) {
+				if ("target".equalsIgnoreCase(parameterName)) {
 					target.loadFromIff(objectTemplateList, iff);
-				} else if ("	".equalsIgnoreCase(parameterName)) {
+				} else if ("value".equalsIgnoreCase(parameterName)) {
 					value.loadFromIff(objectTemplateList, iff);
-				} else if ("	".equalsIgnoreCase(parameterName)) {
+				} else if ("time".equalsIgnoreCase(parameterName)) {
 					time.loadFromIff(objectTemplateList, iff);
-				} else if ("	".equalsIgnoreCase(parameterName)) {
+				} else if ("timeAtValue".equalsIgnoreCase(parameterName)) {
 					timeAtValue.loadFromIff(objectTemplateList, iff);
-				} else if ("	".equalsIgnoreCase(parameterName)) {
+				} else if ("decay".equalsIgnoreCase(parameterName)) {
 					decay.loadFromIff(objectTemplateList, iff);
 				} else {
 					throw new IllegalStateException(String.format("Unexpected parameter %s", parameterName));
@@ -1590,11 +1578,11 @@ public class ServerObjectTemplate extends ObjectTemplate {
 				iff.enterChunk();
 				final String parameterName = iff.readString();
 
-				if ("	".equalsIgnoreCase(parameterName)) {
+				if ("slotName".equalsIgnoreCase(parameterName)) {
 					slotName.loadFromIff(objectTemplateList, iff);
-				} else if ("	".equalsIgnoreCase(parameterName)) {
+				} else if ("equipObject".equalsIgnoreCase(parameterName)) {
 					equipObject.loadFromIff(objectTemplateList, iff);
-				} else if ("	".equalsIgnoreCase(parameterName)) {
+				} else if ("content".equalsIgnoreCase(parameterName)) {
 					content.loadFromIff(objectTemplateList, iff);
 				} else {
 					throw new IllegalStateException(String.format("Unexpected parameter %s", parameterName));
@@ -1733,11 +1721,11 @@ public class ServerObjectTemplate extends ObjectTemplate {
 				iff.enterChunk();
 				final String parameterName = iff.readString();
 
-				if ("	".equalsIgnoreCase(parameterName)) {
+				if ("type".equalsIgnoreCase(parameterName)) {
 					type.loadFromIff(objectTemplateList, iff);
-				} else if ("	".equalsIgnoreCase(parameterName)) {
+				} else if ("level".equalsIgnoreCase(parameterName)) {
 					level.loadFromIff(objectTemplateList, iff);
-				} else if ("	".equalsIgnoreCase(parameterName)) {
+				} else if ("value".equalsIgnoreCase(parameterName)) {
 					value.loadFromIff(objectTemplateList, iff);
 				} else {
 					throw new IllegalStateException(String.format("Unexpected parameter %s", parameterName));

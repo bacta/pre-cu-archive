@@ -19,7 +19,7 @@ public class SharedBuildingObjectTemplate extends SharedTangibleObjectTemplate {
 	private int templateVersion;
 
 	private final StringParam terrainModificationFileName = new StringParam();
-	private final StringParam interiorLayoutFileName = new StringParam();
+	private final StringParam interiorLayoutFileName = new StringParam(); 
 
 	public SharedBuildingObjectTemplate(final String filename, final DataResourceList<ObjectTemplate> objectTemplateList) {
 		super(filename, objectTemplateList);
@@ -100,9 +100,9 @@ public class SharedBuildingObjectTemplate extends SharedTangibleObjectTemplate {
 			iff.enterChunk();
 			final String parameterName = iff.readString();
 
-			if ("".equalsIgnoreCase(parameterName)) {
+			if ("terrainModificationFileName".equalsIgnoreCase(parameterName)) {
 				terrainModificationFileName.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("interiorLayoutFileName".equalsIgnoreCase(parameterName)) {
 				interiorLayoutFileName.loadFromIff(objectTemplateList, iff);
 			} else {
 				throw new IllegalStateException(String.format("Unexpected parameter %s", parameterName));

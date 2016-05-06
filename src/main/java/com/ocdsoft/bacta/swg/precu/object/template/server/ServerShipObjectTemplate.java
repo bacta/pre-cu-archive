@@ -18,7 +18,7 @@ public class ServerShipObjectTemplate extends ServerTangibleObjectTemplate {
 
 	private int templateVersion;
 
-	private final StringParam shipType = new StringParam();
+	private final StringParam shipType = new StringParam(); 
 
 	public ServerShipObjectTemplate(final String filename, final DataResourceList<ObjectTemplate> objectTemplateList) {
 		super(filename, objectTemplateList);
@@ -81,7 +81,7 @@ public class ServerShipObjectTemplate extends ServerTangibleObjectTemplate {
 			iff.enterChunk();
 			final String parameterName = iff.readString();
 
-			if ("".equalsIgnoreCase(parameterName)) {
+			if ("shipType".equalsIgnoreCase(parameterName)) {
 				shipType.loadFromIff(objectTemplateList, iff);
 			} else {
 				throw new IllegalStateException(String.format("Unexpected parameter %s", parameterName));

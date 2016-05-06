@@ -430,13 +430,13 @@ public class ServerDraftSchematicObjectTemplate extends ServerIntangibleObjectTe
 			iff.enterChunk();
 			final String parameterName = iff.readString();
 
-			if ("".equalsIgnoreCase(parameterName)) {
+			if ("category".equalsIgnoreCase(parameterName)) {
 				category.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("craftedObjectTemplate".equalsIgnoreCase(parameterName)) {
 				craftedObjectTemplate.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("crateObjectTemplate".equalsIgnoreCase(parameterName)) {
 				crateObjectTemplate.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("slots".equalsIgnoreCase(parameterName)) {
 				slots.clear();
 				slotsAppend = iff.readBoolean();
 				int listCount = iff.readInt();
@@ -446,7 +446,7 @@ public class ServerDraftSchematicObjectTemplate extends ServerIntangibleObjectTe
 					slots.add(newData);
 				}
 				slotsLoaded = true;
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("skillCommands".equalsIgnoreCase(parameterName)) {
 				skillCommands.clear();
 				skillCommandsAppend = iff.readBoolean();
 				int listCount = iff.readInt();
@@ -456,9 +456,9 @@ public class ServerDraftSchematicObjectTemplate extends ServerIntangibleObjectTe
 					skillCommands.add(newData);
 				}
 				skillCommandsLoaded = true;
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("destroyIngredients".equalsIgnoreCase(parameterName)) {
 				destroyIngredients.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("manufactureScripts".equalsIgnoreCase(parameterName)) {
 				manufactureScripts.clear();
 				manufactureScriptsAppend = iff.readBoolean();
 				int listCount = iff.readInt();
@@ -468,11 +468,11 @@ public class ServerDraftSchematicObjectTemplate extends ServerIntangibleObjectTe
 					manufactureScripts.add(newData);
 				}
 				manufactureScriptsLoaded = true;
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("itemsPerContainer".equalsIgnoreCase(parameterName)) {
 				itemsPerContainer.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("manufactureTime".equalsIgnoreCase(parameterName)) {
 				manufactureTime.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("prototypeTime".equalsIgnoreCase(parameterName)) {
 				prototypeTime.loadFromIff(objectTemplateList, iff);
 			} else {
 				throw new IllegalStateException(String.format("Unexpected parameter %s", parameterName));
@@ -692,11 +692,11 @@ public class ServerDraftSchematicObjectTemplate extends ServerIntangibleObjectTe
 				iff.enterChunk();
 				final String parameterName = iff.readString();
 
-				if ("	".equalsIgnoreCase(parameterName)) {
+				if ("optional".equalsIgnoreCase(parameterName)) {
 					optional.loadFromIff(objectTemplateList, iff);
-				} else if ("	".equalsIgnoreCase(parameterName)) {
+				} else if ("name".equalsIgnoreCase(parameterName)) {
 					name.loadFromIff(objectTemplateList, iff);
-				} else if ("	".equalsIgnoreCase(parameterName)) {
+				} else if ("options".equalsIgnoreCase(parameterName)) {
 					options.clear();
 					optionsAppend = iff.readBoolean();
 					int listCount = iff.readInt();
@@ -706,11 +706,11 @@ public class ServerDraftSchematicObjectTemplate extends ServerIntangibleObjectTe
 						options.add(newData);
 					}
 					optionsLoaded = true;
-				} else if ("	".equalsIgnoreCase(parameterName)) {
+				} else if ("optionalSkillCommand".equalsIgnoreCase(parameterName)) {
 					optionalSkillCommand.loadFromIff(objectTemplateList, iff);
-				} else if ("	".equalsIgnoreCase(parameterName)) {
+				} else if ("complexity".equalsIgnoreCase(parameterName)) {
 					complexity.loadFromIff(objectTemplateList, iff);
-				} else if ("	".equalsIgnoreCase(parameterName)) {
+				} else if ("appearance".equalsIgnoreCase(parameterName)) {
 					appearance.loadFromIff(objectTemplateList, iff);
 				} else {
 					throw new IllegalStateException(String.format("Unexpected parameter %s", parameterName));

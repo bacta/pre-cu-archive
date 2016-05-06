@@ -553,35 +553,35 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 			iff.enterChunk();
 			final String parameterName = iff.readString();
 
-			if ("".equalsIgnoreCase(parameterName)) {
+			if ("weaponType".equalsIgnoreCase(parameterName)) {
 				weaponType.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("attackType".equalsIgnoreCase(parameterName)) {
 				attackType.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("damageType".equalsIgnoreCase(parameterName)) {
 				damageType.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("elementalType".equalsIgnoreCase(parameterName)) {
 				elementalType.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("elementalValue".equalsIgnoreCase(parameterName)) {
 				elementalValue.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("minDamageAmount".equalsIgnoreCase(parameterName)) {
 				minDamageAmount.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("maxDamageAmount".equalsIgnoreCase(parameterName)) {
 				maxDamageAmount.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("attackSpeed".equalsIgnoreCase(parameterName)) {
 				attackSpeed.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("audibleRange".equalsIgnoreCase(parameterName)) {
 				audibleRange.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("minRange".equalsIgnoreCase(parameterName)) {
 				minRange.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("maxRange".equalsIgnoreCase(parameterName)) {
 				maxRange.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("damageRadius".equalsIgnoreCase(parameterName)) {
 				damageRadius.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("woundChance".equalsIgnoreCase(parameterName)) {
 				woundChance.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("attackCost".equalsIgnoreCase(parameterName)) {
 				attackCost.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("accuracy".equalsIgnoreCase(parameterName)) {
 				accuracy.loadFromIff(objectTemplateList, iff);
 			} else {
 				throw new IllegalStateException(String.format("Unexpected parameter %s", parameterName));
@@ -606,7 +606,7 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 		WT_2handLightsaber(10),
 		WT_polearmLightsaber(11),
 		WT_groundTargetting(12),
-		WT_directionTargetting(13);
+		WT_directionTargetting(13); 
 
 		private static final WeaponType[] values = values();
 		public final long value;
@@ -614,7 +614,6 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 		WeaponType(final long value) {
 			this.value = value;
 		}
-
 		public static WeaponType from(final long value) {
 			for (final WeaponType e : values)
 				if (e.value == value) return e;
@@ -633,7 +632,6 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 		AttribModDecaySpecial(final long value) {
 			this.value = value;
 		}
-
 		public static AttribModDecaySpecial from(final long value) {
 			for (final AttribModDecaySpecial e : values)
 				if (e.value == value) return e;
@@ -644,7 +642,7 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 	public enum AttackType {
 		AT_melee(0),
 		AT_ranged(1),
-		AT_thrown(2);
+		AT_thrown(2); 
 
 		private static final AttackType[] values = values();
 		public final long value;
@@ -652,7 +650,6 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 		AttackType(final long value) {
 			this.value = value;
 		}
-
 		public static AttackType from(final long value) {
 			for (final AttackType e : values)
 				if (e.value == value) return e;

@@ -335,7 +335,7 @@ public class ServerTangibleObjectTemplate extends ServerObjectTemplate {
 			iff.enterChunk();
 			final String parameterName = iff.readString();
 
-			if ("".equalsIgnoreCase(parameterName)) {
+			if ("triggerVolumes".equalsIgnoreCase(parameterName)) {
 				triggerVolumes.clear();
 				triggerVolumesAppend = iff.readBoolean();
 				int listCount = iff.readInt();
@@ -345,19 +345,19 @@ public class ServerTangibleObjectTemplate extends ServerObjectTemplate {
 					triggerVolumes.add(newData);
 				}
 				triggerVolumesLoaded = true;
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("combatSkeleton".equalsIgnoreCase(parameterName)) {
 				combatSkeleton.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("maxHitPoints".equalsIgnoreCase(parameterName)) {
 				maxHitPoints.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("armor".equalsIgnoreCase(parameterName)) {
 				armor.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("interestRadius".equalsIgnoreCase(parameterName)) {
 				interestRadius.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("count".equalsIgnoreCase(parameterName)) {
 				count.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("condition".equalsIgnoreCase(parameterName)) {
 				condition.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("wantSawAttackTriggers".equalsIgnoreCase(parameterName)) {
 				wantSawAttackTriggers.loadFromIff(objectTemplateList, iff);
 			} else {
 				throw new IllegalStateException(String.format("Unexpected parameter %s", parameterName));
@@ -378,7 +378,6 @@ public class ServerTangibleObjectTemplate extends ServerObjectTemplate {
 		CombatSkeleton(final long value) {
 			this.value = value;
 		}
-
 		public static CombatSkeleton from(final long value) {
 			for (final CombatSkeleton e : values)
 				if (e.value == value) return e;
@@ -398,11 +397,11 @@ public class ServerTangibleObjectTemplate extends ServerObjectTemplate {
 		C_invulnerable(0x00000100),
 		C_disabled(0x00000200),
 		C_uninsurable(0x00000400),
-		C_interesting(0x00000800),
+		C_interesting(0x00000800), 
 		C_mount(0x00001000), //Set programmatically by mount system.  Do not set this in the template.
 		C_crafted(0x00002000), //Set programmatically by crafting system.  Do not set this in the template.
 		C_wingsOpened(0x00004000), //Set programmatically by wing system.  Do not set this in the template.
-		C_spaceInteresting(0x00008000),
+		C_spaceInteresting(0x00008000), 
 		C_docking(0x00010000), //Set programmatically by docking system.  Do not set this in the template.
 		C_destroying(0x00020000), //Set programmatically by destruction system.  Do not set this in the template.
 		C_commable(0x00040000),
@@ -410,12 +409,12 @@ public class ServerTangibleObjectTemplate extends ServerObjectTemplate {
 		C_eject(0x00100000),
 		C_inspectable(0x00200000),
 		C_transferable(0x00400000),
-		C_inflightTutorial(0x00800000),
+		C_inflightTutorial(0x00800000), 
 		C_spaceCombatMusic(0x01000000), //Set programmatically by the AI system.  Do not set this in the template.
 		C_encounterLocked(0x02000000),
 		C_spawnedCreature(0x04000000),
 		C_holidayInteresting(0x08000000),
-		C_locked(0x10000000);
+		C_locked(0x10000000); 
 
 		private static final Conditions[] values = values();
 		public final long value;
@@ -423,7 +422,6 @@ public class ServerTangibleObjectTemplate extends ServerObjectTemplate {
 		Conditions(final long value) {
 			this.value = value;
 		}
-
 		public static Conditions from(final long value) {
 			for (final Conditions e : values)
 				if (e.value == value) return e;

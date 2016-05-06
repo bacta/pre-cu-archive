@@ -138,11 +138,11 @@ public class SharedWeaponObjectTemplate extends SharedTangibleObjectTemplate {
 			iff.enterChunk();
 			final String parameterName = iff.readString();
 
-			if ("".equalsIgnoreCase(parameterName)) {
+			if ("weaponEffect".equalsIgnoreCase(parameterName)) {
 				weaponEffect.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("weaponEffectIndex".equalsIgnoreCase(parameterName)) {
 				weaponEffectIndex.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("attackType".equalsIgnoreCase(parameterName)) {
 				attackType.loadFromIff(objectTemplateList, iff);
 			} else {
 				throw new IllegalStateException(String.format("Unexpected parameter %s", parameterName));
@@ -157,7 +157,7 @@ public class SharedWeaponObjectTemplate extends SharedTangibleObjectTemplate {
 		AT_melee(0),
 		AT_ranged(1),
 		AT_thrown(2),
-		AT_ammo(3);
+		AT_ammo(3); 
 
 		private static final AttackType[] values = values();
 		public final long value;
@@ -165,7 +165,6 @@ public class SharedWeaponObjectTemplate extends SharedTangibleObjectTemplate {
 		AttackType(final long value) {
 			this.value = value;
 		}
-
 		public static AttackType from(final long value) {
 			for (final AttackType e : values)
 				if (e.value == value) return e;

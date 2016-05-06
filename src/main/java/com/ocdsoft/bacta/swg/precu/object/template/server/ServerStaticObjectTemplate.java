@@ -81,7 +81,7 @@ public class ServerStaticObjectTemplate extends ServerObjectTemplate {
 			iff.enterChunk();
 			final String parameterName = iff.readString();
 
-			if ("".equalsIgnoreCase(parameterName)) {
+			if ("clientOnlyBuildout".equalsIgnoreCase(parameterName)) {
 				clientOnlyBuildout.loadFromIff(objectTemplateList, iff);
 			} else {
 				throw new IllegalStateException(String.format("Unexpected parameter %s", parameterName));

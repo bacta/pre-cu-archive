@@ -256,11 +256,11 @@ public class ServerManufactureSchematicObjectTemplate extends ServerIntangibleOb
 			iff.enterChunk();
 			final String parameterName = iff.readString();
 
-			if ("".equalsIgnoreCase(parameterName)) {
+			if ("draftSchematic".equalsIgnoreCase(parameterName)) {
 				draftSchematic.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("creator".equalsIgnoreCase(parameterName)) {
 				creator.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("ingredients".equalsIgnoreCase(parameterName)) {
 				ingredients.clear();
 				ingredientsAppend = iff.readBoolean();
 				int listCount = iff.readInt();
@@ -270,9 +270,9 @@ public class ServerManufactureSchematicObjectTemplate extends ServerIntangibleOb
 					ingredients.add(newData);
 				}
 				ingredientsLoaded = true;
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("itemCount".equalsIgnoreCase(parameterName)) {
 				itemCount.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("attributes".equalsIgnoreCase(parameterName)) {
 				attributes.clear();
 				attributesAppend = iff.readBoolean();
 				int listCount = iff.readInt();
@@ -369,9 +369,9 @@ public class ServerManufactureSchematicObjectTemplate extends ServerIntangibleOb
 				iff.enterChunk();
 				final String parameterName = iff.readString();
 
-				if ("	".equalsIgnoreCase(parameterName)) {
+				if ("name".equalsIgnoreCase(parameterName)) {
 					name.loadFromIff(objectTemplateList, iff);
-				} else if ("	".equalsIgnoreCase(parameterName)) {
+				} else if ("ingredient".equalsIgnoreCase(parameterName)) {
 					ingredient.loadFromIff(objectTemplateList, iff);
 				} else {
 					throw new IllegalStateException(String.format("Unexpected parameter %s", parameterName));

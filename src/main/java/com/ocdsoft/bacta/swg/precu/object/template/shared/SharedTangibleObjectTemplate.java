@@ -38,7 +38,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 	private boolean socketDestinationsLoaded;
 	private boolean socketDestinationsAppend;
 	private final StringParam structureFootprintFileName = new StringParam();
-	private final BoolParam useStructureFootprintOutline = new BoolParam();
+	private final BoolParam useStructureFootprintOutline = new BoolParam(); 
 	private final BoolParam targetable = new BoolParam(); // can the object be targetted by the client
 	private final List<StringParam> certificationsRequired = new ArrayList<>(); // List of the certifications required to use this item (used in x1 only)
 	private boolean certificationsRequiredLoaded;
@@ -462,7 +462,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 			iff.enterChunk();
 			final String parameterName = iff.readString();
 
-			if ("".equalsIgnoreCase(parameterName)) {
+			if ("paletteColorCustomizationVariables".equalsIgnoreCase(parameterName)) {
 				paletteColorCustomizationVariables.clear();
 				paletteColorCustomizationVariablesAppend = iff.readBoolean();
 				int listCount = iff.readInt();
@@ -472,7 +472,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 					paletteColorCustomizationVariables.add(newData);
 				}
 				paletteColorCustomizationVariablesLoaded = true;
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("rangedIntCustomizationVariables".equalsIgnoreCase(parameterName)) {
 				rangedIntCustomizationVariables.clear();
 				rangedIntCustomizationVariablesAppend = iff.readBoolean();
 				int listCount = iff.readInt();
@@ -482,7 +482,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 					rangedIntCustomizationVariables.add(newData);
 				}
 				rangedIntCustomizationVariablesLoaded = true;
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("constStringCustomizationVariables".equalsIgnoreCase(parameterName)) {
 				constStringCustomizationVariables.clear();
 				constStringCustomizationVariablesAppend = iff.readBoolean();
 				int listCount = iff.readInt();
@@ -492,7 +492,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 					constStringCustomizationVariables.add(newData);
 				}
 				constStringCustomizationVariablesLoaded = true;
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("socketDestinations".equalsIgnoreCase(parameterName)) {
 				socketDestinations.clear();
 				socketDestinationsAppend = iff.readBoolean();
 				int listCount = iff.readInt();
@@ -502,13 +502,13 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 					socketDestinations.add(newData);
 				}
 				socketDestinationsLoaded = true;
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("structureFootprintFileName".equalsIgnoreCase(parameterName)) {
 				structureFootprintFileName.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("useStructureFootprintOutline".equalsIgnoreCase(parameterName)) {
 				useStructureFootprintOutline.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("targetable".equalsIgnoreCase(parameterName)) {
 				targetable.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("certificationsRequired".equalsIgnoreCase(parameterName)) {
 				certificationsRequired.clear();
 				certificationsRequiredAppend = iff.readBoolean();
 				int listCount = iff.readInt();
@@ -518,7 +518,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 					certificationsRequired.add(newData);
 				}
 				certificationsRequiredLoaded = true;
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("customizationVariableMapping".equalsIgnoreCase(parameterName)) {
 				customizationVariableMapping.clear();
 				customizationVariableMappingAppend = iff.readBoolean();
 				int listCount = iff.readInt();
@@ -528,7 +528,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 					customizationVariableMapping.add(newData);
 				}
 				customizationVariableMappingLoaded = true;
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("clientVisabilityFlag".equalsIgnoreCase(parameterName)) {
 				clientVisabilityFlag.loadFromIff(objectTemplateList, iff);
 			} else {
 				throw new IllegalStateException(String.format("Unexpected parameter %s", parameterName));
@@ -541,7 +541,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 
 	public enum ClientVisabilityFlags {
 		CVF_always(0),
-		CVF_gm_only(1);
+		CVF_gm_only(1); 
 
 		private static final ClientVisabilityFlags[] values = values();
 		public final long value;
@@ -549,7 +549,6 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 		ClientVisabilityFlags(final long value) {
 			this.value = value;
 		}
-
 		public static ClientVisabilityFlags from(final long value) {
 			for (final ClientVisabilityFlags e : values)
 				if (e.value == value) return e;
@@ -578,7 +577,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 		private final StringParam variableName = new StringParam();
 		private final IntegerParam minValueInclusive = new IntegerParam();
 		private final IntegerParam defaultValue = new IntegerParam();
-		private final IntegerParam maxValueExclusive = new IntegerParam();
+		private final IntegerParam maxValueExclusive = new IntegerParam(); 
 
 		@Override
 		public int getId() {
@@ -724,13 +723,13 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 				iff.enterChunk();
 				final String parameterName = iff.readString();
 
-				if ("	".equalsIgnoreCase(parameterName)) {
+				if ("variableName".equalsIgnoreCase(parameterName)) {
 					variableName.loadFromIff(objectTemplateList, iff);
-				} else if ("	".equalsIgnoreCase(parameterName)) {
+				} else if ("minValueInclusive".equalsIgnoreCase(parameterName)) {
 					minValueInclusive.loadFromIff(objectTemplateList, iff);
-				} else if ("	".equalsIgnoreCase(parameterName)) {
+				} else if ("defaultValue".equalsIgnoreCase(parameterName)) {
 					defaultValue.loadFromIff(objectTemplateList, iff);
-				} else if ("	".equalsIgnoreCase(parameterName)) {
+				} else if ("maxValueExclusive".equalsIgnoreCase(parameterName)) {
 					maxValueExclusive.loadFromIff(objectTemplateList, iff);
 				} else {
 					throw new IllegalStateException(String.format("Unexpected parameter %s", parameterName));
@@ -761,7 +760,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 
 		private final StringParam variableName = new StringParam();
 		private final StringParam palettePathName = new StringParam();
-		private final IntegerParam defaultPaletteIndex = new IntegerParam();
+		private final IntegerParam defaultPaletteIndex = new IntegerParam(); 
 
 		@Override
 		public int getId() {
@@ -851,11 +850,11 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 				iff.enterChunk();
 				final String parameterName = iff.readString();
 
-				if ("	".equalsIgnoreCase(parameterName)) {
+				if ("variableName".equalsIgnoreCase(parameterName)) {
 					variableName.loadFromIff(objectTemplateList, iff);
-				} else if ("	".equalsIgnoreCase(parameterName)) {
+				} else if ("palettePathName".equalsIgnoreCase(parameterName)) {
 					palettePathName.loadFromIff(objectTemplateList, iff);
-				} else if ("	".equalsIgnoreCase(parameterName)) {
+				} else if ("defaultPaletteIndex".equalsIgnoreCase(parameterName)) {
 					defaultPaletteIndex.loadFromIff(objectTemplateList, iff);
 				} else {
 					throw new IllegalStateException(String.format("Unexpected parameter %s", parameterName));
@@ -883,7 +882,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 		}
 
 		private final StringParam variableName = new StringParam();
-		private final StringParam constValue = new StringParam();
+		private final StringParam constValue = new StringParam(); 
 
 		@Override
 		public int getId() {
@@ -936,9 +935,9 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 				iff.enterChunk();
 				final String parameterName = iff.readString();
 
-				if ("	".equalsIgnoreCase(parameterName)) {
+				if ("variableName".equalsIgnoreCase(parameterName)) {
 					variableName.loadFromIff(objectTemplateList, iff);
-				} else if ("	".equalsIgnoreCase(parameterName)) {
+				} else if ("constValue".equalsIgnoreCase(parameterName)) {
 					constValue.loadFromIff(objectTemplateList, iff);
 				} else {
 					throw new IllegalStateException(String.format("Unexpected parameter %s", parameterName));
@@ -966,7 +965,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 		}
 
 		private final StringParam sourceVariable = new StringParam();
-		private final StringParam dependentVariable = new StringParam();
+		private final StringParam dependentVariable = new StringParam(); 
 
 		@Override
 		public int getId() {
@@ -1019,9 +1018,9 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 				iff.enterChunk();
 				final String parameterName = iff.readString();
 
-				if ("	".equalsIgnoreCase(parameterName)) {
+				if ("sourceVariable".equalsIgnoreCase(parameterName)) {
 					sourceVariable.loadFromIff(objectTemplateList, iff);
-				} else if ("	".equalsIgnoreCase(parameterName)) {
+				} else if ("dependentVariable".equalsIgnoreCase(parameterName)) {
 					dependentVariable.loadFromIff(objectTemplateList, iff);
 				} else {
 					throw new IllegalStateException(String.format("Unexpected parameter %s", parameterName));

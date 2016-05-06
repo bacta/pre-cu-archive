@@ -20,7 +20,7 @@ public class SharedTerrainSurfaceObjectTemplate extends ObjectTemplate {
 	private int templateVersion;
 
 	private final FloatParam cover = new FloatParam();
-	private final StringParam surfaceType = new StringParam();
+	private final StringParam surfaceType = new StringParam(); 
 
 	public SharedTerrainSurfaceObjectTemplate(final String filename, final DataResourceList<ObjectTemplate> objectTemplateList) {
 		super(filename, objectTemplateList);
@@ -120,9 +120,9 @@ public class SharedTerrainSurfaceObjectTemplate extends ObjectTemplate {
 			iff.enterChunk();
 			final String parameterName = iff.readString();
 
-			if ("".equalsIgnoreCase(parameterName)) {
+			if ("cover".equalsIgnoreCase(parameterName)) {
 				cover.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("surfaceType".equalsIgnoreCase(parameterName)) {
 				surfaceType.loadFromIff(objectTemplateList, iff);
 			} else {
 				throw new IllegalStateException(String.format("Unexpected parameter %s", parameterName));

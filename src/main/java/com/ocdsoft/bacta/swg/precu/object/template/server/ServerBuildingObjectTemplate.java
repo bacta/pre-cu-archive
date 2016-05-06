@@ -120,9 +120,9 @@ public class ServerBuildingObjectTemplate extends ServerTangibleObjectTemplate {
 			iff.enterChunk();
 			final String parameterName = iff.readString();
 
-			if ("".equalsIgnoreCase(parameterName)) {
+			if ("maintenanceCost".equalsIgnoreCase(parameterName)) {
 				maintenanceCost.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("isPublic".equalsIgnoreCase(parameterName)) {
 				isPublic.loadFromIff(objectTemplateList, iff);
 			} else {
 				throw new IllegalStateException(String.format("Unexpected parameter %s", parameterName));

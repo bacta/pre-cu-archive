@@ -109,7 +109,7 @@ public class ServerIntangibleObjectTemplate extends ServerObjectTemplate {
 			iff.enterChunk();
 			final String parameterName = iff.readString();
 
-			if ("".equalsIgnoreCase(parameterName)) {
+			if ("count".equalsIgnoreCase(parameterName)) {
 				count.loadFromIff(objectTemplateList, iff);
 			} else {
 				throw new IllegalStateException(String.format("Unexpected parameter %s", parameterName));
@@ -136,7 +136,6 @@ public class ServerIntangibleObjectTemplate extends ServerObjectTemplate {
 		IngredientType(final long value) {
 			this.value = value;
 		}
-
 		public static IngredientType from(final long value) {
 			for (final IngredientType e : values)
 				if (e.value == value) return e;
@@ -252,11 +251,11 @@ public class ServerIntangibleObjectTemplate extends ServerObjectTemplate {
 				iff.enterChunk();
 				final String parameterName = iff.readString();
 
-				if ("	".equalsIgnoreCase(parameterName)) {
+				if ("name".equalsIgnoreCase(parameterName)) {
 					name.loadFromIff(objectTemplateList, iff);
-				} else if ("	".equalsIgnoreCase(parameterName)) {
+				} else if ("ingredient".equalsIgnoreCase(parameterName)) {
 					ingredient.loadFromIff(objectTemplateList, iff);
-				} else if ("	".equalsIgnoreCase(parameterName)) {
+				} else if ("count".equalsIgnoreCase(parameterName)) {
 					count.loadFromIff(objectTemplateList, iff);
 				} else {
 					throw new IllegalStateException(String.format("Unexpected parameter %s", parameterName));
@@ -433,9 +432,9 @@ public class ServerIntangibleObjectTemplate extends ServerObjectTemplate {
 				iff.enterChunk();
 				final String parameterName = iff.readString();
 
-				if ("	".equalsIgnoreCase(parameterName)) {
+				if ("ingredientType".equalsIgnoreCase(parameterName)) {
 					ingredientType.loadFromIff(objectTemplateList, iff);
-				} else if ("	".equalsIgnoreCase(parameterName)) {
+				} else if ("ingredients".equalsIgnoreCase(parameterName)) {
 					ingredients.clear();
 					ingredientsAppend = iff.readBoolean();
 					int listCount = iff.readInt();
@@ -445,9 +444,9 @@ public class ServerIntangibleObjectTemplate extends ServerObjectTemplate {
 						ingredients.add(newData);
 					}
 					ingredientsLoaded = true;
-				} else if ("	".equalsIgnoreCase(parameterName)) {
+				} else if ("complexity".equalsIgnoreCase(parameterName)) {
 					complexity.loadFromIff(objectTemplateList, iff);
-				} else if ("	".equalsIgnoreCase(parameterName)) {
+				} else if ("skillCommand".equalsIgnoreCase(parameterName)) {
 					skillCommand.loadFromIff(objectTemplateList, iff);
 				} else {
 					throw new IllegalStateException(String.format("Unexpected parameter %s", parameterName));
@@ -547,9 +546,9 @@ public class ServerIntangibleObjectTemplate extends ServerObjectTemplate {
 				iff.enterChunk();
 				final String parameterName = iff.readString();
 
-				if ("	".equalsIgnoreCase(parameterName)) {
+				if ("name".equalsIgnoreCase(parameterName)) {
 					name.loadFromIff(objectTemplateList, iff);
-				} else if ("	".equalsIgnoreCase(parameterName)) {
+				} else if ("value".equalsIgnoreCase(parameterName)) {
 					value.loadFromIff(objectTemplateList, iff);
 				} else {
 					throw new IllegalStateException(String.format("Unexpected parameter %s", parameterName));

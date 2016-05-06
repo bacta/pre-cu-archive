@@ -139,9 +139,9 @@ public class SharedBattlefieldMarkerObjectTemplate extends SharedTangibleObjectT
 			iff.enterChunk();
 			final String parameterName = iff.readString();
 
-			if ("".equalsIgnoreCase(parameterName)) {
+			if ("numberOfPoles".equalsIgnoreCase(parameterName)) {
 				numberOfPoles.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("radius".equalsIgnoreCase(parameterName)) {
 				radius.loadFromIff(objectTemplateList, iff);
 			} else {
 				throw new IllegalStateException(String.format("Unexpected parameter %s", parameterName));

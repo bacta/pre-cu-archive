@@ -334,7 +334,7 @@ public class SharedVehicleObjectTemplate extends SharedTangibleObjectTemplate {
 			iff.enterChunk();
 			final String parameterName = iff.readString();
 
-			if ("".equalsIgnoreCase(parameterName)) {
+			if ("speed".equalsIgnoreCase(parameterName)) {
 				int listCount = iff.readInt();
 				int j;
 				for (j = 0; j < 5 && j < listCount; ++j)
@@ -343,17 +343,17 @@ public class SharedVehicleObjectTemplate extends SharedTangibleObjectTemplate {
 					final FloatParam dummy = new FloatParam();
 					dummy.loadFromIff(objectTemplateList, iff);
 				}
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("slopeAversion".equalsIgnoreCase(parameterName)) {
 				slopeAversion.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("hoverValue".equalsIgnoreCase(parameterName)) {
 				hoverValue.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("turnRate".equalsIgnoreCase(parameterName)) {
 				turnRate.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("maxVelocity".equalsIgnoreCase(parameterName)) {
 				maxVelocity.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("acceleration".equalsIgnoreCase(parameterName)) {
 				acceleration.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("braking".equalsIgnoreCase(parameterName)) {
 				braking.loadFromIff(objectTemplateList, iff);
 			} else {
 				throw new IllegalStateException(String.format("Unexpected parameter %s", parameterName));
@@ -369,7 +369,7 @@ public class SharedVehicleObjectTemplate extends SharedTangibleObjectTemplate {
 		MT_underwater(1),
 		MT_ground(2),
 		MT_swim(3),
-		MT_walker(4);
+		MT_walker(4); 
 
 		private static final MovementTypes[] values = values();
 		public final long value;
@@ -377,7 +377,6 @@ public class SharedVehicleObjectTemplate extends SharedTangibleObjectTemplate {
 		MovementTypes(final long value) {
 			this.value = value;
 		}
-
 		public static MovementTypes from(final long value) {
 			for (final MovementTypes e : values)
 				if (e.value == value) return e;

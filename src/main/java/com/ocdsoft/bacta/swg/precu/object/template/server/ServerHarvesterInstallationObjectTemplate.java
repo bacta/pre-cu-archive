@@ -196,13 +196,13 @@ public class ServerHarvesterInstallationObjectTemplate extends ServerInstallatio
 			iff.enterChunk();
 			final String parameterName = iff.readString();
 
-			if ("".equalsIgnoreCase(parameterName)) {
+			if ("maxExtractionRate".equalsIgnoreCase(parameterName)) {
 				maxExtractionRate.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("currentExtractionRate".equalsIgnoreCase(parameterName)) {
 				currentExtractionRate.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("maxHopperSize".equalsIgnoreCase(parameterName)) {
 				maxHopperSize.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("masterClassName".equalsIgnoreCase(parameterName)) {
 				masterClassName.loadFromIff(objectTemplateList, iff);
 			} else {
 				throw new IllegalStateException(String.format("Unexpected parameter %s", parameterName));

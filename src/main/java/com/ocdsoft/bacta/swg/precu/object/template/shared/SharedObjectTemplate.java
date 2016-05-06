@@ -36,11 +36,11 @@ public class SharedObjectTemplate extends ObjectTemplate {
 	private final BoolParam sendToClient = new BoolParam(); //specifies whether or not the object using this template should is sent to the client
 	private final FloatParam scaleThresholdBeforeExtentTest = new FloatParam(); //specifies the scale at which the object will use box extents for collision
 	private final FloatParam clearFloraRadius = new FloatParam(); // distance to clear collidable flora around this object
-	private final IntegerParam surfaceType = new IntegerParam();
+	private final IntegerParam surfaceType = new IntegerParam(); 
 	private final FloatParam noBuildRadius = new FloatParam(); // distance to not allow structure placement around this object
 	private final BoolParam onlyVisibleInTools = new BoolParam();
 	private final FloatParam locationReservationRadius = new FloatParam();
-	private final BoolParam forceNoCollision = new BoolParam();
+	private final BoolParam forceNoCollision = new BoolParam(); 
 
 	public SharedObjectTemplate(final String filename, final DataResourceList<ObjectTemplate> objectTemplateList) {
 		super(filename, objectTemplateList);
@@ -592,49 +592,49 @@ public class SharedObjectTemplate extends ObjectTemplate {
 			iff.enterChunk();
 			final String parameterName = iff.readString();
 
-			if ("".equalsIgnoreCase(parameterName)) {
+			if ("objectName".equalsIgnoreCase(parameterName)) {
 				objectName.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("detailedDescription".equalsIgnoreCase(parameterName)) {
 				detailedDescription.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("lookAtText".equalsIgnoreCase(parameterName)) {
 				lookAtText.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("snapToTerrain".equalsIgnoreCase(parameterName)) {
 				snapToTerrain.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("containerType".equalsIgnoreCase(parameterName)) {
 				containerType.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("containerVolumeLimit".equalsIgnoreCase(parameterName)) {
 				containerVolumeLimit.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("tintPalette".equalsIgnoreCase(parameterName)) {
 				tintPalette.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("slotDescriptorFilename".equalsIgnoreCase(parameterName)) {
 				slotDescriptorFilename.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("arrangementDescriptorFilename".equalsIgnoreCase(parameterName)) {
 				arrangementDescriptorFilename.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("appearanceFilename".equalsIgnoreCase(parameterName)) {
 				appearanceFilename.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("portalLayoutFilename".equalsIgnoreCase(parameterName)) {
 				portalLayoutFilename.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("clientDataFile".equalsIgnoreCase(parameterName)) {
 				clientDataFile.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("scale".equalsIgnoreCase(parameterName)) {
 				scale.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("gameObjectType".equalsIgnoreCase(parameterName)) {
 				gameObjectType.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("sendToClient".equalsIgnoreCase(parameterName)) {
 				sendToClient.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("scaleThresholdBeforeExtentTest".equalsIgnoreCase(parameterName)) {
 				scaleThresholdBeforeExtentTest.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("clearFloraRadius".equalsIgnoreCase(parameterName)) {
 				clearFloraRadius.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("surfaceType".equalsIgnoreCase(parameterName)) {
 				surfaceType.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("noBuildRadius".equalsIgnoreCase(parameterName)) {
 				noBuildRadius.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("onlyVisibleInTools".equalsIgnoreCase(parameterName)) {
 				onlyVisibleInTools.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("locationReservationRadius".equalsIgnoreCase(parameterName)) {
 				locationReservationRadius.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("forceNoCollision".equalsIgnoreCase(parameterName)) {
 				forceNoCollision.loadFromIff(objectTemplateList, iff);
 			} else {
 				throw new IllegalStateException(String.format("Unexpected parameter %s", parameterName));
@@ -654,7 +654,7 @@ public class SharedObjectTemplate extends ObjectTemplate {
 		GOT_static(5),
 		GOT_camp(6),
 		GOT_vendor(7),
-		GOT_loadbeacon(8),
+		GOT_loadbeacon(8), 
 		GOT_armor(0x00000100), //if you add armor types, please add them to the GOT_powerups as well
 		GOT_armor_body(257),
 		GOT_armor_head(258),
@@ -700,7 +700,7 @@ public class SharedObjectTemplate extends ObjectTemplate {
 		GOT_installation_minefield(4101),
 		GOT_misc(0x00002000),
 		GOT_misc_ammunition(8193),
-		GOT_misc_chemical(8194),
+		GOT_misc_chemical(8194), 
 		GOT_misc_clothing_DUMMY(8195), // when you remove this, please recompile all the shared object templates
 		GOT_misc_component_DUMMY(8196), // when you remove this, please recompile all the shared object templates
 		GOT_misc_container(8197),
@@ -711,12 +711,12 @@ public class SharedObjectTemplate extends ObjectTemplate {
 		GOT_misc_food(8202),
 		GOT_misc_furniture(8203),
 		GOT_misc_instrument(8204),
-		GOT_misc_pharmaceutical(8205),
+		GOT_misc_pharmaceutical(8205), 
 		GOT_misc_resource_container_DUMMY(8206), // when you remove this, please recompile all the shared object templates
 		GOT_misc_sign(8207),
 		GOT_misc_counter(8208),
 		GOT_misc_factory_crate(8209),
-		GOT_misc_ticket_travel(8210),
+		GOT_misc_ticket_travel(8210), 
 		GOT_misc_item(8211), // generic 'usable' item
 		GOT_misc_trap(8212),
 		GOT_misc_container_wearable(8213),
@@ -773,7 +773,7 @@ public class SharedObjectTemplate extends ObjectTemplate {
 		GOT_tool_ship_component_repair(32773),
 		GOT_vehicle(0x00010000),
 		GOT_vehicle_hover(65537),
-		GOT_vehicle_hover_ai(65538),
+		GOT_vehicle_hover_ai(65538), 
 		GOT_weapon(0x00020000), //if you add weapon types, please add them to the GOT_powerups as well
 		GOT_weapon_melee_misc(131073),
 		GOT_weapon_ranged_misc(131074),
@@ -863,7 +863,7 @@ public class SharedObjectTemplate extends ObjectTemplate {
 		GOT_clothing_vest(16777231),
 		GOT_clothing_wookiee(16777232),
 		GOT_clothing_misc(16777233),
-		GOT_clothing_skirt(16777234),
+		GOT_clothing_skirt(16777234), 
 		GOT_ship_component(0x40000000), //add space-specific GOTS at the "end" to make merging easier
 		GOT_ship_component_reactor(1073741825),
 		GOT_ship_component_engine(1073741826),
@@ -902,7 +902,7 @@ public class SharedObjectTemplate extends ObjectTemplate {
 		GOT_chronicles_chronicle(4354),
 		GOT_chronicles_quest_holocron(4355),
 		GOT_chronicles_quest_holocron_recipe(4356),
-		GOT_chronicles_relic_fragment(4357);
+		GOT_chronicles_relic_fragment(4357); 
 
 		private static final GameObjectType[] values = values();
 		public final long value;
@@ -910,7 +910,6 @@ public class SharedObjectTemplate extends ObjectTemplate {
 		GameObjectType(final long value) {
 			this.value = value;
 		}
-
 		public static GameObjectType from(final long value) {
 			for (final GameObjectType e : values)
 				if (e.value == value) return e;
@@ -920,7 +919,7 @@ public class SharedObjectTemplate extends ObjectTemplate {
 
 	public enum ContainerType {
 		CT_none(0),
-		CT_slotted(1),
+		CT_slotted(1), 
 		CT_volume(2), //This kind of container can hold tangible objects
 		CT_volumeIntangible(3), //This kind of container can hold intangible objects
 		CT_volumeGeneric(4), //This kind of container can hold any object tangible or not.
@@ -932,7 +931,6 @@ public class SharedObjectTemplate extends ObjectTemplate {
 		ContainerType(final long value) {
 			this.value = value;
 		}
-
 		public static ContainerType from(final long value) {
 			for (final ContainerType e : values)
 				if (e.value == value) return e;
@@ -948,7 +946,7 @@ public class SharedObjectTemplate extends ObjectTemplate {
 		ST_acid(4),
 		ST_ice(5),
 		ST_molten(6),
-		ST_obsidian(7);
+		ST_obsidian(7); 
 
 		private static final SurfaceType[] values = values();
 		public final long value;
@@ -956,7 +954,6 @@ public class SharedObjectTemplate extends ObjectTemplate {
 		SurfaceType(final long value) {
 			this.value = value;
 		}
-
 		public static SurfaceType from(final long value) {
 			for (final SurfaceType e : values)
 				if (e.value == value) return e;

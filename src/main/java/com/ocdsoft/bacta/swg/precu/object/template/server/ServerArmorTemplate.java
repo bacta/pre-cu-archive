@@ -296,13 +296,13 @@ public class ServerArmorTemplate extends ObjectTemplate {
 			iff.enterChunk();
 			final String parameterName = iff.readString();
 
-			if ("".equalsIgnoreCase(parameterName)) {
+			if ("rating".equalsIgnoreCase(parameterName)) {
 				rating.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("integrity".equalsIgnoreCase(parameterName)) {
 				integrity.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("effectiveness".equalsIgnoreCase(parameterName)) {
 				effectiveness.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("specialProtection".equalsIgnoreCase(parameterName)) {
 				specialProtection.clear();
 				specialProtectionAppend = iff.readBoolean();
 				int listCount = iff.readInt();
@@ -312,9 +312,9 @@ public class ServerArmorTemplate extends ObjectTemplate {
 					specialProtection.add(newData);
 				}
 				specialProtectionLoaded = true;
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("vulnerability".equalsIgnoreCase(parameterName)) {
 				vulnerability.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("encumbrance".equalsIgnoreCase(parameterName)) {
 				int listCount = iff.readInt();
 				int j;
 				for (j = 0; j < 3 && j < listCount; ++j)
@@ -337,7 +337,7 @@ public class ServerArmorTemplate extends ObjectTemplate {
 		AR_armorNone(0),
 		AR_armorLight(1),
 		AR_armorMedium(2),
-		AR_armorHeavy(3);
+		AR_armorHeavy(3); 
 
 		private static final ArmorRating[] values = values();
 		public final long value;
@@ -345,7 +345,6 @@ public class ServerArmorTemplate extends ObjectTemplate {
 		ArmorRating(final long value) {
 			this.value = value;
 		}
-
 		public static ArmorRating from(final long value) {
 			for (final ArmorRating e : values)
 				if (e.value == value) return e;
@@ -366,7 +365,7 @@ public class ServerArmorTemplate extends ObjectTemplate {
 		DT_environmental_heat(0x00000200),
 		DT_environmental_cold(0x00000400),
 		DT_environmental_acid(0x00000800),
-		DT_environmental_electrical(0x00001000);
+		DT_environmental_electrical(0x00001000); 
 
 		private static final DamageType[] values = values();
 		public final long value;
@@ -374,7 +373,6 @@ public class ServerArmorTemplate extends ObjectTemplate {
 		DamageType(final long value) {
 			this.value = value;
 		}
-
 		public static DamageType from(final long value) {
 			for (final DamageType e : values)
 				if (e.value == value) return e;
@@ -468,9 +466,9 @@ public class ServerArmorTemplate extends ObjectTemplate {
 				iff.enterChunk();
 				final String parameterName = iff.readString();
 
-				if ("	".equalsIgnoreCase(parameterName)) {
+				if ("type".equalsIgnoreCase(parameterName)) {
 					type.loadFromIff(objectTemplateList, iff);
-				} else if ("	".equalsIgnoreCase(parameterName)) {
+				} else if ("effectiveness".equalsIgnoreCase(parameterName)) {
 					effectiveness.loadFromIff(objectTemplateList, iff);
 				} else {
 					throw new IllegalStateException(String.format("Unexpected parameter %s", parameterName));

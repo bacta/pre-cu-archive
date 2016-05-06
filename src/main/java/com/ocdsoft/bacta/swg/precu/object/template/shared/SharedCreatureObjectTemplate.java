@@ -63,11 +63,11 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 			new BoolParam(),
 	};
 	private final FloatParam swimHeight = new FloatParam(); //Height below the water where the creature decides to swim
-	private final FloatParam warpTolerance = new FloatParam();
+	private final FloatParam warpTolerance = new FloatParam(); 
 	private final FloatParam collisionOffsetX = new FloatParam(); // X offset of the collision sphere
 	private final FloatParam collisionOffsetZ = new FloatParam(); // Z offset of the collision sphere
 	private final FloatParam collisionLength = new FloatParam(); // Length of the creature, in meters
-	private final FloatParam cameraHeight = new FloatParam();
+	private final FloatParam cameraHeight = new FloatParam(); 
 
 	public SharedCreatureObjectTemplate(final String filename, final DataResourceList<ObjectTemplate> objectTemplateList) {
 		super(filename, objectTemplateList);
@@ -789,15 +789,15 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 			iff.enterChunk();
 			final String parameterName = iff.readString();
 
-			if ("".equalsIgnoreCase(parameterName)) {
+			if ("gender".equalsIgnoreCase(parameterName)) {
 				gender.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("niche".equalsIgnoreCase(parameterName)) {
 				niche.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("species".equalsIgnoreCase(parameterName)) {
 				species.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("race".equalsIgnoreCase(parameterName)) {
 				race.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("acceleration".equalsIgnoreCase(parameterName)) {
 				int listCount = iff.readInt();
 				int j;
 				for (j = 0; j < 2 && j < listCount; ++j)
@@ -806,7 +806,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 					final FloatParam dummy = new FloatParam();
 					dummy.loadFromIff(objectTemplateList, iff);
 				}
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("speed".equalsIgnoreCase(parameterName)) {
 				int listCount = iff.readInt();
 				int j;
 				for (j = 0; j < 2 && j < listCount; ++j)
@@ -815,7 +815,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 					final FloatParam dummy = new FloatParam();
 					dummy.loadFromIff(objectTemplateList, iff);
 				}
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("turnRate".equalsIgnoreCase(parameterName)) {
 				int listCount = iff.readInt();
 				int j;
 				for (j = 0; j < 2 && j < listCount; ++j)
@@ -824,23 +824,23 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 					final FloatParam dummy = new FloatParam();
 					dummy.loadFromIff(objectTemplateList, iff);
 				}
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("animationMapFilename".equalsIgnoreCase(parameterName)) {
 				animationMapFilename.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("slopeModAngle".equalsIgnoreCase(parameterName)) {
 				slopeModAngle.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("slopeModPercent".equalsIgnoreCase(parameterName)) {
 				slopeModPercent.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("waterModPercent".equalsIgnoreCase(parameterName)) {
 				waterModPercent.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("stepHeight".equalsIgnoreCase(parameterName)) {
 				stepHeight.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("collisionHeight".equalsIgnoreCase(parameterName)) {
 				collisionHeight.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("collisionRadius".equalsIgnoreCase(parameterName)) {
 				collisionRadius.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("movementDatatable".equalsIgnoreCase(parameterName)) {
 				movementDatatable.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("postureAlignToTerrain".equalsIgnoreCase(parameterName)) {
 				int listCount = iff.readInt();
 				int j;
 				for (j = 0; j < 15 && j < listCount; ++j)
@@ -849,17 +849,17 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 					final BoolParam dummy = new BoolParam();
 					dummy.loadFromIff(objectTemplateList, iff);
 				}
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("swimHeight".equalsIgnoreCase(parameterName)) {
 				swimHeight.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("warpTolerance".equalsIgnoreCase(parameterName)) {
 				warpTolerance.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("collisionOffsetX".equalsIgnoreCase(parameterName)) {
 				collisionOffsetX.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("collisionOffsetZ".equalsIgnoreCase(parameterName)) {
 				collisionOffsetZ.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("collisionLength".equalsIgnoreCase(parameterName)) {
 				collisionLength.loadFromIff(objectTemplateList, iff);
-			} else if ("".equalsIgnoreCase(parameterName)) {
+			} else if ("cameraHeight".equalsIgnoreCase(parameterName)) {
 				cameraHeight.loadFromIff(objectTemplateList, iff);
 			} else {
 				throw new IllegalStateException(String.format("Unexpected parameter %s", parameterName));
@@ -885,7 +885,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 		RidingCreature(11),
 		KnockedDown(12),
 		Incapacitated(13),
-		Dead(14);
+		Dead(14); 
 
 		private static final Postures[] values = values();
 		public final long value;
@@ -893,7 +893,6 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 		Postures(final long value) {
 			this.value = value;
 		}
-
 		public static Postures from(final long value) {
 			for (final Postures e : values)
 				if (e.value == value) return e;
@@ -904,7 +903,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 	public enum Race {
 		RA_none(0),
 		RA_aqualish_quara(1),
-		RA_aqualish_aquala(2),
+		RA_aqualish_aquala(2), 
 		RA_ewok_ewok(1), // plae, green, black, white (subject to change, pending information request to LucasArts)
 		RA_ewok_dulok(2), // blue skin; "Orn Free Taa", "Ann Gella" & "Tann", Sebulba's personal entourage.
 		RA_ewok_jinda(3), // red skin; "Pampy" & "Supi", consorts of Orn Free Taa.
@@ -920,7 +919,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 		RA_R2(0),
 		RA_R3(1),
 		RA_R4(2),
-		RA_R5(3);
+		RA_R5(3); 
 
 		private static final Race[] values = values();
 		public final long value;
@@ -928,7 +927,6 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 		Race(final long value) {
 			this.value = value;
 		}
-
 		public static Race from(final long value) {
 			for (final Race e : values)
 				if (e.value == value) return e;
@@ -947,7 +945,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 		NI_herbivore(7),
 		NI_carnivore(8),
 		NI_predator(9),
-		NI_android(10);
+		NI_android(10); 
 
 		private static final Niche[] values = values();
 		public final long value;
@@ -955,7 +953,6 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 		Niche(final long value) {
 			this.value = value;
 		}
-
 		public static Niche from(final long value) {
 			for (final Niche e : values)
 				if (e.value == value) return e;
@@ -966,7 +963,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 	public enum Gender {
 		GE_male(0),
 		GE_female(1),
-		GE_other(2);
+		GE_other(2); 
 
 		private static final Gender[] values = values();
 		public final long value;
@@ -974,7 +971,6 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 		Gender(final long value) {
 			this.value = value;
 		}
-
 		public static Gender from(final long value) {
 			for (final Gender e : values)
 				if (e.value == value) return e;
@@ -1211,7 +1207,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 		SP_atst(226),
 		SP_atat(227),
 		SP_geonosian(228),
-		SP_veractyle(229);
+		SP_veractyle(229); 
 
 		private static final Species[] values = values();
 		public final long value;
@@ -1219,7 +1215,6 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 		Species(final long value) {
 			this.value = value;
 		}
-
 		public static Species from(final long value) {
 			for (final Species e : values)
 				if (e.value == value) return e;
@@ -1229,7 +1224,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 
 	public enum MovementTypes {
 		MT_run(0),
-		MT_walk(1);
+		MT_walk(1); 
 
 		private static final MovementTypes[] values = values();
 		public final long value;
@@ -1237,7 +1232,6 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 		MovementTypes(final long value) {
 			this.value = value;
 		}
-
 		public static MovementTypes from(final long value) {
 			for (final MovementTypes e : values)
 				if (e.value == value) return e;
