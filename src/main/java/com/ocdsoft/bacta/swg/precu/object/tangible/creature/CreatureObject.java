@@ -14,7 +14,7 @@ import java.util.Collection;
 
 public final class CreatureObject extends TangibleObject {
     @Override
-    public int getOpcode() {
+    public int getObjectType() {
         return 0x4352454F;
     } //'CREO'
 

@@ -5,7 +5,7 @@ import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaInt;
 
 public abstract class IntangibleObject extends ServerObject {
     @Override
-    public int getOpcode() {
+    public int getObjectType() {
         return 0x49544E4F;
     } //'ITNO'
 

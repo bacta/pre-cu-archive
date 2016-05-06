@@ -2,6 +2,7 @@ package com.ocdsoft.bacta.swg.precu.zone;
 
 import com.ocdsoft.bacta.swg.precu.message.game.scene.SceneDestroyObject;
 import com.ocdsoft.bacta.swg.precu.object.tangible.TangibleObject;
+import com.ocdsoft.bacta.swg.shared.math.Vector;
 import lombok.Getter;
 import org.magnos.steer.spatial.CollisionCallback;
 import org.magnos.steer.spatial.SearchCallback;
@@ -26,7 +27,11 @@ public class Planet implements Zone {
 
     //private ProceduralTerrainAppearanceTemplate terrain;
 
-    private SpatialDatabase<Vec3> spatialDatabase = new SpatialQuadTree<Vec3>(new Vec3(-8192, -1000, -8192), new Vec3(8192, 1000, 8192), 16, 10);
+    private SpatialDatabase<Vec3> spatialDatabase = new SpatialQuadTree<>(
+            new Vec3(-8192, -1000, -8192),
+            new Vec3(8192, 1000, 8192),
+            16,
+            10);
 
     public Planet(PlanetMap planetMap, String terrainName/*, ProceduralTerrainAppearanceTemplate terrain*/) {
         this.planetMap = planetMap;
@@ -85,17 +90,17 @@ public class Planet implements Zone {
     }
 
     @Override
-    public int intersects(Vec3 offset, float radius, int max, long collidesWith, SearchCallback callback) {
-        return spatialDatabase.intersects(offset, radius, max, collidesWith, callback);
+    public int intersects(final Vector offset, float radius, int max, long collidesWith, SearchCallback callback) {
+        return spatialDatabase.intersects(offset.asVec3(), radius, max, collidesWith, callback);
     }
 
     @Override
-    public int contains(Vec3 offset, float radius, int max, long collidesWith, SearchCallback callback) {
-        return spatialDatabase.contains(offset, radius, max, collidesWith, callback);
+    public int contains(final Vector offset, float radius, int max, long collidesWith, SearchCallback callback) {
+        return spatialDatabase.contains(offset.asVec3(), radius, max, collidesWith, callback);
     }
 
     @Override
-    public int knn(Vec3 point, int k, long collidesWith, SpatialEntity[] nearest, float[] distance) {
-        return spatialDatabase.knn(point, k, collidesWith, nearest, distance);
+    public int knn(final Vector point, int k, long collidesWith, SpatialEntity[] nearest, float[] distance) {
+        return spatialDatabase.knn(point.asVec3(), k, collidesWith, nearest, distance);
     }
 }

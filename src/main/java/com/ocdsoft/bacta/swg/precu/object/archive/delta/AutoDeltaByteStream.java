@@ -35,14 +35,14 @@ public class AutoDeltaByteStream extends AutoByteStream {
         this.onDirtyCallback = onDirtyCallback;
     }
 
-    public void unpackDeltas(ByteBuffer buffer) {
+    public void unpackDeltas(final ByteBuffer buffer) {
         throw new RuntimeException("Not implemented.");
     }
 
-    public void packDeltas(ByteBuffer buffer) {
+    public void packDeltas(final ByteBuffer buffer) {
         buffer.putShort((short)dirtyList.size());
 
-        for (AutoDeltaVariableBase variable : dirtyList) {
+        for (final AutoDeltaVariableBase variable : dirtyList) {
             buffer.putShort((short)variable.getIndex());
             variable.packDelta(buffer);
         }
@@ -51,7 +51,7 @@ public class AutoDeltaByteStream extends AutoByteStream {
     }
 
     public void clearDeltas() {
-        for (AutoDeltaVariableBase variable : dirtyList)
+        for (final AutoDeltaVariableBase variable : dirtyList)
             variable.clearDelta();
 
         dirtyList.clear();

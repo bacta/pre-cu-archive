@@ -18,7 +18,6 @@ import com.ocdsoft.bacta.swg.precu.object.SceneObject;
 import com.ocdsoft.bacta.swg.precu.object.intangible.player.PlayerObject;
 import com.ocdsoft.bacta.swg.precu.object.tangible.TangibleObject;
 import com.ocdsoft.bacta.swg.precu.object.tangible.creature.CreatureObject;
-import com.ocdsoft.bacta.swg.precu.service.container.ContainerService;
 import com.ocdsoft.bacta.swg.precu.service.data.ObjectTemplateService;
 import com.ocdsoft.bacta.swg.precu.service.data.creation.*;
 import com.ocdsoft.bacta.swg.precu.service.data.customization.AllowBald;

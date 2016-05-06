@@ -12,7 +12,7 @@ import java.io.ObjectInputStream;
 
 public final class PlayerObject extends IntangibleObject {
     @Override
-    public int getOpcode() {
+    public int getObjectType() {
         return 0x504C4159;
     } //'PLAY'
 

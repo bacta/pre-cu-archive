@@ -5,9 +5,9 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.ocdsoft.bacta.soe.util.SOECRC32;
 import com.ocdsoft.bacta.swg.precu.service.data.SharedFileLoader;
-import com.ocdsoft.bacta.swg.shared.object.customization.BasicRangedIntCustomizationVariable;
-import com.ocdsoft.bacta.swg.shared.object.customization.CustomizationVariable;
-import com.ocdsoft.bacta.swg.shared.object.customization.PaletteColorCustomizationVariable;
+import com.ocdsoft.bacta.swg.shared.customization.BasicRangedIntCustomizationVariable;
+import com.ocdsoft.bacta.swg.shared.customization.CustomizationVariable;
+import com.ocdsoft.bacta.swg.shared.customization.PaletteColorCustomizationVariable;
 import com.ocdsoft.bacta.tre.TreeFile;
 import gnu.trove.map.TIntShortMap;
 import gnu.trove.map.TShortIntMap;
@@ -222,7 +222,7 @@ public final class AssetCustomizationManager implements SharedFileLoader {
 
     /**
      * Gets a map of customization variables for the appearance template specified. The String key is
-     * the name of the customization variable, while the value is the {@link com.ocdsoft.bacta.swg.shared.object.customization.CustomizationVariable}
+     * the name of the customization variable, while the value is the {@link com.ocdsoft.bacta.swg.shared.customization.CustomizationVariable}
      * itself. This variation defaults to skipping variables that start with "/shared_owner/".
      *
      * @param key The path to the appearance template for which to fetch customization variables.
@@ -234,7 +234,7 @@ public final class AssetCustomizationManager implements SharedFileLoader {
 
     /**
      * Gets a map of customization variables for the appearance template specified. The String key is
-     * the name of the customization variable, while the value is the {@link com.ocdsoft.bacta.swg.shared.object.customization.CustomizationVariable}
+     * the name of the customization variable, while the value is the {@link com.ocdsoft.bacta.swg.shared.customization.CustomizationVariable}
      * itself. This variation defaults to skipping variables that start with "/shared_owner/".
      *
      * @param crc The crc32 of the path to the appearance template for which to fetch customization variables.
@@ -246,7 +246,7 @@ public final class AssetCustomizationManager implements SharedFileLoader {
 
     /**
      * Gets a map of customization variables for the appearance template specified. The String key is
-     * the name of the customization variable, while the value is the {@link com.ocdsoft.bacta.swg.shared.object.customization.CustomizationVariable}
+     * the name of the customization variable, while the value is the {@link com.ocdsoft.bacta.swg.shared.customization.CustomizationVariable}
      * itself.
      *
      * @param key             The path to the appearance template for which to fetch customization variables.
@@ -259,7 +259,7 @@ public final class AssetCustomizationManager implements SharedFileLoader {
 
     /**
      * Gets a map of customization variables for the appearance template specified. The String key is
-     * the name of the customization variable, while the value is the {@link com.ocdsoft.bacta.swg.shared.object.customization.CustomizationVariable}
+     * the name of the customization variable, while the value is the {@link com.ocdsoft.bacta.swg.shared.customization.CustomizationVariable}
      * itself.
      *
      * @param crc             The crc of the path to the appearance template for which to fetch customization variables.

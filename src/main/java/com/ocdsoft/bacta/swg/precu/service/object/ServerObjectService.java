@@ -8,6 +8,7 @@ import com.ocdsoft.bacta.engine.service.object.ObjectService;
 import com.ocdsoft.bacta.engine.service.objectfactory.NetworkObjectFactory;
 import com.ocdsoft.bacta.swg.precu.object.ServerObject;
 import com.ocdsoft.bacta.swg.precu.object.archive.OnDirtyCallbackBase;
+import com.ocdsoft.bacta.swg.precu.object.template.shared.SharedObjectTemplate;
 import com.ocdsoft.bacta.swg.precu.service.data.ObjectTemplateService;
 import com.ocdsoft.bacta.swg.shared.template.ObjectTemplate;
 import gnu.trove.map.TLongObjectMap;
@@ -23,13 +24,13 @@ import java.util.concurrent.ConcurrentHashMap;
  * Created by Kyle on 3/24/14.
  */
 @Singleton
-public class SceneObjectService implements ObjectService<ServerObject> {
+public class ServerObjectService implements ObjectService<ServerObject> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SceneObjectService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ServerObjectService.class);
 
     private TLongObjectMap<ServerObject> internalMap = new TLongObjectHashMap<>();
 
-    private Set<ServerObject> dirtyList = Collections.newSetFromMap(new ConcurrentHashMap<ServerObject, Boolean>());
+    private Set<ServerObject> dirtyList = Collections.newSetFromMap(new ConcurrentHashMap<>());
     private OnDirtyCallbackBase onDirtyCallback = new SceneObjectServiceOnDirtyCallback();
 
     private final NetworkObjectFactory networkObjectFactory;
@@ -39,10 +40,10 @@ public class SceneObjectService implements ObjectService<ServerObject> {
     private final ObjectTemplateService objectTemplateService;
 
     @Inject
-    public SceneObjectService(BactaConfiguration configuration,
-                              NetworkObjectFactory networkObjectFactory,
-                              GameDatabaseConnector databaseConnector,
-                              ObjectTemplateService objectTemplateService) {
+    public ServerObjectService(BactaConfiguration configuration,
+                               NetworkObjectFactory networkObjectFactory,
+                               GameDatabaseConnector databaseConnector,
+                               ObjectTemplateService objectTemplateService) {
 
         this.networkObjectFactory = networkObjectFactory;
         deltaUpdateInterval = configuration.getIntWithDefault("Bacta/GameServer", "DeltaUpdateInterval", 50);
@@ -56,11 +57,12 @@ public class SceneObjectService implements ObjectService<ServerObject> {
     public <T extends ServerObject> T createObject(long creator, String templatePath) {
 
         //TODO: Implement this
-        ObjectTemplate template = null;// objectTemplateService.getObjectTemplate(templatePath);
+        final ObjectTemplate template = objectTemplateService.getObjectTemplate(templatePath);
         Class<? extends ServerObject> objectClass = objectTemplateService.getClassForTemplate(template);
 
         T newObject = (T) networkObjectFactory.createNetworkObject(objectClass);
-        newObject.setObjectTemplate(template);
+        if (template instanceof SharedObjectTemplate)
+            newObject.setSharedTemplate((SharedObjectTemplate) template);
         newObject.setOnDirtyCallback(onDirtyCallback);
 
         loadTemplateData(creator, newObject);

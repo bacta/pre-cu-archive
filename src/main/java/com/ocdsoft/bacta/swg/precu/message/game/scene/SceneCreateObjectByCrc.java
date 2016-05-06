@@ -2,9 +2,8 @@ package com.ocdsoft.bacta.swg.precu.message.game.scene;
 
 import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
 import com.ocdsoft.bacta.soe.message.Priority;
-import com.ocdsoft.bacta.soe.util.SOECRC32;
 import com.ocdsoft.bacta.swg.precu.object.ServerObject;
-import com.ocdsoft.bacta.swg.shared.utility.Transform;
+import com.ocdsoft.bacta.swg.shared.math.Transform;
 import lombok.AllArgsConstructor;
 
 import java.nio.ByteBuffer;

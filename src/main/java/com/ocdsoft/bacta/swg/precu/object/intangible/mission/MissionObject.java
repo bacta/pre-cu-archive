@@ -7,7 +7,9 @@ import com.ocdsoft.bacta.swg.precu.object.intangible.IntangibleObject;
  */
 public class MissionObject extends IntangibleObject {
     @Override
-    public int getOpcode() { return 0x4D49534F; } //'MISO'
+    public int getObjectType() {
+        return 0x4D49534F;
+    } //'MISO'
 
     //private final AutoDeltaVariable<StringId> description;
     //private final AutoDeltaInt difficulty;

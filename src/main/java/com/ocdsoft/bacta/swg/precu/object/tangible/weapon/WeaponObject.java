@@ -7,7 +7,9 @@ import com.ocdsoft.bacta.swg.precu.object.tangible.TangibleObject;
  */
 public class WeaponObject extends TangibleObject {
     @Override
-    public int getOpcode() { return 0x5745414F; } //'WEAO'
+    public int getObjectType() {
+        return 0x5745414F;
+    } //'WEAO'
 
     //private final AutoDeltaFloat attackSpeed;
     //private final AutoDeltaInt accuracy;

@@ -14,7 +14,7 @@ import java.util.Collection;
  */
 @Singleton
 public class SetupSharedFile {
-    private static final Logger logger = LoggerFactory.getLogger(SetupSharedFile.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SetupSharedFile.class);
 
     private final BactaConfiguration configuration;
     private final TreeFile treeFile;

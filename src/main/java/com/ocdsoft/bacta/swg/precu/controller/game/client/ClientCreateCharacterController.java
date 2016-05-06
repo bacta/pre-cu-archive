@@ -4,6 +4,11 @@ import com.google.inject.Inject;
 import com.ocdsoft.bacta.engine.conf.BactaConfiguration;
 import com.ocdsoft.bacta.engine.security.authenticator.AccountService;
 import com.ocdsoft.bacta.engine.service.object.ObjectService;
+import com.ocdsoft.bacta.soe.connection.ConnectionRole;
+import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
+import com.ocdsoft.bacta.soe.controller.ConnectionRolesAllowed;
+import com.ocdsoft.bacta.soe.controller.GameNetworkMessageController;
+import com.ocdsoft.bacta.soe.controller.MessageHandled;
 import com.ocdsoft.bacta.soe.io.udp.game.GameServerState;
 import com.ocdsoft.bacta.soe.object.account.CharacterInfo;
 import com.ocdsoft.bacta.soe.object.account.SoeAccount;
@@ -12,29 +17,21 @@ import com.ocdsoft.bacta.swg.lang.Gender;
 import com.ocdsoft.bacta.swg.lang.Race;
 import com.ocdsoft.bacta.swg.name.NameService;
 import com.ocdsoft.bacta.swg.precu.message.ErrorMessage;
+import com.ocdsoft.bacta.swg.precu.message.game.client.ClientCreateCharacter;
 import com.ocdsoft.bacta.swg.precu.message.game.client.ClientCreateCharacterFailed;
 import com.ocdsoft.bacta.swg.precu.message.game.client.ClientCreateCharacterSuccess;
 import com.ocdsoft.bacta.swg.precu.object.ServerObject;
 import com.ocdsoft.bacta.swg.precu.object.intangible.player.PlayerObject;
 import com.ocdsoft.bacta.swg.precu.object.tangible.creature.CreatureObject;
-import com.ocdsoft.bacta.swg.precu.object.template.shared.SharedCreatureObjectTemplate;
 import com.ocdsoft.bacta.swg.precu.service.data.ObjectTemplateService;
 import com.ocdsoft.bacta.swg.precu.service.data.creation.*;
 import com.ocdsoft.bacta.swg.precu.service.data.customization.AllowBald;
+import com.ocdsoft.bacta.swg.shared.math.Transform;
+import com.ocdsoft.bacta.swg.shared.math.Vector;
 import com.ocdsoft.bacta.swg.shared.network.messages.chat.ChatAvatarId;
-import com.ocdsoft.bacta.swg.shared.utility.Transform;
-import org.magnos.steer.vec.Vec3;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.ocdsoft.bacta.soe.controller.MessageHandled;
-import com.ocdsoft.bacta.soe.controller.GameNetworkMessageController;
-import com.ocdsoft.bacta.soe.controller.ConnectionRolesAllowed;
-import com.ocdsoft.bacta.soe.connection.ConnectionRole;
-import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
-import com.ocdsoft.bacta.swg.precu.message.game.client.ClientCreateCharacter;
-
-import javax.vecmath.Vector3f;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -220,13 +217,17 @@ public class ClientCreateCharacterController implements GameNetworkMessageContro
 //        character.setWaterModPercent(objectTemplate.getWaterModPercent());
 
         //TODO: Change this to take the player to the tutorial zone when it is implemented.
-        character.setTransform(new Transform(
-                new Vec3(
-                        startingLocationInfo.getX(),
-                        startingLocationInfo.getY(),
-                        startingLocationInfo.getZ()
-                )
-        ));
+        //TODO: Position should be a random point within the radius of these coordinates.
+        final Vector position = new Vector(
+                startingLocationInfo.getX(),
+                startingLocationInfo.getY(),
+                startingLocationInfo.getZ());
+
+        final Transform transform = new Transform();
+        transform.setPositionInParentSpace(position);
+        transform.yaw(startingLocationInfo.getHeading());
+
+        character.setTransform(transform);
 
         PlayerObject ghost = objectService.createObject(0, "object/player/shared_player.iff");
 //        ghost.setClient(client);

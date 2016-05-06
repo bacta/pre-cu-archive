@@ -5,7 +5,7 @@ import com.ocdsoft.bacta.swg.precu.object.universe.UniverseObject;
 
 public final class GroupObject extends UniverseObject {
     @Override
-    public int getOpcode() {
+    public int getObjectType() {
         return 0x47525550;
     } //'GRUP'
 

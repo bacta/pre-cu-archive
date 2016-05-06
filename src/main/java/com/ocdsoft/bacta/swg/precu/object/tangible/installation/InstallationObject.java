@@ -5,7 +5,7 @@ import com.ocdsoft.bacta.swg.precu.object.tangible.TangibleObject;
 
 public class InstallationObject extends TangibleObject {
     @Override
-    public int getOpcode() {
+    public int getObjectType() {
         return 0x494E534F;
     } //'INSO'
 

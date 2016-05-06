@@ -7,7 +7,9 @@ import com.ocdsoft.bacta.swg.precu.object.tangible.TangibleObject;
  */
 public class ShipObject extends TangibleObject {
     @Override
-    public int getOpcode() { return 0x53484950; } //'SHIP'
+    public int getObjectType() {
+        return 0x53484950;
+    } //'SHIP'
 
     //private final AutoDeltaShort shipId;
     //private final AutoDeltaFloat slideDampener;

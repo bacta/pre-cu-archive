@@ -6,7 +6,7 @@ import com.ocdsoft.bacta.swg.precu.message.game.scene.UpdateTransformMessage;
 import com.ocdsoft.bacta.swg.precu.object.ServerObject;
 import com.ocdsoft.bacta.swg.precu.object.archive.delta.*;
 import com.ocdsoft.bacta.swg.precu.zone.Zone;
-import com.ocdsoft.bacta.swg.shared.utility.Transform;
+import com.ocdsoft.bacta.swg.shared.math.Transform;
 import lombok.Getter;
 import lombok.Setter;
 import org.magnos.steer.SteerSubject;
@@ -49,7 +49,7 @@ public class TangibleObject extends ServerObject implements SteerSubject<Vec3> {
     }
 
     @Override
-    public int getOpcode() {
+    public int getObjectType() {
         return 0x54414E4F;
     } //'TANO'
 
@@ -108,24 +108,30 @@ public class TangibleObject extends ServerObject implements SteerSubject<Vec3> {
             updateZone();
         }
 
-        broadcastMessage(new UpdateTransformMessage(this), false);
+        final int sequenceNumber = 0; //This value comes from the MessageQueueDataTransform packet.
+        final byte speed = 2; //This value comes from the MessageQueueDataTransform packet.
+        final byte lookAtYaw = 1; //This value comes from the MessageQueueDataTransform packet.
+        final boolean useLookAtYaw = true; //This value comes from the MessageQueueDataTransform packet.
+
+        //TODO: We should move this to the handler for the MessageQueueDataTransform packet...
+        broadcastMessage(new UpdateTransformMessage(this, sequenceNumber, transform, speed, lookAtYaw, useLookAtYaw), false);
     }
 
     public void updateZone() {
-        ImmutableSet<TangibleObject> newNearObjects = getUpdatedNearObjects();
+        final ImmutableSet<TangibleObject> newNearObjects = getUpdatedNearObjects();
 
-        Set<TangibleObject> newObjects = Sets.difference(newNearObjects, nearObjects);
-        Set<TangibleObject> expiredObjects = Sets.difference(nearObjects, newNearObjects);
+        final Set<TangibleObject> newObjects = Sets.difference(newNearObjects, nearObjects);
+        final Set<TangibleObject> expiredObjects = Sets.difference(nearObjects, newNearObjects);
 
         nearObjects = newNearObjects;
 
         // Notify Appear
-        for (TangibleObject tano : newObjects) {
+        for (final TangibleObject tano : newObjects) {
             addInRangeObject(tano);
         }
 
         // Notify Disappear
-        for (TangibleObject tano : expiredObjects) {
+        for (final TangibleObject tano : expiredObjects) {
             removeInRangeObject(tano);
         }
     }
@@ -141,7 +147,7 @@ public class TangibleObject extends ServerObject implements SteerSubject<Vec3> {
         }
 
         UpdateTransformCallback updateTransformCallback = new UpdateTransformCallback(this);
-        zone.contains(transform.getPosition(), 160.f, Integer.MAX_VALUE, 1, updateTransformCallback);
+        zone.contains(transform.getPositionInParentSpace(), 160.f, Integer.MAX_VALUE, 1, updateTransformCallback);
 
         return updateTransformCallback.getNearObjects();
     }
@@ -239,7 +245,7 @@ public class TangibleObject extends ServerObject implements SteerSubject<Vec3> {
     }
 
     @Override
-    public float getMaximumVelocity() {
+    public float getVelocityMax() {
         return 0;
     }
 
@@ -249,7 +255,7 @@ public class TangibleObject extends ServerObject implements SteerSubject<Vec3> {
     }
 
     @Override
-    public float getMaximumAcceleration() {
+    public float getAccelerationMax() {
         return 0;
     }
 

@@ -7,7 +7,9 @@ import com.ocdsoft.bacta.swg.precu.object.intangible.IntangibleObject;
  */
 public class ManufactureSchematicObject extends IntangibleObject {
     @Override
-    public int getOpcode() { return 0x4D53434F; } //'MSCO'
+    public int getObjectType() {
+        return 0x4D53434F;
+    } //'MSCO'
 
     //private final AutoDeltaInt itemsPerContainer;
     //private final AutoDeltaMap<StringId, Float> attributes;

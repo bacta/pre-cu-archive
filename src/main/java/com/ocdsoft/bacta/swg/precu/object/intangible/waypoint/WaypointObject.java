@@ -1,17 +1,17 @@
 package com.ocdsoft.bacta.swg.precu.object.intangible.waypoint;
 
 import com.ocdsoft.bacta.engine.lang.UnicodeString;
-import com.ocdsoft.bacta.swg.shared.math.Vector;
 import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaBoolean;
 import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaLong;
 import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaString;
 import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaVariable;
 import com.ocdsoft.bacta.swg.precu.object.intangible.IntangibleObject;
+import com.ocdsoft.bacta.swg.shared.math.Vector;
 
 
 public final class WaypointObject extends IntangibleObject {
     @Override
-    public int getOpcode() {
+    public int getObjectType() {
         return 0x57415950;
     } //'WAYP'
 
