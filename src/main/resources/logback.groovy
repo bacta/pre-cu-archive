@@ -20,5 +20,6 @@ logger("io.netty",  WARN)
 logger("com.couchbase",  WARN)
 //logger("com.ocdsoft.bacta.soe.controller.MultiController", TRACE)
 //logger("com.ocdsoft.bacta.soe.controller.GroupMessageController", TRACE)
+logger("com.ocdsoft.bacta.soe.io.udp.SoeTransceiver", TRACE)
 
 root(INFO, ["STDOUT"])

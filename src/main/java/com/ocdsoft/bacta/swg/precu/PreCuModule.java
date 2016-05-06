@@ -48,8 +48,6 @@ public class PreCuModule extends AbstractModule implements Module {
         bind(new TypeLiteral<AccountService<SoeAccount>>(){}).to(new TypeLiteral<CouchbaseAccountService<SoeAccount>>(){});
 
         // SWG Level Bindings
-            bind(NameService.class).to(DefaultNameService.class);
-            bind(SlotIdManager.class).asEagerSingleton();
 
 
         // Pre-cu specific bindings

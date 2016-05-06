@@ -8,12 +8,14 @@ import com.ocdsoft.bacta.soe.object.ClusterEntryItem;
 import com.ocdsoft.bacta.soe.util.SoeMessageUtil;
 import com.ocdsoft.bacta.swg.precu.message.login.LoginClusterStatus;
 import com.ocdsoft.bacta.swg.precu.message.login.LoginEnumCluster;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.nio.ByteBuffer;
 import java.util.Map;
 
 @Getter
+@AllArgsConstructor
 public class ClusterEntry implements ClusterEntryItem, ByteBufferWritable, Comparable<ClusterEntry> {
 
     private final int id;

@@ -23,6 +23,8 @@ import com.ocdsoft.bacta.swg.precu.message.game.client.ClientCreateCharacterSucc
 import com.ocdsoft.bacta.swg.precu.object.ServerObject;
 import com.ocdsoft.bacta.swg.precu.object.intangible.player.PlayerObject;
 import com.ocdsoft.bacta.swg.precu.object.tangible.creature.CreatureObject;
+import com.ocdsoft.bacta.swg.precu.object.template.server.ServerCreatureObjectTemplate;
+import com.ocdsoft.bacta.swg.precu.object.template.shared.SharedCreatureObjectTemplate;
 import com.ocdsoft.bacta.swg.precu.service.data.ObjectTemplateService;
 import com.ocdsoft.bacta.swg.precu.service.data.creation.*;
 import com.ocdsoft.bacta.swg.precu.service.data.customization.AllowBald;
@@ -133,29 +135,24 @@ public class ClientCreateCharacterController implements GameNetworkMessageContro
         stringBuilder.insert(message.getHairTemplateName().lastIndexOf('/') + 1, "shared_");
         String hairTemplate = stringBuilder.toString();
 
-        //SharedCreatureObjectTemplate objectTemplate = templateService.getObjectTemplate(message.getTemplateName());
+        ServerCreatureObjectTemplate objectTemplate = templateService.getObjectTemplate(message.getTemplateName());
 
-//        if (objectTemplate == null
-//                || !(objectTemplate instanceof SharedCreatureObjectTemplate)) {//TODO: Change this to ServerCreatureObjectTemplate when ready.
-//
-//            LOGGER.error("Account <{}> attempted to create a player with invalid player template <{}>.",
-//                    account.getUsername(),
-//                    message.getTemplateName());
-//
-//            connection.sendMessage(new ClientCreateCharacterFailed(message.getCharacterName(), NameService.NAME_DECLINED_NO_TEMPLATE));
-//            return;
-//        }
-//
-//        SharedCreatureObjectTemplate sharedTemplate = (SharedCreatureObjectTemplate) objectTemplate.getBaseTemplate();
+        if (objectTemplate == null) {
 
-        String resourceName = "object/creature/player/human_male.iff";
+            LOGGER.error("Account <{}> attempted to create a player with invalid player template <{}>.",
+                    account.getUsername(),
+                    message.getTemplateName());
+
+            connection.sendMessage(new ClientCreateCharacterFailed(NameService.NAME_DECLINED_NO_TEMPLATE));
+            return;
+        }
 
         ProfessionMods.ProfessionModInfo professionModInfo = professionMods.getProfessionModInfo(profession);
         ProfessionDefaults.ProfessionInfo professionInfo = professionDefaults.getProfessionInfo(profession);
-        //HairStyles.HairStyleInfo hairStyleInfo = hairStyles.getHairStyleInfo(resourceName);//sharedTemplate.getResourceName());
+        HairStyles.HairStyleInfo hairStyleInfo = hairStyles.getHairStyleInfo(objectTemplate.getResourceName());
         StartingLocations.StartingLocationInfo startingLocationInfo = startingLocations.getStartingLocationInfo(message.getStartingLocation());
 
-        if (/*hairStyleInfo == null || */professionModInfo == null || professionInfo == null) {
+        if (/*hairStyleInfo == null || */professionModInfo == null /*|| professionInfo == null*/) {
             //Only way for this to happen is if client data is not loaded or missing.
             LOGGER.error("Unable to retrieve profession information for profession <{}>.", profession);
             connection.sendMessage(new ClientCreateCharacterFailed(NameService.NAME_DECLINED_INTERNAL_ERROR));
@@ -191,7 +188,8 @@ public class ClientCreateCharacterController implements GameNetworkMessageContro
             return;
         }
 
-        CreatureObject character = objectService.createObject(1, resourceName);//sharedTemplate.getResourceName());
+        String sharedTemplate = "object/creature/player/base/shared_human_male.iff";
+        CreatureObject character = objectService.createObject(1, sharedTemplate);
 //        character.setCondition(TangibleObject.Conditions.onOff);
 
         nameService.addPlayerName(firstName);

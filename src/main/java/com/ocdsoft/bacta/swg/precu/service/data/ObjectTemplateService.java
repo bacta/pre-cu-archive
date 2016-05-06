@@ -5,6 +5,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.ocdsoft.bacta.swg.lang.NotImplementedException;
 import com.ocdsoft.bacta.swg.precu.object.ServerObject;
+import com.ocdsoft.bacta.swg.precu.object.intangible.player.PlayerObject;
 import com.ocdsoft.bacta.swg.shared.foundation.CrcString;
 import com.ocdsoft.bacta.swg.shared.foundation.DataResourceList;
 import com.ocdsoft.bacta.swg.shared.template.ObjectTemplate;
@@ -51,15 +52,14 @@ public class ObjectTemplateService {
             while (iterator.hasNext()) {
                 final Class<?> classType = iterator.next();
 
-                if (classType.isAssignableFrom(ObjectTemplate.class)) {
+                if (ObjectTemplate.class.isAssignableFrom(classType)) {
                     final Field tagField = classType.getField("TAG_" + classType.getSimpleName().toUpperCase());
                     tagField.setAccessible(true);
 
                     @SuppressWarnings("unchecked")
                     final Constructor<? extends ObjectTemplate> constructor = (Constructor<? extends ObjectTemplate>) classType.getConstructor(
                             String.class,
-                            DataResourceList.class,
-                            ObjectTemplate.class);
+                            DataResourceList.class);
 
                     final int id = tagField.getInt(null);
 

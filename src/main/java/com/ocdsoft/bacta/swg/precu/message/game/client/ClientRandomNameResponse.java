@@ -24,7 +24,7 @@ import java.nio.ByteBuffer;
  */
 @Getter
 @AllArgsConstructor
-@Priority(0x9)
+@Priority(0x4)
 public final class ClientRandomNameResponse extends GameNetworkMessage {
 
     private final String creatureTemplate;
