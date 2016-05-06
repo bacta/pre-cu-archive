@@ -22,25 +22,25 @@ import java.nio.ByteBuffer;
 @Priority(0x3)
 public final class ClientCreateCharacterFailed extends GameNetworkMessage {
 
-    private final String name;
+    private final String name; // Unicode
     private final StringId errorMessage;
 
     /**
      * Responses are found in the ui package starting with "name_declined"
      */
-    public ClientCreateCharacterFailed(final String name, final String errorKey) {
-        this.name = name;
+    public ClientCreateCharacterFailed(final String errorKey) {
+        this.name = "";
         this.errorMessage = new StringId("ui", errorKey);
     }
 
     public ClientCreateCharacterFailed(final ByteBuffer buffer) {
-        this.name = BufferUtil.getAscii(buffer);
+        this.name = BufferUtil.getUnicode(buffer);
         this.errorMessage = new StringId(buffer);
     }
 
     @Override
     public void writeToBuffer(final ByteBuffer buffer) {
-        BufferUtil.putAscii(buffer, name);
+        BufferUtil.putUnicode(buffer, name);
         errorMessage.writeToBuffer(buffer);
     }
 }

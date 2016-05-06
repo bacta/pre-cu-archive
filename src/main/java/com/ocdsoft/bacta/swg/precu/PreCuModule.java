@@ -46,9 +46,11 @@ import com.ocdsoft.bacta.swg.precu.message.game.object.command.CommandMessage;
 import com.ocdsoft.bacta.swg.precu.object.ServerObject;
 import com.ocdsoft.bacta.swg.precu.object.login.ClusterEntry;
 import com.ocdsoft.bacta.swg.precu.object.tangible.TangibleObject;
+import com.ocdsoft.bacta.swg.precu.service.data.SetupSharedFile;
 import com.ocdsoft.bacta.swg.precu.service.object.SceneObjectService;
 import com.ocdsoft.bacta.swg.precu.zone.PlanetMap;
 import com.ocdsoft.bacta.swg.precu.zone.ZoneMap;
+import com.ocdsoft.bacta.tre.TreeFile;
 
 
 public class PreCuModule extends AbstractModule implements Module {
@@ -58,39 +60,24 @@ public class PreCuModule extends AbstractModule implements Module {
 
         // Engine Level bindings
         bind(BactaConfiguration.class).to(IniBactaConfiguration.class);
-        bind(NetworkObjectFactory.class).to(GuiceNetworkObjectFactory.class);
         bind(SchedulerService.class).to(TaskSchedulerService.class);
-        bind(GameDatabaseConnector.class).to(CouchbaseGameDatabaseConnector.class);
-        bind(ConnectionDatabaseConnector.class).to(CouchbaseConnectionDatabaseConnector.class);
-        bind(NetworkIdGenerator.class).to(CouchbaseNetworkIdGenerator.class);
         bind(PasswordHash.class).to(Pbkdf2SaltedPasswordHash.class);
-        bind(NetworkSerializer.class).to(GameObjectSerializer.class);
-            bind(new TypeLiteral<ObjectService<ServerObject>>() {
-            }).to(SceneObjectService.class);
-
-        bind(new TypeLiteral<AccountService<SoeAccount>>(){}).to(new TypeLiteral<CouchbaseAccountService<SoeAccount>>(){});
         bind(Account.class).to(SoeAccount.class);
-            bind(new TypeLiteral<ObjectService<ServerObject>>() {
-            }).to(SceneObjectService.class);
-        bind(ObjectService.class).to(SceneObjectService.class);
+
 
         // SOE Level Bindings
         bind(SessionKeyService.class).to(SWGSessionKeyService.class);
-        bind(new TypeLiteral<ObjectDispatcher<ObjControllerMessage>>(){}).to(PreCuObjectDispatcher.class);
         bind(SoeMessageDispatcher.class).to(SoeDevMessageDispatcher.class);
-            //bind(new TypeLiteral<ContainerService<ServerObject>>(){}).to(PreCuContainerService.class);
-        bind(new TypeLiteral<CommandDispatcher<CommandMessage, TangibleObject>>(){}).to(PreCuCommandDispatcher.class);
-        bind(new TypeLiteral<ObjectDispatcher<ObjControllerMessage>>(){}).to(PreCuObjectDispatcher.class);
-        bind(new TypeLiteral<GameServerState<ClusterEntry>>(){}).to(PreCuGameServerState.class);
-        bind(GameServerState.class).to(PreCuGameServerState.class);
-        bind(ConnectionServerAgent.class).to(PreCuConnectionServerAgent.class);
         bind(GameNetworkMessageSerializer.class).to(GameNetworkMessageSerializerImpl.class);
+        bind(ConnectionDatabaseConnector.class).to(CouchbaseConnectionDatabaseConnector.class);
+        bind(new TypeLiteral<AccountService<SoeAccount>>(){}).to(new TypeLiteral<CouchbaseAccountService<SoeAccount>>(){});
+
 
         // SWG Level Bindings
-        bind(NameService.class).to(DefaultNameService.class);
+
 
         // Pre-cu specific bindings
-        bind(ZoneMap.class).to(PlanetMap.class);
+
 
 
         // Singleton Bindings

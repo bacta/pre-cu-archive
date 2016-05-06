@@ -45,7 +45,7 @@ public class GameLanguage implements SharedFileLoader {
     private void load() {
         logger.trace("Loading game language.");
 
-        final DataTable dataTable = dataTableManager.getTable(dataTableName);
+        final DataTable dataTable = dataTableManager.getTable(dataTableName, true);
 
         for (int row = 0; row < dataTable.getNumRows(); ++row) {
             final GameLanguageInfo languageInfo = new GameLanguageInfo(dataTable, row);

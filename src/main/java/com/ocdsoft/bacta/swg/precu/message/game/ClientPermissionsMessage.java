@@ -25,22 +25,19 @@ import java.nio.ByteBuffer;
 public final class ClientPermissionsMessage extends GameNetworkMessage {
 
     private final boolean canLogin;
-    private final boolean canCreateRegularCharacter;
-    private final boolean canCreateJediCharacter;
-    private final boolean canSkipTutorial;
+    private final boolean canCreateCharacter;
+    private final boolean unlimitedCharacterCreation;
 
     public ClientPermissionsMessage(final ByteBuffer buffer) {
         this.canLogin = BufferUtil.getBoolean(buffer);
-        this.canCreateRegularCharacter = BufferUtil.getBoolean(buffer);
-        this.canCreateJediCharacter = BufferUtil.getBoolean(buffer);
-        this.canSkipTutorial = BufferUtil.getBoolean(buffer);
+        this.canCreateCharacter = BufferUtil.getBoolean(buffer);
+        this.unlimitedCharacterCreation = BufferUtil.getBoolean(buffer);
     }
 
     @Override
     public void writeToBuffer(final ByteBuffer buffer) {
         BufferUtil.putBoolean(buffer, canLogin);
-        BufferUtil.putBoolean(buffer, canCreateRegularCharacter);
-        BufferUtil.putBoolean(buffer, canCreateJediCharacter);
-        BufferUtil.putBoolean(buffer, canSkipTutorial);
+        BufferUtil.putBoolean(buffer, canCreateCharacter);
+        BufferUtil.putBoolean(buffer, unlimitedCharacterCreation);
     }
 }

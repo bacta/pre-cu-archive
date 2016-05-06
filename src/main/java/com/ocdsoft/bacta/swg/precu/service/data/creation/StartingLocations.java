@@ -44,7 +44,7 @@ public class StartingLocations implements SharedFileLoader {
     private void load() {
         logger.trace("Loading starting locations.");
 
-        final DataTable dataTable = dataTableManager.getTable(dataTableName);
+        final DataTable dataTable = dataTableManager.getTable(dataTableName, true);
 
         for (int row = 0; row < dataTable.getNumRows(); ++row) {
             final StartingLocationInfo locationInfo = new StartingLocationInfo(dataTable, row);

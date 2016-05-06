@@ -44,7 +44,7 @@ public class AllowBald implements SharedFileLoader {
     private void load() {
         logger.trace("Loading allow bald player template settings.");
 
-        final DataTable dataTable = dataTableManager.getTable(dataTableName);
+        final DataTable dataTable = dataTableManager.getTable(dataTableName, true);
 
         for (int row = 0; row < dataTable.getNumRows(); ++row) {
             allowBald.put(

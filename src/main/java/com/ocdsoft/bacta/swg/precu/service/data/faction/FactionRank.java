@@ -64,7 +64,7 @@ public final class FactionRank implements SharedFileLoader {
     private void load() {
         logger.trace("Loading faction ranks.");
 
-        final DataTable dataTable = dataTableManager.getTable(dataTableName);
+        final DataTable dataTable = dataTableManager.getTable(dataTableName, true);
 
         for (int row = 0; row < dataTable.getNumRows(); ++row) {
             final FactionRankInfo factionRankInfo = new FactionRankInfo(dataTable, row);

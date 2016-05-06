@@ -56,7 +56,7 @@ public class ClientIdMsgController implements GameNetworkMessageController<Clien
         connection.addRole(ConnectionRole.AUTHENTICATED);
 
         // TODO: Actually implement permissions
-        ClientPermissionsMessage cpm = new ClientPermissionsMessage(true, true, true, true);
+        ClientPermissionsMessage cpm = new ClientPermissionsMessage(true, true, false);
         connection.sendMessage(cpm);    }
 }
 

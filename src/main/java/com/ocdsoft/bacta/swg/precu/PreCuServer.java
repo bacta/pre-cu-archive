@@ -42,7 +42,7 @@ public final class PreCuServer {
 
         if(argSet.contains("game")) {
             LOGGER.info("Starting Pre-CU GameServer");
-            Injector injector = Guice.createInjector(new PreCuModule(), new GameModule(), new PingModule());
+            Injector injector = Guice.createInjector(new GameModule(), new PreCuModule(), new PingModule());
             GameServer gameServer = injector.getInstance(GameServer.class);
             Thread gameThread = new Thread(gameServer);
             gameThread.start();

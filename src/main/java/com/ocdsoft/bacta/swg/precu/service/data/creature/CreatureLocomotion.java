@@ -31,7 +31,7 @@ public class CreatureLocomotion implements SharedFileLoader {
     private void load() {
         logger.trace("Loading creature locomotions datatable.");
 
-        final DataTable dataTable = dataTableManager.getTable(dataTableName);
+        final DataTable dataTable = dataTableManager.getTable(dataTableName, true);
 
         for (int row = 0; row < dataTable.getNumRows(); ++row) {
             locomotions.put(

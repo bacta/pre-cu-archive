@@ -44,7 +44,7 @@ public class RacialMods implements SharedFileLoader {
     private void load() {
         logger.trace("Loading racial mods.");
 
-        final DataTable dataTable = dataTableManager.getTable(dataTableName);
+        final DataTable dataTable = dataTableManager.getTable(dataTableName, true);
 
         for (int row = 0; row < dataTable.getNumRows(); ++row) {
             final RacialModInfo modInfo = new RacialModInfo(dataTable, row);

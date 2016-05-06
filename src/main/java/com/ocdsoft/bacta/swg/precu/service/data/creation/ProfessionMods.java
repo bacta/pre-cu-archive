@@ -46,7 +46,7 @@ public class ProfessionMods implements SharedFileLoader {
     private void load() {
         logger.trace("Loading profession mods.");
 
-        final DataTable dataTable = dataTableManager.getTable(dataTableName);
+        final DataTable dataTable = dataTableManager.getTable(dataTableName, true);
 
         for (int row = 0; row < dataTable.getNumRows(); ++row) {
             final ProfessionModInfo modInfo = new ProfessionModInfo(dataTable, row);
