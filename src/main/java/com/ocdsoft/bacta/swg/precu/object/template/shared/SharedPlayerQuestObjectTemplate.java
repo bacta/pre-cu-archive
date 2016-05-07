@@ -29,8 +29,10 @@ public class SharedPlayerQuestObjectTemplate extends SharedTangibleObjectTemplat
 
 	@Override
 	protected void load(final Iff iff) {
-		if (iff.getCurrentName() != TAG_SHAREDPLAYERQUESTOBJECTTEMPLATE)
+		if (iff.getCurrentName() != TAG_SHAREDPLAYERQUESTOBJECTTEMPLATE) {
+			super.load(iff);
 			return;
+		}
 
 		iff.enterForm();
 		templateVersion = iff.getCurrentName();
@@ -57,6 +59,9 @@ public class SharedPlayerQuestObjectTemplate extends SharedTangibleObjectTemplat
 		iff.enterChunk();
 		final int paramCount = iff.readInt();
 		iff.exitChunk();
+		iff.exitForm();
+
+		super.load(iff);
 		iff.exitForm();
 	}
 

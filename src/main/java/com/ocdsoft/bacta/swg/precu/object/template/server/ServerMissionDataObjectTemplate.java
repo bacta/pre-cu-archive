@@ -29,8 +29,10 @@ public class ServerMissionDataObjectTemplate extends ServerIntangibleObjectTempl
 
 	@Override
 	protected void load(final Iff iff) {
-		if (iff.getCurrentName() != TAG_SERVERMISSIONDATAOBJECTTEMPLATE)
+		if (iff.getCurrentName() != TAG_SERVERMISSIONDATAOBJECTTEMPLATE) {
+			super.load(iff);
 			return;
+		}
 
 		iff.enterForm();
 		templateVersion = iff.getCurrentName();
@@ -57,6 +59,9 @@ public class ServerMissionDataObjectTemplate extends ServerIntangibleObjectTempl
 		iff.enterChunk();
 		final int paramCount = iff.readInt();
 		iff.exitChunk();
+		iff.exitForm();
+
+		super.load(iff);
 		iff.exitForm();
 	}
 

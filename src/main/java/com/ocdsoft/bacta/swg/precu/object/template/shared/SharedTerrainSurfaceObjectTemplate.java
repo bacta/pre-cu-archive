@@ -19,7 +19,7 @@ public class SharedTerrainSurfaceObjectTemplate extends ObjectTemplate {
 
 	private int templateVersion;
 
-	private final FloatParam cover = new FloatParam();
+	private final FloatParam cover = new FloatParam(); 
 	private final StringParam surfaceType = new StringParam(); 
 
 	public SharedTerrainSurfaceObjectTemplate(final String filename, final DataResourceList<ObjectTemplate> objectTemplateList) {
@@ -88,8 +88,9 @@ public class SharedTerrainSurfaceObjectTemplate extends ObjectTemplate {
 
 	@Override
 	protected void load(final Iff iff) {
-		if (iff.getCurrentName() != TAG_SHAREDTERRAINSURFACEOBJECTTEMPLATE)
+		if (iff.getCurrentName() != TAG_SHAREDTERRAINSURFACEOBJECTTEMPLATE) {
 			return;
+		}
 
 		iff.enterForm();
 		templateVersion = iff.getCurrentName();

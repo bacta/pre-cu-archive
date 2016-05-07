@@ -49,8 +49,10 @@ public class ServerShipObjectTemplate extends ServerTangibleObjectTemplate {
 
 	@Override
 	protected void load(final Iff iff) {
-		if (iff.getCurrentName() != TAG_SERVERSHIPOBJECTTEMPLATE)
+		if (iff.getCurrentName() != TAG_SERVERSHIPOBJECTTEMPLATE) {
+			super.load(iff);
 			return;
+		}
 
 		iff.enterForm();
 		templateVersion = iff.getCurrentName();
@@ -89,6 +91,9 @@ public class ServerShipObjectTemplate extends ServerTangibleObjectTemplate {
 
 			iff.exitChunk();
 		}
+		iff.exitForm();
+
+		super.load(iff);
 		iff.exitForm();
 	}
 

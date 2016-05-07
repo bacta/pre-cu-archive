@@ -243,7 +243,6 @@ public class TangibleObject extends ServerObject implements SteerSubject<Vec3> {
     public Vec3 getVelocity() {
         return null;
     }
-
     @Override
     public float getMaximumVelocity() {
         return 0;

@@ -29,8 +29,10 @@ public class ServerTokenObjectTemplate extends ServerIntangibleObjectTemplate {
 
 	@Override
 	protected void load(final Iff iff) {
-		if (iff.getCurrentName() != TAG_SERVERTOKENOBJECTTEMPLATE)
+		if (iff.getCurrentName() != TAG_SERVERTOKENOBJECTTEMPLATE) {
+			super.load(iff);
 			return;
+		}
 
 		iff.enterForm();
 		templateVersion = iff.getCurrentName();
@@ -57,6 +59,9 @@ public class ServerTokenObjectTemplate extends ServerIntangibleObjectTemplate {
 		iff.enterChunk();
 		final int paramCount = iff.readInt();
 		iff.exitChunk();
+		iff.exitForm();
+
+		super.load(iff);
 		iff.exitForm();
 	}
 

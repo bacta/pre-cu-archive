@@ -572,8 +572,9 @@ public class ServerObjectTemplate extends ObjectTemplate {
 
 	@Override
 	protected void load(final Iff iff) {
-		if (iff.getCurrentName() != TAG_SERVEROBJECTTEMPLATE)
+		if (iff.getCurrentName() != TAG_SERVEROBJECTTEMPLATE) {
 			return;
+		}
 
 		iff.enterForm();
 		templateVersion = iff.getCurrentName();
@@ -701,7 +702,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 	public enum ArmorRating {
 		AR_armorNone(0),
 		AR_armorLight(1),
-		AR_armorMedium(2),
+		AR_armorMedium(2), 
 		AR_armorHeavy(3); 
 
 		private static final ArmorRating[] values = values();
@@ -718,7 +719,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 	}
 
 	public enum VisibleFlags {
-		VF_gm(0),
+		VF_gm(0), 
 		VF_player(1); 
 
 		private static final VisibleFlags[] values = values();
@@ -776,7 +777,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		CT_mandalorianDroidEngineerMission(0x80010000),
 		CT_spaceMission(0x80020000),
 		CT_reverseEngineeringMission(0x80040000),
-		CT_miscMission(0x80080000),
+		CT_miscMission(0x80080000), 
 		CT_spaceComponentMission(0x80100000); 
 
 		private static final CraftingType[] values = values();
@@ -794,7 +795,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 
 	public enum UpdateRanges {
 		UR_near(0),
-		UR_normal(1),
+		UR_normal(1), 
 		UR_far(2); 
 
 		private static final UpdateRanges[] values = values();
@@ -812,7 +813,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 
 	public enum ArmorCategory {
 		AC_reconnaissance(0),
-		AC_battle(1),
+		AC_battle(1), 
 		AC_assault(2), 
 		AC_psg(3); // personal shield generator
 
@@ -832,7 +833,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 	public enum MentalStates {
 		MS_fear(0),
 		MS_anger(1),
-		MS_interest(2),
+		MS_interest(2), 
 		MS_distress(3); 
 
 		private static final MentalStates[] values = values();
@@ -853,7 +854,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		AT_constitution(1),
 		AT_action(2),
 		AT_stamina(3),
-		AT_mind(4),
+		AT_mind(4), 
 		AT_willpower(5); 
 
 		private static final Attributes[] values = values();
@@ -929,7 +930,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		XP_craftingTrapping(56),
 		XP_craftingSpice(57),
 		XP_jediGeneral(58),
-		XP_shipwright(59),
+		XP_shipwright(59), 
 		XP_reverseEngineering(60); 
 
 		private static final XpTypes[] values = values();
@@ -946,7 +947,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 	}
 
 	public enum MoveFlags {
-		MF_gm(0),
+		MF_gm(0), 
 		MF_player(1); 
 
 		private static final MoveFlags[] values = values();
@@ -963,7 +964,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 	}
 
 	public enum DeleteFlags {
-		DF_gm(0),
+		DF_gm(0), 
 		DF_player(1); 
 
 		private static final DeleteFlags[] values = values();
@@ -992,7 +993,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		DT_elemental_electrical(0x00000100),
 		DT_environmental_heat(0x00000200),
 		DT_environmental_cold(0x00000400),
-		DT_environmental_acid(0x00000800),
+		DT_environmental_acid(0x00000800), 
 		DT_environmental_electrical(0x00001000); 
 
 		private static final DamageType[] values = values();
@@ -1010,7 +1011,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 
 	public enum ArmorLevel {
 		AL_basic(0),
-		AL_standard(1),
+		AL_standard(1), 
 		AL_advanced(2); 
 
 		private static final ArmorLevel[] values = values();

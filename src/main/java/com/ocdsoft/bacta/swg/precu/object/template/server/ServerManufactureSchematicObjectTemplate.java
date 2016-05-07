@@ -224,8 +224,10 @@ public class ServerManufactureSchematicObjectTemplate extends ServerIntangibleOb
 
 	@Override
 	protected void load(final Iff iff) {
-		if (iff.getCurrentName() != TAG_SERVERMANUFACTURESCHEMATICOBJECTTEMPLATE)
+		if (iff.getCurrentName() != TAG_SERVERMANUFACTURESCHEMATICOBJECTTEMPLATE) {
+			super.load(iff);
 			return;
+		}
 
 		iff.enterForm();
 		templateVersion = iff.getCurrentName();
@@ -288,6 +290,9 @@ public class ServerManufactureSchematicObjectTemplate extends ServerIntangibleOb
 
 			iff.exitChunk();
 		}
+		iff.exitForm();
+
+		super.load(iff);
 		iff.exitForm();
 	}
 

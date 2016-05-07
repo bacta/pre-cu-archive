@@ -21,7 +21,7 @@ public class SharedShipObjectTemplate extends SharedTangibleObjectTemplate {
 
 	private final StringParam cockpitFilename = new StringParam();
 	private final BoolParam hasWings = new BoolParam();
-	private final BoolParam playerControlled = new BoolParam();
+	private final BoolParam playerControlled = new BoolParam(); 
 	private final StringParam interiorLayoutFileName = new StringParam(); 
 
 	public SharedShipObjectTemplate(final String filename, final DataResourceList<ObjectTemplate> objectTemplateList) {
@@ -107,8 +107,10 @@ public class SharedShipObjectTemplate extends SharedTangibleObjectTemplate {
 
 	@Override
 	protected void load(final Iff iff) {
-		if (iff.getCurrentName() != TAG_SHAREDSHIPOBJECTTEMPLATE)
+		if (iff.getCurrentName() != TAG_SHAREDSHIPOBJECTTEMPLATE) {
+			super.load(iff);
 			return;
+		}
 
 		iff.enterForm();
 		templateVersion = iff.getCurrentName();
@@ -153,6 +155,9 @@ public class SharedShipObjectTemplate extends SharedTangibleObjectTemplate {
 
 			iff.exitChunk();
 		}
+		iff.exitForm();
+
+		super.load(iff);
 		iff.exitForm();
 	}
 

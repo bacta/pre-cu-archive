@@ -107,8 +107,10 @@ public class SharedBattlefieldMarkerObjectTemplate extends SharedTangibleObjectT
 
 	@Override
 	protected void load(final Iff iff) {
-		if (iff.getCurrentName() != TAG_SHAREDBATTLEFIELDMARKEROBJECTTEMPLATE)
+		if (iff.getCurrentName() != TAG_SHAREDBATTLEFIELDMARKEROBJECTTEMPLATE) {
+			super.load(iff);
 			return;
+		}
 
 		iff.enterForm();
 		templateVersion = iff.getCurrentName();
@@ -149,6 +151,9 @@ public class SharedBattlefieldMarkerObjectTemplate extends SharedTangibleObjectT
 
 			iff.exitChunk();
 		}
+		iff.exitForm();
+
+		super.load(iff);
 		iff.exitForm();
 	}
 

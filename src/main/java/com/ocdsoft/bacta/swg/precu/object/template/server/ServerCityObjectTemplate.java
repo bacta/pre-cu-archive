@@ -29,8 +29,10 @@ public class ServerCityObjectTemplate extends ServerUniverseObjectTemplate {
 
 	@Override
 	protected void load(final Iff iff) {
-		if (iff.getCurrentName() != TAG_SERVERCITYOBJECTTEMPLATE)
+		if (iff.getCurrentName() != TAG_SERVERCITYOBJECTTEMPLATE) {
+			super.load(iff);
 			return;
+		}
 
 		iff.enterForm();
 		templateVersion = iff.getCurrentName();
@@ -57,6 +59,9 @@ public class ServerCityObjectTemplate extends ServerUniverseObjectTemplate {
 		iff.enterChunk();
 		final int paramCount = iff.readInt();
 		iff.exitChunk();
+		iff.exitForm();
+
+		super.load(iff);
 		iff.exitForm();
 	}
 

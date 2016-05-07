@@ -29,8 +29,10 @@ public class ServerConstructionContractObjectTemplate extends ServerIntangibleOb
 
 	@Override
 	protected void load(final Iff iff) {
-		if (iff.getCurrentName() != TAG_SERVERCONSTRUCTIONCONTRACTOBJECTTEMPLATE)
+		if (iff.getCurrentName() != TAG_SERVERCONSTRUCTIONCONTRACTOBJECTTEMPLATE) {
+			super.load(iff);
 			return;
+		}
 
 		iff.enterForm();
 		templateVersion = iff.getCurrentName();
@@ -57,6 +59,9 @@ public class ServerConstructionContractObjectTemplate extends ServerIntangibleOb
 		iff.enterChunk();
 		final int paramCount = iff.readInt();
 		iff.exitChunk();
+		iff.exitForm();
+
+		super.load(iff);
 		iff.exitForm();
 	}
 

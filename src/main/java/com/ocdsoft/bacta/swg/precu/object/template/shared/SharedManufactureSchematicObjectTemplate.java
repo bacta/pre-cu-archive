@@ -29,8 +29,10 @@ public class SharedManufactureSchematicObjectTemplate extends SharedIntangibleOb
 
 	@Override
 	protected void load(final Iff iff) {
-		if (iff.getCurrentName() != TAG_SHAREDMANUFACTURESCHEMATICOBJECTTEMPLATE)
+		if (iff.getCurrentName() != TAG_SHAREDMANUFACTURESCHEMATICOBJECTTEMPLATE) {
+			super.load(iff);
 			return;
+		}
 
 		iff.enterForm();
 		templateVersion = iff.getCurrentName();
@@ -57,6 +59,9 @@ public class SharedManufactureSchematicObjectTemplate extends SharedIntangibleOb
 		iff.enterChunk();
 		final int paramCount = iff.readInt();
 		iff.exitChunk();
+		iff.exitForm();
+
+		super.load(iff);
 		iff.exitForm();
 	}
 

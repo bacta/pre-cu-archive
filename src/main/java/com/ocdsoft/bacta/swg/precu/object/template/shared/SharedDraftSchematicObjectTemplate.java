@@ -170,8 +170,10 @@ public class SharedDraftSchematicObjectTemplate extends SharedIntangibleObjectTe
 
 	@Override
 	protected void load(final Iff iff) {
-		if (iff.getCurrentName() != TAG_SHAREDDRAFTSCHEMATICOBJECTTEMPLATE)
+		if (iff.getCurrentName() != TAG_SHAREDDRAFTSCHEMATICOBJECTTEMPLATE) {
+			super.load(iff);
 			return;
+		}
 
 		iff.enterForm();
 		templateVersion = iff.getCurrentName();
@@ -231,12 +233,15 @@ public class SharedDraftSchematicObjectTemplate extends SharedIntangibleObjectTe
 			iff.exitChunk();
 		}
 		iff.exitForm();
+
+		super.load(iff);
+		iff.exitForm();
 	}
 
 	public enum ArmorRating {
 		AR_armorNone(0),
 		AR_armorLight(1),
-		AR_armorMedium(2),
+		AR_armorMedium(2), 
 		AR_armorHeavy(3); 
 
 		private static final ArmorRating[] values = values();
@@ -264,7 +269,7 @@ public class SharedDraftSchematicObjectTemplate extends SharedIntangibleObjectTe
 		DT_elemental_electrical(0x00000100),
 		DT_environmental_heat(0x00000200),
 		DT_environmental_cold(0x00000400),
-		DT_environmental_acid(0x00000800),
+		DT_environmental_acid(0x00000800), 
 		DT_environmental_electrical(0x00001000); 
 
 		private static final DamageType[] values = values();

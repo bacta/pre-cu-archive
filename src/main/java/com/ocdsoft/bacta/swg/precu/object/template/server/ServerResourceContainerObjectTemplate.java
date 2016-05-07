@@ -68,8 +68,10 @@ public class ServerResourceContainerObjectTemplate extends ServerTangibleObjectT
 
 	@Override
 	protected void load(final Iff iff) {
-		if (iff.getCurrentName() != TAG_SERVERRESOURCECONTAINEROBJECTTEMPLATE)
+		if (iff.getCurrentName() != TAG_SERVERRESOURCECONTAINEROBJECTTEMPLATE) {
+			super.load(iff);
 			return;
+		}
 
 		iff.enterForm();
 		templateVersion = iff.getCurrentName();
@@ -108,6 +110,9 @@ public class ServerResourceContainerObjectTemplate extends ServerTangibleObjectT
 
 			iff.exitChunk();
 		}
+		iff.exitForm();
+
+		super.load(iff);
 		iff.exitForm();
 	}
 

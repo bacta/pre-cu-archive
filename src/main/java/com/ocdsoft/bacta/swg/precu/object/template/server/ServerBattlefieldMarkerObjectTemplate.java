@@ -29,8 +29,10 @@ public class ServerBattlefieldMarkerObjectTemplate extends ServerTangibleObjectT
 
 	@Override
 	protected void load(final Iff iff) {
-		if (iff.getCurrentName() != TAG_SERVERBATTLEFIELDMARKEROBJECTTEMPLATE)
+		if (iff.getCurrentName() != TAG_SERVERBATTLEFIELDMARKEROBJECTTEMPLATE) {
+			super.load(iff);
 			return;
+		}
 
 		iff.enterForm();
 		templateVersion = iff.getCurrentName();
@@ -57,6 +59,9 @@ public class ServerBattlefieldMarkerObjectTemplate extends ServerTangibleObjectT
 		iff.enterChunk();
 		final int paramCount = iff.readInt();
 		iff.exitChunk();
+		iff.exitForm();
+
+		super.load(iff);
 		iff.exitForm();
 	}
 

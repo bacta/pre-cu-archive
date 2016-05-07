@@ -757,8 +757,10 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 
 	@Override
 	protected void load(final Iff iff) {
-		if (iff.getCurrentName() != TAG_SHAREDCREATUREOBJECTTEMPLATE)
+		if (iff.getCurrentName() != TAG_SHAREDCREATUREOBJECTTEMPLATE) {
+			super.load(iff);
 			return;
+		}
 
 		iff.enterForm();
 		templateVersion = iff.getCurrentName();
@@ -868,6 +870,9 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 			iff.exitChunk();
 		}
 		iff.exitForm();
+
+		super.load(iff);
+		iff.exitForm();
 	}
 
 	public enum Postures {
@@ -884,7 +889,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 		DrivingVehicle(10),
 		RidingCreature(11),
 		KnockedDown(12),
-		Incapacitated(13),
+		Incapacitated(13), 
 		Dead(14); 
 
 		private static final Postures[] values = values();
@@ -902,7 +907,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 
 	public enum Race {
 		RA_none(0),
-		RA_aqualish_quara(1),
+		RA_aqualish_quara(1), 
 		RA_aqualish_aquala(2), 
 		RA_ewok_ewok(1), // plae, green, black, white (subject to change, pending information request to LucasArts)
 		RA_ewok_dulok(2), // blue skin; "Orn Free Taa", "Ann Gella" & "Tann", Sebulba's personal entourage.
@@ -918,7 +923,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 		RA_krayt_greater(2),
 		RA_R2(0),
 		RA_R3(1),
-		RA_R4(2),
+		RA_R4(2), 
 		RA_R5(3); 
 
 		private static final Race[] values = values();
@@ -944,7 +949,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 		NI_monster(6),
 		NI_herbivore(7),
 		NI_carnivore(8),
-		NI_predator(9),
+		NI_predator(9), 
 		NI_android(10); 
 
 		private static final Niche[] values = values();
@@ -962,7 +967,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 
 	public enum Gender {
 		GE_male(0),
-		GE_female(1),
+		GE_female(1), 
 		GE_other(2); 
 
 		private static final Gender[] values = values();
@@ -1206,7 +1211,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 		SP_maulProbeDroid(225),
 		SP_atst(226),
 		SP_atat(227),
-		SP_geonosian(228),
+		SP_geonosian(228), 
 		SP_veractyle(229); 
 
 		private static final Species[] values = values();
@@ -1223,7 +1228,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 	}
 
 	public enum MovementTypes {
-		MT_run(0),
+		MT_run(0), 
 		MT_walk(1); 
 
 		private static final MovementTypes[] values = values();

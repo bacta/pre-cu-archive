@@ -29,8 +29,10 @@ public class ServerInstallationObjectTemplate extends ServerTangibleObjectTempla
 
 	@Override
 	protected void load(final Iff iff) {
-		if (iff.getCurrentName() != TAG_SERVERINSTALLATIONOBJECTTEMPLATE)
+		if (iff.getCurrentName() != TAG_SERVERINSTALLATIONOBJECTTEMPLATE) {
+			super.load(iff);
 			return;
+		}
 
 		iff.enterForm();
 		templateVersion = iff.getCurrentName();
@@ -57,6 +59,9 @@ public class ServerInstallationObjectTemplate extends ServerTangibleObjectTempla
 		iff.enterChunk();
 		final int paramCount = iff.readInt();
 		iff.exitChunk();
+		iff.exitForm();
+
+		super.load(iff);
 		iff.exitForm();
 	}
 

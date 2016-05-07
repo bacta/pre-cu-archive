@@ -29,8 +29,10 @@ public class ServerCellObjectTemplate extends ServerObjectTemplate {
 
 	@Override
 	protected void load(final Iff iff) {
-		if (iff.getCurrentName() != TAG_SERVERCELLOBJECTTEMPLATE)
+		if (iff.getCurrentName() != TAG_SERVERCELLOBJECTTEMPLATE) {
+			super.load(iff);
 			return;
+		}
 
 		iff.enterForm();
 		templateVersion = iff.getCurrentName();
@@ -57,6 +59,9 @@ public class ServerCellObjectTemplate extends ServerObjectTemplate {
 		iff.enterChunk();
 		final int paramCount = iff.readInt();
 		iff.exitChunk();
+		iff.exitForm();
+
+		super.load(iff);
 		iff.exitForm();
 	}
 

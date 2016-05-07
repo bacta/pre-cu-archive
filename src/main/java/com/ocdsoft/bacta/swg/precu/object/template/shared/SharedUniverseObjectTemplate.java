@@ -29,8 +29,10 @@ public class SharedUniverseObjectTemplate extends SharedObjectTemplate {
 
 	@Override
 	protected void load(final Iff iff) {
-		if (iff.getCurrentName() != TAG_SHAREDUNIVERSEOBJECTTEMPLATE)
+		if (iff.getCurrentName() != TAG_SHAREDUNIVERSEOBJECTTEMPLATE) {
+			super.load(iff);
 			return;
+		}
 
 		iff.enterForm();
 		templateVersion = iff.getCurrentName();
@@ -57,6 +59,9 @@ public class SharedUniverseObjectTemplate extends SharedObjectTemplate {
 		iff.enterChunk();
 		final int paramCount = iff.readInt();
 		iff.exitChunk();
+		iff.exitForm();
+
+		super.load(iff);
 		iff.exitForm();
 	}
 

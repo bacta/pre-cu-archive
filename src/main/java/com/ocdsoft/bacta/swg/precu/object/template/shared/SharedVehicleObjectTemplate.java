@@ -302,8 +302,10 @@ public class SharedVehicleObjectTemplate extends SharedTangibleObjectTemplate {
 
 	@Override
 	protected void load(final Iff iff) {
-		if (iff.getCurrentName() != TAG_SHAREDVEHICLEOBJECTTEMPLATE)
+		if (iff.getCurrentName() != TAG_SHAREDVEHICLEOBJECTTEMPLATE) {
+			super.load(iff);
 			return;
+		}
 
 		iff.enterForm();
 		templateVersion = iff.getCurrentName();
@@ -362,13 +364,16 @@ public class SharedVehicleObjectTemplate extends SharedTangibleObjectTemplate {
 			iff.exitChunk();
 		}
 		iff.exitForm();
+
+		super.load(iff);
+		iff.exitForm();
 	}
 
 	public enum MovementTypes {
 		MT_hover(0),
 		MT_underwater(1),
 		MT_ground(2),
-		MT_swim(3),
+		MT_swim(3), 
 		MT_walker(4); 
 
 		private static final MovementTypes[] values = values();

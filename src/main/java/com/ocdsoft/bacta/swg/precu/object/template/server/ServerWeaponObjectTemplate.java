@@ -521,8 +521,10 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 
 	@Override
 	protected void load(final Iff iff) {
-		if (iff.getCurrentName() != TAG_SERVERWEAPONOBJECTTEMPLATE)
+		if (iff.getCurrentName() != TAG_SERVERWEAPONOBJECTTEMPLATE) {
+			super.load(iff);
 			return;
+		}
 
 		iff.enterForm();
 		templateVersion = iff.getCurrentName();
@@ -590,6 +592,9 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 			iff.exitChunk();
 		}
 		iff.exitForm();
+
+		super.load(iff);
+		iff.exitForm();
 	}
 
 	public enum WeaponType {
@@ -605,7 +610,7 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 		WT_1handLightsaber(9),
 		WT_2handLightsaber(10),
 		WT_polearmLightsaber(11),
-		WT_groundTargetting(12),
+		WT_groundTargetting(12), 
 		WT_directionTargetting(13); 
 
 		private static final WeaponType[] values = values();
@@ -641,7 +646,7 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 
 	public enum AttackType {
 		AT_melee(0),
-		AT_ranged(1),
+		AT_ranged(1), 
 		AT_thrown(2); 
 
 		private static final AttackType[] values = values();

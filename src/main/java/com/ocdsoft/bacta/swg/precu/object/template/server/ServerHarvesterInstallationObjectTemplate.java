@@ -164,8 +164,10 @@ public class ServerHarvesterInstallationObjectTemplate extends ServerInstallatio
 
 	@Override
 	protected void load(final Iff iff) {
-		if (iff.getCurrentName() != TAG_SERVERHARVESTERINSTALLATIONOBJECTTEMPLATE)
+		if (iff.getCurrentName() != TAG_SERVERHARVESTERINSTALLATIONOBJECTTEMPLATE) {
+			super.load(iff);
 			return;
+		}
 
 		iff.enterForm();
 		templateVersion = iff.getCurrentName();
@@ -210,6 +212,9 @@ public class ServerHarvesterInstallationObjectTemplate extends ServerInstallatio
 
 			iff.exitChunk();
 		}
+		iff.exitForm();
+
+		super.load(iff);
 		iff.exitForm();
 	}
 

@@ -37,7 +37,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 	private final List<IntegerParam> socketDestinations = new ArrayList<>(); // GOTs that this object can be socketed into
 	private boolean socketDestinationsLoaded;
 	private boolean socketDestinationsAppend;
-	private final StringParam structureFootprintFileName = new StringParam();
+	private final StringParam structureFootprintFileName = new StringParam(); 
 	private final BoolParam useStructureFootprintOutline = new BoolParam(); 
 	private final BoolParam targetable = new BoolParam(); // can the object be targetted by the client
 	private final List<StringParam> certificationsRequired = new ArrayList<>(); // List of the certifications required to use this item (used in x1 only)
@@ -430,8 +430,10 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 
 	@Override
 	protected void load(final Iff iff) {
-		if (iff.getCurrentName() != TAG_SHAREDTANGIBLEOBJECTTEMPLATE)
+		if (iff.getCurrentName() != TAG_SHAREDTANGIBLEOBJECTTEMPLATE) {
+			super.load(iff);
 			return;
+		}
 
 		iff.enterForm();
 		templateVersion = iff.getCurrentName();
@@ -537,10 +539,13 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 			iff.exitChunk();
 		}
 		iff.exitForm();
+
+		super.load(iff);
+		iff.exitForm();
 	}
 
 	public enum ClientVisabilityFlags {
-		CVF_always(0),
+		CVF_always(0), 
 		CVF_gm_only(1); 
 
 		private static final ClientVisabilityFlags[] values = values();
@@ -576,7 +581,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 
 		private final StringParam variableName = new StringParam();
 		private final IntegerParam minValueInclusive = new IntegerParam();
-		private final IntegerParam defaultValue = new IntegerParam();
+		private final IntegerParam defaultValue = new IntegerParam(); 
 		private final IntegerParam maxValueExclusive = new IntegerParam(); 
 
 		@Override
@@ -759,7 +764,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 		}
 
 		private final StringParam variableName = new StringParam();
-		private final StringParam palettePathName = new StringParam();
+		private final StringParam palettePathName = new StringParam(); 
 		private final IntegerParam defaultPaletteIndex = new IntegerParam(); 
 
 		@Override
@@ -881,7 +886,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 			super(filename, objectTemplateList);
 		}
 
-		private final StringParam variableName = new StringParam();
+		private final StringParam variableName = new StringParam(); 
 		private final StringParam constValue = new StringParam(); 
 
 		@Override
@@ -964,7 +969,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 			super(filename, objectTemplateList);
 		}
 
-		private final StringParam sourceVariable = new StringParam();
+		private final StringParam sourceVariable = new StringParam(); 
 		private final StringParam dependentVariable = new StringParam(); 
 
 		@Override

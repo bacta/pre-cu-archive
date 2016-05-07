@@ -29,8 +29,10 @@ public class SharedJediManagerObjectTemplate extends SharedUniverseObjectTemplat
 
 	@Override
 	protected void load(final Iff iff) {
-		if (iff.getCurrentName() != TAG_SHAREDJEDIMANAGEROBJECTTEMPLATE)
+		if (iff.getCurrentName() != TAG_SHAREDJEDIMANAGEROBJECTTEMPLATE) {
+			super.load(iff);
 			return;
+		}
 
 		iff.enterForm();
 		templateVersion = iff.getCurrentName();
@@ -57,6 +59,9 @@ public class SharedJediManagerObjectTemplate extends SharedUniverseObjectTemplat
 		iff.enterChunk();
 		final int paramCount = iff.readInt();
 		iff.exitChunk();
+		iff.exitForm();
+
+		super.load(iff);
 		iff.exitForm();
 	}
 

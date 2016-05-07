@@ -29,8 +29,10 @@ public class SharedResourceContainerObjectTemplate extends SharedTangibleObjectT
 
 	@Override
 	protected void load(final Iff iff) {
-		if (iff.getCurrentName() != TAG_SHAREDRESOURCECONTAINEROBJECTTEMPLATE)
+		if (iff.getCurrentName() != TAG_SHAREDRESOURCECONTAINEROBJECTTEMPLATE) {
+			super.load(iff);
 			return;
+		}
 
 		iff.enterForm();
 		templateVersion = iff.getCurrentName();
@@ -57,6 +59,9 @@ public class SharedResourceContainerObjectTemplate extends SharedTangibleObjectT
 		iff.enterChunk();
 		final int paramCount = iff.readInt();
 		iff.exitChunk();
+		iff.exitForm();
+
+		super.load(iff);
 		iff.exitForm();
 	}
 

@@ -398,8 +398,10 @@ public class ServerDraftSchematicObjectTemplate extends ServerIntangibleObjectTe
 
 	@Override
 	protected void load(final Iff iff) {
-		if (iff.getCurrentName() != TAG_SERVERDRAFTSCHEMATICOBJECTTEMPLATE)
+		if (iff.getCurrentName() != TAG_SERVERDRAFTSCHEMATICOBJECTTEMPLATE) {
+			super.load(iff);
 			return;
+		}
 
 		iff.enterForm();
 		templateVersion = iff.getCurrentName();
@@ -480,6 +482,9 @@ public class ServerDraftSchematicObjectTemplate extends ServerIntangibleObjectTe
 
 			iff.exitChunk();
 		}
+		iff.exitForm();
+
+		super.load(iff);
 		iff.exitForm();
 	}
 

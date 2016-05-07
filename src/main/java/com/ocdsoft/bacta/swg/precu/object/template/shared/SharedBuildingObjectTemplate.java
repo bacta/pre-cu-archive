@@ -18,7 +18,7 @@ public class SharedBuildingObjectTemplate extends SharedTangibleObjectTemplate {
 
 	private int templateVersion;
 
-	private final StringParam terrainModificationFileName = new StringParam();
+	private final StringParam terrainModificationFileName = new StringParam(); 
 	private final StringParam interiorLayoutFileName = new StringParam(); 
 
 	public SharedBuildingObjectTemplate(final String filename, final DataResourceList<ObjectTemplate> objectTemplateList) {
@@ -68,8 +68,10 @@ public class SharedBuildingObjectTemplate extends SharedTangibleObjectTemplate {
 
 	@Override
 	protected void load(final Iff iff) {
-		if (iff.getCurrentName() != TAG_SHAREDBUILDINGOBJECTTEMPLATE)
+		if (iff.getCurrentName() != TAG_SHAREDBUILDINGOBJECTTEMPLATE) {
+			super.load(iff);
 			return;
+		}
 
 		iff.enterForm();
 		templateVersion = iff.getCurrentName();
@@ -110,6 +112,9 @@ public class SharedBuildingObjectTemplate extends SharedTangibleObjectTemplate {
 
 			iff.exitChunk();
 		}
+		iff.exitForm();
+
+		super.load(iff);
 		iff.exitForm();
 	}
 

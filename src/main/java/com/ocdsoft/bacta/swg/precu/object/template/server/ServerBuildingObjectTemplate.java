@@ -88,8 +88,10 @@ public class ServerBuildingObjectTemplate extends ServerTangibleObjectTemplate {
 
 	@Override
 	protected void load(final Iff iff) {
-		if (iff.getCurrentName() != TAG_SERVERBUILDINGOBJECTTEMPLATE)
+		if (iff.getCurrentName() != TAG_SERVERBUILDINGOBJECTTEMPLATE) {
+			super.load(iff);
 			return;
+		}
 
 		iff.enterForm();
 		templateVersion = iff.getCurrentName();
@@ -130,6 +132,9 @@ public class ServerBuildingObjectTemplate extends ServerTangibleObjectTemplate {
 
 			iff.exitChunk();
 		}
+		iff.exitForm();
+
+		super.load(iff);
 		iff.exitForm();
 	}
 

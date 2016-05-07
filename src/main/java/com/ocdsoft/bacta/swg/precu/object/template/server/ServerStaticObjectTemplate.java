@@ -49,8 +49,10 @@ public class ServerStaticObjectTemplate extends ServerObjectTemplate {
 
 	@Override
 	protected void load(final Iff iff) {
-		if (iff.getCurrentName() != TAG_SERVERSTATICOBJECTTEMPLATE)
+		if (iff.getCurrentName() != TAG_SERVERSTATICOBJECTTEMPLATE) {
+			super.load(iff);
 			return;
+		}
 
 		iff.enterForm();
 		templateVersion = iff.getCurrentName();
@@ -89,6 +91,9 @@ public class ServerStaticObjectTemplate extends ServerObjectTemplate {
 
 			iff.exitChunk();
 		}
+		iff.exitForm();
+
+		super.load(iff);
 		iff.exitForm();
 	}
 

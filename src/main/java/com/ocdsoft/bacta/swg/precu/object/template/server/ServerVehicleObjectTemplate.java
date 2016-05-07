@@ -164,8 +164,10 @@ public class ServerVehicleObjectTemplate extends ServerTangibleObjectTemplate {
 
 	@Override
 	protected void load(final Iff iff) {
-		if (iff.getCurrentName() != TAG_SERVERVEHICLEOBJECTTEMPLATE)
+		if (iff.getCurrentName() != TAG_SERVERVEHICLEOBJECTTEMPLATE) {
+			super.load(iff);
 			return;
+		}
 
 		iff.enterForm();
 		templateVersion = iff.getCurrentName();
@@ -210,6 +212,9 @@ public class ServerVehicleObjectTemplate extends ServerTangibleObjectTemplate {
 
 			iff.exitChunk();
 		}
+		iff.exitForm();
+
+		super.load(iff);
 		iff.exitForm();
 	}
 

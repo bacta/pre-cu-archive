@@ -29,8 +29,10 @@ public class SharedFactoryObjectTemplate extends SharedTangibleObjectTemplate {
 
 	@Override
 	protected void load(final Iff iff) {
-		if (iff.getCurrentName() != TAG_SHAREDFACTORYOBJECTTEMPLATE)
+		if (iff.getCurrentName() != TAG_SHAREDFACTORYOBJECTTEMPLATE) {
+			super.load(iff);
 			return;
+		}
 
 		iff.enterForm();
 		templateVersion = iff.getCurrentName();
@@ -57,6 +59,9 @@ public class SharedFactoryObjectTemplate extends SharedTangibleObjectTemplate {
 		iff.enterChunk();
 		final int paramCount = iff.readInt();
 		iff.exitChunk();
+		iff.exitForm();
+
+		super.load(iff);
 		iff.exitForm();
 	}
 

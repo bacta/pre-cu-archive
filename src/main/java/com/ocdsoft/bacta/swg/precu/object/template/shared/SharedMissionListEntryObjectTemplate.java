@@ -29,8 +29,10 @@ public class SharedMissionListEntryObjectTemplate extends SharedIntangibleObject
 
 	@Override
 	protected void load(final Iff iff) {
-		if (iff.getCurrentName() != TAG_SHAREDMISSIONLISTENTRYOBJECTTEMPLATE)
+		if (iff.getCurrentName() != TAG_SHAREDMISSIONLISTENTRYOBJECTTEMPLATE) {
+			super.load(iff);
 			return;
+		}
 
 		iff.enterForm();
 		templateVersion = iff.getCurrentName();
@@ -57,6 +59,9 @@ public class SharedMissionListEntryObjectTemplate extends SharedIntangibleObject
 		iff.enterChunk();
 		final int paramCount = iff.readInt();
 		iff.exitChunk();
+		iff.exitForm();
+
+		super.load(iff);
 		iff.exitForm();
 	}
 

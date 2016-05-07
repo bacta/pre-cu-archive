@@ -608,8 +608,10 @@ public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 
 	@Override
 	protected void load(final Iff iff) {
-		if (iff.getCurrentName() != TAG_SERVERCREATUREOBJECTTEMPLATE)
+		if (iff.getCurrentName() != TAG_SERVERCREATUREOBJECTTEMPLATE) {
+			super.load(iff);
 			return;
+		}
 
 		iff.enterForm();
 		templateVersion = iff.getCurrentName();
@@ -719,6 +721,9 @@ public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 
 			iff.exitChunk();
 		}
+		iff.exitForm();
+
+		super.load(iff);
 		iff.exitForm();
 	}
 

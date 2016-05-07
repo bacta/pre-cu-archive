@@ -49,8 +49,10 @@ public class ServerPlanetObjectTemplate extends ServerUniverseObjectTemplate {
 
 	@Override
 	protected void load(final Iff iff) {
-		if (iff.getCurrentName() != TAG_SERVERPLANETOBJECTTEMPLATE)
+		if (iff.getCurrentName() != TAG_SERVERPLANETOBJECTTEMPLATE) {
+			super.load(iff);
 			return;
+		}
 
 		iff.enterForm();
 		templateVersion = iff.getCurrentName();
@@ -89,6 +91,9 @@ public class ServerPlanetObjectTemplate extends ServerUniverseObjectTemplate {
 
 			iff.exitChunk();
 		}
+		iff.exitForm();
+
+		super.load(iff);
 		iff.exitForm();
 	}
 

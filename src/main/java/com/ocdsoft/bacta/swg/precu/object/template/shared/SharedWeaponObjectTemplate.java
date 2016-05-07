@@ -106,8 +106,10 @@ public class SharedWeaponObjectTemplate extends SharedTangibleObjectTemplate {
 
 	@Override
 	protected void load(final Iff iff) {
-		if (iff.getCurrentName() != TAG_SHAREDWEAPONOBJECTTEMPLATE)
+		if (iff.getCurrentName() != TAG_SHAREDWEAPONOBJECTTEMPLATE) {
+			super.load(iff);
 			return;
+		}
 
 		iff.enterForm();
 		templateVersion = iff.getCurrentName();
@@ -151,12 +153,15 @@ public class SharedWeaponObjectTemplate extends SharedTangibleObjectTemplate {
 			iff.exitChunk();
 		}
 		iff.exitForm();
+
+		super.load(iff);
+		iff.exitForm();
 	}
 
 	public enum AttackType {
 		AT_melee(0),
 		AT_ranged(1),
-		AT_thrown(2),
+		AT_thrown(2), 
 		AT_ammo(3); 
 
 		private static final AttackType[] values = values();

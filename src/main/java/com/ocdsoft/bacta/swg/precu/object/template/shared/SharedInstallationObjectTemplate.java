@@ -29,8 +29,10 @@ public class SharedInstallationObjectTemplate extends SharedTangibleObjectTempla
 
 	@Override
 	protected void load(final Iff iff) {
-		if (iff.getCurrentName() != TAG_SHAREDINSTALLATIONOBJECTTEMPLATE)
+		if (iff.getCurrentName() != TAG_SHAREDINSTALLATIONOBJECTTEMPLATE) {
+			super.load(iff);
 			return;
+		}
 
 		iff.enterForm();
 		templateVersion = iff.getCurrentName();
@@ -57,6 +59,9 @@ public class SharedInstallationObjectTemplate extends SharedTangibleObjectTempla
 		iff.enterChunk();
 		final int paramCount = iff.readInt();
 		iff.exitChunk();
+		iff.exitForm();
+
+		super.load(iff);
 		iff.exitForm();
 	}
 
