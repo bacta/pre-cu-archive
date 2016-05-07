@@ -16,6 +16,10 @@ import com.ocdsoft.bacta.swg.shared.utility.StringParam;
 public class ServerPlanetObjectTemplate extends ServerUniverseObjectTemplate {
 	public static final int TAG_SERVERPLANETOBJECTTEMPLATE = Tag.convertStringToTag("PLAN");
 
+	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
+		objectTemplateList.registerTemplate(ServerPlanetObjectTemplate.TAG_SERVERPLANETOBJECTTEMPLATE, ServerPlanetObjectTemplate::new);
+	}
+
 	private int templateVersion;
 
 	private final StringParam planetName = new StringParam(); //name of the planet

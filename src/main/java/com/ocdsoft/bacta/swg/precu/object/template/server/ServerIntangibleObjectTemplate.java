@@ -21,6 +21,13 @@ import java.util.List;
 public class ServerIntangibleObjectTemplate extends ServerObjectTemplate {
 	public static final int TAG_SERVERINTANGIBLEOBJECTTEMPLATE = Tag.convertStringToTag("ITNO");
 
+	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
+		objectTemplateList.registerTemplate(ServerIntangibleObjectTemplate.TAG_SERVERINTANGIBLEOBJECTTEMPLATE, ServerIntangibleObjectTemplate::new);
+		objectTemplateList.registerTemplate(SimpleIngredientObjectTemplate.TAG_SIMPLEINGREDIENT, SimpleIngredientObjectTemplate::new);
+		objectTemplateList.registerTemplate(IngredientObjectTemplate.TAG_INGREDIENT, IngredientObjectTemplate::new);
+		objectTemplateList.registerTemplate(SchematicAttributeObjectTemplate.TAG_SCHEMATICATTRIBUTE, SchematicAttributeObjectTemplate::new);
+	}
+
 	private int templateVersion;
 
 	//

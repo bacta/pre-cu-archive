@@ -16,6 +16,10 @@ import com.ocdsoft.bacta.swg.shared.utility.FloatParam;
 public class SharedVehicleObjectTemplate extends SharedTangibleObjectTemplate {
 	public static final int TAG_SHAREDVEHICLEOBJECTTEMPLATE = Tag.convertStringToTag("SVOT");
 
+	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
+		objectTemplateList.registerTemplate(SharedVehicleObjectTemplate.TAG_SHAREDVEHICLEOBJECTTEMPLATE, SharedVehicleObjectTemplate::new);
+	}
+
 	private int templateVersion;
 
 	private final FloatParam[] speed = new FloatParam[]{ //how fast the vehicle moves
@@ -372,7 +376,7 @@ public class SharedVehicleObjectTemplate extends SharedTangibleObjectTemplate {
 	public enum MovementTypes {
 		MT_hover(0),
 		MT_underwater(1),
-		MT_ground(2),
+		MT_ground(2), 
 		MT_swim(3), 
 		MT_walker(4); 
 

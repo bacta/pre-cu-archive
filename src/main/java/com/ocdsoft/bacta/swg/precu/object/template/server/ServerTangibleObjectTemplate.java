@@ -19,6 +19,10 @@ import java.util.List;
 public class ServerTangibleObjectTemplate extends ServerObjectTemplate {
 	public static final int TAG_SERVERTANGIBLEOBJECTTEMPLATE = Tag.convertStringToTag("TANO");
 
+	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
+		objectTemplateList.registerTemplate(ServerTangibleObjectTemplate.TAG_SERVERTANGIBLEOBJECTTEMPLATE, ServerTangibleObjectTemplate::new);
+	}
+
 	private int templateVersion;
 
 	// these MUST be reflected in: 
@@ -400,7 +404,7 @@ public class ServerTangibleObjectTemplate extends ServerObjectTemplate {
 		C_aggressive(0x00000040),
 		C_wantSawAttackTrigger(0x00000080),
 		C_invulnerable(0x00000100),
-		C_disabled(0x00000200),
+		C_disabled(0x00000200), 
 		C_uninsurable(0x00000400), 
 		C_interesting(0x00000800), 
 		C_mount(0x00001000), //Set programmatically by mount system.  Do not set this in the template.
@@ -412,12 +416,12 @@ public class ServerTangibleObjectTemplate extends ServerObjectTemplate {
 		C_commable(0x00040000),
 		C_dockable(0x00080000),
 		C_eject(0x00100000),
-		C_inspectable(0x00200000),
+		C_inspectable(0x00200000), 
 		C_transferable(0x00400000), 
 		C_inflightTutorial(0x00800000), 
 		C_spaceCombatMusic(0x01000000), //Set programmatically by the AI system.  Do not set this in the template.
 		C_encounterLocked(0x02000000),
-		C_spawnedCreature(0x04000000),
+		C_spawnedCreature(0x04000000), 
 		C_holidayInteresting(0x08000000), 
 		C_locked(0x10000000); 
 

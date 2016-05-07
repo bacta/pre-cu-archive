@@ -15,6 +15,10 @@ import com.ocdsoft.bacta.swg.shared.template.definition.TemplateDefinition;
 public class ServerGroupObjectTemplate extends ServerUniverseObjectTemplate {
 	public static final int TAG_SERVERGROUPOBJECTTEMPLATE = Tag.convertStringToTag("GRUP");
 
+	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
+		objectTemplateList.registerTemplate(ServerGroupObjectTemplate.TAG_SERVERGROUPOBJECTTEMPLATE, ServerGroupObjectTemplate::new);
+	}
+
 	private int templateVersion;
 
 

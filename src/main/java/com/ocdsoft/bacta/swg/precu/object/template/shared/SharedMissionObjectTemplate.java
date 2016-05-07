@@ -15,6 +15,10 @@ import com.ocdsoft.bacta.swg.shared.template.definition.TemplateDefinition;
 public class SharedMissionObjectTemplate extends SharedIntangibleObjectTemplate {
 	public static final int TAG_SHAREDMISSIONOBJECTTEMPLATE = Tag.convertStringToTag("SMSO");
 
+	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
+		objectTemplateList.registerTemplate(SharedMissionObjectTemplate.TAG_SHAREDMISSIONOBJECTTEMPLATE, SharedMissionObjectTemplate::new);
+	}
+
 	private int templateVersion;
 
 

@@ -15,6 +15,10 @@ import com.ocdsoft.bacta.swg.shared.template.definition.TemplateDefinition;
 public class SharedManufactureSchematicObjectTemplate extends SharedIntangibleObjectTemplate {
 	public static final int TAG_SHAREDMANUFACTURESCHEMATICOBJECTTEMPLATE = Tag.convertStringToTag("SMSC");
 
+	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
+		objectTemplateList.registerTemplate(SharedManufactureSchematicObjectTemplate.TAG_SHAREDMANUFACTURESCHEMATICOBJECTTEMPLATE, SharedManufactureSchematicObjectTemplate::new);
+	}
+
 	private int templateVersion;
 
 

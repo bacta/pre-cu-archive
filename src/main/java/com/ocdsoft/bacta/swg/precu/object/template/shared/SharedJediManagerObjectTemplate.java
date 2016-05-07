@@ -15,6 +15,10 @@ import com.ocdsoft.bacta.swg.shared.template.definition.TemplateDefinition;
 public class SharedJediManagerObjectTemplate extends SharedUniverseObjectTemplate {
 	public static final int TAG_SHAREDJEDIMANAGEROBJECTTEMPLATE = Tag.convertStringToTag("SJED");
 
+	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
+		objectTemplateList.registerTemplate(SharedJediManagerObjectTemplate.TAG_SHAREDJEDIMANAGEROBJECTTEMPLATE, SharedJediManagerObjectTemplate::new);
+	}
+
 	private int templateVersion;
 
 

@@ -5,7 +5,6 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.ocdsoft.bacta.swg.lang.NotImplementedException;
 import com.ocdsoft.bacta.swg.precu.object.ServerObject;
-import com.ocdsoft.bacta.swg.precu.object.intangible.player.PlayerObject;
 import com.ocdsoft.bacta.swg.shared.foundation.CrcString;
 import com.ocdsoft.bacta.swg.shared.foundation.DataResourceList;
 import com.ocdsoft.bacta.swg.shared.template.ObjectTemplate;
@@ -17,11 +16,9 @@ import net.spy.memcached.compat.log.Logger;
 import net.spy.memcached.compat.log.LoggerFactory;
 import org.reflections.Reflections;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.Iterator;
 import java.util.Set;
-import java.util.function.BiFunction;
 
 /**
  * Created by crush on 3/4/14.
@@ -46,6 +43,7 @@ public class ObjectTemplateService {
             //Registering all template definitions with the object template list.
 
             final Reflections reflections = new Reflections();
+            //TODO: Move the name of the register function to the annotation.
             final Set<Class<?>> templateDefinitions = reflections.getTypesAnnotatedWith(TemplateDefinition.class);
             final Iterator<Class<?>> iterator = templateDefinitions.iterator();
 
@@ -53,27 +51,9 @@ public class ObjectTemplateService {
                 final Class<?> classType = iterator.next();
 
                 if (ObjectTemplate.class.isAssignableFrom(classType)) {
-                    final Field tagField = classType.getField("TAG_" + classType.getSimpleName().toUpperCase());
-                    tagField.setAccessible(true);
-
-                    @SuppressWarnings("unchecked")
-                    final Constructor<? extends ObjectTemplate> constructor = (Constructor<? extends ObjectTemplate>) classType.getConstructor(
-                            String.class,
-                            DataResourceList.class);
-
-                    final int id = tagField.getInt(null);
-
-                    final BiFunction<String, DataResourceList<ObjectTemplate>, ObjectTemplate> createFunc =
-                            (fileName, objectTemplateList) -> {
-                                try {
-                                    return constructor.newInstance(fileName, objectTemplateList);
-                                } catch (Exception ex) {
-                                    ex.printStackTrace();
-                                    return null;
-                                }
-                            };
-
-                    objectTemplateList.registerTemplate(id, createFunc);
+                    final Method registerMethod = classType.getDeclaredMethod("registerTemplateConstructors", DataResourceList.class);
+                    registerMethod.setAccessible(true);
+                    registerMethod.invoke(null, objectTemplateList);
                 }
             }
         } catch (final Exception ex) {

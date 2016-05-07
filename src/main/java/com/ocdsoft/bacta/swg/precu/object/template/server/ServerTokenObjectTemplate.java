@@ -15,6 +15,10 @@ import com.ocdsoft.bacta.swg.shared.template.definition.TemplateDefinition;
 public class ServerTokenObjectTemplate extends ServerIntangibleObjectTemplate {
 	public static final int TAG_SERVERTOKENOBJECTTEMPLATE = Tag.convertStringToTag("TOKN");
 
+	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
+		objectTemplateList.registerTemplate(ServerTokenObjectTemplate.TAG_SERVERTOKENOBJECTTEMPLATE, ServerTokenObjectTemplate::new);
+	}
+
 	private int templateVersion;
 
 

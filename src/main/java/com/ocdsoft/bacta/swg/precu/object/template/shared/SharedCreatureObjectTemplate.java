@@ -19,6 +19,10 @@ import com.ocdsoft.bacta.swg.shared.utility.StringParam;
 public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 	public static final int TAG_SHAREDCREATUREOBJECTTEMPLATE = Tag.convertStringToTag("SCOT");
 
+	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
+		objectTemplateList.registerTemplate(SharedCreatureObjectTemplate.TAG_SHAREDCREATUREOBJECTTEMPLATE, SharedCreatureObjectTemplate::new);
+	}
+
 	private int templateVersion;
 
 	private final IntegerParam gender = new IntegerParam(); //creature gender
@@ -888,7 +892,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 		SkillAnimating(9),
 		DrivingVehicle(10),
 		RidingCreature(11),
-		KnockedDown(12),
+		KnockedDown(12), 
 		Incapacitated(13), 
 		Dead(14); 
 
@@ -906,7 +910,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 	}
 
 	public enum Race {
-		RA_none(0),
+		RA_none(0), 
 		RA_aqualish_quara(1), 
 		RA_aqualish_aquala(2), 
 		RA_ewok_ewok(1), // plae, green, black, white (subject to change, pending information request to LucasArts)
@@ -922,7 +926,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 		RA_krayt_canyon(1),
 		RA_krayt_greater(2),
 		RA_R2(0),
-		RA_R3(1),
+		RA_R3(1), 
 		RA_R4(2), 
 		RA_R5(3); 
 
@@ -948,7 +952,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 		NI_npc(5),
 		NI_monster(6),
 		NI_herbivore(7),
-		NI_carnivore(8),
+		NI_carnivore(8), 
 		NI_predator(9), 
 		NI_android(10); 
 
@@ -966,7 +970,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 	}
 
 	public enum Gender {
-		GE_male(0),
+		GE_male(0), 
 		GE_female(1), 
 		GE_other(2); 
 
@@ -1210,7 +1214,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 		SP_ev9d9(224),
 		SP_maulProbeDroid(225),
 		SP_atst(226),
-		SP_atat(227),
+		SP_atat(227), 
 		SP_geonosian(228), 
 		SP_veractyle(229); 
 

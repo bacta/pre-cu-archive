@@ -15,6 +15,10 @@ import com.ocdsoft.bacta.swg.shared.template.definition.TemplateDefinition;
 public class ServerXpManagerObjectTemplate extends ServerUniverseObjectTemplate {
 	public static final int TAG_SERVERXPMANAGEROBJECTTEMPLATE = Tag.convertStringToTag("XPMG");
 
+	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
+		objectTemplateList.registerTemplate(ServerXpManagerObjectTemplate.TAG_SERVERXPMANAGEROBJECTTEMPLATE, ServerXpManagerObjectTemplate::new);
+	}
+
 	private int templateVersion;
 
 

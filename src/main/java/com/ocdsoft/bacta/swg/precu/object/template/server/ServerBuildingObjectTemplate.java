@@ -17,6 +17,10 @@ import com.ocdsoft.bacta.swg.shared.utility.IntegerParam;
 public class ServerBuildingObjectTemplate extends ServerTangibleObjectTemplate {
 	public static final int TAG_SERVERBUILDINGOBJECTTEMPLATE = Tag.convertStringToTag("BUIO");
 
+	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
+		objectTemplateList.registerTemplate(ServerBuildingObjectTemplate.TAG_SERVERBUILDINGOBJECTTEMPLATE, ServerBuildingObjectTemplate::new);
+	}
+
 	private int templateVersion;
 
 	private final IntegerParam maintenanceCost = new IntegerParam(); //The weekly cost (in credits) of maintaining this Building.

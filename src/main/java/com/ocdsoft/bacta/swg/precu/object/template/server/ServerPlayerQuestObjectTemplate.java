@@ -15,6 +15,10 @@ import com.ocdsoft.bacta.swg.shared.template.definition.TemplateDefinition;
 public class ServerPlayerQuestObjectTemplate extends ServerTangibleObjectTemplate {
 	public static final int TAG_SERVERPLAYERQUESTOBJECTTEMPLATE = Tag.convertStringToTag("PQOS");
 
+	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
+		objectTemplateList.registerTemplate(ServerPlayerQuestObjectTemplate.TAG_SERVERPLAYERQUESTOBJECTTEMPLATE, ServerPlayerQuestObjectTemplate::new);
+	}
+
 	private int templateVersion;
 
 

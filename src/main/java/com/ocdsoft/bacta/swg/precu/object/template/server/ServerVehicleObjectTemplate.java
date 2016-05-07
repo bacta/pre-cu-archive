@@ -17,6 +17,10 @@ import com.ocdsoft.bacta.swg.shared.utility.StringParam;
 public class ServerVehicleObjectTemplate extends ServerTangibleObjectTemplate {
 	public static final int TAG_SERVERVEHICLEOBJECTTEMPLATE = Tag.convertStringToTag("VEHO");
 
+	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
+		objectTemplateList.registerTemplate(ServerVehicleObjectTemplate.TAG_SERVERVEHICLEOBJECTTEMPLATE, ServerVehicleObjectTemplate::new);
+	}
+
 	private int templateVersion;
 
 	private final StringParam fuelType = new StringParam(); //type of fuel used

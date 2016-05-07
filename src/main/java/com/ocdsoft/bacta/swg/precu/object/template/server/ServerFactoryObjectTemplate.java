@@ -15,6 +15,10 @@ import com.ocdsoft.bacta.swg.shared.template.definition.TemplateDefinition;
 public class ServerFactoryObjectTemplate extends ServerTangibleObjectTemplate {
 	public static final int TAG_SERVERFACTORYOBJECTTEMPLATE = Tag.convertStringToTag("FCYT");
 
+	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
+		objectTemplateList.registerTemplate(ServerFactoryObjectTemplate.TAG_SERVERFACTORYOBJECTTEMPLATE, ServerFactoryObjectTemplate::new);
+	}
+
 	private int templateVersion;
 
 

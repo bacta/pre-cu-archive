@@ -15,6 +15,10 @@ import com.ocdsoft.bacta.swg.shared.template.definition.TemplateDefinition;
 public class SharedStaticObjectTemplate extends SharedObjectTemplate {
 	public static final int TAG_SHAREDSTATICOBJECTTEMPLATE = Tag.convertStringToTag("STAT");
 
+	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
+		objectTemplateList.registerTemplate(SharedStaticObjectTemplate.TAG_SHAREDSTATICOBJECTTEMPLATE, SharedStaticObjectTemplate::new);
+	}
+
 	private int templateVersion;
 
 

@@ -15,6 +15,10 @@ import com.ocdsoft.bacta.swg.shared.template.definition.TemplateDefinition;
 public class SharedGuildObjectTemplate extends SharedUniverseObjectTemplate {
 	public static final int TAG_SHAREDGUILDOBJECTTEMPLATE = Tag.convertStringToTag("SGLD");
 
+	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
+		objectTemplateList.registerTemplate(SharedGuildObjectTemplate.TAG_SHAREDGUILDOBJECTTEMPLATE, SharedGuildObjectTemplate::new);
+	}
+
 	private int templateVersion;
 
 

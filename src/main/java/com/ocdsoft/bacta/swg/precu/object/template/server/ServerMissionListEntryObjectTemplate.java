@@ -15,6 +15,10 @@ import com.ocdsoft.bacta.swg.shared.template.definition.TemplateDefinition;
 public class ServerMissionListEntryObjectTemplate extends ServerIntangibleObjectTemplate {
 	public static final int TAG_SERVERMISSIONLISTENTRYOBJECTTEMPLATE = Tag.convertStringToTag("MLEO");
 
+	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
+		objectTemplateList.registerTemplate(ServerMissionListEntryObjectTemplate.TAG_SERVERMISSIONLISTENTRYOBJECTTEMPLATE, ServerMissionListEntryObjectTemplate::new);
+	}
+
 	private int templateVersion;
 
 

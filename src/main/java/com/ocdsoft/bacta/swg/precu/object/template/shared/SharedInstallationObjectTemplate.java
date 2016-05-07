@@ -15,6 +15,10 @@ import com.ocdsoft.bacta.swg.shared.template.definition.TemplateDefinition;
 public class SharedInstallationObjectTemplate extends SharedTangibleObjectTemplate {
 	public static final int TAG_SHAREDINSTALLATIONOBJECTTEMPLATE = Tag.convertStringToTag("SIOT");
 
+	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
+		objectTemplateList.registerTemplate(SharedInstallationObjectTemplate.TAG_SHAREDINSTALLATIONOBJECTTEMPLATE, SharedInstallationObjectTemplate::new);
+	}
+
 	private int templateVersion;
 
 

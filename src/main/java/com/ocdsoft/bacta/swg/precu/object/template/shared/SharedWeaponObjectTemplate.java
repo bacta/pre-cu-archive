@@ -17,6 +17,10 @@ import com.ocdsoft.bacta.swg.shared.utility.StringParam;
 public class SharedWeaponObjectTemplate extends SharedTangibleObjectTemplate {
 	public static final int TAG_SHAREDWEAPONOBJECTTEMPLATE = Tag.convertStringToTag("SWOT");
 
+	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
+		objectTemplateList.registerTemplate(SharedWeaponObjectTemplate.TAG_SHAREDWEAPONOBJECTTEMPLATE, SharedWeaponObjectTemplate::new);
+	}
+
 	private int templateVersion;
 
 	private final StringParam weaponEffect = new StringParam(); //The id lookup into the weapon data table for the bolt and combat effects.
@@ -160,7 +164,7 @@ public class SharedWeaponObjectTemplate extends SharedTangibleObjectTemplate {
 
 	public enum AttackType {
 		AT_melee(0),
-		AT_ranged(1),
+		AT_ranged(1), 
 		AT_thrown(2), 
 		AT_ammo(3); 
 

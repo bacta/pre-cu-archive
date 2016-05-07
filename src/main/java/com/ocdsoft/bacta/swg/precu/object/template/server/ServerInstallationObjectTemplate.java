@@ -15,6 +15,10 @@ import com.ocdsoft.bacta.swg.shared.template.definition.TemplateDefinition;
 public class ServerInstallationObjectTemplate extends ServerTangibleObjectTemplate {
 	public static final int TAG_SERVERINSTALLATIONOBJECTTEMPLATE = Tag.convertStringToTag("INSO");
 
+	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
+		objectTemplateList.registerTemplate(ServerInstallationObjectTemplate.TAG_SERVERINSTALLATIONOBJECTTEMPLATE, ServerInstallationObjectTemplate::new);
+	}
+
 	private int templateVersion;
 
 

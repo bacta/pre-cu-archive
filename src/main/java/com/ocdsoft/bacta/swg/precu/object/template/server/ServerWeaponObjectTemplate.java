@@ -17,6 +17,10 @@ import com.ocdsoft.bacta.swg.shared.utility.IntegerParam;
 public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 	public static final int TAG_SERVERWEAPONOBJECTTEMPLATE = Tag.convertStringToTag("WEAO");
 
+	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
+		objectTemplateList.registerTemplate(ServerWeaponObjectTemplate.TAG_SERVERWEAPONOBJECTTEMPLATE, ServerWeaponObjectTemplate::new);
+	}
+
 	private int templateVersion;
 
 	private final IntegerParam weaponType = new IntegerParam(); //General type of weapon
@@ -609,7 +613,7 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 		WT_thrown(8),
 		WT_1handLightsaber(9),
 		WT_2handLightsaber(10),
-		WT_polearmLightsaber(11),
+		WT_polearmLightsaber(11), 
 		WT_groundTargetting(12), 
 		WT_directionTargetting(13); 
 
@@ -645,7 +649,7 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 	}
 
 	public enum AttackType {
-		AT_melee(0),
+		AT_melee(0), 
 		AT_ranged(1), 
 		AT_thrown(2); 
 

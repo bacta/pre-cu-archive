@@ -15,6 +15,10 @@ import com.ocdsoft.bacta.swg.shared.template.definition.TemplateDefinition;
 public class ServerManufactureInstallationObjectTemplate extends ServerInstallationObjectTemplate {
 	public static final int TAG_SERVERMANUFACTUREINSTALLATIONOBJECTTEMPLATE = Tag.convertStringToTag("MINO");
 
+	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
+		objectTemplateList.registerTemplate(ServerManufactureInstallationObjectTemplate.TAG_SERVERMANUFACTUREINSTALLATIONOBJECTTEMPLATE, ServerManufactureInstallationObjectTemplate::new);
+	}
+
 	private int templateVersion;
 
 

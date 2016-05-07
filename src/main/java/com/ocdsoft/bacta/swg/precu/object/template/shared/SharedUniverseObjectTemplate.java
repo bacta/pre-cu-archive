@@ -15,6 +15,10 @@ import com.ocdsoft.bacta.swg.shared.template.definition.TemplateDefinition;
 public class SharedUniverseObjectTemplate extends SharedObjectTemplate {
 	public static final int TAG_SHAREDUNIVERSEOBJECTTEMPLATE = Tag.convertStringToTag("SUNI");
 
+	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
+		objectTemplateList.registerTemplate(SharedUniverseObjectTemplate.TAG_SHAREDUNIVERSEOBJECTTEMPLATE, SharedUniverseObjectTemplate::new);
+	}
+
 	private int templateVersion;
 
 

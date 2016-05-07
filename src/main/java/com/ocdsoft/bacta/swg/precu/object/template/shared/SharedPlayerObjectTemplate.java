@@ -15,6 +15,10 @@ import com.ocdsoft.bacta.swg.shared.template.definition.TemplateDefinition;
 public class SharedPlayerObjectTemplate extends SharedIntangibleObjectTemplate {
 	public static final int TAG_SHAREDPLAYEROBJECTTEMPLATE = Tag.convertStringToTag("SPLY");
 
+	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
+		objectTemplateList.registerTemplate(SharedPlayerObjectTemplate.TAG_SHAREDPLAYEROBJECTTEMPLATE, SharedPlayerObjectTemplate::new);
+	}
+
 	private int templateVersion;
 
 

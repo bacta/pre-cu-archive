@@ -16,6 +16,10 @@ import com.ocdsoft.bacta.swg.shared.utility.StringParam;
 public class SharedBuildingObjectTemplate extends SharedTangibleObjectTemplate {
 	public static final int TAG_SHAREDBUILDINGOBJECTTEMPLATE = Tag.convertStringToTag("SBOT");
 
+	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
+		objectTemplateList.registerTemplate(SharedBuildingObjectTemplate.TAG_SHAREDBUILDINGOBJECTTEMPLATE, SharedBuildingObjectTemplate::new);
+	}
+
 	private int templateVersion;
 
 	private final StringParam terrainModificationFileName = new StringParam(); 

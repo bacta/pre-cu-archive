@@ -16,6 +16,10 @@ import com.ocdsoft.bacta.swg.shared.utility.StringParam;
 public class ServerShipObjectTemplate extends ServerTangibleObjectTemplate {
 	public static final int TAG_SERVERSHIPOBJECTTEMPLATE = Tag.convertStringToTag("SHIP");
 
+	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
+		objectTemplateList.registerTemplate(ServerShipObjectTemplate.TAG_SERVERSHIPOBJECTTEMPLATE, ServerShipObjectTemplate::new);
+	}
+
 	private int templateVersion;
 
 	private final StringParam shipType = new StringParam(); 

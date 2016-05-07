@@ -16,6 +16,10 @@ import com.ocdsoft.bacta.swg.shared.utility.IntegerParam;
 public class ServerResourceContainerObjectTemplate extends ServerTangibleObjectTemplate {
 	public static final int TAG_SERVERRESOURCECONTAINEROBJECTTEMPLATE = Tag.convertStringToTag("RCNO");
 
+	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
+		objectTemplateList.registerTemplate(ServerResourceContainerObjectTemplate.TAG_SERVERRESOURCECONTAINEROBJECTTEMPLATE, ServerResourceContainerObjectTemplate::new);
+	}
+
 	private int templateVersion;
 
 	private final IntegerParam maxResources = new IntegerParam(); //Maximum number of units of resource the container can hold.

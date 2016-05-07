@@ -15,6 +15,10 @@ import com.ocdsoft.bacta.swg.shared.template.definition.TemplateDefinition;
 public class ServerUniverseObjectTemplate extends ServerObjectTemplate {
 	public static final int TAG_SERVERUNIVERSEOBJECTTEMPLATE = Tag.convertStringToTag("UNIO");
 
+	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
+		objectTemplateList.registerTemplate(ServerUniverseObjectTemplate.TAG_SERVERUNIVERSEOBJECTTEMPLATE, ServerUniverseObjectTemplate::new);
+	}
+
 	private int templateVersion;
 
 

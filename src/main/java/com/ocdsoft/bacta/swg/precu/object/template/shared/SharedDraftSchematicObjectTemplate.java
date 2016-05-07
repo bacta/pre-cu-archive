@@ -24,6 +24,12 @@ import java.util.List;
 public class SharedDraftSchematicObjectTemplate extends SharedIntangibleObjectTemplate {
 	public static final int TAG_SHAREDDRAFTSCHEMATICOBJECTTEMPLATE = Tag.convertStringToTag("SDSC");
 
+	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
+		objectTemplateList.registerTemplate(SharedDraftSchematicObjectTemplate.TAG_SHAREDDRAFTSCHEMATICOBJECTTEMPLATE, SharedDraftSchematicObjectTemplate::new);
+		objectTemplateList.registerTemplate(IngredientSlotObjectTemplate.TAG_INGREDIENTSLOT, IngredientSlotObjectTemplate::new);
+		objectTemplateList.registerTemplate(SchematicAttributeObjectTemplate.TAG_SCHEMATICATTRIBUTE, SchematicAttributeObjectTemplate::new);
+	}
+
 	private int templateVersion;
 
 	// this enum is also defined in the server object_template.tdf file
@@ -240,7 +246,7 @@ public class SharedDraftSchematicObjectTemplate extends SharedIntangibleObjectTe
 
 	public enum ArmorRating {
 		AR_armorNone(0),
-		AR_armorLight(1),
+		AR_armorLight(1), 
 		AR_armorMedium(2), 
 		AR_armorHeavy(3); 
 
@@ -268,7 +274,7 @@ public class SharedDraftSchematicObjectTemplate extends SharedIntangibleObjectTe
 		DT_elemental_acid(0x00000080),
 		DT_elemental_electrical(0x00000100),
 		DT_environmental_heat(0x00000200),
-		DT_environmental_cold(0x00000400),
+		DT_environmental_cold(0x00000400), 
 		DT_environmental_acid(0x00000800), 
 		DT_environmental_electrical(0x00001000); 
 

@@ -16,6 +16,10 @@ import com.ocdsoft.bacta.swg.shared.utility.BoolParam;
 public class ServerStaticObjectTemplate extends ServerObjectTemplate {
 	public static final int TAG_SERVERSTATICOBJECTTEMPLATE = Tag.convertStringToTag("STAO");
 
+	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
+		objectTemplateList.registerTemplate(ServerStaticObjectTemplate.TAG_SERVERSTATICOBJECTTEMPLATE, ServerStaticObjectTemplate::new);
+	}
+
 	private int templateVersion;
 
 	private final BoolParam clientOnlyBuildout = new BoolParam(); //Whether we should be instantiated from buildout files on the server

@@ -17,6 +17,10 @@ import com.ocdsoft.bacta.swg.shared.utility.StringParam;
 public class SharedTerrainSurfaceObjectTemplate extends ObjectTemplate {
 	public static final int TAG_SHAREDTERRAINSURFACEOBJECTTEMPLATE = Tag.convertStringToTag("STER");
 
+	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
+		objectTemplateList.registerTemplate(SharedTerrainSurfaceObjectTemplate.TAG_SHAREDTERRAINSURFACEOBJECTTEMPLATE, SharedTerrainSurfaceObjectTemplate::new);
+	}
+
 	private int templateVersion;
 
 	private final FloatParam cover = new FloatParam(); 

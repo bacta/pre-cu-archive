@@ -15,6 +15,10 @@ import com.ocdsoft.bacta.swg.shared.template.definition.TemplateDefinition;
 public class SharedTokenObjectTemplate extends SharedIntangibleObjectTemplate {
 	public static final int TAG_SHAREDTOKENOBJECTTEMPLATE = Tag.convertStringToTag("STOK");
 
+	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
+		objectTemplateList.registerTemplate(SharedTokenObjectTemplate.TAG_SHAREDTOKENOBJECTTEMPLATE, SharedTokenObjectTemplate::new);
+	}
+
 	private int templateVersion;
 
 

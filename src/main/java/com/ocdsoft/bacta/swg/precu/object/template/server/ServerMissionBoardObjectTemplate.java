@@ -15,6 +15,10 @@ import com.ocdsoft.bacta.swg.shared.template.definition.TemplateDefinition;
 public class ServerMissionBoardObjectTemplate extends ServerUniverseObjectTemplate {
 	public static final int TAG_SERVERMISSIONBOARDOBJECTTEMPLATE = Tag.convertStringToTag("MISB");
 
+	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
+		objectTemplateList.registerTemplate(ServerMissionBoardObjectTemplate.TAG_SERVERMISSIONBOARDOBJECTTEMPLATE, ServerMissionBoardObjectTemplate::new);
+	}
+
 	private int templateVersion;
 
 

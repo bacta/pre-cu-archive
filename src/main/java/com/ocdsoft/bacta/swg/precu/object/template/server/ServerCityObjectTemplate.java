@@ -15,6 +15,10 @@ import com.ocdsoft.bacta.swg.shared.template.definition.TemplateDefinition;
 public class ServerCityObjectTemplate extends ServerUniverseObjectTemplate {
 	public static final int TAG_SERVERCITYOBJECTTEMPLATE = Tag.convertStringToTag("CITY");
 
+	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
+		objectTemplateList.registerTemplate(ServerCityObjectTemplate.TAG_SERVERCITYOBJECTTEMPLATE, ServerCityObjectTemplate::new);
+	}
+
 	private int templateVersion;
 
 

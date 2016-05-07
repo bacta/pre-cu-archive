@@ -15,6 +15,10 @@ import com.ocdsoft.bacta.swg.shared.template.definition.TemplateDefinition;
 public class ServerPlayerObjectTemplate extends ServerIntangibleObjectTemplate {
 	public static final int TAG_SERVERPLAYEROBJECTTEMPLATE = Tag.convertStringToTag("PLAY");
 
+	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
+		objectTemplateList.registerTemplate(ServerPlayerObjectTemplate.TAG_SERVERPLAYEROBJECTTEMPLATE, ServerPlayerObjectTemplate::new);
+	}
+
 	private int templateVersion;
 
 

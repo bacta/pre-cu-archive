@@ -17,6 +17,10 @@ import com.ocdsoft.bacta.swg.shared.utility.IntegerParam;
 public class SharedBattlefieldMarkerObjectTemplate extends SharedTangibleObjectTemplate {
 	public static final int TAG_SHAREDBATTLEFIELDMARKEROBJECTTEMPLATE = Tag.convertStringToTag("SBMK");
 
+	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
+		objectTemplateList.registerTemplate(SharedBattlefieldMarkerObjectTemplate.TAG_SHAREDBATTLEFIELDMARKEROBJECTTEMPLATE, SharedBattlefieldMarkerObjectTemplate::new);
+	}
+
 	private int templateVersion;
 
 	private final IntegerParam numberOfPoles = new IntegerParam(); // number of child object poles

@@ -15,6 +15,10 @@ import com.ocdsoft.bacta.swg.shared.template.definition.TemplateDefinition;
 public class SharedFactoryObjectTemplate extends SharedTangibleObjectTemplate {
 	public static final int TAG_SHAREDFACTORYOBJECTTEMPLATE = Tag.convertStringToTag("SFOT");
 
+	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
+		objectTemplateList.registerTemplate(SharedFactoryObjectTemplate.TAG_SHAREDFACTORYOBJECTTEMPLATE, SharedFactoryObjectTemplate::new);
+	}
+
 	private int templateVersion;
 
 

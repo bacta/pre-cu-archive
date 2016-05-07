@@ -15,6 +15,10 @@ import com.ocdsoft.bacta.swg.shared.template.definition.TemplateDefinition;
 public class ServerMissionDataObjectTemplate extends ServerIntangibleObjectTemplate {
 	public static final int TAG_SERVERMISSIONDATAOBJECTTEMPLATE = Tag.convertStringToTag("MISD");
 
+	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
+		objectTemplateList.registerTemplate(ServerMissionDataObjectTemplate.TAG_SERVERMISSIONDATAOBJECTTEMPLATE, ServerMissionDataObjectTemplate::new);
+	}
+
 	private int templateVersion;
 
 

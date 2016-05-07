@@ -21,6 +21,11 @@ import java.util.List;
 public class ServerArmorTemplate extends ObjectTemplate {
 	public static final int TAG_SERVERARMORTEMPLATE = Tag.convertStringToTag("ARMO");
 
+	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
+		objectTemplateList.registerTemplate(ServerArmorTemplate.TAG_SERVERARMORTEMPLATE, ServerArmorTemplate::new);
+		objectTemplateList.registerTemplate(SpecialProtectionObjectTemplate.TAG_SPECIALPROTECTION, SpecialProtectionObjectTemplate::new);
+	}
+
 	private int templateVersion;
 
 	private final IntegerParam rating = new IntegerParam(); //armor rating
@@ -336,7 +341,7 @@ public class ServerArmorTemplate extends ObjectTemplate {
 	public enum ArmorRating {
 		AR_armorRealNone(-1), //needed for internal reasons, do not use in templates! This means you!
 		AR_armorNone(0),
-		AR_armorLight(1),
+		AR_armorLight(1), 
 		AR_armorMedium(2), 
 		AR_armorHeavy(3); 
 
@@ -364,7 +369,7 @@ public class ServerArmorTemplate extends ObjectTemplate {
 		DT_elemental_acid(0x00000080),
 		DT_elemental_electrical(0x00000100),
 		DT_environmental_heat(0x00000200),
-		DT_environmental_cold(0x00000400),
+		DT_environmental_cold(0x00000400), 
 		DT_environmental_acid(0x00000800), 
 		DT_environmental_electrical(0x00001000); 
 

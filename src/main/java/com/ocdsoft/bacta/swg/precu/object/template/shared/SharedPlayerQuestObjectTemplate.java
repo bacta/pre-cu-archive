@@ -15,6 +15,10 @@ import com.ocdsoft.bacta.swg.shared.template.definition.TemplateDefinition;
 public class SharedPlayerQuestObjectTemplate extends SharedTangibleObjectTemplate {
 	public static final int TAG_SHAREDPLAYERQUESTOBJECTTEMPLATE = Tag.convertStringToTag("SPQO");
 
+	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
+		objectTemplateList.registerTemplate(SharedPlayerQuestObjectTemplate.TAG_SHAREDPLAYERQUESTOBJECTTEMPLATE, SharedPlayerQuestObjectTemplate::new);
+	}
+
 	private int templateVersion;
 
 

@@ -20,6 +20,14 @@ import java.util.List;
 public class ServerObjectTemplate extends ObjectTemplate {
 	public static final int TAG_SERVEROBJECTTEMPLATE = Tag.convertStringToTag("SWOO");
 
+	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
+		objectTemplateList.registerTemplate(ServerObjectTemplate.TAG_SERVEROBJECTTEMPLATE, ServerObjectTemplate::new);
+		objectTemplateList.registerTemplate(AttribModObjectTemplate.TAG_ATTRIBMOD, AttribModObjectTemplate::new);
+		objectTemplateList.registerTemplate(MentalStateModObjectTemplate.TAG_MENTALSTATEMOD, MentalStateModObjectTemplate::new);
+		objectTemplateList.registerTemplate(ContentsObjectTemplate.TAG_CONTENTS, ContentsObjectTemplate::new);
+		objectTemplateList.registerTemplate(XpObjectTemplate.TAG_XP, XpObjectTemplate::new);
+	}
+
 	private int templateVersion;
 
 	// crafting types also defined in base_class.java
@@ -701,7 +709,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 
 	public enum ArmorRating {
 		AR_armorNone(0),
-		AR_armorLight(1),
+		AR_armorLight(1), 
 		AR_armorMedium(2), 
 		AR_armorHeavy(3); 
 
@@ -776,7 +784,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		CT_mandalorianArmorsmithMission(0x80008000),
 		CT_mandalorianDroidEngineerMission(0x80010000),
 		CT_spaceMission(0x80020000),
-		CT_reverseEngineeringMission(0x80040000),
+		CT_reverseEngineeringMission(0x80040000), 
 		CT_miscMission(0x80080000), 
 		CT_spaceComponentMission(0x80100000); 
 
@@ -794,7 +802,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 	}
 
 	public enum UpdateRanges {
-		UR_near(0),
+		UR_near(0), 
 		UR_normal(1), 
 		UR_far(2); 
 
@@ -812,7 +820,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 	}
 
 	public enum ArmorCategory {
-		AC_reconnaissance(0),
+		AC_reconnaissance(0), 
 		AC_battle(1), 
 		AC_assault(2), 
 		AC_psg(3); // personal shield generator
@@ -832,7 +840,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 
 	public enum MentalStates {
 		MS_fear(0),
-		MS_anger(1),
+		MS_anger(1), 
 		MS_interest(2), 
 		MS_distress(3); 
 
@@ -853,7 +861,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		AT_health(0),
 		AT_constitution(1),
 		AT_action(2),
-		AT_stamina(3),
+		AT_stamina(3), 
 		AT_mind(4), 
 		AT_willpower(5); 
 
@@ -929,7 +937,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		XP_craftingCamp(55),
 		XP_craftingTrapping(56),
 		XP_craftingSpice(57),
-		XP_jediGeneral(58),
+		XP_jediGeneral(58), 
 		XP_shipwright(59), 
 		XP_reverseEngineering(60); 
 
@@ -992,7 +1000,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		DT_elemental_acid(0x00000080),
 		DT_elemental_electrical(0x00000100),
 		DT_environmental_heat(0x00000200),
-		DT_environmental_cold(0x00000400),
+		DT_environmental_cold(0x00000400), 
 		DT_environmental_acid(0x00000800), 
 		DT_environmental_electrical(0x00001000); 
 
@@ -1010,7 +1018,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 	}
 
 	public enum ArmorLevel {
-		AL_basic(0),
+		AL_basic(0), 
 		AL_standard(1), 
 		AL_advanced(2); 
 

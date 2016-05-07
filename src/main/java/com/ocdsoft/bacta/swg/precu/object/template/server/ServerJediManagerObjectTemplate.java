@@ -15,6 +15,10 @@ import com.ocdsoft.bacta.swg.shared.template.definition.TemplateDefinition;
 public class ServerJediManagerObjectTemplate extends ServerUniverseObjectTemplate {
 	public static final int TAG_SERVERJEDIMANAGEROBJECTTEMPLATE = Tag.convertStringToTag("JEDI");
 
+	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
+		objectTemplateList.registerTemplate(ServerJediManagerObjectTemplate.TAG_SERVERJEDIMANAGEROBJECTTEMPLATE, ServerJediManagerObjectTemplate::new);
+	}
+
 	private int templateVersion;
 
 

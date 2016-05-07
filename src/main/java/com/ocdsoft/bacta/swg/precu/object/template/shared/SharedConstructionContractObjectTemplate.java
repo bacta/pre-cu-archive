@@ -15,6 +15,10 @@ import com.ocdsoft.bacta.swg.shared.template.definition.TemplateDefinition;
 public class SharedConstructionContractObjectTemplate extends SharedIntangibleObjectTemplate {
 	public static final int TAG_SHAREDCONSTRUCTIONCONTRACTOBJECTTEMPLATE = Tag.convertStringToTag("SCNC");
 
+	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
+		objectTemplateList.registerTemplate(SharedConstructionContractObjectTemplate.TAG_SHAREDCONSTRUCTIONCONTRACTOBJECTTEMPLATE, SharedConstructionContractObjectTemplate::new);
+	}
+
 	private int templateVersion;
 
 

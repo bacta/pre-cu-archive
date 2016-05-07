@@ -15,6 +15,10 @@ import com.ocdsoft.bacta.swg.shared.template.definition.TemplateDefinition;
 public class ServerConstructionContractObjectTemplate extends ServerIntangibleObjectTemplate {
 	public static final int TAG_SERVERCONSTRUCTIONCONTRACTOBJECTTEMPLATE = Tag.convertStringToTag("CONC");
 
+	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
+		objectTemplateList.registerTemplate(ServerConstructionContractObjectTemplate.TAG_SERVERCONSTRUCTIONCONTRACTOBJECTTEMPLATE, ServerConstructionContractObjectTemplate::new);
+	}
+
 	private int templateVersion;
 
 

@@ -15,6 +15,10 @@ import com.ocdsoft.bacta.swg.shared.template.definition.TemplateDefinition;
 public class SharedIntangibleObjectTemplate extends SharedObjectTemplate {
 	public static final int TAG_SHAREDINTANGIBLEOBJECTTEMPLATE = Tag.convertStringToTag("SITN");
 
+	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
+		objectTemplateList.registerTemplate(SharedIntangibleObjectTemplate.TAG_SHAREDINTANGIBLEOBJECTTEMPLATE, SharedIntangibleObjectTemplate::new);
+	}
+
 	private int templateVersion;
 
 

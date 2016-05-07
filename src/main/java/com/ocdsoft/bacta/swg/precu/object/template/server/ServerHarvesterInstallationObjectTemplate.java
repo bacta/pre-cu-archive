@@ -17,6 +17,10 @@ import com.ocdsoft.bacta.swg.shared.utility.StringParam;
 public class ServerHarvesterInstallationObjectTemplate extends ServerInstallationObjectTemplate {
 	public static final int TAG_SERVERHARVESTERINSTALLATIONOBJECTTEMPLATE = Tag.convertStringToTag("HINO");
 
+	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
+		objectTemplateList.registerTemplate(ServerHarvesterInstallationObjectTemplate.TAG_SERVERHARVESTERINSTALLATIONOBJECTTEMPLATE, ServerHarvesterInstallationObjectTemplate::new);
+	}
+
 	private int templateVersion;
 
 	private final IntegerParam maxExtractionRate = new IntegerParam(); //max extraction rate

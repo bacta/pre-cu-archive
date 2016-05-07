@@ -23,6 +23,14 @@ import java.util.List;
 public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 	public static final int TAG_SHAREDTANGIBLEOBJECTTEMPLATE = Tag.convertStringToTag("STOT");
 
+	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
+		objectTemplateList.registerTemplate(SharedTangibleObjectTemplate.TAG_SHAREDTANGIBLEOBJECTTEMPLATE, SharedTangibleObjectTemplate::new);
+		objectTemplateList.registerTemplate(RangedIntCustomizationVariableObjectTemplate.TAG_RANGEDINTCUSTOMIZATIONVARIABLE, RangedIntCustomizationVariableObjectTemplate::new);
+		objectTemplateList.registerTemplate(PaletteColorCustomizationVariableObjectTemplate.TAG_PALETTECOLORCUSTOMIZATIONVARIABLE, PaletteColorCustomizationVariableObjectTemplate::new);
+		objectTemplateList.registerTemplate(ConstStringCustomizationVariableObjectTemplate.TAG_CONSTSTRINGCUSTOMIZATIONVARIABLE, ConstStringCustomizationVariableObjectTemplate::new);
+		objectTemplateList.registerTemplate(CustomizationVariableMappingObjectTemplate.TAG_CUSTOMIZATIONVARIABLEMAPPING, CustomizationVariableMappingObjectTemplate::new);
+	}
+
 	private int templateVersion;
 
 	private final List<StructParam<ObjectTemplate>> paletteColorCustomizationVariables = new ArrayList<>(); // all palette color customization variables exposed by an Object created with this template
@@ -580,7 +588,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 		}
 
 		private final StringParam variableName = new StringParam();
-		private final IntegerParam minValueInclusive = new IntegerParam();
+		private final IntegerParam minValueInclusive = new IntegerParam(); 
 		private final IntegerParam defaultValue = new IntegerParam(); 
 		private final IntegerParam maxValueExclusive = new IntegerParam(); 
 
@@ -763,7 +771,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 			super(filename, objectTemplateList);
 		}
 
-		private final StringParam variableName = new StringParam();
+		private final StringParam variableName = new StringParam(); 
 		private final StringParam palettePathName = new StringParam(); 
 		private final IntegerParam defaultPaletteIndex = new IntegerParam(); 
 

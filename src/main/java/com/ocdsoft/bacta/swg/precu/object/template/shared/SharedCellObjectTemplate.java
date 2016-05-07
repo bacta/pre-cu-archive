@@ -15,6 +15,10 @@ import com.ocdsoft.bacta.swg.shared.template.definition.TemplateDefinition;
 public class SharedCellObjectTemplate extends SharedObjectTemplate {
 	public static final int TAG_SHAREDCELLOBJECTTEMPLATE = Tag.convertStringToTag("CCLT");
 
+	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
+		objectTemplateList.registerTemplate(SharedCellObjectTemplate.TAG_SHAREDCELLOBJECTTEMPLATE, SharedCellObjectTemplate::new);
+	}
+
 	private int templateVersion;
 
 

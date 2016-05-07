@@ -17,10 +17,14 @@ import com.ocdsoft.bacta.swg.shared.utility.StringParam;
 public class SharedShipObjectTemplate extends SharedTangibleObjectTemplate {
 	public static final int TAG_SHAREDSHIPOBJECTTEMPLATE = Tag.convertStringToTag("SSHP");
 
+	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
+		objectTemplateList.registerTemplate(SharedShipObjectTemplate.TAG_SHAREDSHIPOBJECTTEMPLATE, SharedShipObjectTemplate::new);
+	}
+
 	private int templateVersion;
 
 	private final StringParam cockpitFilename = new StringParam();
-	private final BoolParam hasWings = new BoolParam();
+	private final BoolParam hasWings = new BoolParam(); 
 	private final BoolParam playerControlled = new BoolParam(); 
 	private final StringParam interiorLayoutFileName = new StringParam(); 
 

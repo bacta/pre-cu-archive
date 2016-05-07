@@ -21,6 +21,11 @@ import java.util.List;
 public class ServerDraftSchematicObjectTemplate extends ServerIntangibleObjectTemplate {
 	public static final int TAG_SERVERDRAFTSCHEMATICOBJECTTEMPLATE = Tag.convertStringToTag("DSCO");
 
+	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
+		objectTemplateList.registerTemplate(ServerDraftSchematicObjectTemplate.TAG_SERVERDRAFTSCHEMATICOBJECTTEMPLATE, ServerDraftSchematicObjectTemplate::new);
+		objectTemplateList.registerTemplate(IngredientSlotObjectTemplate.TAG_INGREDIENTSLOT, IngredientSlotObjectTemplate::new);
+	}
+
 	private int templateVersion;
 
 	private final IntegerParam category = new IntegerParam(); //schematic category (food, weapon, etc)

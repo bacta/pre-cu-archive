@@ -19,6 +19,10 @@ import java.util.List;
 public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 	public static final int TAG_SERVERCREATUREOBJECTTEMPLATE = Tag.convertStringToTag("CREO");
 
+	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
+		objectTemplateList.registerTemplate(ServerCreatureObjectTemplate.TAG_SERVERCREATUREOBJECTTEMPLATE, ServerCreatureObjectTemplate::new);
+	}
+
 	private int templateVersion;
 
 	//Creature Attributes

@@ -15,6 +15,10 @@ import com.ocdsoft.bacta.swg.shared.template.definition.TemplateDefinition;
 public class ServerBattlefieldMarkerObjectTemplate extends ServerTangibleObjectTemplate {
 	public static final int TAG_SERVERBATTLEFIELDMARKEROBJECTTEMPLATE = Tag.convertStringToTag("BMRK");
 
+	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
+		objectTemplateList.registerTemplate(ServerBattlefieldMarkerObjectTemplate.TAG_SERVERBATTLEFIELDMARKEROBJECTTEMPLATE, ServerBattlefieldMarkerObjectTemplate::new);
+	}
+
 	private int templateVersion;
 
 

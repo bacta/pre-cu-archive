@@ -15,6 +15,10 @@ import com.ocdsoft.bacta.swg.shared.template.definition.TemplateDefinition;
 public class ServerCellObjectTemplate extends ServerObjectTemplate {
 	public static final int TAG_SERVERCELLOBJECTTEMPLATE = Tag.convertStringToTag("SCLT");
 
+	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
+		objectTemplateList.registerTemplate(ServerCellObjectTemplate.TAG_SERVERCELLOBJECTTEMPLATE, ServerCellObjectTemplate::new);
+	}
+
 	private int templateVersion;
 
 

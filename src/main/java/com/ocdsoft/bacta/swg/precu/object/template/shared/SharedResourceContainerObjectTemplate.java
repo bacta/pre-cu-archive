@@ -15,6 +15,10 @@ import com.ocdsoft.bacta.swg.shared.template.definition.TemplateDefinition;
 public class SharedResourceContainerObjectTemplate extends SharedTangibleObjectTemplate {
 	public static final int TAG_SHAREDRESOURCECONTAINEROBJECTTEMPLATE = Tag.convertStringToTag("RCCT");
 
+	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
+		objectTemplateList.registerTemplate(SharedResourceContainerObjectTemplate.TAG_SHAREDRESOURCECONTAINEROBJECTTEMPLATE, SharedResourceContainerObjectTemplate::new);
+	}
+
 	private int templateVersion;
 
 

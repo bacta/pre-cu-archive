@@ -16,13 +16,14 @@ public class ServerCreatureObjectTemplateTest {
     private static final String resourcesPath = new File(ServerCreatureObjectTemplateTest.class.getResource("/").getFile()).getAbsolutePath();
 
     private final TreeFile treeFile = new TreeFile();
-    private final ObjectTemplateList objectTemplateList = new ObjectTemplateList(treeFile);
+    private ObjectTemplateList objectTemplateList;
     private ObjectTemplateService objectTemplateService;
 
     @Before
     public void setup() {
         treeFile.addSearchPath(resourcesPath, 1);
 
+        objectTemplateList = new ObjectTemplateList(treeFile);
         objectTemplateService = new ObjectTemplateService(objectTemplateList);
     }
 

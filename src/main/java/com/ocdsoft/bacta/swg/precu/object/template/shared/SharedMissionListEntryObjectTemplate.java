@@ -15,6 +15,10 @@ import com.ocdsoft.bacta.swg.shared.template.definition.TemplateDefinition;
 public class SharedMissionListEntryObjectTemplate extends SharedIntangibleObjectTemplate {
 	public static final int TAG_SHAREDMISSIONLISTENTRYOBJECTTEMPLATE = Tag.convertStringToTag("SMLE");
 
+	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
+		objectTemplateList.registerTemplate(SharedMissionListEntryObjectTemplate.TAG_SHAREDMISSIONLISTENTRYOBJECTTEMPLATE, SharedMissionListEntryObjectTemplate::new);
+	}
+
 	private int templateVersion;
 
 

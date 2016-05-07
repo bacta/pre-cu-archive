@@ -15,6 +15,10 @@ import com.ocdsoft.bacta.swg.shared.template.definition.TemplateDefinition;
 public class SharedWaypointObjectTemplate extends SharedIntangibleObjectTemplate {
 	public static final int TAG_SHAREDWAYPOINTOBJECTTEMPLATE = Tag.convertStringToTag("SWAY");
 
+	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
+		objectTemplateList.registerTemplate(SharedWaypointObjectTemplate.TAG_SHAREDWAYPOINTOBJECTTEMPLATE, SharedWaypointObjectTemplate::new);
+	}
+
 	private int templateVersion;
 
 
