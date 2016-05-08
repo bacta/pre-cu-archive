@@ -4,14 +4,22 @@ package com.ocdsoft.bacta.swg.precu.object.archive.delta;
 import com.ocdsoft.bacta.engine.buffer.ByteBufferWritable;
 
 import java.nio.ByteBuffer;
+import java.util.function.Function;
 
 public class AutoDeltaVariable<T extends ByteBufferWritable> extends AutoDeltaVariableBase {
     private T currentValue;
     private transient int lastValue;
 
-    public AutoDeltaVariable(T value, AutoDeltaByteStream owner) {
-        super(owner);
+    private final Function<ByteBuffer, T> createFunc;
 
+    public AutoDeltaVariable(final Function<ByteBuffer, T> createFunc) {
+        this.createFunc = createFunc;
+    }
+
+    public AutoDeltaVariable(final T value, final Function<ByteBuffer, T> createFunc) {
+        super();
+
+        this.createFunc = createFunc;
         this.currentValue = value;
         this.lastValue = value.hashCode();
     }
@@ -21,10 +29,10 @@ public class AutoDeltaVariable<T extends ByteBufferWritable> extends AutoDeltaVa
     }
 
     public void set(T value) {
-        this.currentValue = value;
-
-        if (owner != null)
-            owner.addToDirtyList(this);
+        if (this.currentValue != value) {
+            this.currentValue = value;
+            touch();
+        }
     }
 
     @Override
@@ -38,15 +46,15 @@ public class AutoDeltaVariable<T extends ByteBufferWritable> extends AutoDeltaVa
 
     @Override
     public void packDelta(ByteBuffer buffer) {
-        this.currentValue.writeToBuffer(buffer);
+        pack(buffer);
         clearDelta();
     }
 
     @Override
     public void unpackDelta(ByteBuffer buffer) {
-
+        this.currentValue = createFunc.apply(buffer);
+        touch();
     }
-
     @Override
     public void pack(ByteBuffer buffer) {
         currentValue.writeToBuffer(buffer);
@@ -54,7 +62,7 @@ public class AutoDeltaVariable<T extends ByteBufferWritable> extends AutoDeltaVa
 
     @Override
     public void unpack(ByteBuffer buffer) {
-        //this.currentValue.readFromBuffer(buffer);
-        //this.lastValue = this.currentValue;
+        this.currentValue = createFunc.apply(buffer);
+        clearDelta();
     }
 }

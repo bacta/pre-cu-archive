@@ -1,6 +1,5 @@
 package com.ocdsoft.bacta.swg.precu.object.archive.delta;
 
-import com.ocdsoft.bacta.swg.precu.object.ServerObject;
 import com.ocdsoft.bacta.swg.precu.object.archive.AutoByteStream;
 import com.ocdsoft.bacta.swg.precu.object.archive.OnDirtyCallbackBase;
 
@@ -12,55 +11,71 @@ import java.util.TreeSet;
  * Created by crush on 8/14/2014.
  */
 public class AutoDeltaByteStream extends AutoByteStream {
-    private transient final ServerObject parent;
     private transient final Set<AutoDeltaVariableBase> dirtyList = new TreeSet<>();
     private transient OnDirtyCallbackBase onDirtyCallback;
 
-    public AutoDeltaByteStream(ServerObject parent) {
-        this.parent = parent;
-    }
-
-    public void addToDirtyList(AutoDeltaVariableBase variable) {
+    protected void addToDirtyList(final AutoDeltaVariableBase variable) {
         dirtyList.add(variable);
 
         if (onDirtyCallback != null)
-            onDirtyCallback.onDirty(this.parent);
+            onDirtyCallback.onDirty();
     }
 
-    public boolean isDirty() {
-        return dirtyList.size() > 0;
-    }
-
-    public void addOnDirtyCallback(OnDirtyCallbackBase onDirtyCallback) {
+    public void addOnDirtyCallback(final OnDirtyCallbackBase onDirtyCallback) {
         this.onDirtyCallback = onDirtyCallback;
     }
 
+    public void removeOnDirtyCallback() {
+        onDirtyCallback = null;
+    }
+
     public void unpackDeltas(final ByteBuffer buffer) {
-        throw new RuntimeException("Not implemented.");
+        final short count = buffer.getShort();
+
+        for (int i = 0; i < count; ++i) {
+            final short index = buffer.getShort();
+            final AutoDeltaVariableBase variable = (AutoDeltaVariableBase) members.get(index);
+            variable.unpackDelta(buffer);
+        }
     }
 
     public void packDeltas(final ByteBuffer buffer) {
-        buffer.putShort((short)dirtyList.size());
+        final short count = (short) getItemCount();
 
-        for (final AutoDeltaVariableBase variable : dirtyList) {
-            buffer.putShort((short)variable.getIndex());
-            variable.packDelta(buffer);
+        buffer.putShort(count);
+
+        if (count > 0) {
+            dirtyList.stream()
+                    .filter(AutoDeltaVariableBase::isDirty)
+                    .forEachOrdered(variable -> {
+                        buffer.putShort(variable.getIndex());
+                        variable.packDelta(buffer);
+                    });
         }
 
         dirtyList.clear();
     }
 
     public void clearDeltas() {
-        for (final AutoDeltaVariableBase variable : dirtyList)
-            variable.clearDelta();
-
-        dirtyList.clear();
+        if (!dirtyList.isEmpty()) {
+            dirtyList.stream().forEach(AutoDeltaVariableBase::clearDelta);
+            dirtyList.clear();
+        }
     }
 
-    public final void addVariable(final AutoDeltaVariableBase variable) {
-        variable.setIndex(members.size());
+    public void addVariable(final AutoDeltaVariableBase variable) {
+        variable.setIndex((short) members.size());
         variable.setOwner(this);
-
         super.addVariable(variable);
+    }
+
+    public int getItemCount() {
+        short count = 0;
+
+        if (!dirtyList.isEmpty()) {
+            count = (short) dirtyList.stream().filter(AutoDeltaVariableBase::isDirty).count();
+        }
+
+        return count;
     }
 }

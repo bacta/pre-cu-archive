@@ -10,7 +10,17 @@ import java.nio.ByteBuffer;
 
 @Priority(0x5)
 public final class DeltasMessage extends GameNetworkMessage {
-
+    public static final byte DELTAS_CLIENT_ONLY = 0;
+    public static final byte DELTAS_CLIENT_SERVER = 1;
+    public static final byte DELTAS_SERVER = 2;
+    public static final byte DELTAS_SHARED = 3;
+    public static final byte DELTAS_CLIENT_SERVER_NP = 4;
+    public static final byte DELTAS_SERVER_NP = 5;
+    public static final byte DELTAS_SHARED_NP = 6;
+    public static final byte DELTAS_UI = 7;
+    public static final byte DELTAS_FIRST_PARENT_CLIENT_SERVER = 8;
+    public static final byte DELTAS_FIRST_PARENT_CLIENT_SERVER_NP = 9;
+    
     @Getter
     private final long target;
     @Getter

@@ -18,7 +18,7 @@ public class AutoByteStream {
         members.add(variable);
     }
 
-    public void pack(ByteBuffer buffer) {
+    public void pack(final ByteBuffer buffer) {
         buffer.putShort((short) getItemCount());
 
         for (AutoVariableBase variable : members) {
@@ -26,7 +26,7 @@ public class AutoByteStream {
         }
     }
 
-    public void unpack(ByteBuffer buffer) {
+    public void unpack(final ByteBuffer buffer) {
         throw new RuntimeException("Not implemented.");
     }
 }

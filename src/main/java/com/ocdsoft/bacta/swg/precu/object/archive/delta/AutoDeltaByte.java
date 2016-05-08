@@ -6,49 +6,55 @@ public class AutoDeltaByte extends AutoDeltaVariableBase {
     private byte currentValue;
     private transient byte lastValue;
 
-    public AutoDeltaByte(int value, AutoDeltaByteStream owner) {
-        super(owner);
-        this.currentValue = this.lastValue = (byte) value;
+    public AutoDeltaByte() {
+    }
+
+    public AutoDeltaByte(byte value) {
+        super();
+
+        this.currentValue = value;
+        this.lastValue = value;
     }
 
     public byte get() {
-        return currentValue;
+        return this.currentValue;
     }
 
-    public void set(int value) {
-        this.currentValue = (byte) value;
-
-        if (owner != null)
-            owner.addToDirtyList(this);
+    public void set(byte value) {
+        if (this.currentValue != value) {
+            this.currentValue = value;
+            touch();
+        }
     }
 
-    @Override
     public void clearDelta() {
         this.lastValue = this.currentValue;
     }
 
     public boolean isDirty() {
-        return currentValue != lastValue;
+        return this.currentValue != this.lastValue;
     }
 
     @Override
     public void packDelta(ByteBuffer buffer) {
-        buffer.put(currentValue);
+        pack(buffer);
         clearDelta();
     }
 
     @Override
     public void unpackDelta(ByteBuffer buffer) {
-        this.currentValue = this.lastValue = buffer.get();
+        this.currentValue = buffer.get();
+        touch();
     }
 
     @Override
     public void pack(ByteBuffer buffer) {
-        buffer.put(currentValue);
+        buffer.put(this.currentValue);
     }
 
     @Override
     public void unpack(ByteBuffer buffer) {
-        this.currentValue = this.lastValue = buffer.get();
+        this.currentValue = buffer.get();
+        clearDelta();
     }
 }

@@ -1,16 +1,12 @@
 package com.ocdsoft.bacta.swg.precu.object.tangible.ship;
 
 import com.ocdsoft.bacta.swg.precu.object.tangible.TangibleObject;
+import com.ocdsoft.bacta.swg.precu.object.template.server.ServerShipObjectTemplate;
 
 /**
  * Created by crush on 9/4/2014.
  */
 public class ShipObject extends TangibleObject {
-    @Override
-    public int getObjectType() {
-        return 0x53484950;
-    } //'SHIP'
-
     //private final AutoDeltaShort shipId;
     //private final AutoDeltaFloat slideDampener;
     //private final AutoDeltaFloat currentChassisHitPoints;
@@ -88,4 +84,8 @@ public class ShipObject extends TangibleObject {
     //private final AutoDeltaString difficulty;
     //private final AutoDeltaString faction;
     //private final AutoDeltaInt guildId;
+
+    public ShipObject(final ServerShipObjectTemplate template) {
+        super(template);
+    }
 }

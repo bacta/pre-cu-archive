@@ -9,22 +9,21 @@ import java.nio.ByteBuffer;
 /**
  * Created by crush on 8/14/2014.
  */
-public abstract class AutoDeltaVariableBase implements AutoVariableBase, Comparable<AutoDeltaVariableBase> {
-
-    @Setter protected AutoDeltaByteStream owner;
-    @Getter @Setter protected int index;
-
-    public AutoDeltaVariableBase(AutoDeltaByteStream owner) {
-        owner.addVariable(this);
-    }
+public abstract class AutoDeltaVariableBase implements AutoVariableBase {
+    @Getter
+    @Setter
+    private AutoDeltaByteStream owner;
+    @Getter
+    @Setter
+    private short index;
 
     public abstract void clearDelta();
     public abstract boolean isDirty();
     public abstract void packDelta(ByteBuffer buffer);
     public abstract void unpackDelta(ByteBuffer buffer);
 
-    @Override
-    public int compareTo(AutoDeltaVariableBase other) {
-        return other.index - index;
+    public final void touch() {
+        if (owner != null)
+            owner.addToDirtyList(this);
     }
 }

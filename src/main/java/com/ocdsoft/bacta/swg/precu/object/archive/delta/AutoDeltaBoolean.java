@@ -8,10 +8,14 @@ public class AutoDeltaBoolean extends AutoDeltaVariableBase {
     private boolean currentValue;
     private transient boolean lastValue;
 
-    public AutoDeltaBoolean(boolean value, AutoDeltaByteStream owner) {
-        super(owner);
+    public AutoDeltaBoolean() {
+    }
 
-        this.currentValue = this.lastValue = value;
+    public AutoDeltaBoolean(boolean value) {
+        super();
+
+        this.currentValue = value;
+        this.lastValue = value;
     }
 
     public boolean get() {
@@ -19,10 +23,10 @@ public class AutoDeltaBoolean extends AutoDeltaVariableBase {
     }
 
     public void set(boolean value) {
-        this.currentValue = value;
-
-        if (owner != null)
-            owner.addToDirtyList(this);
+        if (this.currentValue != value) {
+            this.currentValue = value;
+            touch();
+        }
     }
 
     public void clearDelta() {
@@ -35,14 +39,14 @@ public class AutoDeltaBoolean extends AutoDeltaVariableBase {
 
     @Override
     public void packDelta(ByteBuffer buffer) {
-        BufferUtil.putBoolean(buffer, this.currentValue);
-
+        pack(buffer);
         clearDelta();
     }
 
     @Override
     public void unpackDelta(ByteBuffer buffer) {
-        this.currentValue = this.lastValue = BufferUtil.getBoolean(buffer);
+        this.currentValue = BufferUtil.getBoolean(buffer);
+        touch();
     }
 
     @Override
@@ -52,6 +56,7 @@ public class AutoDeltaBoolean extends AutoDeltaVariableBase {
 
     @Override
     public void unpack(ByteBuffer buffer) {
-        this.currentValue = this.lastValue = BufferUtil.getBoolean(buffer);
+        this.currentValue = BufferUtil.getBoolean(buffer);
+        clearDelta();
     }
 }

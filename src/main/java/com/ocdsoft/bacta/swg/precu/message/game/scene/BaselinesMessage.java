@@ -9,6 +9,16 @@ import java.nio.ByteBuffer;
 
 @Priority(0x5)
 public final class BaselinesMessage extends GameNetworkMessage {
+    public static final byte BASELINES_CLIENT_ONLY = 0;
+    public static final byte BASELINES_CLIENT_SERVER = 1;
+    public static final byte BASELINES_SERVER = 2;
+    public static final byte BASELINES_SHARED = 3;
+    public static final byte BASELINES_CLIENT_SERVER_NP = 4;
+    public static final byte BASELINES_SERVER_NP = 5;
+    public static final byte BASELINES_SHARED_NP = 6;
+    public static final byte BASELINES_UI = 7;
+    public static final byte BASELINES_FIRST_PARENT_CLIENT_SERVER = 8;
+    public static final byte BASELINES_FIRST_PARENT_CLIENT_SERVER_NP = 9;
 
     private final long target;
     private final int typeId;

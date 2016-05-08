@@ -3,14 +3,21 @@ package com.ocdsoft.bacta.swg.precu.object.tangible.creature;
 
 import com.ocdsoft.bacta.swg.precu.event.ObservableGameEvent;
 import com.ocdsoft.bacta.swg.precu.message.game.object.PostureMessage;
-import com.ocdsoft.bacta.swg.precu.object.GroupInviter;
 import com.ocdsoft.bacta.swg.precu.object.archive.delta.*;
+import com.ocdsoft.bacta.swg.precu.object.archive.delta.map.AutoDeltaStringObjectMap;
+import com.ocdsoft.bacta.swg.precu.object.archive.delta.set.AutoDeltaStringSet;
+import com.ocdsoft.bacta.swg.precu.object.archive.delta.vector.AutoDeltaIntVector;
+import com.ocdsoft.bacta.swg.precu.object.archive.delta.vector.AutoDeltaObjectVector;
 import com.ocdsoft.bacta.swg.precu.object.tangible.TangibleObject;
+import com.ocdsoft.bacta.swg.precu.object.template.server.ServerCreatureObjectTemplate;
+import com.ocdsoft.bacta.swg.precu.object.template.shared.SharedCreatureObjectTemplate;
+import com.ocdsoft.bacta.swg.precu.object.template.shared.SharedCreatureObjectTemplate.MovementTypes;
+import com.ocdsoft.bacta.swg.precu.object.universe.group.GroupInviter;
+import com.ocdsoft.bacta.swg.precu.object.universe.group.GroupMissionCriticalObject;
+import gnu.trove.list.TIntList;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.util.Arrays;
-import java.util.Collection;
 
 public final class CreatureObject extends TangibleObject {
     @Override
@@ -18,24 +25,19 @@ public final class CreatureObject extends TangibleObject {
         return 0x4352454F;
     } //'CREO'
 
-    //CreatureObjectMessage01
-    private final AutoDeltaVector<Integer> unmodifiedMaxAttributes;
-    private final AutoDeltaSet<String> skills;
-
-    //CreatureObjectMessage03
+    private final AutoDeltaIntVector unmodifiedMaxAttributes;
+    private final AutoDeltaStringSet skills;
     private final AutoDeltaByte posture;
     private final AutoDeltaByte rank;
     private final AutoDeltaLong masterId;
     private final AutoDeltaFloat scaleFactor;
     private final AutoDeltaInt shockWounds;
     private final AutoDeltaLong states;
-    private final AutoDeltaVector<Integer> attributeWounds;
-
-    //CreatureObjectMessage04
+    private final AutoDeltaIntVector attributeWounds;
     private final AutoDeltaFloat accelPercent;
     private final AutoDeltaFloat accelScale;
-    private final AutoDeltaVector<Integer> attribBonus;
-    private final AutoDeltaMap<String, SkillModEntry> modMap;
+    private final AutoDeltaIntVector attribBonus;
+    private final AutoDeltaStringObjectMap<SkillModEntry> modMap;
     private final AutoDeltaFloat movementPercent;
     private final AutoDeltaFloat movementScale;
     private final AutoDeltaLong performanceListenTarget;
@@ -45,9 +47,7 @@ public final class CreatureObject extends TangibleObject {
     private final AutoDeltaFloat turnScale;
     private final AutoDeltaFloat walkSpeed;
     private final AutoDeltaFloat waterModPercent;
-    private final AutoDeltaVector<GroupMissionCriticalObject> groupMissionCriticalObjectList;
-
-    //CreatureObjectMessage06
+    private final AutoDeltaObjectVector<GroupMissionCriticalObject> groupMissionCriticalObjectList;
     private final AutoDeltaShort level;
     private final AutoDeltaString animatingSkillData;
     private final AutoDeltaString animationMood;
@@ -59,58 +59,94 @@ public final class CreatureObject extends TangibleObject {
     private final AutoDeltaByte moodId;
     private final AutoDeltaInt performanceStartTime;
     private final AutoDeltaInt performanceType;
-    private final AutoDeltaVector<Integer> attributes;
-    private final AutoDeltaVector<Integer> maxAttributes;
-    private final AutoDeltaVector<WearableEntry> wearableData;
+    private final AutoDeltaIntVector attributes;
+    private final AutoDeltaIntVector maxAttributes;
+    private final AutoDeltaObjectVector<WearableEntry> wearableData;
     private final AutoDeltaString alternateAppearanceSharedObjectTemplateName;
     private final AutoDeltaBoolean coverVisibility;
 
-    public CreatureObject() {
-        unmodifiedMaxAttributes = new AutoDeltaVector<>(Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0, 0), authoritativeClientServerPackage);
-        skills = new AutoDeltaSet<>(authoritativeClientServerPackage);
+    public CreatureObject(final ServerCreatureObjectTemplate template) {
+        super(template);
 
-        //CreatureObjectMessage03
-        posture = new AutoDeltaByte(0, sharedPackage);
-        rank = new AutoDeltaByte(0, sharedPackage);
-        masterId = new AutoDeltaLong(0L, sharedPackage);
-        scaleFactor = new AutoDeltaFloat(1.0F, sharedPackage);
-        shockWounds = new AutoDeltaInt(0, sharedPackage);
-        states = new AutoDeltaLong(0L, sharedPackage);
-        attributeWounds = new AutoDeltaVector<>(Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0, 0), sharedPackage);
+        unmodifiedMaxAttributes = new AutoDeltaIntVector();
+        skills = new AutoDeltaStringSet();
+        posture = new AutoDeltaByte(CreaturePosture.UPRIGHT);
+        rank = new AutoDeltaByte((byte) 0);
+        masterId = new AutoDeltaLong();
+        scaleFactor = new AutoDeltaFloat(1.0F);
+        shockWounds = new AutoDeltaInt(0);
+        states = new AutoDeltaLong(0L);
+        attributeWounds = new AutoDeltaIntVector();
+        accelPercent = new AutoDeltaFloat(1.0F);
+        accelScale = new AutoDeltaFloat(1.0F);
+        attribBonus = new AutoDeltaIntVector(CreatureAttribute.SIZE);
+        modMap = new AutoDeltaStringObjectMap<>(SkillModEntry::new);
+        movementPercent = new AutoDeltaFloat(1.0F);
+        movementScale = new AutoDeltaFloat(1.0F);
+        performanceListenTarget = new AutoDeltaLong();
+        runSpeed = new AutoDeltaFloat(((SharedCreatureObjectTemplate) getSharedTemplate()).getSpeed(MovementTypes.MT_run));
+        slopeModAngle = new AutoDeltaFloat((float) (((SharedCreatureObjectTemplate) getSharedTemplate()).getSlopeModAngle() * Math.PI / 180));
+        slopeModPercent = new AutoDeltaFloat(1.0F);
+        turnScale = new AutoDeltaFloat(1.0F);
+        walkSpeed = new AutoDeltaFloat(((SharedCreatureObjectTemplate) getSharedTemplate()).getSpeed(MovementTypes.MT_walk));
+        waterModPercent = new AutoDeltaFloat(((SharedCreatureObjectTemplate) getSharedTemplate()).getWaterModPercent());
+        groupMissionCriticalObjectList = new AutoDeltaObjectVector<>(GroupMissionCriticalObject::new);
+        level = new AutoDeltaShort((short) -1);
+        animatingSkillData = new AutoDeltaString();
+        animationMood = new AutoDeltaString("neutral");
+        currentWeapon = new AutoDeltaLong();
+        group = new AutoDeltaLong();
+        groupInviter = new AutoDeltaVariable<>(GroupInviter::new);
+        guildId = new AutoDeltaInt(0);
+        lookAtTarget = new AutoDeltaLong();
+        moodId = new AutoDeltaByte();
+        performanceStartTime = new AutoDeltaInt();
+        performanceType = new AutoDeltaInt();
+        attributes = new AutoDeltaIntVector(CreatureAttribute.SIZE);
+        maxAttributes = new AutoDeltaIntVector(CreatureAttribute.SIZE);
+        wearableData = new AutoDeltaObjectVector<>(WearableEntry::new);
+        alternateAppearanceSharedObjectTemplateName = new AutoDeltaString();
+        coverVisibility = new AutoDeltaBoolean(true);
 
-        //CreatureObjectMessage04
-        accelPercent = new AutoDeltaFloat(1.0F, authoritativeClientServerPackageNp);
-        accelScale = new AutoDeltaFloat(1.0F, authoritativeClientServerPackageNp);
-        attribBonus = new AutoDeltaVector<>(Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0, 0), authoritativeClientServerPackageNp);
-        modMap = new AutoDeltaMap<>(authoritativeClientServerPackageNp);
-        movementPercent = new AutoDeltaFloat(1.0F, authoritativeClientServerPackageNp);
-        movementScale = new AutoDeltaFloat(1.0F, authoritativeClientServerPackageNp);
-        performanceListenTarget = new AutoDeltaLong(0L, authoritativeClientServerPackageNp);
-        runSpeed = new AutoDeltaFloat(5.0F, authoritativeClientServerPackageNp);
-        slopeModAngle = new AutoDeltaFloat(1.0F, authoritativeClientServerPackageNp);
-        slopeModPercent = new AutoDeltaFloat(1.0F, authoritativeClientServerPackageNp);
-        turnScale = new AutoDeltaFloat(1.0F, authoritativeClientServerPackageNp);
-        walkSpeed = new AutoDeltaFloat(1.5F, authoritativeClientServerPackageNp);
-        waterModPercent = new AutoDeltaFloat(1.0F, authoritativeClientServerPackageNp);
-        groupMissionCriticalObjectList = new AutoDeltaVector<>(authoritativeClientServerPackageNp);
-
-        //CreatureObjectMessage06
-        level = new AutoDeltaShort(0, sharedPackageNp);
-        animatingSkillData = new AutoDeltaString("", sharedPackageNp);
-        animationMood = new AutoDeltaString("", sharedPackageNp);
-        currentWeapon = new AutoDeltaLong(0L, sharedPackageNp);
-        group = new AutoDeltaLong(0L, sharedPackageNp);
-        groupInviter = new AutoDeltaVariable<GroupInviter>(new GroupInviter(0, 0), sharedPackageNp);
-        guildId = new AutoDeltaInt(0, sharedPackageNp);
-        lookAtTarget = new AutoDeltaLong(0L, sharedPackageNp);
-        moodId = new AutoDeltaByte(0, sharedPackageNp);
-        performanceStartTime = new AutoDeltaInt(0, sharedPackageNp);
-        performanceType = new AutoDeltaInt(0, sharedPackageNp);
-        attributes = new AutoDeltaVector<>(Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0, 0), sharedPackageNp);
-        maxAttributes = new AutoDeltaVector<>(Arrays.asList(0, 0, 0, 0, 0, 0, 0, 0, 0), sharedPackageNp);
-        wearableData = new AutoDeltaVector<>(sharedPackageNp);
-        alternateAppearanceSharedObjectTemplateName = new AutoDeltaString("", sharedPackageNp);
-        coverVisibility = new AutoDeltaBoolean(true, sharedPackageNp);
+//        addVariable(unmodifiedMaxAttributes);
+//        addVariable(skills);
+//        addVariable(posture);
+//        addVariable(rank);
+//        addVariable(masterId);
+//        addVariable(scaleFactor);
+//        addVariable(shockWounds);
+//        addVariable(states);
+//        addVariable(attributeWounds);
+//        addVariable(accelPercent);
+//        addVariable(accelScale);
+//        addVariable(attribBonus);
+//        addVariable(modMap);
+//        addVariable(movementPercent);
+//        addVariable(movementScale);
+//        addVariable(performanceListenTarget);
+//        addVariable(runSpeed);
+//        addVariable(slopeModAngle);
+//        addVariable(slopeModPercent);
+//        addVariable(turnScale);
+//        addVariable(walkSpeed);
+//        addVariable(waterModPercent);
+//        addVariable(groupMissionCriticalObjectList);
+//        addVariable(level);
+//        addVariable(animatingSkillData);
+//        addVariable(animationMood);
+//        addVariable(currentWeapon);
+//        addVariable(group);
+//        addVariable(groupInviter);
+//        addVariable(guildId);
+//        addVariable(lookAtTarget);
+//        addVariable(moodId);
+//        addVariable(performanceStartTime);
+//        addVariable(performanceType);
+//        addVariable(attributes);
+//        addVariable(maxAttributes);
+//        addVariable(wearableData);
+//        addVariable(alternateAppearanceSharedObjectTemplateName);
+//        addVariable(coverVisibility);
     }
 
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
@@ -147,112 +183,429 @@ public final class CreatureObject extends TangibleObject {
     public final long getLookAtTarget() { return lookAtTarget.get(); }
 
     //hamBase
-    public final int getHealthBase() { return unmodifiedMaxAttributes.get(CreatureAttribute.Health); }
-    public final int getStrengthBase() { return unmodifiedMaxAttributes.get(CreatureAttribute.Strength); }
-    public final int getConstitutionBase() { return unmodifiedMaxAttributes.get(CreatureAttribute.Constitution); }
-    public final int getActionBase() { return unmodifiedMaxAttributes.get(CreatureAttribute.Action); }
-    public final int getQuicknessBase() { return unmodifiedMaxAttributes.get(CreatureAttribute.Quickness); }
-    public final int getStaminaBase() { return unmodifiedMaxAttributes.get(CreatureAttribute.Stamina); }
-    public final int getMindBase() { return unmodifiedMaxAttributes.get(CreatureAttribute.Mind); }
-    public final int getFocusBase() { return unmodifiedMaxAttributes.get(CreatureAttribute.Focus); }
-    public final int getWillpowerBase() { return unmodifiedMaxAttributes.get(CreatureAttribute.Willpower); }
+    public final int getHealthBase() {
+        return unmodifiedMaxAttributes.get(CreatureAttribute.HEALTH);
+    }
 
-    public final void setUnmodifiedMaxAttributes(Collection<Integer> values) { unmodifiedMaxAttributes.set(values); setDirty(true); }
-    public final void setHealthBase(int value) { unmodifiedMaxAttributes.set(CreatureAttribute.Health, value); setDirty(true); }
-    public final void setStrengthBase(int value) { unmodifiedMaxAttributes.set(CreatureAttribute.Strength, value); setDirty(true); }
-    public final void setConstitutionBase(int value) { unmodifiedMaxAttributes.set(CreatureAttribute.Constitution, value); setDirty(true); }
-    public final void setActionBase(int value) { unmodifiedMaxAttributes.set(CreatureAttribute.Action, value); setDirty(true); }
-    public final void setQuicknessBase(int value) { unmodifiedMaxAttributes.set(CreatureAttribute.Quickness, value); setDirty(true); }
-    public final void setStaminaBase(int value) { unmodifiedMaxAttributes.set(CreatureAttribute.Stamina, value); setDirty(true); }
-    public final void setMindBase(int value) { unmodifiedMaxAttributes.set(CreatureAttribute.Mind, value); setDirty(true); }
-    public final void setFocusBase(int value) { unmodifiedMaxAttributes.set(CreatureAttribute.Focus, value); setDirty(true); }
-    public final void setWillpowerBase(int value) { unmodifiedMaxAttributes.set(CreatureAttribute.Willpower, value); setDirty(true); }
+    public final int getStrengthBase() {
+        return unmodifiedMaxAttributes.get(CreatureAttribute.STRENGTH);
+    }
+
+    public final int getConstitutionBase() {
+        return unmodifiedMaxAttributes.get(CreatureAttribute.CONSTITUTION);
+    }
+
+    public final int getActionBase() {
+        return unmodifiedMaxAttributes.get(CreatureAttribute.ACTION);
+    }
+
+    public final int getQuicknessBase() {
+        return unmodifiedMaxAttributes.get(CreatureAttribute.QUICKNESS);
+    }
+
+    public final int getStaminaBase() {
+        return unmodifiedMaxAttributes.get(CreatureAttribute.STAMINA);
+    }
+
+    public final int getMindBase() {
+        return unmodifiedMaxAttributes.get(CreatureAttribute.MIND);
+    }
+
+    public final int getFocusBase() {
+        return unmodifiedMaxAttributes.get(CreatureAttribute.FOCUS);
+    }
+
+    public final int getWillpowerBase() {
+        return unmodifiedMaxAttributes.get(CreatureAttribute.WILLPOWER);
+    }
+
+    public final void setUnmodifiedMaxAttributes(TIntList values) {
+        unmodifiedMaxAttributes.set(values);
+        setDirty(true);
+    }
+
+    public final void setHealthBase(int value) {
+        unmodifiedMaxAttributes.set(CreatureAttribute.HEALTH, value);
+        setDirty(true);
+    }
+
+    public final void setStrengthBase(int value) {
+        unmodifiedMaxAttributes.set(CreatureAttribute.STRENGTH, value);
+        setDirty(true);
+    }
+
+    public final void setConstitutionBase(int value) {
+        unmodifiedMaxAttributes.set(CreatureAttribute.CONSTITUTION, value);
+        setDirty(true);
+    }
+
+    public final void setActionBase(int value) {
+        unmodifiedMaxAttributes.set(CreatureAttribute.ACTION, value);
+        setDirty(true);
+    }
+
+    public final void setQuicknessBase(int value) {
+        unmodifiedMaxAttributes.set(CreatureAttribute.QUICKNESS, value);
+        setDirty(true);
+    }
+
+    public final void setStaminaBase(int value) {
+        unmodifiedMaxAttributes.set(CreatureAttribute.STAMINA, value);
+        setDirty(true);
+    }
+
+    public final void setMindBase(int value) {
+        unmodifiedMaxAttributes.set(CreatureAttribute.MIND, value);
+        setDirty(true);
+    }
+
+    public final void setFocusBase(int value) {
+        unmodifiedMaxAttributes.set(CreatureAttribute.FOCUS, value);
+        setDirty(true);
+    }
+
+    public final void setWillpowerBase(int value) {
+        unmodifiedMaxAttributes.set(CreatureAttribute.WILLPOWER, value);
+        setDirty(true);
+    }
 
     //Attribute wounds
-    public final int getHealthWounds() { return attributeWounds.get(CreatureAttribute.Health); }
-    public final int getStrengthWounds() { return attributeWounds.get(CreatureAttribute.Strength); }
-    public final int getConstitutionWounds() { return attributeWounds.get(CreatureAttribute.Constitution); }
-    public final int getActionWounds() { return attributeWounds.get(CreatureAttribute.Action); }
-    public final int getQuicknessWounds() { return attributeWounds.get(CreatureAttribute.Quickness); }
-    public final int getStaminaWounds() { return attributeWounds.get(CreatureAttribute.Stamina); }
-    public final int getMindWounds() { return attributeWounds.get(CreatureAttribute.Mind); }
-    public final int getFocusWounds() { return attributeWounds.get(CreatureAttribute.Focus); }
-    public final int getWillpowerWounds() { return attributeWounds.get(CreatureAttribute.Willpower); }
+    public final int getHealthWounds() {
+        return attributeWounds.get(CreatureAttribute.HEALTH);
+    }
 
-    public final void setHealthWounds(int value) { attributeWounds.set(CreatureAttribute.Health, value); setDirty(true); }
-    public final void setStrengthWounds(int value) { attributeWounds.set(CreatureAttribute.Strength, value); setDirty(true); }
-    public final void setConstitutionWounds(int value) { attributeWounds.set(CreatureAttribute.Constitution, value); setDirty(true); }
-    public final void setActionWounds(int value) { attributeWounds.set(CreatureAttribute.Action, value); setDirty(true); }
-    public final void setQuicknessWounds(int value) { attributeWounds.set(CreatureAttribute.Quickness, value); setDirty(true); }
-    public final void setStaminaWounds(int value) { attributeWounds.set(CreatureAttribute.Stamina, value); setDirty(true); }
-    public final void setMindWounds(int value) { attributeWounds.set(CreatureAttribute.Mind, value); setDirty(true); }
-    public final void setFocusWounds(int value) { attributeWounds.set(CreatureAttribute.Focus, value); setDirty(true); }
-    public final void setWillpowerWounds(int value) { attributeWounds.set(CreatureAttribute.Willpower, value); setDirty(true); }
+    public final int getStrengthWounds() {
+        return attributeWounds.get(CreatureAttribute.STRENGTH);
+    }
+
+    public final int getConstitutionWounds() {
+        return attributeWounds.get(CreatureAttribute.CONSTITUTION);
+    }
+
+    public final int getActionWounds() {
+        return attributeWounds.get(CreatureAttribute.ACTION);
+    }
+
+    public final int getQuicknessWounds() {
+        return attributeWounds.get(CreatureAttribute.QUICKNESS);
+    }
+
+    public final int getStaminaWounds() {
+        return attributeWounds.get(CreatureAttribute.STAMINA);
+    }
+
+    public final int getMindWounds() {
+        return attributeWounds.get(CreatureAttribute.MIND);
+    }
+
+    public final int getFocusWounds() {
+        return attributeWounds.get(CreatureAttribute.FOCUS);
+    }
+
+    public final int getWillpowerWounds() {
+        return attributeWounds.get(CreatureAttribute.WILLPOWER);
+    }
+
+    public final void setHealthWounds(int value) {
+        attributeWounds.set(CreatureAttribute.HEALTH, value);
+        setDirty(true);
+    }
+
+    public final void setStrengthWounds(int value) {
+        attributeWounds.set(CreatureAttribute.STRENGTH, value);
+        setDirty(true);
+    }
+
+    public final void setConstitutionWounds(int value) {
+        attributeWounds.set(CreatureAttribute.CONSTITUTION, value);
+        setDirty(true);
+    }
+
+    public final void setActionWounds(int value) {
+        attributeWounds.set(CreatureAttribute.ACTION, value);
+        setDirty(true);
+    }
+
+    public final void setQuicknessWounds(int value) {
+        attributeWounds.set(CreatureAttribute.QUICKNESS, value);
+        setDirty(true);
+    }
+
+    public final void setStaminaWounds(int value) {
+        attributeWounds.set(CreatureAttribute.STAMINA, value);
+        setDirty(true);
+    }
+
+    public final void setMindWounds(int value) {
+        attributeWounds.set(CreatureAttribute.MIND, value);
+        setDirty(true);
+    }
+
+    public final void setFocusWounds(int value) {
+        attributeWounds.set(CreatureAttribute.FOCUS, value);
+        setDirty(true);
+    }
+
+    public final void setWillpowerWounds(int value) {
+        attributeWounds.set(CreatureAttribute.WILLPOWER, value);
+        setDirty(true);
+    }
 
     //hamEncumbrance
-    public final int getHealthEncumbrance() { return attribBonus.get(CreatureAttribute.Health); }
-    public final int getStrengthEncumbrance() { return attribBonus.get(CreatureAttribute.Strength); }
-    public final int getConstitutionEncumbrance() { return attribBonus.get(CreatureAttribute.Constitution); }
-    public final int getActionEncumbrance() { return attribBonus.get(CreatureAttribute.Action); }
-    public final int getQuicknessEncumbrance() { return attribBonus.get(CreatureAttribute.Quickness); }
-    public final int getStaminaEncumbrance() { return attribBonus.get(CreatureAttribute.Stamina); }
-    public final int getMindEncumbrance() { return attribBonus.get(CreatureAttribute.Mind); }
-    public final int getFocusEncumbrance() { return attribBonus.get(CreatureAttribute.Focus); }
-    public final int getWillpowerEncumbrance() { return attribBonus.get(CreatureAttribute.Willpower); }
+    public final int getHealthEncumbrance() {
+        return attribBonus.get(CreatureAttribute.HEALTH);
+    }
 
-    public final void setHealthEncumbrance(int value) { attribBonus.set(CreatureAttribute.Health, value); setDirty(true); }
-    public final void setStrengthEncumbrance(int value) { attribBonus.set(CreatureAttribute.Strength, value); setDirty(true); }
-    public final void setConstitutionEncumbrance(int value) { attribBonus.set(CreatureAttribute.Constitution, value); setDirty(true); }
-    public final void setActionEncumbrance(int value) { attribBonus.set(CreatureAttribute.Action, value); setDirty(true); }
-    public final void setQuicknessEncumbrance(int value) { attribBonus.set(CreatureAttribute.Quickness, value); setDirty(true); }
-    public final void setStaminaEncumbrance(int value) { attribBonus.set(CreatureAttribute.Stamina, value); setDirty(true); }
-    public final void setMindEncumbrance(int value) { attribBonus.set(CreatureAttribute.Mind, value); setDirty(true); }
-    public final void setFocusEncumbrance(int value) { attribBonus.set(CreatureAttribute.Focus, value); setDirty(true); }
-    public final void setWillpowerEncumbrance(int value) { attribBonus.set(CreatureAttribute.Willpower, value); setDirty(true); }
+    public final int getStrengthEncumbrance() {
+        return attribBonus.get(CreatureAttribute.STRENGTH);
+    }
+
+    public final int getConstitutionEncumbrance() {
+        return attribBonus.get(CreatureAttribute.CONSTITUTION);
+    }
+
+    public final int getActionEncumbrance() {
+        return attribBonus.get(CreatureAttribute.ACTION);
+    }
+
+    public final int getQuicknessEncumbrance() {
+        return attribBonus.get(CreatureAttribute.QUICKNESS);
+    }
+
+    public final int getStaminaEncumbrance() {
+        return attribBonus.get(CreatureAttribute.STAMINA);
+    }
+
+    public final int getMindEncumbrance() {
+        return attribBonus.get(CreatureAttribute.MIND);
+    }
+
+    public final int getFocusEncumbrance() {
+        return attribBonus.get(CreatureAttribute.FOCUS);
+    }
+
+    public final int getWillpowerEncumbrance() {
+        return attribBonus.get(CreatureAttribute.WILLPOWER);
+    }
+
+    public final void setHealthEncumbrance(int value) {
+        attribBonus.set(CreatureAttribute.HEALTH, value);
+        setDirty(true);
+    }
+
+    public final void setStrengthEncumbrance(int value) {
+        attribBonus.set(CreatureAttribute.STRENGTH, value);
+        setDirty(true);
+    }
+
+    public final void setConstitutionEncumbrance(int value) {
+        attribBonus.set(CreatureAttribute.CONSTITUTION, value);
+        setDirty(true);
+    }
+
+    public final void setActionEncumbrance(int value) {
+        attribBonus.set(CreatureAttribute.ACTION, value);
+        setDirty(true);
+    }
+
+    public final void setQuicknessEncumbrance(int value) {
+        attribBonus.set(CreatureAttribute.QUICKNESS, value);
+        setDirty(true);
+    }
+
+    public final void setStaminaEncumbrance(int value) {
+        attribBonus.set(CreatureAttribute.STAMINA, value);
+        setDirty(true);
+    }
+
+    public final void setMindEncumbrance(int value) {
+        attribBonus.set(CreatureAttribute.MIND, value);
+        setDirty(true);
+    }
+
+    public final void setFocusEncumbrance(int value) {
+        attribBonus.set(CreatureAttribute.FOCUS, value);
+        setDirty(true);
+    }
+
+    public final void setWillpowerEncumbrance(int value) {
+        attribBonus.set(CreatureAttribute.WILLPOWER, value);
+        setDirty(true);
+    }
 
     //ham
-    public final int getHealth() { return attributes.get(CreatureAttribute.Health); }
-    public final int getStrength() { return attributes.get(CreatureAttribute.Strength); }
-    public final int getConstitution() { return attributes.get(CreatureAttribute.Constitution); }
-    public final int getAction() { return attributes.get(CreatureAttribute.Action); }
-    public final int getQuickness() { return attributes.get(CreatureAttribute.Quickness); }
-    public final int getStamina() { return attributes.get(CreatureAttribute.Stamina); }
-    public final int getMind() { return attributes.get(CreatureAttribute.Mind); }
-    public final int getFocus() { return attributes.get(CreatureAttribute.Focus); }
-    public final int getWillpower() { return attributes.get(CreatureAttribute.Willpower); }
+    public final int getHealth() {
+        return attributes.get(CreatureAttribute.HEALTH);
+    }
 
-    public final void setAttributes(Collection<Integer> value) { attributes.set(value); setDirty(true); }
-    public final void setHealth(int value) { attributes.set(CreatureAttribute.Health, value); setDirty(true); }
-    public final void setStrength(int value) { attributes.set(CreatureAttribute.Strength, value); setDirty(true); }
-    public final void setConstitution(int value) { attributes.set(CreatureAttribute.Constitution, value); setDirty(true); }
-    public final void setAction(int value) { attributes.set(CreatureAttribute.Action, value); setDirty(true); }
-    public final void setQuickness(int value) { attributes.set(CreatureAttribute.Quickness, value); setDirty(true); }
-    public final void setStamina(int value) { attributes.set(CreatureAttribute.Stamina, value); setDirty(true); }
-    public final void setMind(int value) { attributes.set(CreatureAttribute.Mind, value); setDirty(true); }
-    public final void setFocus(int value) { attributes.set(CreatureAttribute.Focus, value); setDirty(true); }
-    public final void setWillpower(int value) { attributes.set(CreatureAttribute.Willpower, value); setDirty(true); }
+    public final int getStrength() {
+        return attributes.get(CreatureAttribute.STRENGTH);
+    }
+
+    public final int getConstitution() {
+        return attributes.get(CreatureAttribute.CONSTITUTION);
+    }
+
+    public final int getAction() {
+        return attributes.get(CreatureAttribute.ACTION);
+    }
+
+    public final int getQuickness() {
+        return attributes.get(CreatureAttribute.QUICKNESS);
+    }
+
+    public final int getStamina() {
+        return attributes.get(CreatureAttribute.STAMINA);
+    }
+
+    public final int getMind() {
+        return attributes.get(CreatureAttribute.MIND);
+    }
+
+    public final int getFocus() {
+        return attributes.get(CreatureAttribute.FOCUS);
+    }
+
+    public final int getWillpower() {
+        return attributes.get(CreatureAttribute.WILLPOWER);
+    }
+
+    public final void setAttributes(TIntList value) {
+        attributes.set(value);
+        setDirty(true);
+    }
+
+    public final void setHealth(int value) {
+        attributes.set(CreatureAttribute.HEALTH, value);
+        setDirty(true);
+    }
+
+    public final void setStrength(int value) {
+        attributes.set(CreatureAttribute.STRENGTH, value);
+        setDirty(true);
+    }
+
+    public final void setConstitution(int value) {
+        attributes.set(CreatureAttribute.CONSTITUTION, value);
+        setDirty(true);
+    }
+
+    public final void setAction(int value) {
+        attributes.set(CreatureAttribute.ACTION, value);
+        setDirty(true);
+    }
+
+    public final void setQuickness(int value) {
+        attributes.set(CreatureAttribute.QUICKNESS, value);
+        setDirty(true);
+    }
+
+    public final void setStamina(int value) {
+        attributes.set(CreatureAttribute.STAMINA, value);
+        setDirty(true);
+    }
+
+    public final void setMind(int value) {
+        attributes.set(CreatureAttribute.MIND, value);
+        setDirty(true);
+    }
+
+    public final void setFocus(int value) {
+        attributes.set(CreatureAttribute.FOCUS, value);
+        setDirty(true);
+    }
+
+    public final void setWillpower(int value) {
+        attributes.set(CreatureAttribute.WILLPOWER, value);
+        setDirty(true);
+    }
 
     //hamMax
-    public final int getHealthMax() { return maxAttributes.get(CreatureAttribute.Health); }
-    public final int getStrengthMax() { return maxAttributes.get(CreatureAttribute.Strength); }
-    public final int getConstitutionMax() { return maxAttributes.get(CreatureAttribute.Constitution); }
-    public final int getActionMax() { return maxAttributes.get(CreatureAttribute.Action); }
-    public final int getQuicknessMax() { return maxAttributes.get(CreatureAttribute.Quickness); }
-    public final int getStaminaMax() { return maxAttributes.get(CreatureAttribute.Stamina); }
-    public final int getMindMax() { return maxAttributes.get(CreatureAttribute.Mind); }
-    public final int getFocusMax() { return maxAttributes.get(CreatureAttribute.Focus); }
-    public final int getWillpowerMax() { return maxAttributes.get(CreatureAttribute.Willpower); }
+    public final int getHealthMax() {
+        return maxAttributes.get(CreatureAttribute.HEALTH);
+    }
 
-    public final void setMaxAttributes(Collection<Integer> value) { maxAttributes.set(value); setDirty(true); }
-    public final void setHealthMax(int value) { maxAttributes.set(CreatureAttribute.Health, value); setDirty(true); }
-    public final void setStrengthMax(int value) { maxAttributes.set(CreatureAttribute.Strength, value); setDirty(true); }
-    public final void setConstitutionMax(int value) { maxAttributes.set(CreatureAttribute.Constitution, value); setDirty(true); }
-    public final void setActionMax(int value) { maxAttributes.set(CreatureAttribute.Action, value); setDirty(true); }
-    public final void setQuicknessMax(int value) { maxAttributes.set(CreatureAttribute.Quickness, value); setDirty(true); }
-    public final void setStaminaMax(int value) { maxAttributes.set(CreatureAttribute.Stamina, value); setDirty(true); }
-    public final void setMindMax(int value) { maxAttributes.set(CreatureAttribute.Mind, value); setDirty(true); }
-    public final void setFocusMax(int value) { maxAttributes.set(CreatureAttribute.Focus, value); setDirty(true); }
-    public final void setWillpowerMax(int value) { maxAttributes.set(CreatureAttribute.Willpower, value); setDirty(true); }
+    public final int getStrengthMax() {
+        return maxAttributes.get(CreatureAttribute.STRENGTH);
+    }
+
+    public final int getConstitutionMax() {
+        return maxAttributes.get(CreatureAttribute.CONSTITUTION);
+    }
+
+    public final int getActionMax() {
+        return maxAttributes.get(CreatureAttribute.ACTION);
+    }
+
+    public final int getQuicknessMax() {
+        return maxAttributes.get(CreatureAttribute.QUICKNESS);
+    }
+
+    public final int getStaminaMax() {
+        return maxAttributes.get(CreatureAttribute.STAMINA);
+    }
+
+    public final int getMindMax() {
+        return maxAttributes.get(CreatureAttribute.MIND);
+    }
+
+    public final int getFocusMax() {
+        return maxAttributes.get(CreatureAttribute.FOCUS);
+    }
+
+    public final int getWillpowerMax() {
+        return maxAttributes.get(CreatureAttribute.WILLPOWER);
+    }
+
+    public final void setMaxAttributes(TIntList value) {
+        maxAttributes.set(value);
+        setDirty(true);
+    }
+
+    public final void setHealthMax(int value) {
+        maxAttributes.set(CreatureAttribute.HEALTH, value);
+        setDirty(true);
+    }
+
+    public final void setStrengthMax(int value) {
+        maxAttributes.set(CreatureAttribute.STRENGTH, value);
+        setDirty(true);
+    }
+
+    public final void setConstitutionMax(int value) {
+        maxAttributes.set(CreatureAttribute.CONSTITUTION, value);
+        setDirty(true);
+    }
+
+    public final void setActionMax(int value) {
+        maxAttributes.set(CreatureAttribute.ACTION, value);
+        setDirty(true);
+    }
+
+    public final void setQuicknessMax(int value) {
+        maxAttributes.set(CreatureAttribute.QUICKNESS, value);
+        setDirty(true);
+    }
+
+    public final void setStaminaMax(int value) {
+        maxAttributes.set(CreatureAttribute.STAMINA, value);
+        setDirty(true);
+    }
+
+    public final void setMindMax(int value) {
+        maxAttributes.set(CreatureAttribute.MIND, value);
+        setDirty(true);
+    }
+
+    public final void setFocusMax(int value) {
+        maxAttributes.set(CreatureAttribute.FOCUS, value);
+        setDirty(true);
+    }
+
+    public final void setWillpowerMax(int value) {
+        maxAttributes.set(CreatureAttribute.WILLPOWER, value);
+        setDirty(true);
+    }
 
     public final float getRunSpeed() { return runSpeed.get(); }
     public final float setWalkSpeed() { return walkSpeed.get(); }

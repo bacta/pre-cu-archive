@@ -1,0 +1,30 @@
+//This code is the user defined code for SharedObjectTemplate until I add user defined sections to the template writer.
+
+	//@TDF-USER-START
+	private ArrangementDescriptor arrangementDescriptor;
+	private SlotDescriptor slotDescriptor;
+
+	public ArrangementDescriptor getArrangementDescriptor() { return arrangementDescriptor; }
+	public SlotDescriptor getSlotDescriptor() { return slotDescriptor; }
+
+	public void setArrangementDescriptor(final ArrangementDescriptor arrangementDescriptor) {
+		this.arrangementDescriptor = arrangementDescriptor;
+	}
+
+	public void setSlotDescriptor(final SlotDescriptor slotDescriptor) {
+		this.slotDescriptor = slotDescriptor;
+	}
+
+	@Override
+	protected void postLoad() {
+		//TODO: Instead of storing a reference to arrangementDescriptorList and slotDescriptorList just for
+		//this one method, we will create setters, and allot it to be set after creation, externally.
+		//if (slotFilename != null && !slotFilename.isEmpty())
+		//	slotDescriptor = slotDescriptorList.fetch(slotFilename);
+
+		//if (arrangementFilename != null && !arrangementFilename.isEmpty())
+		//	arrangementDescriptor = arrangementDescriptorList.fetch(arrangementFilename);
+
+		//load the client data file?!
+	}
+	//@TDF-USER-END

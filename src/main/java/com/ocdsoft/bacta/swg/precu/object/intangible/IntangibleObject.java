@@ -2,13 +2,24 @@ package com.ocdsoft.bacta.swg.precu.object.intangible;
 
 import com.ocdsoft.bacta.swg.precu.object.ServerObject;
 import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaInt;
+import com.ocdsoft.bacta.swg.precu.object.template.server.ServerIntangibleObjectTemplate;
 
-public abstract class IntangibleObject extends ServerObject {
-    @Override
-    public int getObjectType() {
-        return 0x49544E4F;
-    } //'ITNO'
+public class IntangibleObject extends ServerObject {
+    private final AutoDeltaInt count;
 
-    // IntangibleObject03
-    private final AutoDeltaInt count = new AutoDeltaInt(0, sharedPackage);
+    public IntangibleObject(final ServerIntangibleObjectTemplate template) {
+        super(template, false);
+
+        count = new AutoDeltaInt(template.getCount());
+
+        sharedPackage.addVariable(count);
+    }
+
+    public enum TheaterLocationType {
+        NONE,
+        GET_GOOD_LOCATION,
+        FLATTEN
+    }
+
+    ;
 }

@@ -1,16 +1,12 @@
 package com.ocdsoft.bacta.swg.precu.object.intangible.mission;
 
 import com.ocdsoft.bacta.swg.precu.object.intangible.IntangibleObject;
+import com.ocdsoft.bacta.swg.precu.object.template.server.ServerMissionObjectTemplate;
 
 /**
  * Created by crush on 9/4/2014.
  */
 public class MissionObject extends IntangibleObject {
-    @Override
-    public int getObjectType() {
-        return 0x4D49534F;
-    } //'MISO'
-
     //private final AutoDeltaVariable<StringId> description;
     //private final AutoDeltaInt difficulty;
     //private final AutoDeltaVariable<Vector> location;
@@ -23,4 +19,8 @@ public class MissionObject extends IntangibleObject {
     //private final AutoDeltaInt status;
     //private final AutoDeltaString targetName;
     //private final AutoDeltaVariable<Waypoint> waypoint;
+
+    public MissionObject(final ServerMissionObjectTemplate template) {
+        super(template);
+    }
 }

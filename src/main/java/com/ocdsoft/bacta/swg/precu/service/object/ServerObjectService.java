@@ -31,7 +31,6 @@ public class ServerObjectService implements ObjectService<ServerObject> {
     private TLongObjectMap<ServerObject> internalMap = new TLongObjectHashMap<>();
 
     private Set<ServerObject> dirtyList = Collections.newSetFromMap(new ConcurrentHashMap<>());
-    private OnDirtyCallbackBase onDirtyCallback = new SceneObjectServiceOnDirtyCallback();
 
     private final NetworkObjectFactory networkObjectFactory;
     private final int deltaUpdateInterval;
@@ -61,9 +60,11 @@ public class ServerObjectService implements ObjectService<ServerObject> {
         Class<? extends ServerObject> objectClass = objectTemplateService.getClassForTemplate(template);
 
         T newObject = (T) networkObjectFactory.createNetworkObject(objectClass);
+
         if (template instanceof SharedObjectTemplate)
             newObject.setSharedTemplate((SharedObjectTemplate) template);
-        newObject.setOnDirtyCallback(onDirtyCallback);
+
+        newObject.setOnDirtyCallback(new ServerObjectServiceOnDirtyCallback(newObject));
 
         loadTemplateData(creator, newObject);
 
@@ -142,11 +143,16 @@ public class ServerObjectService implements ObjectService<ServerObject> {
         }
     }
 
-    private class SceneObjectServiceOnDirtyCallback implements OnDirtyCallbackBase {
+    private final class ServerObjectServiceOnDirtyCallback implements OnDirtyCallbackBase {
+        private final ServerObject serverObject;
+
+        public ServerObjectServiceOnDirtyCallback(final ServerObject serverObject) {
+            this.serverObject = serverObject;
+        }
 
         @Override
-        public void onDirty(ServerObject sceneObject) {
-            dirtyList.add(sceneObject);
+        public void onDirty() {
+            dirtyList.add(serverObject);
         }
 
     }

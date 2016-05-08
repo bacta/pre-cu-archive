@@ -4,7 +4,13 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import com.ocdsoft.bacta.swg.precu.message.game.scene.UpdateTransformMessage;
 import com.ocdsoft.bacta.swg.precu.object.ServerObject;
-import com.ocdsoft.bacta.swg.precu.object.archive.delta.*;
+import com.ocdsoft.bacta.swg.precu.object.UpdateTransformCallback;
+import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaBoolean;
+import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaInt;
+import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaString;
+import com.ocdsoft.bacta.swg.precu.object.archive.delta.set.AutoDeltaIntSet;
+import com.ocdsoft.bacta.swg.precu.object.archive.delta.set.AutoDeltaLongSet;
+import com.ocdsoft.bacta.swg.precu.object.template.server.ServerTangibleObjectTemplate;
 import com.ocdsoft.bacta.swg.precu.zone.Zone;
 import com.ocdsoft.bacta.swg.shared.math.Transform;
 import lombok.Getter;
@@ -15,39 +21,6 @@ import org.magnos.steer.vec.Vec3;
 import java.util.Set;
 
 public class TangibleObject extends ServerObject implements SteerSubject<Vec3> {
-
-    public static final class Conditions {
-        public final static int onOff = 0x1;
-        public final static int vendor = 0x2;
-        public final static int insured = 0x4;
-        public final static int conversable = 0x8;
-        public final static int hibernating = 0x10;
-        public final static int magicItem = 0x20;
-        public final static int aggressive = 0x40;
-        public final static int wantSawAttackTrigger = 0x80;
-        public final static int invulnerable = 0x100;
-        public final static int disabled = 0x200;
-        public final static int uninsurable = 0x400;
-        public final static int interesting = 0x800;
-        public final static int mount = 0x1000;
-        public final static int crafted = 0x2000;
-        public final static int wingsOpened = 0x4000;
-        public final static int spaceInteresting = 0x8000;
-        public final static int docking = 0x10000;
-        public final static int destroying = 0x20000;
-        public final static int commable = 0x40000;
-        public final static int dockable = 0x80000;
-        public final static int eject = 0x100000;
-        public final static int inspectable = 0x200000;
-        public final static int transferable = 0x400000;
-        public final static int inflightTutorial = 0x800000;
-        public final static int spaceCombatMusic = 0x1000000;
-        public final static int encounterLocked = 0x2000000;
-        public final static int spawnedCreature = 0x4000000;
-        public final static int holidayInteresting = 0x8000000;
-        public final static int locked = 0x10000000;
-    }
-
     @Override
     public int getObjectType() {
         return 0x54414E4F;
@@ -56,50 +29,96 @@ public class TangibleObject extends ServerObject implements SteerSubject<Vec3> {
     public static transient ImmutableSet<TangibleObject> NO_NEAR_OBJECTS = ImmutableSet.copyOf(new TangibleObject[0]);
 
     private transient ImmutableSet<TangibleObject> nearObjects = NO_NEAR_OBJECTS;
-    @Setter @Getter protected transient Zone zone = null;
-    @Getter protected String zoneName = "";
-    @Getter @Setter private transient int movementCounter = 0;
-    @Getter @Setter private transient boolean inert = true;
+    @Setter
+    @Getter
+    protected transient Zone zone = null;
+    @Getter
+    protected String zoneName = "";
+    @Getter
+    @Setter
+    private transient int movementCounter = 0;
+    @Getter
+    @Setter
+    private transient boolean inert = true;
 
-    //TangibleObjectMessage03
+    private String customAppearnce;
+    //private LocationData locationTargets
+    //private long ownerId;
+    //private List<PvpEnemy> pvpEnemies;
+
+    private final AutoDeltaInt pvpFaction;
+    private final AutoDeltaInt pvpType;
     private final AutoDeltaString appearanceData;
-    private final AutoDeltaSet<Integer> components;
+    private final AutoDeltaIntSet components;
     private final AutoDeltaInt condition;
     private final AutoDeltaInt count;
     private final AutoDeltaInt damageTaken;
     private final AutoDeltaInt maxHitPoints;
     private final AutoDeltaBoolean visible;
+    private final AutoDeltaBoolean inCombat;
+    private final AutoDeltaLongSet passiveRevealPlayerCharacter;
+    private final AutoDeltaInt mapColorOverride;
+    private final AutoDeltaLongSet accessList;
+    private final AutoDeltaIntSet guildAccessList;
+    //private final AutoDeltaMap effectsMap;
 
-    //TangibleObjectMessage06
-    private final AutoDeltaVector<Long> defenderList; //accessList?
 
-    //TangibleObjectMessage07
-    private final AutoDeltaLong craftingSessionManufacturingSchematic;
-    private final AutoDeltaLong craftingSessionPrototype;
+    public TangibleObject(final ServerTangibleObjectTemplate template) {
+        super(template, false);
 
-    protected TangibleObject() {
-        appearanceData = new AutoDeltaString("", sharedPackage);
-        components = new AutoDeltaSet<>(sharedPackage);
-        condition = new AutoDeltaInt(0, sharedPackage);
-        count = new AutoDeltaInt(0, sharedPackage);
-        damageTaken = new AutoDeltaInt(0, sharedPackage);
-        maxHitPoints = new AutoDeltaInt(0, sharedPackage);
-        visible = new AutoDeltaBoolean(false, sharedPackage);
+        pvpFaction = new AutoDeltaInt();
+        pvpType = new AutoDeltaInt();
+        appearanceData = new AutoDeltaString("");
+        components = new AutoDeltaIntSet();
+        condition = new AutoDeltaInt();
+        count = new AutoDeltaInt();
+        damageTaken = new AutoDeltaInt();
+        maxHitPoints = new AutoDeltaInt();
+        visible = new AutoDeltaBoolean();
+        inCombat = new AutoDeltaBoolean();
+        passiveRevealPlayerCharacter = new AutoDeltaLongSet();
+        mapColorOverride = new AutoDeltaInt();
+        accessList = new AutoDeltaLongSet();
+        guildAccessList = new AutoDeltaIntSet();
+        //effectsMap = new AutoDeltaMap<>(sharedPackageNp);
 
-        defenderList = new AutoDeltaVector<Long>(sharedPackageNp);
+        //DID Pre-CU really send this, or was it a mistake?
+        //defenderList = new AutoDeltaVector<>(sharedPackageNp);
 
-        craftingSessionManufacturingSchematic = new AutoDeltaLong(0L, uiPackage);
-        craftingSessionPrototype = new AutoDeltaLong(0L, uiPackage);
+        //This stuff comes from the Synchronized Ui if it is set.
+        //craftingSessionManufacturingSchematic = new AutoDeltaLong(0L, uiPackage);
+        //craftingSessionPrototype = new AutoDeltaLong(0L, uiPackage);
+
+        sharedPackage.addVariable(pvpFaction);
+        sharedPackage.addVariable(pvpType);
+        sharedPackage.addVariable(appearanceData);
+        sharedPackage.addVariable(components);
+        sharedPackage.addVariable(condition);
+        sharedPackage.addVariable(count);
+        sharedPackage.addVariable(damageTaken);
+        sharedPackage.addVariable(maxHitPoints);
+        sharedPackage.addVariable(visible);
+        sharedPackage.addVariable(inCombat);
+        sharedPackageNp.addVariable(passiveRevealPlayerCharacter);
+        sharedPackageNp.addVariable(mapColorOverride);
+        sharedPackageNp.addVariable(accessList);
+        sharedPackageNp.addVariable(guildAccessList);
+        //sharedPackageNp.addVariable(effectsMap);
     }
-
 
 
     public TangibleObject[] getNearObjects() {
         return nearObjects.toArray(new TangibleObject[nearObjects.size()]);
     }
 
-    public String getAppearanceData() { return appearanceData.get(); }
-    public void setAppearanceData(final String appearanceData) { this.appearanceData.set(appearanceData); setDirty(true); }
+    public String getAppearanceData() {
+        return appearanceData.get();
+    }
+
+    public void setAppearanceData(final String appearanceData) {
+        this.appearanceData.set(appearanceData);
+        setDirty(true);
+    }
 
     public final void setPosition(final Transform transform, boolean updateZone) {
         super.setTransform(transform);
@@ -142,7 +161,7 @@ public class TangibleObject extends ServerObject implements SteerSubject<Vec3> {
     }
 
     private ImmutableSet<TangibleObject> getUpdatedNearObjects() {
-        if(zone == null) {
+        if (zone == null) {
             return NO_NEAR_OBJECTS;
         }
 
@@ -158,7 +177,7 @@ public class TangibleObject extends ServerObject implements SteerSubject<Vec3> {
 
     public void addInRangeObject(TangibleObject tano) {
 
-        if(tano.getConnection() != null && listeners.add(tano.getConnection())) {
+        if (tano.getConnection() != null && listeners.add(tano.getConnection())) {
 
             if (getConnection() != null) {
                 tano.sendTo(getConnection());
@@ -170,7 +189,7 @@ public class TangibleObject extends ServerObject implements SteerSubject<Vec3> {
 
     public void removeInRangeObject(TangibleObject tano) {
 
-        if(tano.getConnection() != null && listeners.remove(tano.getConnection())) {
+        if (tano.getConnection() != null && listeners.remove(tano.getConnection())) {
             if (getConnection() != null) {
                 tano.sendDestroyTo(getConnection());
             }
@@ -243,6 +262,7 @@ public class TangibleObject extends ServerObject implements SteerSubject<Vec3> {
     public Vec3 getVelocity() {
         return null;
     }
+
     @Override
     public float getMaximumVelocity() {
         return 0;

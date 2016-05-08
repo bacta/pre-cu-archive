@@ -17,10 +17,11 @@ import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaFloat;
 import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaInt;
 import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaVariable;
 import com.ocdsoft.bacta.swg.precu.object.cell.CellObject;
+import com.ocdsoft.bacta.swg.precu.object.template.server.ServerObjectTemplate;
 import com.ocdsoft.bacta.swg.precu.object.template.shared.SharedObjectTemplate;
+import com.ocdsoft.bacta.swg.precu.synchronizedui.ServerSynchronizedUi;
 import com.ocdsoft.bacta.swg.shared.container.ContainedByProperty;
 import com.ocdsoft.bacta.swg.shared.container.Container;
-import com.ocdsoft.bacta.swg.shared.foundation.ConstCharCrcLowerString;
 import com.ocdsoft.bacta.swg.shared.math.Transform;
 import com.ocdsoft.bacta.swg.shared.object.GameObject;
 import lombok.Getter;
@@ -34,15 +35,50 @@ import java.util.Set;
 
 
 public abstract class ServerObject extends GameObject implements Subject<ObservableGameEvent> {
-
     private static final transient Logger LOGGER = LoggerFactory.getLogger(ServerObject.class);
 
-    private static final ConstCharCrcLowerString TEMPLATE_NAME = new ConstCharCrcLowerString("object/object/base/shared_object_default.iff");
+    private static SharedObjectTemplate DEFAULT_SHARED_TEMPLATE; //Gets set by a startup service.
 
-    /**
-     * Template to use if no shared template is given.
-     */
-    private static SharedObjectTemplate defaultSharedTemplate;
+    private final AutoDeltaInt bankBalance;
+    private final AutoDeltaInt cashBalance;
+    private final AutoDeltaFloat complexity;
+    private final AutoDeltaVariable<StringId> nameStringId;
+    private final AutoDeltaVariable<UnicodeString> objectName;
+    private final AutoDeltaInt volume;
+    private final AutoDeltaInt authServerProcessId;
+    private final AutoDeltaVariable<StringId> descriptionStringId;
+
+    private ServerSynchronizedUi synchornizedUi;
+
+    public ServerObject(final ServerObjectTemplate template,
+                        final boolean hyperspaceOnCreate) {
+
+        //DO NOT CHANGE ORDER OF PACKAGE MEMBERS. IT MATTERS.
+        bankBalance = new AutoDeltaInt(0);
+        cashBalance = new AutoDeltaInt(0);
+        complexity = new AutoDeltaFloat(template.getComplexity());
+        nameStringId = new AutoDeltaVariable<>(StringId.INVALID, StringId::new);
+        objectName = new AutoDeltaVariable<>(UnicodeString.EMPTY, UnicodeString::new);
+        volume = new AutoDeltaInt(template.getVolume());
+        descriptionStringId = new AutoDeltaVariable<>(StringId.INVALID, StringId::new);
+        authServerProcessId = new AutoDeltaInt();
+
+        listeners = Collections.synchronizedSet(new HashSet<>());
+        eventRegistry = new ObservableEventRegistry<>();
+
+        setLocalFlag(ServerObject.LocalObjectFlags.HYPERSPACE_ON_CREATE, hyperspaceOnCreate);
+        setLocalFlag(ServerObject.LocalObjectFlags.HYPERSPACE_ON_DESTRUCT, false);
+
+        authoritativeClientServerPackage.addVariable(bankBalance);
+        authoritativeClientServerPackage.addVariable(cashBalance);
+        sharedPackage.addVariable(complexity);
+        sharedPackage.addVariable(nameStringId);
+        sharedPackage.addVariable(objectName);
+        sharedPackage.addVariable(volume);
+        sharedPackage.addVariable(descriptionStringId);
+        sharedPackageNp.addVariable(authServerProcessId);
+    }
+
 
     @Getter
     private transient boolean initialized = false;
@@ -68,77 +104,18 @@ public abstract class ServerObject extends GameObject implements Subject<Observa
 
     private transient int localFlags;
 
-    @Getter
-    protected transient final AutoDeltaByteStream authoritativeClientServerPackage = new AutoDeltaByteStream(this); //1
-    @Getter
-    protected transient final AutoDeltaByteStream authoritativeClientServerPackageNp = new AutoDeltaByteStream(this); //4
-    @Getter
-    protected transient final AutoDeltaByteStream firstParentAuthClientServerPackage = new AutoDeltaByteStream(this); //8
-    @Getter
-    protected transient final AutoDeltaByteStream firstParentAuthClientServerPackageNp = new AutoDeltaByteStream(this); //9
-    @Getter
-    protected transient final AutoDeltaByteStream sharedPackage = new AutoDeltaByteStream(this); //3
-    @Getter
-    protected transient final AutoDeltaByteStream sharedPackageNp = new AutoDeltaByteStream(this); //6
-    @Getter
-    protected transient final AutoDeltaByteStream uiPackage = new AutoDeltaByteStream(this); //7
+    protected transient final AutoDeltaByteStream authoritativeClientServerPackage = new AutoDeltaByteStream();
+    protected transient final AutoDeltaByteStream authoritativeClientServerPackageNp = new AutoDeltaByteStream();
+    protected transient final AutoDeltaByteStream firstParentAuthClientServerPackage = new AutoDeltaByteStream();
+    protected transient final AutoDeltaByteStream firstParentAuthClientServerPackageNp = new AutoDeltaByteStream();
+    protected transient final AutoDeltaByteStream sharedPackage = new AutoDeltaByteStream();
+    protected transient final AutoDeltaByteStream sharedPackageNp = new AutoDeltaByteStream();
+    protected transient final AutoDeltaByteStream uiPackage = new AutoDeltaByteStream();
 
-    /**
-     * Volume this object takes up in its container.
-     */
-    private final AutoDeltaInt volume;
-    /**
-     * Difficulty crafting or manufacturing this object.
-     */
-    private final AutoDeltaFloat complexity;
-    /**
-     * Name for this object. For players, this is their character name. Overrides the nameStringId.
-     */
-    private final AutoDeltaVariable<UnicodeString> objectName;
-    /**
-     * Name for this object. It is overridden by the existence of {@link ServerObject#objectName}.
-     */
-    private final AutoDeltaVariable<StringId> nameStringId;
-    /**
-     * Description for this object.
-     */
-    //private final AutoDeltaVariable<StringId> descriptionStringId;
-    /**
-     * How much money this object has in its bank account.
-     */
-    private final AutoDeltaInt balanceBank;
-    /**
-     * How much money this object has in cash.
-     */
-    private final AutoDeltaInt balanceCash;
-    /**
-     * The process id on the auth server.
-     */
-    private final AutoDeltaInt authServerProcessId;
+    int gameObjectType;
 
-    private int gameObjectType;
+    SharedObjectTemplate sharedTemplate;
 
-    /**
-     * Template shared between client and server.
-     */
-    private SharedObjectTemplate sharedTemplate;
-
-    protected ServerObject() {
-        listeners = Collections.synchronizedSet(new HashSet<>());
-        connection = null;
-
-        balanceBank = new AutoDeltaInt(0, authoritativeClientServerPackage);
-        balanceCash = new AutoDeltaInt(0, authoritativeClientServerPackage);
-
-        complexity = new AutoDeltaFloat(1.0f, sharedPackage);
-        nameStringId = new AutoDeltaVariable<>(StringId.INVALID, sharedPackage);
-        objectName = new AutoDeltaVariable<>(UnicodeString.EMPTY, sharedPackage);
-        volume = new AutoDeltaInt(0, sharedPackage);
-
-        authServerProcessId = new AutoDeltaInt(0, sharedPackageNp);
-
-        eventRegistry = new ObservableEventRegistry();
-    }
 
     public final boolean getLocalFlag(final int flag) {
         return (localFlags & (1 << flag)) != 0;
@@ -164,20 +141,20 @@ public abstract class ServerObject extends GameObject implements Subject<Observa
     }
 
     public final int getBalanceBank() {
-        return balanceBank.get();
+        return bankBalance.get();
     }
 
     public final void setBalanceBank(int value) {
-        balanceBank.set(value);
+        bankBalance.set(value);
         setDirty(true);
     }
 
     public final int getBalanceCash() {
-        return balanceCash.get();
+        return cashBalance.get();
     }
 
     public final void setBalanceCash(int value) {
-        balanceCash.set(value);
+        cashBalance.set(value);
         setDirty(true);
     }
 
@@ -296,38 +273,38 @@ public abstract class ServerObject extends GameObject implements Subject<Observa
     }
 
     public final void sendDeltas() {
-        if (authoritativeClientServerPackage.isDirty())
-            broadcastMessage(new DeltasMessage(this, authoritativeClientServerPackage, 1));
+//        if (authoritativeClientServerPackage).isDirty())
+//            broadcastMessage(new DeltasMessage(this, authoritativeClientServerPackage, 1));
+//
+//        if (sharedPackage.isDirty())
+//            getConnection().sendMessage(new DeltasMessage(this, sharedPackage, 3));
+//
+//        if (authoritativeClientServerPackageNp.isDirty())
+//            getConnection().sendMessage(new DeltasMessage(this, authoritativeClientServerPackageNp, 4));
+//
+//        if (sharedPackageNp.isDirty())
+//            broadcastMessage(new DeltasMessage(this, sharedPackageNp, 6));
+//
+//        if (uiPackage.isDirty())
+//            getConnection().sendMessage(new DeltasMessage(this, uiPackage, 7));
+//
+//        if (firstParentAuthClientServerPackage.isDirty())
+//            getConnection().sendMessage(new DeltasMessage(this, firstParentAuthClientServerPackage, 8));
+//
+//        if (firstParentAuthClientServerPackageNp.isDirty())
+//            getConnection().sendMessage(new DeltasMessage(this, firstParentAuthClientServerPackageNp, 9));
 
-        if (sharedPackage.isDirty())
-            getConnection().sendMessage(new DeltasMessage(this, sharedPackage, 3));
-
-        if (authoritativeClientServerPackageNp.isDirty())
-            getConnection().sendMessage(new DeltasMessage(this, authoritativeClientServerPackageNp, 4));
-
-        if (sharedPackageNp.isDirty())
-            broadcastMessage(new DeltasMessage(this, sharedPackageNp, 6));
-
-        if (uiPackage.isDirty())
-            getConnection().sendMessage(new DeltasMessage(this, uiPackage, 7));
-
-        if (firstParentAuthClientServerPackage.isDirty())
-            getConnection().sendMessage(new DeltasMessage(this, firstParentAuthClientServerPackage, 8));
-
-        if (firstParentAuthClientServerPackageNp.isDirty())
-            getConnection().sendMessage(new DeltasMessage(this, firstParentAuthClientServerPackageNp, 9));
-
-        clearDeltas();
+        //clearDeltas();
     }
 
     public final void clearDeltas() {
-        authoritativeClientServerPackage.clearDeltas();
-        authoritativeClientServerPackageNp.clearDeltas();
-        sharedPackage.clearDeltas();
-        sharedPackageNp.clearDeltas();
-        uiPackage.clearDeltas();
-        firstParentAuthClientServerPackage.clearDeltas();
-        firstParentAuthClientServerPackageNp.clearDeltas();
+//        authoritativeClientServerPackage.clearDeltas();
+//        authoritativeClientServerPackageNp.clearDeltas();
+//        sharedPackage.clearDeltas();
+//        sharedPackageNp.clearDeltas();
+//        uiPackage.clearDeltas();
+//        firstParentAuthClientServerPackage.clearDeltas();
+//        firstParentAuthClientServerPackageNp.clearDeltas();
     }
 
     public void setTransform(final Transform transform) {
@@ -368,7 +345,7 @@ public abstract class ServerObject extends GameObject implements Subject<Observa
     public final void broadcastMessage(ObjControllerMessage message, boolean changeReceiver) {
         for (SoeUdpConnection theirConnection : listeners) {
 
-            if(changeReceiver) {
+            if (changeReceiver) {
                 message.setReceiver(theirConnection.getCurrentNetworkId());
             }
             theirConnection.sendMessage(message);
@@ -398,19 +375,14 @@ public abstract class ServerObject extends GameObject implements Subject<Observa
         return null;
     }
 
-    //TODO: Might need a safer way of doing this.
-    public static void setDefaultSharedTemplate(final SharedObjectTemplate template) {
-        defaultSharedTemplate = template;
-    }
-
     /**
      * Returns a shared template if none was given for this object.
      *
      * @return The shared template
      */
     protected static final SharedObjectTemplate getDefaultSharedTemplate() {
-        if (defaultSharedTemplate != null)
-            return defaultSharedTemplate;
+        if (DEFAULT_SHARED_TEMPLATE != null)
+            return DEFAULT_SHARED_TEMPLATE;
 
         throw new IllegalStateException("The default SharedObjectTemplate for ServerObject was not set. See ServerObject.setDefaultSharedTemplate.");
     }
