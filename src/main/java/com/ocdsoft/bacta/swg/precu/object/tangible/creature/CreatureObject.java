@@ -1,42 +1,41 @@
 package com.ocdsoft.bacta.swg.precu.object.tangible.creature;
 
 
+import com.google.inject.Inject;
 import com.ocdsoft.bacta.swg.precu.event.ObservableGameEvent;
 import com.ocdsoft.bacta.swg.precu.message.game.object.PostureMessage;
 import com.ocdsoft.bacta.swg.precu.object.archive.delta.*;
+import com.ocdsoft.bacta.swg.precu.object.archive.delta.map.AutoDeltaIntObjectMap;
+import com.ocdsoft.bacta.swg.precu.object.archive.delta.map.AutoDeltaStringIntMap;
 import com.ocdsoft.bacta.swg.precu.object.archive.delta.map.AutoDeltaStringObjectMap;
+import com.ocdsoft.bacta.swg.precu.object.archive.delta.packedmap.AutoDeltaPackedBuffMap;
 import com.ocdsoft.bacta.swg.precu.object.archive.delta.set.AutoDeltaStringSet;
+import com.ocdsoft.bacta.swg.precu.object.archive.delta.vector.AutoDeltaFloatVector;
 import com.ocdsoft.bacta.swg.precu.object.archive.delta.vector.AutoDeltaIntVector;
 import com.ocdsoft.bacta.swg.precu.object.archive.delta.vector.AutoDeltaObjectVector;
+import com.ocdsoft.bacta.swg.precu.object.buff.Buff;
 import com.ocdsoft.bacta.swg.precu.object.tangible.TangibleObject;
 import com.ocdsoft.bacta.swg.precu.object.template.server.ServerCreatureObjectTemplate;
 import com.ocdsoft.bacta.swg.precu.object.template.shared.SharedCreatureObjectTemplate;
 import com.ocdsoft.bacta.swg.precu.object.template.shared.SharedCreatureObjectTemplate.MovementTypes;
 import com.ocdsoft.bacta.swg.precu.object.universe.group.GroupInviter;
 import com.ocdsoft.bacta.swg.precu.object.universe.group.GroupMissionCriticalObject;
+import com.ocdsoft.bacta.swg.shared.container.SlotIdManager;
+import com.ocdsoft.bacta.swg.shared.object.GameObject;
+import com.ocdsoft.bacta.swg.shared.template.ObjectTemplateList;
 import gnu.trove.list.TIntList;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-
-public final class CreatureObject extends TangibleObject {
-    @Override
-    public int getObjectType() {
-        return 0x4352454F;
-    } //'CREO'
-
+public class CreatureObject extends TangibleObject {
     private final AutoDeltaIntVector unmodifiedMaxAttributes;
     private final AutoDeltaStringSet skills;
     private final AutoDeltaByte posture;
     private final AutoDeltaByte rank;
     private final AutoDeltaLong masterId;
     private final AutoDeltaFloat scaleFactor;
-    private final AutoDeltaInt shockWounds;
     private final AutoDeltaLong states;
     private final AutoDeltaIntVector attributeWounds;
     private final AutoDeltaFloat accelPercent;
     private final AutoDeltaFloat accelScale;
-    private final AutoDeltaIntVector attribBonus;
     private final AutoDeltaStringObjectMap<SkillModEntry> modMap;
     private final AutoDeltaFloat movementPercent;
     private final AutoDeltaFloat movementScale;
@@ -61,12 +60,39 @@ public final class CreatureObject extends TangibleObject {
     private final AutoDeltaInt performanceType;
     private final AutoDeltaIntVector attributes;
     private final AutoDeltaIntVector maxAttributes;
+    private final AutoDeltaIntVector totalAttributes; //The current attributes, with all mods applied.
+    private final AutoDeltaIntVector totalMaxAttributes; //The max attributes, with all mods applied.
+    private final AutoDeltaIntVector attribBonus;
+    private final AutoDeltaInt shockWounds;
     private final AutoDeltaObjectVector<WearableEntry> wearableData;
     private final AutoDeltaString alternateAppearanceSharedObjectTemplateName;
     private final AutoDeltaBoolean coverVisibility;
+    private final AutoDeltaIntObjectMap<Buff.PackedBuff> buffs;
+    private final AutoDeltaPackedBuffMap persistedBuffs;
+    private final AutoDeltaInt hologramType;
+    private final AutoDeltaBoolean clientUsesAnimationLocomotion;
+    private final AutoDeltaByte difficulty;
+    private final AutoDeltaBoolean visibleOnMapAndRadar;
+    private final AutoDeltaStringIntMap commands; //game commands a creature may execute.
+    private final AutoDeltaBoolean isBeast;
+    private final AutoDeltaBoolean forceShowHam;
+    private final AutoDeltaObjectVector<WearableEntry> wearableAppearanceData; //Vector for our appearance items.
+    private final AutoDeltaLong decoyOrigin; //The OID of the player whome we copied for this decoy creature.
+    private final AutoDeltaInt totalLevelXp;
+    private final AutoDeltaInt levelHealthGranted;
+    private final AutoDeltaLong inviterForPendingGroup;
+    private final AutoDeltaIntVector timedMod;
+    private final AutoDeltaFloatVector timedModDuration;
+    private final AutoDeltaIntVector timedModUpdateTime;
+    private final AutoDeltaLong intendedTarget;
+    private final AutoDeltaByte mood;
 
-    public CreatureObject(final ServerCreatureObjectTemplate template) {
-        super(template);
+
+    @Inject
+    public CreatureObject(final ObjectTemplateList objectTempalteList,
+                          final SlotIdManager slotIdManager,
+                          final ServerCreatureObjectTemplate template) {
+        super(objectTempalteList, slotIdManager, template);
 
         unmodifiedMaxAttributes = new AutoDeltaIntVector();
         skills = new AutoDeltaStringSet();
@@ -108,54 +134,97 @@ public final class CreatureObject extends TangibleObject {
         alternateAppearanceSharedObjectTemplateName = new AutoDeltaString();
         coverVisibility = new AutoDeltaBoolean(true);
 
-//        addVariable(unmodifiedMaxAttributes);
-//        addVariable(skills);
-//        addVariable(posture);
-//        addVariable(rank);
-//        addVariable(masterId);
-//        addVariable(scaleFactor);
-//        addVariable(shockWounds);
-//        addVariable(states);
-//        addVariable(attributeWounds);
-//        addVariable(accelPercent);
-//        addVariable(accelScale);
-//        addVariable(attribBonus);
-//        addVariable(modMap);
-//        addVariable(movementPercent);
-//        addVariable(movementScale);
-//        addVariable(performanceListenTarget);
-//        addVariable(runSpeed);
-//        addVariable(slopeModAngle);
-//        addVariable(slopeModPercent);
-//        addVariable(turnScale);
-//        addVariable(walkSpeed);
-//        addVariable(waterModPercent);
-//        addVariable(groupMissionCriticalObjectList);
-//        addVariable(level);
-//        addVariable(animatingSkillData);
-//        addVariable(animationMood);
-//        addVariable(currentWeapon);
-//        addVariable(group);
-//        addVariable(groupInviter);
-//        addVariable(guildId);
-//        addVariable(lookAtTarget);
-//        addVariable(moodId);
-//        addVariable(performanceStartTime);
-//        addVariable(performanceType);
-//        addVariable(attributes);
-//        addVariable(maxAttributes);
-//        addVariable(wearableData);
-//        addVariable(alternateAppearanceSharedObjectTemplateName);
-//        addVariable(coverVisibility);
+        totalAttributes = new AutoDeltaIntVector();
+        totalMaxAttributes = new AutoDeltaIntVector();
+        buffs = new AutoDeltaIntObjectMap<>(Buff.PackedBuff::new);
+        persistedBuffs = new AutoDeltaPackedBuffMap();
+        hologramType = new AutoDeltaInt();
+        clientUsesAnimationLocomotion = new AutoDeltaBoolean();
+        difficulty = new AutoDeltaByte();
+        visibleOnMapAndRadar = new AutoDeltaBoolean();
+        commands = new AutoDeltaStringIntMap();
+        isBeast = new AutoDeltaBoolean();
+        forceShowHam = new AutoDeltaBoolean();
+        wearableAppearanceData = new AutoDeltaObjectVector<>(WearableEntry::new);
+        decoyOrigin = new AutoDeltaLong();
+        totalLevelXp = new AutoDeltaInt();
+        levelHealthGranted = new AutoDeltaInt();
+        inviterForPendingGroup = new AutoDeltaLong();
+        timedMod = new AutoDeltaIntVector();
+        timedModDuration = new AutoDeltaFloatVector();
+        timedModUpdateTime = new AutoDeltaIntVector();
+        intendedTarget = new AutoDeltaLong();
+        mood = new AutoDeltaByte();
     }
 
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
-        in.defaultReadObject();
+    private void addMembersToPackages() {
+        authoritativeClientServerPackage.addVariable(maxAttributes);
+        authoritativeClientServerPackage.addVariable(skills);
+
+        authoritativeClientServerPackageNp.addVariable(accelPercent);
+        authoritativeClientServerPackageNp.addVariable(accelScale);
+        authoritativeClientServerPackageNp.addVariable(attribBonus);
+        authoritativeClientServerPackageNp.addVariable(modMap);
+        authoritativeClientServerPackageNp.addVariable(movementPercent);
+        authoritativeClientServerPackageNp.addVariable(movementScale);
+        authoritativeClientServerPackageNp.addVariable(performanceListenTarget);
+        authoritativeClientServerPackageNp.addVariable(runSpeed);
+        authoritativeClientServerPackageNp.addVariable(slopeModAngle);
+        authoritativeClientServerPackageNp.addVariable(slopeModPercent);
+        authoritativeClientServerPackageNp.addVariable(turnScale);
+        authoritativeClientServerPackageNp.addVariable(walkSpeed);
+        authoritativeClientServerPackageNp.addVariable(waterModPercent);
+        authoritativeClientServerPackageNp.addVariable(groupMissionCriticalObjectList);
+        authoritativeClientServerPackageNp.addVariable(commands);
+        authoritativeClientServerPackageNp.addVariable(totalLevelXp);
+
+        sharedPackage.addVariable(posture);
+        sharedPackage.addVariable(rank);
+        sharedPackage.addVariable(masterId);
+        sharedPackage.addVariable(scaleFactor);
+        sharedPackage.addVariable(shockWounds);
+        sharedPackage.addVariable(states);
+
+        sharedPackageNp.addVariable(level);
+        sharedPackageNp.addVariable(levelHealthGranted);
+        sharedPackageNp.addVariable(animatingSkillData);
+        sharedPackageNp.addVariable(animationMood);
+        sharedPackageNp.addVariable(currentWeapon);
+        sharedPackageNp.addVariable(group);
+        sharedPackageNp.addVariable(groupInviter);
+        sharedPackageNp.addVariable(inviterForPendingGroup);
+        sharedPackageNp.addVariable(guildId);
+        sharedPackageNp.addVariable(lookAtTarget);
+        sharedPackageNp.addVariable(intendedTarget);
+        sharedPackageNp.addVariable(mood);
+        sharedPackageNp.addVariable(performanceStartTime);
+        sharedPackageNp.addVariable(performanceType);
+        sharedPackageNp.addVariable(totalAttributes);
+        sharedPackageNp.addVariable(totalMaxAttributes);
+        sharedPackageNp.addVariable(wearableData);
+        sharedPackageNp.addVariable(alternateAppearanceSharedObjectTemplateName);
+        sharedPackageNp.addVariable(timedMod);
+        sharedPackageNp.addVariable(timedModDuration);
+        sharedPackageNp.addVariable(timedModUpdateTime);
+        sharedPackageNp.addVariable(coverVisibility);
+        sharedPackageNp.addVariable(buffs);
+        sharedPackageNp.addVariable(clientUsesAnimationLocomotion);
+        sharedPackageNp.addVariable(difficulty);
+        sharedPackageNp.addVariable(hologramType);
+        sharedPackageNp.addVariable(visibleOnMapAndRadar);
+        sharedPackageNp.addVariable(isBeast);
+        sharedPackageNp.addVariable(forceShowHam);
+        sharedPackageNp.addVariable(wearableAppearanceData);
+        sharedPackageNp.addVariable(decoyOrigin);
+    }
+
+    public long getMasterId() {
+        return masterId.get();
     }
 
     public final void setPosture(byte posture) {
 
-        if(this.posture.get() == posture) {
+        if (this.posture.get() == posture) {
             return;
         }
 
@@ -171,16 +240,28 @@ public final class CreatureObject extends TangibleObject {
         return this.posture.get();
     }
 
-    public final void addSkill(final String skill) { skills.insert(skill); setDirty(true); }
-    public final void removeSkill(final String skill) { skills.erase(skill); setDirty(true); }
-    public final boolean hasSkill(final String skill) { return skills.contains(skill); }
+    public final void addSkill(final String skill) {
+        skills.insert(skill);
+        setDirty(true);
+    }
+
+    public final void removeSkill(final String skill) {
+        skills.erase(skill);
+        setDirty(true);
+    }
+
+    public final boolean hasSkill(final String skill) {
+        return skills.contains(skill);
+    }
 
     public final void setLookAtTarget(long lookAtTarget) {
         this.lookAtTarget.set(lookAtTarget);
         setDirty(true);
     }
 
-    public final long getLookAtTarget() { return lookAtTarget.get(); }
+    public final long getLookAtTarget() {
+        return lookAtTarget.get();
+    }
 
     //hamBase
     public final int getHealthBase() {
@@ -607,17 +688,86 @@ public final class CreatureObject extends TangibleObject {
         setDirty(true);
     }
 
-    public final float getRunSpeed() { return runSpeed.get(); }
-    public final float setWalkSpeed() { return walkSpeed.get(); }
-    public final float setSlopeModAngle() { return slopeModAngle.get(); }
-    public final float setSlopeModPercent() { return slopeModPercent.get(); }
-    public final float setWaterModPercent() { return waterModPercent.get(); }
-    public final float getScaleFactor() { return scaleFactor.get(); }
+    public final float getRunSpeed() {
+        return runSpeed.get();
+    }
 
-    public final void setRunSpeed(float speed) { runSpeed.set(speed); setDirty(true); }
-    public final void setWalkSpeed(float speed) { walkSpeed.set(speed); setDirty(true); }
-    public final void setSlopeModAngle(float angle) { slopeModAngle.set(angle); setDirty(true); }
-    public final void setSlopeModPercent(float percent) { slopeModPercent.set(percent); setDirty(true); }
-    public final void setWaterModPercent(float percent) { waterModPercent.set(percent); setDirty(true); }
-    public final void setScaleFactor(float value) { scaleFactor.set(value); setDirty(true); }
+    public final float setWalkSpeed() {
+        return walkSpeed.get();
+    }
+
+    public final float setSlopeModAngle() {
+        return slopeModAngle.get();
+    }
+
+    public final float setSlopeModPercent() {
+        return slopeModPercent.get();
+    }
+
+    public final float setWaterModPercent() {
+        return waterModPercent.get();
+    }
+
+    public final float getScaleFactor() {
+        return scaleFactor.get();
+    }
+
+    public final void setRunSpeed(float speed) {
+        runSpeed.set(speed);
+        setDirty(true);
+    }
+
+    public final void setWalkSpeed(float speed) {
+        walkSpeed.set(speed);
+        setDirty(true);
+    }
+
+    public final void setSlopeModAngle(float angle) {
+        slopeModAngle.set(angle);
+        setDirty(true);
+    }
+
+    public final void setSlopeModPercent(float percent) {
+        slopeModPercent.set(percent);
+        setDirty(true);
+    }
+
+    public final void setWaterModPercent(float percent) {
+        waterModPercent.set(percent);
+        setDirty(true);
+    }
+
+    public final void setScaleFactor(float value) {
+        scaleFactor.set(value);
+        setDirty(true);
+    }
+
+    public final boolean isIncapacitated() {
+        final byte posture = getPosture();
+        return (posture == CreaturePosture.INCAPACITATED /*&& !getState(CreatureState.FEIGN_DEATH)*/)
+                || posture == CreaturePosture.DEAD;
+    }
+
+    public final boolean isDead() {
+        return getPosture() == CreaturePosture.DEAD;
+    }
+
+    public boolean isDisabled() {
+        //Check if its a vehicle type or sub type, then super.isDisabled()
+        return (isIncapacitated() || isDead());
+    }
+
+
+    /**
+     * Checks if the provided object is an instanceof CreatureObject, and then casts it. Otherwise returns null.
+     *
+     * @param object The object to cast to CreatureObject.
+     * @return If object is a CreatureObject, then casts it to CreatureObject. Otherwise, returns null.
+     */
+    public static CreatureObject asCreatureObject(final GameObject object) {
+        if (object instanceof CreatureObject)
+            return (CreatureObject) object;
+
+        return null;
+    }
 }

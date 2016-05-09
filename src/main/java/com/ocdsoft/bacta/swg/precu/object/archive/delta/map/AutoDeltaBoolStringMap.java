@@ -3,6 +3,7 @@ package com.ocdsoft.bacta.swg.precu.object.archive.delta.map;
 import com.ocdsoft.bacta.engine.buffer.ByteBufferWritable;
 import com.ocdsoft.bacta.engine.utils.BufferUtil;
 import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaContainer;
+import gnu.trove.iterator.TByteObjectIterator;
 import gnu.trove.map.TByteObjectMap;
 import gnu.trove.map.hash.TByteObjectHashMap;
 
@@ -17,7 +18,7 @@ public class AutoDeltaBoolStringMap extends AutoDeltaContainer {
 
     public AutoDeltaBoolStringMap() {
         this.changes = new ArrayList<>(5);
-        this.container = new TByteObjectHashMap<String>();
+        this.container = new TByteObjectHashMap<>();
         this.baselineCommandCount = 0;
     }
 
@@ -35,8 +36,6 @@ public class AutoDeltaBoolStringMap extends AutoDeltaContainer {
 
     public void erase(final boolean key) {
         final String value = container.get(key ? (byte) 1 : (byte) 0);
-
-
         if (value != null) {
             final Command command = new Command(Command.ERASE, key, value);
             changes.add(command);
@@ -45,14 +44,22 @@ public class AutoDeltaBoolStringMap extends AutoDeltaContainer {
             touch();
             onErase(key, value);
         }
-    }
+        }
 
     public boolean isEmpty() {
         return container.isEmpty();
     }
 
+    public TByteObjectIterator<String> iterator() {
+        return container.iterator();
+    }
+
     public boolean containsKey(final boolean key) {
         return container.containsKey(key ? (byte) 1 : (byte) 0);
+    }
+
+    public String get(final boolean key) {
+        return container.get(key ? (byte) 1 : (byte) 0);
     }
 
     public TByteObjectMap<String> getMap() {
@@ -76,6 +83,7 @@ public class AutoDeltaBoolStringMap extends AutoDeltaContainer {
         return !changes.isEmpty();
     }
 
+    @Override
     public int size() {
         return container.size();
     }
@@ -207,10 +215,10 @@ public class AutoDeltaBoolStringMap extends AutoDeltaContainer {
         //callback
     }
 
-    public final class Command implements ByteBufferWritable {
-        private static final byte ADD = 0x0;
-        private static final byte ERASE = 0x1;
-        private static final byte SET = 0x2;
+    public static class Command implements ByteBufferWritable {
+        public static final byte ADD = 0x0;
+        public static final byte ERASE = 0x1;
+        public static final byte SET = 0x2;
 
         public final byte cmd;
         public final boolean key;
@@ -228,6 +236,7 @@ public class AutoDeltaBoolStringMap extends AutoDeltaContainer {
             this.value = BufferUtil.getAscii(buffer);
         }
 
+        @Override
         public void writeToBuffer(final ByteBuffer buffer) {
             buffer.put(this.cmd);
             BufferUtil.put(buffer, key);

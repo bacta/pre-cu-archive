@@ -1,118 +1,186 @@
 package com.ocdsoft.bacta.swg.precu.object.intangible.player;
 
-import com.ocdsoft.bacta.swg.precu.message.game.outofband.WaypointDataBase;
+import com.google.inject.Inject;
 import com.ocdsoft.bacta.swg.precu.object.archive.delta.*;
 import com.ocdsoft.bacta.swg.precu.object.archive.delta.map.AutoDeltaLongObjectMap;
+import com.ocdsoft.bacta.swg.precu.object.archive.delta.map.AutoDeltaObjectIntMap;
 import com.ocdsoft.bacta.swg.precu.object.archive.delta.map.AutoDeltaStringIntMap;
-import com.ocdsoft.bacta.swg.precu.object.archive.delta.vector.AutoDeltaByteVector;
-import com.ocdsoft.bacta.swg.precu.object.archive.delta.vector.AutoDeltaObjectVector;
+import com.ocdsoft.bacta.swg.precu.object.archive.delta.packedmap.AutoDeltaPackedPlayerQuestDataMap;
+import com.ocdsoft.bacta.swg.precu.object.archive.delta.set.AutoDeltaLongSet;
 import com.ocdsoft.bacta.swg.precu.object.archive.delta.vector.AutoDeltaStringVector;
 import com.ocdsoft.bacta.swg.precu.object.intangible.IntangibleObject;
+import com.ocdsoft.bacta.swg.precu.object.intangible.schematic.DraftSchematicCombinedCrcs;
 import com.ocdsoft.bacta.swg.precu.object.matchmaking.MatchMakingId;
-import com.ocdsoft.bacta.swg.precu.object.tangible.creature.CraftingStage;
 import com.ocdsoft.bacta.swg.precu.object.template.server.ServerPlayerObjectTemplate;
+import com.ocdsoft.bacta.swg.precu.object.waypoint.Waypoint;
+import com.ocdsoft.bacta.swg.shared.container.SlotIdManager;
+import com.ocdsoft.bacta.swg.shared.foundation.BitArray;
+import com.ocdsoft.bacta.swg.shared.template.ObjectTemplateList;
 
 
 public final class PlayerObject extends IntangibleObject {
-    private String biography = "";
+    private String biography;
+    private long houseId;
 
-    private final AutoDeltaVariable<MatchMakingId> matchMakingCharacterProfileId;
-    private final AutoDeltaVariable<MatchMakingId> matchMakingPersonalProfileId;
-    private final AutoDeltaString skillTitle;
-    private final AutoDeltaInt bornDate;
-    private final AutoDeltaInt playedTime;
-
-    private final AutoDeltaByte privilegedTitle;
-
-    private final AutoDeltaStringIntMap experienceList;
-    private final AutoDeltaLongObjectMap<WaypointDataBase> waypointList;
-    private final AutoDeltaInt forcePower;
-    private final AutoDeltaInt forcePowerMax;
-    private final AutoDeltaByteVector fsQuestMask;
-    private final AutoDeltaByteVector fsQuestMaskCompleted;
-    private final AutoDeltaObjectVector<QuestJournalEntry> questJournal;
-
-    private final AutoDeltaStringVector commands;
-    private final AutoDeltaInt experimentationFlag;
-    private final AutoDeltaInt craftingStage;
-    private final AutoDeltaLong craftingStation;
-    private final AutoDeltaObjectVector<DraftSchematicEntry> draftSchematics;
-    private final AutoDeltaInt experimentationPoints;
-    private final AutoDeltaInt accomplishmentCounter;
+    //private StationId stationId;
+    private final AutoDeltaInt accountNumLotsOverLimitSpam; /// controls whether the player should be spammed for exceeding the lot limit
+    private final AutoDeltaObjectIntMap<DraftSchematicCombinedCrcs> draftSchematics; // draft schematics the player may use
+    private final AutoDeltaStringIntMap experiencePoints;   // xp name->amount map
+    private final AutoDeltaInt expModified;        // just a flag that we increment any time the creature is granted new xp
+    private final AutoDeltaInt maxForcePower;      ///< Maximum force power the player can have
+    private final AutoDeltaInt forcePower;         ///< Current force power the player has
+    private float forceRegenRate;     ///< Rate at which the force power regenerates (units/sec)
+    private float forceRegenValue;    ///< Amount of force power that's regenerated
+    private final AutoDeltaInt craftingLevel;           // crafting level of the current crafting session
+    private final AutoDeltaInt experimentPoints;        // experiment points available to the player
+    private final AutoDeltaInt craftingStage;           // what stage in the crafting process a player is in
+    private long craftingTool;         // tool a player is crafting with
+    private final AutoDeltaLong craftingStation;         // station a player is crafting with
+    private final AutoDeltaLong craftingComponentBioLink;// bio-link id of a component
+    private final AutoDeltaVariable<MatchMakingId> matchMakingPersonalProfileId; // What the player defines their personality as
+    private final AutoDeltaVariable<MatchMakingId> matchMakingCharacterProfileId; // What the player defines their character as
     private final AutoDeltaStringVector friendList;
     private final AutoDeltaStringVector ignoreList;
+    private final AutoDeltaString skillTitle;
     private final AutoDeltaInt spokenLanguage;
+    private final AutoDeltaLongObjectMap<Waypoint> waypoints;
+    private final AutoDeltaLongObjectMap<Waypoint> groupWaypoints;
+    private final AutoDeltaInt bornDate;
+    private final AutoDeltaInt playedTime;
     private final AutoDeltaInt food;
     private final AutoDeltaInt maxFood;
     private final AutoDeltaInt drink;
     private final AutoDeltaInt maxDrink;
     private final AutoDeltaInt meds;
     private final AutoDeltaInt maxMeds;
-    private final AutoDeltaLongObjectMap<WaypointDataBase> groupWaypoints;
-    private final AutoDeltaInt jediState;
+    private final AutoDeltaByte privilegedTitle;
+    private final AutoDeltaVariable<BitArray> completedQuests;
+    private final AutoDeltaVariable<BitArray> activeQuests;
+    private final AutoDeltaInt currentQuest;
+    private final AutoDeltaPackedPlayerQuestDataMap quests;
+    private final AutoDeltaInt roleIconChoice;
+    private final AutoDeltaString skillTemplate;
+    private final AutoDeltaString workingSkill;
+    private final AutoDeltaInt currentGcwPoints;
+    private final AutoDeltaInt currentPvpKills;
+    private final AutoDeltaInt lifetimeGcwPoints;
+    private final AutoDeltaInt lifetimePvpKills;
+    private final AutoDeltaInt currentGcwRank;
+    private final AutoDeltaFloat currentGcwRankProgress;
+    private final AutoDeltaInt maxGcwImperialRank;
+    private final AutoDeltaInt maxGcwRebelRank;
+    private final AutoDeltaInt gcwRatingActualCalcTime;
+    private final AutoDeltaLongSet playerHateList;
+    private final AutoDeltaInt killMeter;
+    private final AutoDeltaLong petId;
+    private final AutoDeltaStringVector petCommandList;
+    private final AutoDeltaStringVector petToggledCommands;
+    private final AutoDeltaVariable<BitArray> collections;
+    private final AutoDeltaVariable<BitArray> collections2;
+    private final AutoDeltaString citizenshipCity;
+    private final AutoDeltaByte citizenshipType; // CityDataCitizenType
+    private final AutoDeltaVariable<GcwDefenderRegionQualifications> cityGcwDefenderRegion;
+    private final AutoDeltaVariable<GcwDefenderRegionQualifications> guildGcwDefenderRegion;
+    private final AutoDeltaLong squelchedById;   // id of the toon who squelched this toon; is NetworkId::cms_invalid if this toon is not squelched
+    private final AutoDeltaString squelchedByName; // name of the toon who squelched this toon
+    private final AutoDeltaInt squelchExpireTime; // the Epoch time when the toon will be unsquelched; is < 0 for indefinite squelch
+    private final AutoDeltaBoolean showBackpack;
+    private final AutoDeltaBoolean showHelmet;
+    private final AutoDeltaInt environmentFlags; // Force Day, Night, whatever else.
+    private final AutoDeltaString defaultAttackOverride; // This string will override the user's default attack
+    private final AutoDeltaVariable<BitArray> guildRank;
+    private final AutoDeltaVariable<BitArray> citizenRank;
+    private final AutoDeltaByte galacticReserveDeposit;
+    private final AutoDeltaLong pgcRatingCount;
+    private final AutoDeltaLong pgcRatingTotal;
+    private final AutoDeltaInt pgcLastRatingTime;
 
+    @Inject
+    public PlayerObject(final ObjectTemplateList objectTemplateList,
+                        final SlotIdManager slotIdManager,
+                        final ServerPlayerObjectTemplate template) {
+        super(objectTemplateList, slotIdManager, template);
 
-    public PlayerObject(final ServerPlayerObjectTemplate template) {
-        super(template);
-
-        matchMakingCharacterProfileId = new AutoDeltaVariable<>(MatchMakingId::new);
-        matchMakingPersonalProfileId = new AutoDeltaVariable<>(MatchMakingId::new);
-        skillTitle = new AutoDeltaString("");
-        bornDate = new AutoDeltaInt();
-        playedTime = new AutoDeltaInt();
-
-        privilegedTitle = new AutoDeltaByte(PlayerDataPriviledgedTitle.NORMAL_PLAYER);
-
-        experienceList = new AutoDeltaStringIntMap();
-        waypointList = new AutoDeltaLongObjectMap<>(WaypointDataBase::new);
-        forcePower = new AutoDeltaInt(0);
-        forcePowerMax = new AutoDeltaInt();
-        fsQuestMask = new AutoDeltaByteVector();
-        fsQuestMaskCompleted = new AutoDeltaByteVector();
-        questJournal = new AutoDeltaObjectVector<>(QuestJournalEntry::new);
-
-        commands = new AutoDeltaStringVector();
-        experimentationFlag = new AutoDeltaInt(35);
-        craftingStage = new AutoDeltaInt(CraftingStage.NONE);
+        accountNumLotsOverLimitSpam = new AutoDeltaInt();
+        draftSchematics = new AutoDeltaObjectIntMap<>(DraftSchematicCombinedCrcs::new);
+        experiencePoints = new AutoDeltaStringIntMap();
+        expModified = new AutoDeltaInt();
+        maxForcePower = new AutoDeltaInt();
+        forcePower = new AutoDeltaInt();
+        craftingLevel = new AutoDeltaInt();
+        experimentPoints = new AutoDeltaInt();
+        craftingStage = new AutoDeltaInt();
         craftingStation = new AutoDeltaLong();
-        draftSchematics = new AutoDeltaObjectVector<>(DraftSchematicEntry::new);
-        experimentationPoints = new AutoDeltaInt(8);
-        accomplishmentCounter = new AutoDeltaInt(0);
+        craftingComponentBioLink = new AutoDeltaLong();
+        matchMakingPersonalProfileId = new AutoDeltaVariable<>(MatchMakingId::new);
+        matchMakingCharacterProfileId = new AutoDeltaVariable<>(MatchMakingId::new);
         friendList = new AutoDeltaStringVector();
         ignoreList = new AutoDeltaStringVector();
-        spokenLanguage = new AutoDeltaInt(0);
-        food = new AutoDeltaInt(0);
-        maxFood = new AutoDeltaInt(100);
-        drink = new AutoDeltaInt(0);
-        maxDrink = new AutoDeltaInt(100);
-        meds = new AutoDeltaInt(0);
-        maxMeds = new AutoDeltaInt(100);
-        groupWaypoints = new AutoDeltaLongObjectMap<>(WaypointDataBase::new);
-        jediState = new AutoDeltaInt(0);
+        skillTitle = new AutoDeltaString();
+        spokenLanguage = new AutoDeltaInt();
+        waypoints = new AutoDeltaLongObjectMap<>(Waypoint::new);
+        groupWaypoints = new AutoDeltaLongObjectMap<>(Waypoint::new);
+        bornDate = new AutoDeltaInt();
+        playedTime = new AutoDeltaInt();
+        food = new AutoDeltaInt();
+        maxFood = new AutoDeltaInt();
+        drink = new AutoDeltaInt();
+        maxDrink = new AutoDeltaInt();
+        meds = new AutoDeltaInt();
+        maxMeds = new AutoDeltaInt();
+        privilegedTitle = new AutoDeltaByte();
+        completedQuests = new AutoDeltaVariable<>(BitArray::new);
+        activeQuests = new AutoDeltaVariable<>(BitArray::new);
+        currentQuest = new AutoDeltaInt();
+        quests = new AutoDeltaPackedPlayerQuestDataMap();
+        roleIconChoice = new AutoDeltaInt();
+        skillTemplate = new AutoDeltaString();
+        workingSkill = new AutoDeltaString();
+        currentGcwPoints = new AutoDeltaInt();
+        currentPvpKills = new AutoDeltaInt();
+        lifetimeGcwPoints = new AutoDeltaInt();
+        lifetimePvpKills = new AutoDeltaInt();
+        currentGcwRank = new AutoDeltaInt();
+        currentGcwRankProgress = new AutoDeltaFloat();
+        maxGcwImperialRank = new AutoDeltaInt();
+        maxGcwRebelRank = new AutoDeltaInt();
+        gcwRatingActualCalcTime = new AutoDeltaInt();
+        playerHateList = new AutoDeltaLongSet();
+        killMeter = new AutoDeltaInt();
+        petId = new AutoDeltaLong();
+        petCommandList = new AutoDeltaStringVector();
+        petToggledCommands = new AutoDeltaStringVector();
+        collections = new AutoDeltaVariable<>(BitArray::new);
+        collections2 = new AutoDeltaVariable<>(BitArray::new);
+        citizenshipCity = new AutoDeltaString();
+        citizenshipType = new AutoDeltaByte();
+        cityGcwDefenderRegion = new AutoDeltaVariable<>(GcwDefenderRegionQualifications::new);
+        guildGcwDefenderRegion = new AutoDeltaVariable<>(GcwDefenderRegionQualifications::new);
+        squelchedById = new AutoDeltaLong();
+        squelchedByName = new AutoDeltaString();
+        squelchExpireTime = new AutoDeltaInt();
+        showBackpack = new AutoDeltaBoolean();
+        showHelmet = new AutoDeltaBoolean();
+        environmentFlags = new AutoDeltaInt();
+        defaultAttackOverride = new AutoDeltaString();
+        guildRank = new AutoDeltaVariable<>(BitArray::new);
+        citizenRank = new AutoDeltaVariable<>(BitArray::new);
+        galacticReserveDeposit = new AutoDeltaByte();
+        pgcRatingCount = new AutoDeltaLong();
+        pgcRatingTotal = new AutoDeltaLong();
+        pgcLastRatingTime = new AutoDeltaInt();
 
-        sharedPackage.addVariable(matchMakingCharacterProfileId);
-        sharedPackage.addVariable(matchMakingPersonalProfileId);
-        sharedPackage.addVariable(skillTitle);
-        sharedPackage.addVariable(bornDate);
-        sharedPackage.addVariable(playedTime);
+        addMembersToPackages();
+    }
 
-        sharedPackageNp.addVariable(privilegedTitle);
-
-        firstParentAuthClientServerPackage.addVariable(experienceList);
-        firstParentAuthClientServerPackage.addVariable(waypointList);
-        firstParentAuthClientServerPackage.addVariable(forcePower);
-        firstParentAuthClientServerPackage.addVariable(forcePowerMax);
-        firstParentAuthClientServerPackage.addVariable(fsQuestMask);
-        firstParentAuthClientServerPackage.addVariable(fsQuestMaskCompleted);
-        firstParentAuthClientServerPackage.addVariable(questJournal);
-
-        firstParentAuthClientServerPackageNp.addVariable(commands);
-        firstParentAuthClientServerPackageNp.addVariable(experimentationFlag);
+    private void addMembersToPackages() {
+        firstParentAuthClientServerPackageNp.addVariable(craftingLevel);
         firstParentAuthClientServerPackageNp.addVariable(craftingStage);
         firstParentAuthClientServerPackageNp.addVariable(craftingStation);
         firstParentAuthClientServerPackageNp.addVariable(draftSchematics);
-        firstParentAuthClientServerPackageNp.addVariable(experimentationPoints);
-        firstParentAuthClientServerPackageNp.addVariable(accomplishmentCounter);
+        firstParentAuthClientServerPackageNp.addVariable(craftingComponentBioLink);
+        firstParentAuthClientServerPackageNp.addVariable(experimentPoints);
+        firstParentAuthClientServerPackageNp.addVariable(expModified);
         firstParentAuthClientServerPackageNp.addVariable(friendList);
         firstParentAuthClientServerPackageNp.addVariable(ignoreList);
         firstParentAuthClientServerPackageNp.addVariable(spokenLanguage);
@@ -123,25 +191,97 @@ public final class PlayerObject extends IntangibleObject {
         firstParentAuthClientServerPackageNp.addVariable(meds);
         firstParentAuthClientServerPackageNp.addVariable(maxMeds);
         firstParentAuthClientServerPackageNp.addVariable(groupWaypoints);
-        firstParentAuthClientServerPackageNp.addVariable(jediState);
+        firstParentAuthClientServerPackageNp.addVariable(playerHateList);
+        firstParentAuthClientServerPackageNp.addVariable(killMeter);
+        firstParentAuthClientServerPackageNp.addVariable(accountNumLotsOverLimitSpam);
+        firstParentAuthClientServerPackageNp.addVariable(petId);
+        firstParentAuthClientServerPackageNp.addVariable(petCommandList);
+        firstParentAuthClientServerPackageNp.addVariable(petToggledCommands);
+        firstParentAuthClientServerPackageNp.addVariable(guildRank);
+        firstParentAuthClientServerPackageNp.addVariable(citizenRank);
+        firstParentAuthClientServerPackageNp.addVariable(galacticReserveDeposit);
+        firstParentAuthClientServerPackageNp.addVariable(pgcRatingCount);
+        firstParentAuthClientServerPackageNp.addVariable(pgcRatingTotal);
+        firstParentAuthClientServerPackageNp.addVariable(pgcLastRatingTime);
 
+        firstParentAuthClientServerPackage.addVariable(experiencePoints);
+        firstParentAuthClientServerPackage.addVariable(waypoints);
+        firstParentAuthClientServerPackage.addVariable(forcePower);
+        firstParentAuthClientServerPackage.addVariable(maxForcePower);
+        firstParentAuthClientServerPackage.addVariable(completedQuests);
+        firstParentAuthClientServerPackage.addVariable(activeQuests);
+        firstParentAuthClientServerPackage.addVariable(currentQuest);
+        firstParentAuthClientServerPackage.addVariable(quests);
+        firstParentAuthClientServerPackage.addVariable(workingSkill);
+
+        sharedPackage.addVariable(matchMakingCharacterProfileId);
+        sharedPackage.addVariable(matchMakingPersonalProfileId);
+        sharedPackage.addVariable(skillTitle);
+        sharedPackage.addVariable(bornDate);
+        sharedPackage.addVariable(playedTime);
+        sharedPackage.addVariable(roleIconChoice);
+        sharedPackage.addVariable(skillTemplate);
+        sharedPackage.addVariable(currentGcwPoints);
+        sharedPackage.addVariable(currentPvpKills);
+        sharedPackage.addVariable(lifetimeGcwPoints);
+        sharedPackage.addVariable(lifetimePvpKills);
+        sharedPackage.addVariable(collections);
+        sharedPackage.addVariable(collections2);
+        sharedPackage.addVariable(showBackpack);
+        sharedPackage.addVariable(showHelmet);
+
+        sharedPackageNp.addVariable(privilegedTitle);
+        sharedPackageNp.addVariable(currentGcwRank);
+        sharedPackageNp.addVariable(currentGcwRankProgress);
+        sharedPackageNp.addVariable(maxGcwImperialRank);
+        sharedPackageNp.addVariable(maxGcwRebelRank);
+        sharedPackageNp.addVariable(gcwRatingActualCalcTime);
+        sharedPackageNp.addVariable(citizenshipCity);
+        sharedPackageNp.addVariable(citizenshipType);
+        sharedPackageNp.addVariable(cityGcwDefenderRegion);
+        sharedPackageNp.addVariable(guildGcwDefenderRegion);
+        sharedPackageNp.addVariable(squelchedById);
+        sharedPackageNp.addVariable(squelchedByName);
+        sharedPackageNp.addVariable(squelchExpireTime);
+        sharedPackageNp.addVariable(environmentFlags);
+        sharedPackageNp.addVariable(defaultAttackOverride);
     }
 
 
-    public final String getBiography() { return biography; }
-    public final void setBiography(final String biography) { this.biography = biography; setDirty(true); }
+    public final String getBiography() {
+        return biography;
+    }
 
-    public final int getBornDate() { return bornDate.get(); }
-    public final void setBornDate(int value) { bornDate.set(value); setDirty(true); }
+    public final void setBiography(final String biography) {
+        this.biography = biography;
+        setDirty(true);
+    }
 
-    public final int getPlayedTime() { return playedTime.get(); }
-    public final void setPlayedTime(int value) { playedTime.set(value); setDirty(true); }
+    public final int getBornDate() {
+        return bornDate.get();
+    }
 
-    public final boolean isLinkDead() { return matchMakingCharacterProfileId.get().isBitSet(MatchMakingId.linkDead); }
+    public final void setBornDate(int value) {
+        bornDate.set(value);
+        setDirty(true);
+    }
+
+    public final int getPlayedTime() {
+        return playedTime.get();
+    }
+
+    public final void setPlayedTime(int value) {
+        playedTime.set(value);
+        setDirty(true);
+    }
+
+    public final boolean isLinkDead() {
+        return matchMakingCharacterProfileId.get().isBitSet(MatchMakingId.LINK_DEAD);
+    }
 
     public final void setLinkDead() {
         MatchMakingId matchMakingId = matchMakingCharacterProfileId.get();
-        matchMakingId.set(MatchMakingId.linkDead);
+        matchMakingId.set(MatchMakingId.LINK_DEAD);
 
         matchMakingCharacterProfileId.set(matchMakingId);
         setDirty(true);
@@ -149,7 +289,7 @@ public final class PlayerObject extends IntangibleObject {
 
     public final void clearLinkDead() {
         MatchMakingId matchMakingId = matchMakingCharacterProfileId.get();
-        matchMakingId.unset(MatchMakingId.linkDead);
+        matchMakingId.unset(MatchMakingId.LINK_DEAD);
         matchMakingCharacterProfileId.set(matchMakingId);
         setDirty(true);
     }

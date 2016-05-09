@@ -8,9 +8,8 @@ import com.ocdsoft.bacta.engine.service.object.ObjectService;
 import com.ocdsoft.bacta.engine.service.objectfactory.NetworkObjectFactory;
 import com.ocdsoft.bacta.swg.precu.object.ServerObject;
 import com.ocdsoft.bacta.swg.precu.object.archive.OnDirtyCallbackBase;
-import com.ocdsoft.bacta.swg.precu.object.template.shared.SharedObjectTemplate;
+import com.ocdsoft.bacta.swg.precu.object.template.server.ServerObjectTemplate;
 import com.ocdsoft.bacta.swg.precu.service.data.ObjectTemplateService;
-import com.ocdsoft.bacta.swg.shared.template.ObjectTemplate;
 import gnu.trove.map.TLongObjectMap;
 import gnu.trove.map.hash.TLongObjectHashMap;
 import org.slf4j.Logger;
@@ -24,59 +23,47 @@ import java.util.concurrent.ConcurrentHashMap;
  * Created by Kyle on 3/24/14.
  */
 @Singleton
-public class ServerObjectService implements ObjectService<ServerObject> {
+public final class ServerObjectService implements ObjectService<ServerObject> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ServerObjectService.class);
 
-    private TLongObjectMap<ServerObject> internalMap = new TLongObjectHashMap<>();
+    private final TLongObjectMap<ServerObject> internalMap = new TLongObjectHashMap<>();
 
-    private Set<ServerObject> dirtyList = Collections.newSetFromMap(new ConcurrentHashMap<>());
+    private final Set<ServerObject> dirtyList = Collections.newSetFromMap(new ConcurrentHashMap<>());
 
     private final NetworkObjectFactory networkObjectFactory;
-    private final int deltaUpdateInterval;
     private final DeltaNetworkDispatcher deltaDispatcher;
     private final GameDatabaseConnector databaseConnector;
     private final ObjectTemplateService objectTemplateService;
+    private final int deltaUpdateInterval;
 
     @Inject
-    public ServerObjectService(BactaConfiguration configuration,
-                               NetworkObjectFactory networkObjectFactory,
-                               GameDatabaseConnector databaseConnector,
-                               ObjectTemplateService objectTemplateService) {
+    public ServerObjectService(final BactaConfiguration configuration,
+                               final NetworkObjectFactory networkObjectFactory,
+                               final GameDatabaseConnector databaseConnector,
+                               final ObjectTemplateService objectTemplateService) {
 
         this.networkObjectFactory = networkObjectFactory;
-        deltaUpdateInterval = configuration.getIntWithDefault("Bacta/GameServer", "DeltaUpdateInterval", 50);
+        this.deltaUpdateInterval = configuration.getIntWithDefault("Bacta/GameServer", "DeltaUpdateInterval", 50);
         this.databaseConnector = databaseConnector;
         this.objectTemplateService = objectTemplateService;
-        deltaDispatcher = new DeltaNetworkDispatcher();
+        this.deltaDispatcher = new DeltaNetworkDispatcher();
+
         new Thread(deltaDispatcher).start();
     }
 
     @Override
-    public <T extends ServerObject> T createObject(long creator, String templatePath) {
-
-        //TODO: Implement this
-        final ObjectTemplate template = objectTemplateService.getObjectTemplate(templatePath);
-        Class<? extends ServerObject> objectClass = objectTemplateService.getClassForTemplate(template);
-
-        T newObject = (T) networkObjectFactory.createNetworkObject(objectClass);
-
-        if (template instanceof SharedObjectTemplate)
-            newObject.setSharedTemplate((SharedObjectTemplate) template);
+    public <T extends ServerObject> T createObject(final long creator, final String templatePath) {
+        final ServerObjectTemplate template = objectTemplateService.getObjectTemplate(templatePath);
+        final Class<T> objectClass = objectTemplateService.getClassForTemplate(template);
+        final T newObject = networkObjectFactory.createNetworkObject(objectClass);
 
         newObject.setOnDirtyCallback(new ServerObjectServiceOnDirtyCallback(newObject));
-
-        loadTemplateData(creator, newObject);
 
         internalMap.put(newObject.getNetworkId(), newObject);
         databaseConnector.createNetworkObject(newObject);
 
         return newObject;
-    }
-
-    private <T extends ServerObject> void loadTemplateData(long creator, T newObject) {
-        ObjectTemplate template = newObject.getObjectTemplate();
-        //containerService.createObjectContainer(newObject);
     }
 
     @Override
@@ -92,7 +79,7 @@ public class ServerObjectService implements ObjectService<ServerObject> {
             }
         }
 
-        return (T) object;
+        return object;
     }
 
     @Override

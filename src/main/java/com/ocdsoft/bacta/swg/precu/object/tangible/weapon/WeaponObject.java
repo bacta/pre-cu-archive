@@ -1,5 +1,6 @@
 package com.ocdsoft.bacta.swg.precu.object.tangible.weapon;
 
+import com.google.inject.Inject;
 import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaFloat;
 import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaInt;
 import com.ocdsoft.bacta.swg.precu.object.tangible.TangibleObject;
@@ -7,6 +8,8 @@ import com.ocdsoft.bacta.swg.precu.object.template.server.ServerObjectTemplate.D
 import com.ocdsoft.bacta.swg.precu.object.template.server.ServerWeaponObjectTemplate;
 import com.ocdsoft.bacta.swg.precu.object.template.server.ServerWeaponObjectTemplate.AttackType;
 import com.ocdsoft.bacta.swg.precu.object.template.server.ServerWeaponObjectTemplate.WeaponType;
+import com.ocdsoft.bacta.swg.shared.container.SlotIdManager;
+import com.ocdsoft.bacta.swg.shared.template.ObjectTemplateList;
 
 /**
  * Created by crush on 9/4/2014.
@@ -27,8 +30,11 @@ public class WeaponObject extends TangibleObject {
     private final AutoDeltaInt elementalValue; //shared
     private final AutoDeltaInt weaponType; //shared_np
 
-    public WeaponObject(final ServerWeaponObjectTemplate template) {
-        super(template);
+    @Inject
+    public WeaponObject(final ObjectTemplateList objectTemplateList,
+                        final SlotIdManager slotIdManager,
+                        final ServerWeaponObjectTemplate template) {
+        super(objectTemplateList, slotIdManager, template);
 
         attackSpeed = new AutoDeltaFloat();
         accuracy = new AutoDeltaInt();

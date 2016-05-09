@@ -1,7 +1,10 @@
 package com.ocdsoft.bacta.swg.precu.object.tangible.ship;
 
+import com.google.inject.Inject;
 import com.ocdsoft.bacta.swg.precu.object.tangible.TangibleObject;
 import com.ocdsoft.bacta.swg.precu.object.template.server.ServerShipObjectTemplate;
+import com.ocdsoft.bacta.swg.shared.container.SlotIdManager;
+import com.ocdsoft.bacta.swg.shared.template.ObjectTemplateList;
 
 /**
  * Created by crush on 9/4/2014.
@@ -82,10 +85,13 @@ public class ShipObject extends TangibleObject {
     //private final AutoDeltaString wingName;
     //private final AutoDeltaString typeName;
     //private final AutoDeltaString difficulty;
-    //private final AutoDeltaString faction;
+    //private final AutoDeltaString FACTION;
     //private final AutoDeltaInt guildId;
 
-    public ShipObject(final ServerShipObjectTemplate template) {
-        super(template);
+    @Inject
+    public ShipObject(final ObjectTemplateList objectTemplateList,
+                      final SlotIdManager slotIdManager,
+                      final ServerShipObjectTemplate template) {
+        super(objectTemplateList, slotIdManager, template);
     }
 }

@@ -1,9 +1,12 @@
 package com.ocdsoft.bacta.swg.precu.object.tangible.installation;
 
+import com.google.inject.Inject;
 import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaBoolean;
 import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaFloat;
 import com.ocdsoft.bacta.swg.precu.object.tangible.TangibleObject;
 import com.ocdsoft.bacta.swg.precu.object.template.server.ServerInstallationObjectTemplate;
+import com.ocdsoft.bacta.swg.shared.container.SlotIdManager;
+import com.ocdsoft.bacta.swg.shared.template.ObjectTemplateList;
 
 public class InstallationObject extends TangibleObject {
     private final AutoDeltaBoolean activated;
@@ -31,13 +34,20 @@ public class InstallationObject extends TangibleObject {
     private float tickCount;
     private float activateStartTime;
 
-    public InstallationObject(final ServerInstallationObjectTemplate template) {
-        super(template);
+    @Inject
+    public InstallationObject(final ObjectTemplateList objectTemplateList,
+                              final SlotIdManager slotIdManager,
+                              final ServerInstallationObjectTemplate template) {
+        super(objectTemplateList, slotIdManager, template);
 
         activated = new AutoDeltaBoolean();
         power = new AutoDeltaFloat();
         powerRate = new AutoDeltaFloat();
 
+        addMembersToPackages();
+    }
+
+    private void addMembersToPackages() {
         sharedPackage.addVariable(activated);
         sharedPackage.addVariable(power);
         sharedPackage.addVariable(powerRate);

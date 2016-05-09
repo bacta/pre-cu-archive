@@ -11,7 +11,7 @@ import java.util.Set;
 public class LfgCharacterSearchResultData {
     private long characterId;
     private UnicodeString characterName;
-    //private SharedCreatureObjectTemplate:Species species;
+    //private SharedCreatureObjectTemplate:Species SPECIES;
     //private Profession profession;
     private short level;
     private int faction;

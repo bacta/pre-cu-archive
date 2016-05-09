@@ -5,6 +5,11 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.ocdsoft.bacta.swg.lang.NotImplementedException;
 import com.ocdsoft.bacta.swg.precu.object.ServerObject;
+import com.ocdsoft.bacta.swg.precu.object.intangible.IntangibleObject;
+import com.ocdsoft.bacta.swg.precu.object.intangible.player.PlayerObject;
+import com.ocdsoft.bacta.swg.precu.object.tangible.TangibleObject;
+import com.ocdsoft.bacta.swg.precu.object.tangible.creature.CreatureObject;
+import com.ocdsoft.bacta.swg.precu.object.template.server.*;
 import com.ocdsoft.bacta.swg.shared.foundation.CrcString;
 import com.ocdsoft.bacta.swg.shared.foundation.DataResourceList;
 import com.ocdsoft.bacta.swg.shared.template.ObjectTemplate;
@@ -27,7 +32,7 @@ import java.util.Set;
 public class ObjectTemplateService {
     private static final Logger LOGGER = LoggerFactory.getLogger(ObjectTemplateService.class);
 
-    private final TIntObjectMap<Class<? extends ServerObject>> templateClassMap = new TIntObjectHashMap<>();
+    private final TIntObjectMap<Class<? extends ServerObject>> templateClassMap = new TIntObjectHashMap<>(100);
     private final ObjectTemplateList objectTemplateList;
 
     @Inject
@@ -35,13 +40,13 @@ public class ObjectTemplateService {
 
         this.objectTemplateList = objectTemplateList;
 
-        load();
+        registerTemplates();
+        configureTemplateClassMap();
     }
 
-    private void load() {
+    private void registerTemplates() {
         try {
             //Registering all template definitions with the object template list.
-
             final Reflections reflections = new Reflections();
             //TODO: Move the name of the register function to the annotation.
             final Set<Class<?>> templateDefinitions = reflections.getTypesAnnotatedWith(TemplateDefinition.class);
@@ -49,9 +54,10 @@ public class ObjectTemplateService {
 
             while (iterator.hasNext()) {
                 final Class<?> classType = iterator.next();
+                final String registerMethodName = classType.getAnnotation(TemplateDefinition.class).value();
 
                 if (ObjectTemplate.class.isAssignableFrom(classType)) {
-                    final Method registerMethod = classType.getDeclaredMethod("registerTemplateConstructors", DataResourceList.class);
+                    final Method registerMethod = classType.getDeclaredMethod(registerMethodName, DataResourceList.class);
                     registerMethod.setAccessible(true);
                     registerMethod.invoke(null, objectTemplateList);
                 }
@@ -59,6 +65,15 @@ public class ObjectTemplateService {
         } catch (final Exception ex) {
             ex.printStackTrace();
         }
+    }
+
+    private void configureTemplateClassMap() {
+        //TODO: Load with reflection instead.
+        templateClassMap.put(ServerObjectTemplate.TAG_SERVEROBJECTTEMPLATE, ServerObject.class);
+        templateClassMap.put(ServerTangibleObjectTemplate.TAG_SERVERTANGIBLEOBJECTTEMPLATE, TangibleObject.class);
+        templateClassMap.put(ServerCreatureObjectTemplate.TAG_SERVERCREATUREOBJECTTEMPLATE, CreatureObject.class);
+        templateClassMap.put(ServerIntangibleObjectTemplate.TAG_SERVERINTANGIBLEOBJECTTEMPLATE, IntangibleObject.class);
+        templateClassMap.put(ServerPlayerObjectTemplate.TAG_SERVERPLAYEROBJECTTEMPLATE, PlayerObject.class);
     }
 
     public <T extends ObjectTemplate> T getObjectTemplate(final String templatePath) {
@@ -86,7 +101,7 @@ public class ObjectTemplateService {
         final Class<T> classType = (Class<T>) templateClassMap.get(template.getId());
 
         if (classType == null) {
-            LOGGER.error("Template with class mapping: " + Iff.getChunkName(template.getId()));
+            LOGGER.error("Did not find template with class mapping: " + Iff.getChunkName(template.getId()));
             throw new NotImplementedException();
         }
 

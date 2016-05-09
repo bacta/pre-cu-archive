@@ -3,6 +3,7 @@ package com.ocdsoft.bacta.swg.precu.object.archive.delta.map;
 import com.ocdsoft.bacta.engine.buffer.ByteBufferWritable;
 import com.ocdsoft.bacta.engine.utils.BufferUtil;
 import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaContainer;
+import gnu.trove.iterator.TByteObjectIterator;
 import gnu.trove.map.TByteObjectMap;
 import gnu.trove.map.hash.TByteObjectHashMap;
 
@@ -12,14 +13,14 @@ import java.util.List;
 import java.util.function.Function;
 
 public class AutoDeltaBoolObjectMap<V extends ByteBufferWritable> extends AutoDeltaContainer {
-    private transient final List<Command> changes;
+    private transient final List<Command<V>> changes;
     private final TByteObjectMap<V> container;
     private transient int baselineCommandCount;
     private final Function<ByteBuffer, V> valueCreator;
 
     public AutoDeltaBoolObjectMap(Function<ByteBuffer, V> valueCreator) {
         this.changes = new ArrayList<>(5);
-        this.container = new TByteObjectHashMap<V>();
+        this.container = new TByteObjectHashMap<>();
         this.baselineCommandCount = 0;
         this.valueCreator = valueCreator;
     }
@@ -38,24 +39,30 @@ public class AutoDeltaBoolObjectMap<V extends ByteBufferWritable> extends AutoDe
 
     public void erase(final boolean key) {
         final V value = container.get(key ? (byte) 1 : (byte) 0);
-
-
         if (value != null) {
-            final Command command = new Command(Command.ERASE, key, value);
+            final Command<V> command = new Command<>(Command.ERASE, key, value);
             changes.add(command);
             ++baselineCommandCount;
             container.remove(key ? (byte) 1 : (byte) 0);
             touch();
             onErase(key, value);
         }
-    }
+        }
 
     public boolean isEmpty() {
         return container.isEmpty();
     }
 
+    public TByteObjectIterator<V> iterator() {
+        return container.iterator();
+    }
+
     public boolean containsKey(final boolean key) {
         return container.containsKey(key ? (byte) 1 : (byte) 0);
+    }
+
+    public V get(final boolean key) {
+        return container.get(key ? (byte) 1 : (byte) 0);
     }
 
     public TByteObjectMap<V> getMap() {
@@ -66,7 +73,7 @@ public class AutoDeltaBoolObjectMap<V extends ByteBufferWritable> extends AutoDe
         if (containsKey(key))
             return;
 
-        final Command command = new Command(Command.ADD, key, value);
+        final Command<V> command = new Command<>(Command.ADD, key, value);
         container.put(key ? (byte) 1 : (byte) 0, value);
         touch();
         onInsert(key, value);
@@ -79,6 +86,7 @@ public class AutoDeltaBoolObjectMap<V extends ByteBufferWritable> extends AutoDe
         return !changes.isEmpty();
     }
 
+    @Override
     public int size() {
         return container.size();
     }
@@ -86,7 +94,7 @@ public class AutoDeltaBoolObjectMap<V extends ByteBufferWritable> extends AutoDe
     public void set(final boolean key, final V value) {
         if (!containsKey(key)) {
             //Inserting...
-            final Command command = new Command(Command.ADD, key, value);
+            final Command<V> command = new Command<>(Command.ADD, key, value);
             container.put(key ? (byte) 1 : (byte) 0, value);
             touch();
             onInsert(key, value);
@@ -94,7 +102,7 @@ public class AutoDeltaBoolObjectMap<V extends ByteBufferWritable> extends AutoDe
             ++baselineCommandCount;
         } else {
             //Setting...
-            final Command command = new Command(Command.SET, key, value);
+            final Command<V> command = new Command<>(Command.SET, key, value);
             final V oldValue = container.get(key ? (byte) 1 : (byte) 0);
             container.put(key ? (byte) 1 : (byte) 0, value);
             touch();
@@ -138,7 +146,7 @@ public class AutoDeltaBoolObjectMap<V extends ByteBufferWritable> extends AutoDe
         baselineCommandCount = buffer.getInt();
 
         for (int i = 0; i < commandCount; ++i) {
-            final Command command = new Command(buffer);
+            final Command<V> command = new Command<>(buffer, valueCreator);
             assert command.cmd == Command.ADD : "Only add is valid in unpack";
             container.put(command.key ? (byte) 1 : (byte) 0, command.value);
             onInsert(command.key, command.value);
@@ -177,7 +185,7 @@ public class AutoDeltaBoolObjectMap<V extends ByteBufferWritable> extends AutoDe
         }
 
         for (; i < commandCount; ++i) {
-            final Command command = new Command(buffer);
+            final Command<V> command = new Command<>(buffer, valueCreator);
 
             switch (command.cmd) {
                 case Command.ADD:
@@ -210,10 +218,10 @@ public class AutoDeltaBoolObjectMap<V extends ByteBufferWritable> extends AutoDe
         //callback
     }
 
-    public final class Command implements ByteBufferWritable {
-        private static final byte ADD = 0x0;
-        private static final byte ERASE = 0x1;
-        private static final byte SET = 0x2;
+    public static class Command<V extends ByteBufferWritable> implements ByteBufferWritable {
+        public static final byte ADD = 0x0;
+        public static final byte ERASE = 0x1;
+        public static final byte SET = 0x2;
 
         public final byte cmd;
         public final boolean key;
@@ -225,12 +233,13 @@ public class AutoDeltaBoolObjectMap<V extends ByteBufferWritable> extends AutoDe
             this.value = value;
         }
 
-        public Command(final ByteBuffer buffer) {
+        public Command(final ByteBuffer buffer, final Function<ByteBuffer, V> valueCreator) {
             this.cmd = buffer.get();
             this.key = buffer.get() != 0;
             this.value = valueCreator.apply(buffer);
         }
 
+        @Override
         public void writeToBuffer(final ByteBuffer buffer) {
             buffer.put(this.cmd);
             BufferUtil.put(buffer, key);

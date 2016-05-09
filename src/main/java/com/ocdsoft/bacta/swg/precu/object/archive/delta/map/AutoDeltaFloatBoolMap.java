@@ -3,6 +3,7 @@ package com.ocdsoft.bacta.swg.precu.object.archive.delta.map;
 import com.ocdsoft.bacta.engine.buffer.ByteBufferWritable;
 import com.ocdsoft.bacta.engine.utils.BufferUtil;
 import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaContainer;
+import gnu.trove.iterator.TFloatByteIterator;
 import gnu.trove.map.TFloatByteMap;
 import gnu.trove.map.hash.TFloatByteHashMap;
 
@@ -35,8 +36,6 @@ public class AutoDeltaFloatBoolMap extends AutoDeltaContainer {
 
     public void erase(final float key) {
         final boolean value = container.get(key) != 0;
-
-
         final Command command = new Command(Command.ERASE, key, value);
         changes.add(command);
         ++baselineCommandCount;
@@ -49,8 +48,16 @@ public class AutoDeltaFloatBoolMap extends AutoDeltaContainer {
         return container.isEmpty();
     }
 
+    public TFloatByteIterator iterator() {
+        return container.iterator();
+    }
+
     public boolean containsKey(final float key) {
         return container.containsKey(key);
+    }
+
+    public boolean get(final float key) {
+        return container.get(key) != 0;
     }
 
     public TFloatByteMap getMap() {
@@ -74,6 +81,7 @@ public class AutoDeltaFloatBoolMap extends AutoDeltaContainer {
         return !changes.isEmpty();
     }
 
+    @Override
     public int size() {
         return container.size();
     }
@@ -205,10 +213,10 @@ public class AutoDeltaFloatBoolMap extends AutoDeltaContainer {
         //callback
     }
 
-    public final class Command implements ByteBufferWritable {
-        private static final byte ADD = 0x0;
-        private static final byte ERASE = 0x1;
-        private static final byte SET = 0x2;
+    public static class Command implements ByteBufferWritable {
+        public static final byte ADD = 0x0;
+        public static final byte ERASE = 0x1;
+        public static final byte SET = 0x2;
 
         public final byte cmd;
         public final float key;
@@ -226,6 +234,7 @@ public class AutoDeltaFloatBoolMap extends AutoDeltaContainer {
             this.value = BufferUtil.getBoolean(buffer);
         }
 
+        @Override
         public void writeToBuffer(final ByteBuffer buffer) {
             buffer.put(this.cmd);
             BufferUtil.put(buffer, key);

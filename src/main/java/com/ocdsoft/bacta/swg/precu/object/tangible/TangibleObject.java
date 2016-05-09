@@ -2,6 +2,7 @@ package com.ocdsoft.bacta.swg.precu.object.tangible;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
+import com.google.inject.Inject;
 import com.ocdsoft.bacta.swg.precu.message.game.scene.UpdateTransformMessage;
 import com.ocdsoft.bacta.swg.precu.object.ServerObject;
 import com.ocdsoft.bacta.swg.precu.object.UpdateTransformCallback;
@@ -12,7 +13,10 @@ import com.ocdsoft.bacta.swg.precu.object.archive.delta.set.AutoDeltaIntSet;
 import com.ocdsoft.bacta.swg.precu.object.archive.delta.set.AutoDeltaLongSet;
 import com.ocdsoft.bacta.swg.precu.object.template.server.ServerTangibleObjectTemplate;
 import com.ocdsoft.bacta.swg.precu.zone.Zone;
+import com.ocdsoft.bacta.swg.shared.container.SlotIdManager;
 import com.ocdsoft.bacta.swg.shared.math.Transform;
+import com.ocdsoft.bacta.swg.shared.object.GameObject;
+import com.ocdsoft.bacta.swg.shared.template.ObjectTemplateList;
 import lombok.Getter;
 import lombok.Setter;
 import org.magnos.steer.SteerSubject;
@@ -62,33 +66,32 @@ public class TangibleObject extends ServerObject implements SteerSubject<Vec3> {
     private final AutoDeltaIntSet guildAccessList;
     //private final AutoDeltaMap effectsMap;
 
-
-    public TangibleObject(final ServerTangibleObjectTemplate template) {
-        super(template, false);
+    @Inject
+    public TangibleObject(final ObjectTemplateList objectTemplateList,
+                          final SlotIdManager slotIdManager,
+                          final ServerTangibleObjectTemplate template) {
+        super(objectTemplateList, slotIdManager, template, false);
 
         pvpFaction = new AutoDeltaInt();
         pvpType = new AutoDeltaInt();
         appearanceData = new AutoDeltaString("");
         components = new AutoDeltaIntSet();
-        condition = new AutoDeltaInt();
-        count = new AutoDeltaInt();
+        condition = new AutoDeltaInt(template.getCondition());
+        count = new AutoDeltaInt(template.getCount());
         damageTaken = new AutoDeltaInt();
-        maxHitPoints = new AutoDeltaInt();
-        visible = new AutoDeltaBoolean();
+        maxHitPoints = new AutoDeltaInt(template.getMaxHitPoints());
+        visible = new AutoDeltaBoolean(true);
         inCombat = new AutoDeltaBoolean();
         passiveRevealPlayerCharacter = new AutoDeltaLongSet();
         mapColorOverride = new AutoDeltaInt();
         accessList = new AutoDeltaLongSet();
         guildAccessList = new AutoDeltaIntSet();
-        //effectsMap = new AutoDeltaMap<>(sharedPackageNp);
+        //effectsMap = new AutoDeltaMap<>(sharedPackageNp); //How the F do we do this!?
 
-        //DID Pre-CU really send this, or was it a mistake?
-        //defenderList = new AutoDeltaVector<>(sharedPackageNp);
+        addMembersToPackages();
+    }
 
-        //This stuff comes from the Synchronized Ui if it is set.
-        //craftingSessionManufacturingSchematic = new AutoDeltaLong(0L, uiPackage);
-        //craftingSessionPrototype = new AutoDeltaLong(0L, uiPackage);
-
+    private void addMembersToPackages() {
         sharedPackage.addVariable(pvpFaction);
         sharedPackage.addVariable(pvpType);
         sharedPackage.addVariable(appearanceData);
@@ -99,6 +102,7 @@ public class TangibleObject extends ServerObject implements SteerSubject<Vec3> {
         sharedPackage.addVariable(maxHitPoints);
         sharedPackage.addVariable(visible);
         sharedPackage.addVariable(inCombat);
+
         sharedPackageNp.addVariable(passiveRevealPlayerCharacter);
         sharedPackageNp.addVariable(mapColorOverride);
         sharedPackageNp.addVariable(accessList);
@@ -280,6 +284,14 @@ public class TangibleObject extends ServerObject implements SteerSubject<Vec3> {
 
     @Override
     public Vec3 getTarget(SteerSubject<Vec3> steerSubject) {
+        return null;
+    }
+
+
+    public static TangibleObject asTangibleObject(final GameObject object) {
+        if (object instanceof TangibleObject)
+            return (TangibleObject) object;
+
         return null;
     }
 }

@@ -1,5 +1,6 @@
 package com.ocdsoft.bacta.swg.precu.object;
 
+import com.google.inject.Inject;
 import com.ocdsoft.bacta.engine.lang.ObservableEventRegistry;
 import com.ocdsoft.bacta.engine.lang.Observer;
 import com.ocdsoft.bacta.engine.lang.Subject;
@@ -8,6 +9,8 @@ import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
 import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
 import com.ocdsoft.bacta.soe.util.SoeMessageUtil;
 import com.ocdsoft.bacta.swg.localization.StringId;
+import com.ocdsoft.bacta.swg.precu.container.IntangibleVolumeContainer;
+import com.ocdsoft.bacta.swg.precu.container.TangibleVolumeContainer;
 import com.ocdsoft.bacta.swg.precu.event.ObservableGameEvent;
 import com.ocdsoft.bacta.swg.precu.message.game.object.ObjControllerMessage;
 import com.ocdsoft.bacta.swg.precu.message.game.scene.*;
@@ -20,10 +23,11 @@ import com.ocdsoft.bacta.swg.precu.object.cell.CellObject;
 import com.ocdsoft.bacta.swg.precu.object.template.server.ServerObjectTemplate;
 import com.ocdsoft.bacta.swg.precu.object.template.shared.SharedObjectTemplate;
 import com.ocdsoft.bacta.swg.precu.synchronizedui.ServerSynchronizedUi;
-import com.ocdsoft.bacta.swg.shared.container.ContainedByProperty;
-import com.ocdsoft.bacta.swg.shared.container.Container;
+import com.ocdsoft.bacta.swg.shared.container.*;
 import com.ocdsoft.bacta.swg.shared.math.Transform;
 import com.ocdsoft.bacta.swg.shared.object.GameObject;
+import com.ocdsoft.bacta.swg.shared.portal.PortalProperty;
+import com.ocdsoft.bacta.swg.shared.template.ObjectTemplateList;
 import lombok.Getter;
 import lombok.Setter;
 import org.slf4j.Logger;
@@ -50,10 +54,14 @@ public abstract class ServerObject extends GameObject implements Subject<Observa
 
     private ServerSynchronizedUi synchornizedUi;
 
-    public ServerObject(final ServerObjectTemplate template,
+    @Inject
+    public ServerObject(final ObjectTemplateList objectTemplateList,
+                        final SlotIdManager slotIdManager,
+                        final ServerObjectTemplate template,
                         final boolean hyperspaceOnCreate) {
 
-        //DO NOT CHANGE ORDER OF PACKAGE MEMBERS. IT MATTERS.
+        assert DEFAULT_SHARED_TEMPLATE != null : "The default shared template for ServerObject has not been setup.";
+
         bankBalance = new AutoDeltaInt(0);
         cashBalance = new AutoDeltaInt(0);
         complexity = new AutoDeltaFloat(template.getComplexity());
@@ -69,16 +77,125 @@ public abstract class ServerObject extends GameObject implements Subject<Observa
         setLocalFlag(ServerObject.LocalObjectFlags.HYPERSPACE_ON_CREATE, hyperspaceOnCreate);
         setLocalFlag(ServerObject.LocalObjectFlags.HYPERSPACE_ON_DESTRUCT, false);
 
+
+        final String sharedTemplateName = template.getSharedTemplate();
+        sharedTemplate = objectTemplateList.fetch(sharedTemplateName);
+
+        if (sharedTemplate == null && !sharedTemplateName.isEmpty()) {
+            LOGGER.warn("Template {} has an invalid shared template {}. We will use the default shared template for now.",
+                    template.getResourceName(),
+                    sharedTemplateName);
+        }
+
+        //Instead of calling getSharedTemplate() 100x, let's just cache the result...
+        final SharedObjectTemplate localSharedTemplate = getSharedTemplate();
+
+        if (localSharedTemplate != null) {
+            nameStringId.set(localSharedTemplate.getObjectName());
+            descriptionStringId.set(localSharedTemplate.getDetailedDescription());
+        }
+
+        final ContainedByProperty containedBy = new ContainedByProperty(this, null);
+        addProperty(containedBy);
+
+        final SlottedContainmentProperty slottedProperty = new SlottedContainmentProperty(this, slotIdManager);
+        addProperty(slottedProperty);
+
+        if (localSharedTemplate != null) {
+            final ArrangementDescriptor arrangementDescriptor = localSharedTemplate.getArrangementDescriptor();
+
+            if (arrangementDescriptor != null) {
+                final int arrangementCount = arrangementDescriptor.getArrangementCount();
+
+                for (int i = 0; i < arrangementCount; ++i)
+                    slottedProperty.addArrangement(arrangementDescriptor.getArrangement(i));
+            }
+        }
+
+        if (localSharedTemplate != null) {
+            final SharedObjectTemplate.ContainerType containerType = localSharedTemplate.getContainerType();
+
+            switch (containerType) {
+                case CT_none:
+                    break;
+
+                case CT_slotted:
+                case CT_ridable: {
+                    final SlotDescriptor slotDescriptor = localSharedTemplate.getSlotDescriptor();
+
+                    if (slotDescriptor != null) {
+                        final SlottedContainer slottedContainer = new SlottedContainer(this, slotDescriptor.getSlots());
+                        addProperty(slottedContainer);
+                    }
+                    break;
+                }
+                case CT_volume: {
+                    int maxVolume = localSharedTemplate.getContainerVolumeLimit();
+
+                    if (maxVolume <= 0)
+                        maxVolume = VolumeContainer.NO_VOLUME_LIMIT;
+
+                    final VolumeContainer volumeContainer = new TangibleVolumeContainer(this, maxVolume);
+                    addProperty(volumeContainer);
+                    break;
+                }
+                case CT_volumeIntangible: {
+                    int maxVolume = localSharedTemplate.getContainerVolumeLimit();
+
+                    if (maxVolume <= 0)
+                        maxVolume = VolumeContainer.NO_VOLUME_LIMIT;
+
+                    final VolumeContainer volumeContainer = new IntangibleVolumeContainer(this, maxVolume);
+                    addProperty(volumeContainer);
+                    break;
+                }
+                case CT_volumeGeneric: {
+                    int maxVolume = localSharedTemplate.getContainerVolumeLimit();
+
+                    if (maxVolume <= 0)
+                        maxVolume = VolumeContainer.NO_VOLUME_LIMIT;
+
+                    final VolumeContainer volumeContainer = new VolumeContainer(this, maxVolume);
+                    addProperty(volumeContainer);
+                    break;
+                }
+                default:
+                    LOGGER.warn("Invalid container type specified.");
+                    break;
+            }
+
+            setLocalFlag(ServerObject.LocalObjectFlags.SEND_TO_CLIENT, localSharedTemplate.getSendToClient());
+            gameObjectType = (int) localSharedTemplate.getGameObjectType().value;
+        }
+
+        int vol = template.getVolume();
+        final VolumeContainmentProperty volumeProperty = new VolumeContainmentProperty(this, vol < 1 ? 1 : vol);
+        addProperty(volumeProperty);
+
+        if (localSharedTemplate != null) {
+            final String portalLayoutFileName = localSharedTemplate.getPortalLayoutFilename();
+
+            if (!portalLayoutFileName.isEmpty()) {
+                final PortalProperty portalProperty = new PortalProperty(this, portalLayoutFileName);
+                addProperty(portalProperty);
+            }
+        }
+
+        addMembersToPackages();
+    }
+
+    private void addMembersToPackages() {
         authoritativeClientServerPackage.addVariable(bankBalance);
         authoritativeClientServerPackage.addVariable(cashBalance);
+
         sharedPackage.addVariable(complexity);
         sharedPackage.addVariable(nameStringId);
         sharedPackage.addVariable(objectName);
         sharedPackage.addVariable(volume);
         sharedPackage.addVariable(descriptionStringId);
+
         sharedPackageNp.addVariable(authServerProcessId);
     }
-
 
     @Getter
     private transient boolean initialized = false;
@@ -312,7 +429,7 @@ public abstract class ServerObject extends GameObject implements Subject<Observa
         dirty = true;
     }
 
-    public void setOnDirtyCallback(OnDirtyCallbackBase onDirtyCallback) {
+    public void setOnDirtyCallback(final OnDirtyCallbackBase onDirtyCallback) {
         sharedPackage.addOnDirtyCallback(onDirtyCallback);
         sharedPackageNp.addOnDirtyCallback(onDirtyCallback);
         authoritativeClientServerPackage.addOnDirtyCallback(onDirtyCallback);

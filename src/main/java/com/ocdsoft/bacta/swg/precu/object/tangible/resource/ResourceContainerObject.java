@@ -1,7 +1,10 @@
 package com.ocdsoft.bacta.swg.precu.object.tangible.resource;
 
+import com.google.inject.Inject;
 import com.ocdsoft.bacta.swg.precu.object.tangible.TangibleObject;
 import com.ocdsoft.bacta.swg.precu.object.template.server.ServerResourceContainerObjectTemplate;
+import com.ocdsoft.bacta.swg.shared.container.SlotIdManager;
+import com.ocdsoft.bacta.swg.shared.template.ObjectTemplateList;
 
 /**
  * Created by crush on 9/4/2014.
@@ -14,7 +17,10 @@ public class ResourceContainerObject extends TangibleObject {
     //private final AutoDeltaVariable<UnicodeString> resourceName;
     //private final AutoDeltaString parentName;
 
-    public ResourceContainerObject(final ServerResourceContainerObjectTemplate template) {
-        super(template);
+    @Inject
+    public ResourceContainerObject(final ObjectTemplateList objectTemplateList,
+                                   final SlotIdManager slotIdManager,
+                                   final ServerResourceContainerObjectTemplate template) {
+        super(objectTemplateList, slotIdManager, template);
     }
 }

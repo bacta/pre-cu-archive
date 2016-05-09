@@ -58,8 +58,12 @@ public class AutoDeltaMapTemplateWriter {
             velocityContext.put("trove", context.mapType.charAt(0) == 'T');
             velocityContext.put("mapType", context.mapType);
             velocityContext.put("mapImpl", context.mapImpl);
-            velocityContext.put("generic", context.generic);
+            velocityContext.put("iteratorType", context.iteratorType);
+            velocityContext.put("iteratorAccessor", context.iteratorAccessor);
+            velocityContext.put("iteratorGeneric", context.mapType.charAt(0) == 'T' ? context.generic : String.format("<Map.Entry%s>", context.generic));
+            velocityContext.put("generic", context.generic.isEmpty() ? null : context.generic);
             velocityContext.put("genericClass", context.genericClass);
+            velocityContext.put("genericCommand", context.genericCommand.isEmpty() ? null : context.genericCommand);
             velocityContext.put("keyName", context.keyName);
             velocityContext.put("keyType", context.keyType);
             velocityContext.put("keySerializer", context.keySerializer);
@@ -116,15 +120,21 @@ public class AutoDeltaMapTemplateWriter {
                 fields[12],
                 fields[13],
                 fields[14],
-                fields[15]);
+                fields[15],
+                fields[16],
+                fields[17],
+                fields[18]);
     }
 
     @AllArgsConstructor
     private static class AutoDeltaMapContext {
         public final String mapType;
         public final String mapImpl;
+        public final String iteratorType;
+        public final String iteratorAccessor;
         public final String generic;
         public final String genericClass;
+        public final String genericCommand;
         public final String keyName;
         public final String keyType;
         public final String keySerializer;

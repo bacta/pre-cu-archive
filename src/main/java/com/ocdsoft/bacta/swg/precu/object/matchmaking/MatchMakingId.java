@@ -12,22 +12,22 @@ import java.util.BitSet;
  */
 @NoArgsConstructor
 public class MatchMakingId implements ByteBufferWritable {
-    public static final int lookingForGroup = 0x0;
-    public static final int helper = 0x1;
-    public static final int rolePlay = 0x2;
-    public static final int faction = 0x3;
-    public static final int species = 0x4;
-    public static final int title = 0x5;
-    public static final int friend = 0x6;
-    public static final int awayFromKeyBoard = 0x7;
-    public static final int linkDead = 0x8;
-    public static final int displayingFactionRank = 0x9;
-    public static final int displayLocationInSearchResults = 0xA;
-    public static final int outOfCharacter = 0xB;
-    public static final int searchableByCtsSourceGalaxy = 0xC;
-    public static final int lookingForWork = 0xD;
-    public static final int maxLoadedBits = 0x7E;
-    public static final int anonymous = 0x7F;
+    public static final int LOOKING_FOR_GROUP = 0x0;
+    public static final int HELPER = 0x1;
+    public static final int ROLE_PLAY = 0x2;
+    public static final int FACTION = 0x3;
+    public static final int SPECIES = 0x4;
+    public static final int TITLE = 0x5;
+    public static final int FRIEND = 0x6;
+    public static final int AWAY_FROM_KEY_BOARD = 0x7;
+    public static final int LINK_DEAD = 0x8;
+    public static final int DISPLAYING_FACTION_RANK = 0x9;
+    public static final int DISPLAY_LOCATION_IN_SEARCH_RESULTS = 0xA;
+    public static final int OUT_OF_CHARACTER = 0xB;
+    public static final int SEARCHABLE_BY_CTS_SOURCE_GALAXY = 0xC;
+    public static final int LOOKING_FOR_WORK = 0xD;
+    public static final int MAX_LOADED_BITS = 0x7E;
+    public static final int ANONYMOUS = 0x7F;
 
     private BitSet bitSet = new BitSet(128);
 

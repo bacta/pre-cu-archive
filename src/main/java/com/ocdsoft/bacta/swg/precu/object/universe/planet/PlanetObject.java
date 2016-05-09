@@ -1,7 +1,10 @@
 package com.ocdsoft.bacta.swg.precu.object.universe.planet;
 
+import com.google.inject.Inject;
 import com.ocdsoft.bacta.swg.precu.object.template.server.ServerPlanetObjectTemplate;
 import com.ocdsoft.bacta.swg.precu.object.universe.UniverseObject;
+import com.ocdsoft.bacta.swg.shared.container.SlotIdManager;
+import com.ocdsoft.bacta.swg.shared.template.ObjectTemplateList;
 
 /**
  * Created by crush on 5/8/2016.
@@ -9,8 +12,11 @@ import com.ocdsoft.bacta.swg.precu.object.universe.UniverseObject;
  * A pool of resource found on a planet.
  */
 public class PlanetObject extends UniverseObject {
-    public PlanetObject(final ServerPlanetObjectTemplate template) {
-        super(template);
+    @Inject
+    public PlanetObject(final ObjectTemplateList objectTemplateList,
+                        final SlotIdManager slotIdManager,
+                        final ServerPlanetObjectTemplate template) {
+        super(objectTemplateList, slotIdManager, template);
 
     }
 }

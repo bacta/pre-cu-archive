@@ -4,14 +4,11 @@ import com.ocdsoft.bacta.engine.buffer.ByteBufferWritable;
 import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaContainer;
 
 import java.nio.ByteBuffer;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 
 public class AutoDeltaObjectObjectMap<K extends ByteBufferWritable, V extends ByteBufferWritable> extends AutoDeltaContainer {
-    private transient final List<Command> changes;
+    private transient final List<Command<K, V>> changes;
     private final Map<K, V> container;
     private transient int baselineCommandCount;
     private final Function<ByteBuffer, K> keyCreator;
@@ -19,7 +16,7 @@ public class AutoDeltaObjectObjectMap<K extends ByteBufferWritable, V extends By
 
     public AutoDeltaObjectObjectMap(Function<ByteBuffer, K> keyCreator, Function<ByteBuffer, V> valueCreator) {
         this.changes = new ArrayList<>(5);
-        this.container = new HashMap<K, V>();
+        this.container = new HashMap<>();
         this.baselineCommandCount = 0;
         this.keyCreator = keyCreator;
         this.valueCreator = valueCreator;
@@ -39,24 +36,30 @@ public class AutoDeltaObjectObjectMap<K extends ByteBufferWritable, V extends By
 
     public void erase(final K key) {
         final V value = container.get(key);
-
-
         if (value != null) {
-            final Command command = new Command(Command.ERASE, key, value);
+            final Command<K, V> command = new Command<>(Command.ERASE, key, value);
             changes.add(command);
             ++baselineCommandCount;
             container.remove(key);
             touch();
             onErase(key, value);
         }
-    }
+        }
 
     public boolean isEmpty() {
         return container.isEmpty();
     }
 
+    public Iterator<Map.Entry<K, V>> iterator() {
+        return container.entrySet().iterator();
+    }
+
     public boolean containsKey(final K key) {
         return container.containsKey(key);
+    }
+
+    public V get(final K key) {
+        return container.get(key);
     }
 
     public Map<K, V> getMap() {
@@ -67,7 +70,7 @@ public class AutoDeltaObjectObjectMap<K extends ByteBufferWritable, V extends By
         if (containsKey(key))
             return;
 
-        final Command command = new Command(Command.ADD, key, value);
+        final Command<K, V> command = new Command<>(Command.ADD, key, value);
         container.put(key, value);
         touch();
         onInsert(key, value);
@@ -80,6 +83,7 @@ public class AutoDeltaObjectObjectMap<K extends ByteBufferWritable, V extends By
         return !changes.isEmpty();
     }
 
+    @Override
     public int size() {
         return container.size();
     }
@@ -87,7 +91,7 @@ public class AutoDeltaObjectObjectMap<K extends ByteBufferWritable, V extends By
     public void set(final K key, final V value) {
         if (!containsKey(key)) {
             //Inserting...
-            final Command command = new Command(Command.ADD, key, value);
+            final Command<K, V> command = new Command<>(Command.ADD, key, value);
             container.put(key, value);
             touch();
             onInsert(key, value);
@@ -95,7 +99,7 @@ public class AutoDeltaObjectObjectMap<K extends ByteBufferWritable, V extends By
             ++baselineCommandCount;
         } else {
             //Setting...
-            final Command command = new Command(Command.SET, key, value);
+            final Command<K, V> command = new Command<>(Command.SET, key, value);
             final V oldValue = container.get(key);
             container.put(key, value);
             touch();
@@ -139,7 +143,7 @@ public class AutoDeltaObjectObjectMap<K extends ByteBufferWritable, V extends By
         baselineCommandCount = buffer.getInt();
 
         for (int i = 0; i < commandCount; ++i) {
-            final Command command = new Command(buffer);
+            final Command<K, V> command = new Command<>(buffer, keyCreator, valueCreator);
             assert command.cmd == Command.ADD : "Only add is valid in unpack";
             container.put(command.key, command.value);
             onInsert(command.key, command.value);
@@ -178,7 +182,7 @@ public class AutoDeltaObjectObjectMap<K extends ByteBufferWritable, V extends By
         }
 
         for (; i < commandCount; ++i) {
-            final Command command = new Command(buffer);
+            final Command<K, V> command = new Command<>(buffer, keyCreator, valueCreator);
 
             switch (command.cmd) {
                 case Command.ADD:
@@ -211,10 +215,10 @@ public class AutoDeltaObjectObjectMap<K extends ByteBufferWritable, V extends By
         //callback
     }
 
-    public final class Command implements ByteBufferWritable {
-        private static final byte ADD = 0x0;
-        private static final byte ERASE = 0x1;
-        private static final byte SET = 0x2;
+    public static class Command<K extends ByteBufferWritable, V extends ByteBufferWritable> implements ByteBufferWritable {
+        public static final byte ADD = 0x0;
+        public static final byte ERASE = 0x1;
+        public static final byte SET = 0x2;
 
         public final byte cmd;
         public final K key;
@@ -226,12 +230,13 @@ public class AutoDeltaObjectObjectMap<K extends ByteBufferWritable, V extends By
             this.value = value;
         }
 
-        public Command(final ByteBuffer buffer) {
+        public Command(final ByteBuffer buffer, final Function<ByteBuffer, K> keyCreator, final Function<ByteBuffer, V> valueCreator) {
             this.cmd = buffer.get();
             this.key = keyCreator.apply(buffer);
             this.value = valueCreator.apply(buffer);
         }
 
+        @Override
         public void writeToBuffer(final ByteBuffer buffer) {
             buffer.put(this.cmd);
             key.writeToBuffer(buffer);
