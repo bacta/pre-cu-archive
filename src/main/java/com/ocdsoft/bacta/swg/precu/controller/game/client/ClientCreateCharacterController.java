@@ -24,6 +24,7 @@ import com.ocdsoft.bacta.swg.precu.object.ServerObject;
 import com.ocdsoft.bacta.swg.precu.object.intangible.player.PlayerObject;
 import com.ocdsoft.bacta.swg.precu.object.tangible.creature.CreatureObject;
 import com.ocdsoft.bacta.swg.precu.object.template.server.ServerCreatureObjectTemplate;
+import com.ocdsoft.bacta.swg.precu.object.template.shared.SharedCreatureObjectTemplate;
 import com.ocdsoft.bacta.swg.precu.service.data.ObjectTemplateService;
 import com.ocdsoft.bacta.swg.precu.service.data.creation.*;
 import com.ocdsoft.bacta.swg.precu.service.data.customization.AllowBald;
@@ -187,9 +188,8 @@ public class ClientCreateCharacterController implements GameNetworkMessageContro
             return;
         }
 
-        String sharedTemplate = "object/creature/player/base/shared_human_male.iff";
-        CreatureObject character = objectService.createObject(1, sharedTemplate);
-//        character.setCondition(TangibleObject.Conditions.ON_OFF);
+        CreatureObject character = objectService.createObject(1, objectTemplate.getSharedTemplate());
+//        character.setCondition(TangibleObject.Conditions.onOff);
 
         nameService.addPlayerName(firstName);
 

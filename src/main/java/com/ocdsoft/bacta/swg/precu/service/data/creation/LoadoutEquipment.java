@@ -53,7 +53,7 @@ public class LoadoutEquipment implements SharedFileLoader {
 //
 //        root = chunkReader.nextChunk();
 //
-//        if (!root.isFormType(ID_0000))
+//        if (!root.isFormType(TAG_0000))
 //            throw new RuntimeException("Failed to load default loadout equipment. Wrong version.");
 //
 //        while (root.hasMoreChunks(chunkReader.readerIndex())) {
@@ -65,7 +65,7 @@ public class LoadoutEquipment implements SharedFileLoader {
 //            }
 //        }
 //
-//        chunkReader.closeChunk(); //Closes ID_0000
+//        chunkReader.closeChunk(); //Closes TAG_0000
 //        chunkReader.closeChunk(); //Closes ID_HAIR
 
         logger.debug(String.format("Loaded %d default loadout equipment entries.", equipmentInfos.size()));

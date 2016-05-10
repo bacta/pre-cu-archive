@@ -108,7 +108,7 @@ public final class AssetCustomizationManager implements SharedFileLoader {
 //        if (root.isFormType(ID_ACST)) {
 //            root = reader.nextChunk();
 //
-//            if (root.isFormType(ID_0000)) {
+//            if (root.isFormType(TAG_0000)) {
 //                parseNAME(reader);
 //                parsePNOF(reader);
 //                parseVNOF(reader);

@@ -55,7 +55,7 @@ public final class ProfessionDefaults implements SharedFileLoader {
 //
 //        root = chunkReader.nextChunk();
 //
-//        if (!root.isFormType(ID_0000))
+//        if (!root.isFormType(TAG_0000))
 //            throw new RuntimeException("Failed to load default professions. Wrong version.");
 //
 //        while (root.hasMoreChunks(chunkReader.readerIndex())) {
@@ -73,7 +73,7 @@ public final class ProfessionDefaults implements SharedFileLoader {
 //            }
 //        }
 //
-//        chunkReader.closeChunk(); //Closes ID_0000
+//        chunkReader.closeChunk(); //Closes TAG_0000
 //        chunkReader.closeChunk(); //Closes ID_HAIR
 
         logger.debug(String.format("Loaded %d default professions.",
@@ -115,7 +115,7 @@ public final class ProfessionDefaults implements SharedFileLoader {
 //
 //            root = reader.nextChunk();
 //
-//            if (!root.isFormType(ID_0000))
+//            if (!root.isFormType(TAG_0000))
 //                return;
 //
 //            logger.trace("Parsing profession info");

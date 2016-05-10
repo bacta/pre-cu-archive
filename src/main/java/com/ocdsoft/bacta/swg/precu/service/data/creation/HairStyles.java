@@ -60,7 +60,7 @@ public class HairStyles implements SharedFileLoader {
 //
 //        root = chunkReader.nextChunk();
 //
-//        if (!root.isFormType(ID_0000))
+//        if (!root.isFormType(TAG_0000))
 //            throw new RuntimeException("Failed to load hair styles. Wrong version.");
 //
 //        while (root.hasMoreChunks(chunkReader.readerIndex())) {
@@ -72,7 +72,7 @@ public class HairStyles implements SharedFileLoader {
 //            }
 //        }
 //
-//        chunkReader.closeChunk(); //Closes ID_0000
+//        chunkReader.closeChunk(); //Closes TAG_0000
 //        chunkReader.closeChunk(); //Closes ID_HAIR
 
         logger.debug("Loaded {} default hair styles.", hairStyles.size());
