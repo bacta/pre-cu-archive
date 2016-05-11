@@ -72,6 +72,80 @@ public class ServerBuildingObjectTemplate extends ServerTangibleObjectTemplate {
 		return value;
 	}
 
+	public int getMaintenanceCostMin() {
+		ServerBuildingObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerBuildingObjectTemplate) baseData;
+
+		if (!maintenanceCost.isLoaded()) {
+			if (base == null) {
+				return 0;
+			} else {
+				return base.getMaintenanceCostMin();
+			}
+		}
+
+		int value = this.maintenanceCost.getMinValue();
+		final byte delta = this.maintenanceCost.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			int baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getMaintenanceCostMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (int) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (int) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public int getMaintenanceCostMax() {
+		ServerBuildingObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerBuildingObjectTemplate) baseData;
+
+		if (!maintenanceCost.isLoaded()) {
+			if (base == null) {
+				return 0;
+			} else {
+				return base.getMaintenanceCostMax();
+			}
+		}
+
+		int value = this.maintenanceCost.getMaxValue();
+		final byte delta = this.maintenanceCost.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			int baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getMaintenanceCostMax();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (int) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (int) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
 	public boolean getIsPublic() {
 		ServerBuildingObjectTemplate base = null;
 

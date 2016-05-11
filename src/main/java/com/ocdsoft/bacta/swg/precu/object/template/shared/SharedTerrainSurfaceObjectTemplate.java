@@ -72,6 +72,80 @@ public class SharedTerrainSurfaceObjectTemplate extends ObjectTemplate {
 		return value;
 	}
 
+	public float getCoverMin() {
+		SharedTerrainSurfaceObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedTerrainSurfaceObjectTemplate) baseData;
+
+		if (!cover.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getCoverMin();
+			}
+		}
+
+		float value = this.cover.getMinValue();
+		final byte delta = this.cover.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getCoverMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getCoverMax() {
+		SharedTerrainSurfaceObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedTerrainSurfaceObjectTemplate) baseData;
+
+		if (!cover.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getCoverMax();
+			}
+		}
+
+		float value = this.cover.getMaxValue();
+		final byte delta = this.cover.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getCoverMax();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
 	public String getSurfaceType() {
 		SharedTerrainSurfaceObjectTemplate base = null;
 

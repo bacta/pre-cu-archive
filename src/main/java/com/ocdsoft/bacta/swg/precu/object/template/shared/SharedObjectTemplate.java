@@ -3,8 +3,6 @@ package com.ocdsoft.bacta.swg.precu.object.template.shared;
 import bacta.iff.Iff;
 import com.google.common.base.Preconditions;
 import com.ocdsoft.bacta.swg.localization.StringId;
-import com.ocdsoft.bacta.swg.shared.container.ArrangementDescriptor;
-import com.ocdsoft.bacta.swg.shared.container.SlotDescriptor;
 import com.ocdsoft.bacta.swg.shared.foundation.DataResourceList;
 import com.ocdsoft.bacta.swg.shared.foundation.Tag;
 import com.ocdsoft.bacta.swg.shared.template.ObjectTemplate;
@@ -51,40 +49,6 @@ public class SharedObjectTemplate extends ObjectTemplate {
 	public SharedObjectTemplate(final String filename, final DataResourceList<ObjectTemplate> objectTemplateList) {
 		super(filename, objectTemplateList);
 	}
-
-	//@TDF-USER-START
-	private ArrangementDescriptor arrangementDescriptor;
-	private SlotDescriptor slotDescriptor;
-
-	public ArrangementDescriptor getArrangementDescriptor() {
-		return arrangementDescriptor;
-	}
-
-	public SlotDescriptor getSlotDescriptor() {
-		return slotDescriptor;
-	}
-
-	public void setArrangementDescriptor(final ArrangementDescriptor arrangementDescriptor) {
-		this.arrangementDescriptor = arrangementDescriptor;
-	}
-
-	public void setSlotDescriptor(final SlotDescriptor slotDescriptor) {
-		this.slotDescriptor = slotDescriptor;
-	}
-
-	@Override
-	protected void postLoad() {
-		//TODO: Instead of storing a reference to arrangementDescriptorList and slotDescriptorList just for
-		//this one method, we will create setters, and allot it to be set after creation, externally.
-		//if (slotFilename != null && !slotFilename.isEmpty())
-		//	slotDescriptor = slotDescriptorList.fetch(slotFilename);
-
-		//if (arrangementFilename != null && !arrangementFilename.isEmpty())
-		//	arrangementDescriptor = arrangementDescriptorList.fetch(arrangementFilename);
-
-		//load the client data file?!
-	}
-	//@TDF-USER-END
 
 	@Override
 	public int getId() {
@@ -203,6 +167,80 @@ public class SharedObjectTemplate extends ObjectTemplate {
 			if (baseData != null) {
 				if (base != null)
 					baseValue = base.getContainerVolumeLimit();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (int) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (int) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public int getContainerVolumeLimitMin() {
+		SharedObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedObjectTemplate) baseData;
+
+		if (!containerVolumeLimit.isLoaded()) {
+			if (base == null) {
+				return 0;
+			} else {
+				return base.getContainerVolumeLimitMin();
+			}
+		}
+
+		int value = this.containerVolumeLimit.getMinValue();
+		final byte delta = this.containerVolumeLimit.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			int baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getContainerVolumeLimitMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (int) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (int) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public int getContainerVolumeLimitMax() {
+		SharedObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedObjectTemplate) baseData;
+
+		if (!containerVolumeLimit.isLoaded()) {
+			if (base == null) {
+				return 0;
+			} else {
+				return base.getContainerVolumeLimitMax();
+			}
+		}
+
+		int value = this.containerVolumeLimit.getMaxValue();
+		final byte delta = this.containerVolumeLimit.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			int baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getContainerVolumeLimitMax();
 			}
 
 			if (delta == '+')
@@ -362,6 +400,80 @@ public class SharedObjectTemplate extends ObjectTemplate {
 		return value;
 	}
 
+	public float getScaleMin() {
+		SharedObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedObjectTemplate) baseData;
+
+		if (!scale.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getScaleMin();
+			}
+		}
+
+		float value = this.scale.getMinValue();
+		final byte delta = this.scale.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getScaleMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getScaleMax() {
+		SharedObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedObjectTemplate) baseData;
+
+		if (!scale.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getScaleMax();
+			}
+		}
+
+		float value = this.scale.getMaxValue();
+		final byte delta = this.scale.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getScaleMax();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
 	public GameObjectType getGameObjectType() {
 		SharedObjectTemplate base = null;
 
@@ -434,6 +546,80 @@ public class SharedObjectTemplate extends ObjectTemplate {
 		return value;
 	}
 
+	public float getScaleThresholdBeforeExtentTestMin() {
+		SharedObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedObjectTemplate) baseData;
+
+		if (!scaleThresholdBeforeExtentTest.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getScaleThresholdBeforeExtentTestMin();
+			}
+		}
+
+		float value = this.scaleThresholdBeforeExtentTest.getMinValue();
+		final byte delta = this.scaleThresholdBeforeExtentTest.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getScaleThresholdBeforeExtentTestMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getScaleThresholdBeforeExtentTestMax() {
+		SharedObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedObjectTemplate) baseData;
+
+		if (!scaleThresholdBeforeExtentTest.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getScaleThresholdBeforeExtentTestMax();
+			}
+		}
+
+		float value = this.scaleThresholdBeforeExtentTest.getMaxValue();
+		final byte delta = this.scaleThresholdBeforeExtentTest.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getScaleThresholdBeforeExtentTestMax();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
 	public float getClearFloraRadius() {
 		SharedObjectTemplate base = null;
 
@@ -457,6 +643,80 @@ public class SharedObjectTemplate extends ObjectTemplate {
 			if (baseData != null) {
 				if (base != null)
 					baseValue = base.getClearFloraRadius();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getClearFloraRadiusMin() {
+		SharedObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedObjectTemplate) baseData;
+
+		if (!clearFloraRadius.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getClearFloraRadiusMin();
+			}
+		}
+
+		float value = this.clearFloraRadius.getMinValue();
+		final byte delta = this.clearFloraRadius.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getClearFloraRadiusMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getClearFloraRadiusMax() {
+		SharedObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedObjectTemplate) baseData;
+
+		if (!clearFloraRadius.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getClearFloraRadiusMax();
+			}
+		}
+
+		float value = this.clearFloraRadius.getMaxValue();
+		final byte delta = this.clearFloraRadius.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getClearFloraRadiusMax();
 			}
 
 			if (delta == '+')
@@ -525,6 +785,80 @@ public class SharedObjectTemplate extends ObjectTemplate {
 		return value;
 	}
 
+	public float getNoBuildRadiusMin() {
+		SharedObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedObjectTemplate) baseData;
+
+		if (!noBuildRadius.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getNoBuildRadiusMin();
+			}
+		}
+
+		float value = this.noBuildRadius.getMinValue();
+		final byte delta = this.noBuildRadius.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getNoBuildRadiusMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getNoBuildRadiusMax() {
+		SharedObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedObjectTemplate) baseData;
+
+		if (!noBuildRadius.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getNoBuildRadiusMax();
+			}
+		}
+
+		float value = this.noBuildRadius.getMaxValue();
+		final byte delta = this.noBuildRadius.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getNoBuildRadiusMax();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
 	public boolean getOnlyVisibleInTools() {
 		SharedObjectTemplate base = null;
 
@@ -566,6 +900,80 @@ public class SharedObjectTemplate extends ObjectTemplate {
 			if (baseData != null) {
 				if (base != null)
 					baseValue = base.getLocationReservationRadius();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getLocationReservationRadiusMin() {
+		SharedObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedObjectTemplate) baseData;
+
+		if (!locationReservationRadius.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getLocationReservationRadiusMin();
+			}
+		}
+
+		float value = this.locationReservationRadius.getMinValue();
+		final byte delta = this.locationReservationRadius.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getLocationReservationRadiusMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getLocationReservationRadiusMax() {
+		SharedObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedObjectTemplate) baseData;
+
+		if (!locationReservationRadius.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getLocationReservationRadiusMax();
+			}
+		}
+
+		float value = this.locationReservationRadius.getMaxValue();
+		final byte delta = this.locationReservationRadius.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getLocationReservationRadiusMax();
 			}
 
 			if (delta == '+')
@@ -692,7 +1100,7 @@ public class SharedObjectTemplate extends ObjectTemplate {
 		GOT_group(2),
 		GOT_guild(3),
 		GOT_lair(4),
-		GOT_static(5),
+		GOT_static(5), 
 		GOT_camp(6), 
 		GOT_vendor(7), 
 		GOT_loadbeacon(8), 
@@ -738,7 +1146,7 @@ public class SharedObjectTemplate extends ObjectTemplate {
 		GOT_installation_generator(4098),
 		GOT_installation_harvester(4099),
 		GOT_installation_turret(4100),
-		GOT_installation_minefield(4101),
+		GOT_installation_minefield(4101), 
 		GOT_misc(0x00002000), 
 		GOT_misc_ammunition(8193), 
 		GOT_misc_chemical(8194), 
@@ -749,12 +1157,12 @@ public class SharedObjectTemplate extends ObjectTemplate {
 		GOT_misc_deed_DUMMY(8199),
 		GOT_misc_electronics(8200),
 		GOT_misc_flora(8201),
-		GOT_misc_food(8202),
+		GOT_misc_food(8202), 
 		GOT_misc_furniture(8203), 
 		GOT_misc_instrument(8204), 
 		GOT_misc_pharmaceutical(8205), 
 		GOT_misc_resource_container_DUMMY(8206), // when you remove this, please recompile all the shared object templates
-		GOT_misc_sign(8207),
+		GOT_misc_sign(8207), 
 		GOT_misc_counter(8208), 
 		GOT_misc_factory_crate(8209), 
 		GOT_misc_ticket_travel(8210), 
@@ -811,7 +1219,7 @@ public class SharedObjectTemplate extends ObjectTemplate {
 		GOT_tool_survey(32770),
 		GOT_tool_repair(32771),
 		GOT_tool_camp_kit(32772),
-		GOT_tool_ship_component_repair(32773),
+		GOT_tool_ship_component_repair(32773), 
 		GOT_vehicle(0x00010000), 
 		GOT_vehicle_hover(65537), 
 		GOT_vehicle_hover_ai(65538), 
@@ -901,7 +1309,7 @@ public class SharedObjectTemplate extends ObjectTemplate {
 		GOT_clothing_pants(16777228),
 		GOT_clothing_robe(16777229),
 		GOT_clothing_shirt(16777230),
-		GOT_clothing_vest(16777231),
+		GOT_clothing_vest(16777231), 
 		GOT_clothing_wookiee(16777232), 
 		GOT_clothing_misc(16777233), 
 		GOT_clothing_skirt(16777234), 
@@ -940,7 +1348,7 @@ public class SharedObjectTemplate extends ObjectTemplate {
 		GOT_cybernetic_component(536871174),
 		GOT_chronicles(0x00001100),
 		GOT_chronicles_relic(4353),
-		GOT_chronicles_chronicle(4354),
+		GOT_chronicles_chronicle(4354), 
 		GOT_chronicles_quest_holocron(4355), 
 		GOT_chronicles_quest_holocron_recipe(4356), 
 		GOT_chronicles_relic_fragment(4357); 
@@ -984,7 +1392,7 @@ public class SharedObjectTemplate extends ObjectTemplate {
 		ST_metal(1),
 		ST_stone(2),
 		ST_wood(3),
-		ST_acid(4),
+		ST_acid(4), 
 		ST_ice(5), 
 		ST_molten(6), 
 		ST_obsidian(7); 

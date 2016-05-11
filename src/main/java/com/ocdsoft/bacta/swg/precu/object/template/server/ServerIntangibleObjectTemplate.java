@@ -82,6 +82,80 @@ public class ServerIntangibleObjectTemplate extends ServerObjectTemplate {
 		return value;
 	}
 
+	public int getCountMin() {
+		ServerIntangibleObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerIntangibleObjectTemplate) baseData;
+
+		if (!count.isLoaded()) {
+			if (base == null) {
+				return 0;
+			} else {
+				return base.getCountMin();
+			}
+		}
+
+		int value = this.count.getMinValue();
+		final byte delta = this.count.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			int baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getCountMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (int) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (int) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public int getCountMax() {
+		ServerIntangibleObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerIntangibleObjectTemplate) baseData;
+
+		if (!count.isLoaded()) {
+			if (base == null) {
+				return 0;
+			} else {
+				return base.getCountMax();
+			}
+		}
+
+		int value = this.count.getMaxValue();
+		final byte delta = this.count.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			int baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getCountMax();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (int) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (int) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
 	@Override
 	protected void load(final Iff iff) {
 		if (iff.getCurrentName() != TAG_SERVERINTANGIBLEOBJECTTEMPLATE) {
@@ -253,6 +327,80 @@ public class ServerIntangibleObjectTemplate extends ServerObjectTemplate {
 			return value;
 		}
 
+		public int getCountMin() {
+			SimpleIngredientObjectTemplate base = null;
+
+			if (baseData != null)
+				base = (SimpleIngredientObjectTemplate) baseData;
+
+			if (!count.isLoaded()) {
+				if (base == null) {
+					return 0;
+				} else {
+					return base.getCountMin();
+				}
+			}
+
+			int value = this.count.getMinValue();
+			final byte delta = this.count.getDeltaType();
+
+			if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+				int baseValue = 0;
+
+				if (baseData != null) {
+					if (base != null)
+						baseValue = base.getCountMin();
+				}
+
+				if (delta == '+')
+					value = baseValue + value;
+				if (delta == '-')
+					value = baseValue - value;
+				if (delta == '=')
+					value = baseValue + (int) (baseValue * (value / 100.0f));
+				if (delta == '_')
+					value = baseValue - (int) (baseValue * (value / 100.0f));
+			}
+			return value;
+		}
+
+		public int getCountMax() {
+			SimpleIngredientObjectTemplate base = null;
+
+			if (baseData != null)
+				base = (SimpleIngredientObjectTemplate) baseData;
+
+			if (!count.isLoaded()) {
+				if (base == null) {
+					return 0;
+				} else {
+					return base.getCountMax();
+				}
+			}
+
+			int value = this.count.getMaxValue();
+			final byte delta = this.count.getDeltaType();
+
+			if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+				int baseValue = 0;
+
+				if (baseData != null) {
+					if (base != null)
+						baseValue = base.getCountMax();
+				}
+
+				if (delta == '+')
+					value = baseValue + value;
+				if (delta == '-')
+					value = baseValue - value;
+				if (delta == '=')
+					value = baseValue + (int) (baseValue * (value / 100.0f));
+				if (delta == '_')
+					value = baseValue - (int) (baseValue * (value / 100.0f));
+			}
+			return value;
+		}
+
 		@Override
 		protected void load(final Iff iff) {
 			iff.enterForm();
@@ -360,6 +508,74 @@ public class ServerIntangibleObjectTemplate extends ServerObjectTemplate {
 			return data;
 		}
 
+		public SimpleIngredient getIngredients(int index) {
+			IngredientObjectTemplate base = null;
+
+			if (baseData != null)
+				base = (IngredientObjectTemplate) baseData;
+
+			if (!ingredientsLoaded) {
+				if (base == null) {
+					return null;
+				} else {
+					return base.getIngredientsMin(index);
+				}
+			}
+
+			if (ingredientsAppend && base != null) {
+				int baseCount = base.getIngredientsCount();
+
+				if (index < baseCount) {
+					return base.getIngredientsMin(index);
+				}
+				index -= baseCount;
+			}
+			final ObjectTemplate structTemplate = ingredients.get(index).getValue();
+			Preconditions.checkNotNull(structTemplate);
+			final SimpleIngredientObjectTemplate param = (SimpleIngredientObjectTemplate) structTemplate;
+
+			final SimpleIngredient data = new SimpleIngredient();
+			data.name = param.getName();
+			data.ingredient = param.getIngredient();
+			data.count = param.getCountMin();
+
+			return data;
+		}
+
+		public SimpleIngredient getIngredients(int index) {
+			IngredientObjectTemplate base = null;
+
+			if (baseData != null)
+				base = (IngredientObjectTemplate) baseData;
+
+			if (!ingredientsLoaded) {
+				if (base == null) {
+					return null;
+				} else {
+					return base.getIngredientsMax(index);
+				}
+			}
+
+			if (ingredientsAppend && base != null) {
+				int baseCount = base.getIngredientsCount();
+
+				if (index < baseCount) {
+					return base.getIngredientsMax(index);
+				}
+				index -= baseCount;
+			}
+			final ObjectTemplate structTemplate = ingredients.get(index).getValue();
+			Preconditions.checkNotNull(structTemplate);
+			final SimpleIngredientObjectTemplate param = (SimpleIngredientObjectTemplate) structTemplate;
+
+			final SimpleIngredient data = new SimpleIngredient();
+			data.name = param.getName();
+			data.ingredient = param.getIngredient();
+			data.count = param.getCountMax();
+
+			return data;
+		}
+
 		public int getIngredientsCount() {
 			if (!ingredientsLoaded) {
 				if (baseData == null)
@@ -402,6 +618,80 @@ public class ServerIntangibleObjectTemplate extends ServerObjectTemplate {
 				if (baseData != null) {
 					if (base != null)
 						baseValue = base.getComplexity();
+				}
+
+				if (delta == '+')
+					value = baseValue + value;
+				if (delta == '-')
+					value = baseValue - value;
+				if (delta == '=')
+					value = baseValue + (float) (baseValue * (value / 100.0f));
+				if (delta == '_')
+					value = baseValue - (float) (baseValue * (value / 100.0f));
+			}
+			return value;
+		}
+
+		public float getComplexityMin() {
+			IngredientObjectTemplate base = null;
+
+			if (baseData != null)
+				base = (IngredientObjectTemplate) baseData;
+
+			if (!complexity.isLoaded()) {
+				if (base == null) {
+					return 0.0f;
+				} else {
+					return base.getComplexityMin();
+				}
+			}
+
+			float value = this.complexity.getMinValue();
+			final byte delta = this.complexity.getDeltaType();
+
+			if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+				float baseValue = 0;
+
+				if (baseData != null) {
+					if (base != null)
+						baseValue = base.getComplexityMin();
+				}
+
+				if (delta == '+')
+					value = baseValue + value;
+				if (delta == '-')
+					value = baseValue - value;
+				if (delta == '=')
+					value = baseValue + (float) (baseValue * (value / 100.0f));
+				if (delta == '_')
+					value = baseValue - (float) (baseValue * (value / 100.0f));
+			}
+			return value;
+		}
+
+		public float getComplexityMax() {
+			IngredientObjectTemplate base = null;
+
+			if (baseData != null)
+				base = (IngredientObjectTemplate) baseData;
+
+			if (!complexity.isLoaded()) {
+				if (base == null) {
+					return 0.0f;
+				} else {
+					return base.getComplexityMax();
+				}
+			}
+
+			float value = this.complexity.getMaxValue();
+			final byte delta = this.complexity.getDeltaType();
+
+			if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+				float baseValue = 0;
+
+				if (baseData != null) {
+					if (base != null)
+						baseValue = base.getComplexityMax();
 				}
 
 				if (delta == '+')
@@ -534,6 +824,80 @@ public class ServerIntangibleObjectTemplate extends ServerObjectTemplate {
 				if (baseData != null) {
 					if (base != null)
 						baseValue = base.getValue();
+				}
+
+				if (delta == '+')
+					value = baseValue + value;
+				if (delta == '-')
+					value = baseValue - value;
+				if (delta == '=')
+					value = baseValue + (int) (baseValue * (value / 100.0f));
+				if (delta == '_')
+					value = baseValue - (int) (baseValue * (value / 100.0f));
+			}
+			return value;
+		}
+
+		public int getValueMin() {
+			SchematicAttributeObjectTemplate base = null;
+
+			if (baseData != null)
+				base = (SchematicAttributeObjectTemplate) baseData;
+
+			if (!value.isLoaded()) {
+				if (base == null) {
+					return 0;
+				} else {
+					return base.getValueMin();
+				}
+			}
+
+			int value = this.value.getMinValue();
+			final byte delta = this.value.getDeltaType();
+
+			if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+				int baseValue = 0;
+
+				if (baseData != null) {
+					if (base != null)
+						baseValue = base.getValueMin();
+				}
+
+				if (delta == '+')
+					value = baseValue + value;
+				if (delta == '-')
+					value = baseValue - value;
+				if (delta == '=')
+					value = baseValue + (int) (baseValue * (value / 100.0f));
+				if (delta == '_')
+					value = baseValue - (int) (baseValue * (value / 100.0f));
+			}
+			return value;
+		}
+
+		public int getValueMax() {
+			SchematicAttributeObjectTemplate base = null;
+
+			if (baseData != null)
+				base = (SchematicAttributeObjectTemplate) baseData;
+
+			if (!value.isLoaded()) {
+				if (base == null) {
+					return 0;
+				} else {
+					return base.getValueMax();
+				}
+			}
+
+			int value = this.value.getMaxValue();
+			final byte delta = this.value.getDeltaType();
+
+			if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+				int baseValue = 0;
+
+				if (baseData != null) {
+					if (base != null)
+						baseValue = base.getValueMax();
 				}
 
 				if (delta == '+')

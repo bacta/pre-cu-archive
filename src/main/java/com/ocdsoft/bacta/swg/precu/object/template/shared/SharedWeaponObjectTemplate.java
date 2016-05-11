@@ -91,6 +91,80 @@ public class SharedWeaponObjectTemplate extends SharedTangibleObjectTemplate {
 		return value;
 	}
 
+	public int getWeaponEffectIndexMin() {
+		SharedWeaponObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedWeaponObjectTemplate) baseData;
+
+		if (!weaponEffectIndex.isLoaded()) {
+			if (base == null) {
+				return 0;
+			} else {
+				return base.getWeaponEffectIndexMin();
+			}
+		}
+
+		int value = this.weaponEffectIndex.getMinValue();
+		final byte delta = this.weaponEffectIndex.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			int baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getWeaponEffectIndexMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (int) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (int) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public int getWeaponEffectIndexMax() {
+		SharedWeaponObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedWeaponObjectTemplate) baseData;
+
+		if (!weaponEffectIndex.isLoaded()) {
+			if (base == null) {
+				return 0;
+			} else {
+				return base.getWeaponEffectIndexMax();
+			}
+		}
+
+		int value = this.weaponEffectIndex.getMaxValue();
+		final byte delta = this.weaponEffectIndex.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			int baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getWeaponEffectIndexMax();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (int) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (int) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
 	public AttackType getAttackType() {
 		SharedWeaponObjectTemplate base = null;
 
@@ -163,7 +237,7 @@ public class SharedWeaponObjectTemplate extends SharedTangibleObjectTemplate {
 	}
 
 	public enum AttackType {
-		AT_melee(0),
+		AT_melee(0), 
 		AT_ranged(1), 
 		AT_thrown(2), 
 		AT_ammo(3); 

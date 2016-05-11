@@ -72,6 +72,80 @@ public class SharedBattlefieldMarkerObjectTemplate extends SharedTangibleObjectT
 		return value;
 	}
 
+	public int getNumberOfPolesMin() {
+		SharedBattlefieldMarkerObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedBattlefieldMarkerObjectTemplate) baseData;
+
+		if (!numberOfPoles.isLoaded()) {
+			if (base == null) {
+				return 0;
+			} else {
+				return base.getNumberOfPolesMin();
+			}
+		}
+
+		int value = this.numberOfPoles.getMinValue();
+		final byte delta = this.numberOfPoles.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			int baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getNumberOfPolesMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (int) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (int) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public int getNumberOfPolesMax() {
+		SharedBattlefieldMarkerObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedBattlefieldMarkerObjectTemplate) baseData;
+
+		if (!numberOfPoles.isLoaded()) {
+			if (base == null) {
+				return 0;
+			} else {
+				return base.getNumberOfPolesMax();
+			}
+		}
+
+		int value = this.numberOfPoles.getMaxValue();
+		final byte delta = this.numberOfPoles.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			int baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getNumberOfPolesMax();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (int) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (int) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
 	public float getRadius() {
 		SharedBattlefieldMarkerObjectTemplate base = null;
 
@@ -95,6 +169,80 @@ public class SharedBattlefieldMarkerObjectTemplate extends SharedTangibleObjectT
 			if (baseData != null) {
 				if (base != null)
 					baseValue = base.getRadius();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getRadiusMin() {
+		SharedBattlefieldMarkerObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedBattlefieldMarkerObjectTemplate) baseData;
+
+		if (!radius.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getRadiusMin();
+			}
+		}
+
+		float value = this.radius.getMinValue();
+		final byte delta = this.radius.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getRadiusMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getRadiusMax() {
+		SharedBattlefieldMarkerObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedBattlefieldMarkerObjectTemplate) baseData;
+
+		if (!radius.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getRadiusMax();
+			}
+		}
+
+		float value = this.radius.getMaxValue();
+		final byte delta = this.radius.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getRadiusMax();
 			}
 
 			if (delta == '+')

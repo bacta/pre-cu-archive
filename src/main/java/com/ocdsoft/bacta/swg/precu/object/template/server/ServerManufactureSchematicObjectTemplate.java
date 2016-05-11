@@ -119,6 +119,72 @@ public class ServerManufactureSchematicObjectTemplate extends ServerIntangibleOb
 		return data;
 	}
 
+	public IngredientSlot getIngredients(int index) {
+		ServerManufactureSchematicObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerManufactureSchematicObjectTemplate) baseData;
+
+		if (!ingredientsLoaded) {
+			if (base == null) {
+				return null;
+			} else {
+				return base.getIngredientsMin(index);
+			}
+		}
+
+		if (ingredientsAppend && base != null) {
+			int baseCount = base.getIngredientsCount();
+
+			if (index < baseCount) {
+				return base.getIngredientsMin(index);
+			}
+			index -= baseCount;
+		}
+		final ObjectTemplate structTemplate = ingredients.get(index).getValue();
+		Preconditions.checkNotNull(structTemplate);
+		final IngredientSlotObjectTemplate param = (IngredientSlotObjectTemplate) structTemplate;
+
+		final IngredientSlot data = new IngredientSlot();
+		data.name = param.getName();
+		data.ingredient = param.getIngredientMin();
+
+		return data;
+	}
+
+	public IngredientSlot getIngredients(int index) {
+		ServerManufactureSchematicObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerManufactureSchematicObjectTemplate) baseData;
+
+		if (!ingredientsLoaded) {
+			if (base == null) {
+				return null;
+			} else {
+				return base.getIngredientsMax(index);
+			}
+		}
+
+		if (ingredientsAppend && base != null) {
+			int baseCount = base.getIngredientsCount();
+
+			if (index < baseCount) {
+				return base.getIngredientsMax(index);
+			}
+			index -= baseCount;
+		}
+		final ObjectTemplate structTemplate = ingredients.get(index).getValue();
+		Preconditions.checkNotNull(structTemplate);
+		final IngredientSlotObjectTemplate param = (IngredientSlotObjectTemplate) structTemplate;
+
+		final IngredientSlot data = new IngredientSlot();
+		data.name = param.getName();
+		data.ingredient = param.getIngredientMax();
+
+		return data;
+	}
+
 	public int getIngredientsCount() {
 		if (!ingredientsLoaded) {
 			if (baseData == null)
@@ -175,6 +241,80 @@ public class ServerManufactureSchematicObjectTemplate extends ServerIntangibleOb
 		return value;
 	}
 
+	public int getItemCountMin() {
+		ServerManufactureSchematicObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerManufactureSchematicObjectTemplate) baseData;
+
+		if (!itemCount.isLoaded()) {
+			if (base == null) {
+				return 0;
+			} else {
+				return base.getItemCountMin();
+			}
+		}
+
+		int value = this.itemCount.getMinValue();
+		final byte delta = this.itemCount.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			int baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getItemCountMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (int) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (int) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public int getItemCountMax() {
+		ServerManufactureSchematicObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerManufactureSchematicObjectTemplate) baseData;
+
+		if (!itemCount.isLoaded()) {
+			if (base == null) {
+				return 0;
+			} else {
+				return base.getItemCountMax();
+			}
+		}
+
+		int value = this.itemCount.getMaxValue();
+		final byte delta = this.itemCount.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			int baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getItemCountMax();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (int) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (int) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
 	public SchematicAttribute getAttributes(int index) {
 		ServerManufactureSchematicObjectTemplate base = null;
 
@@ -204,6 +344,72 @@ public class ServerManufactureSchematicObjectTemplate extends ServerIntangibleOb
 		final SchematicAttribute data = new SchematicAttribute();
 		data.name = param.getName();
 		data.value = param.getValue();
+
+		return data;
+	}
+
+	public SchematicAttribute getAttributes(int index) {
+		ServerManufactureSchematicObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerManufactureSchematicObjectTemplate) baseData;
+
+		if (!attributesLoaded) {
+			if (base == null) {
+				return null;
+			} else {
+				return base.getAttributesMin(index);
+			}
+		}
+
+		if (attributesAppend && base != null) {
+			int baseCount = base.getAttributesCount();
+
+			if (index < baseCount) {
+				return base.getAttributesMin(index);
+			}
+			index -= baseCount;
+		}
+		final ObjectTemplate structTemplate = attributes.get(index).getValue();
+		Preconditions.checkNotNull(structTemplate);
+		final SchematicAttributeObjectTemplate param = (SchematicAttributeObjectTemplate) structTemplate;
+
+		final SchematicAttribute data = new SchematicAttribute();
+		data.name = param.getName();
+		data.value = param.getValueMin();
+
+		return data;
+	}
+
+	public SchematicAttribute getAttributes(int index) {
+		ServerManufactureSchematicObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerManufactureSchematicObjectTemplate) baseData;
+
+		if (!attributesLoaded) {
+			if (base == null) {
+				return null;
+			} else {
+				return base.getAttributesMax(index);
+			}
+		}
+
+		if (attributesAppend && base != null) {
+			int baseCount = base.getAttributesCount();
+
+			if (index < baseCount) {
+				return base.getAttributesMax(index);
+			}
+			index -= baseCount;
+		}
+		final ObjectTemplate structTemplate = attributes.get(index).getValue();
+		Preconditions.checkNotNull(structTemplate);
+		final SchematicAttributeObjectTemplate param = (SchematicAttributeObjectTemplate) structTemplate;
+
+		final SchematicAttribute data = new SchematicAttribute();
+		data.name = param.getName();
+		data.value = param.getValueMax();
 
 		return data;
 	}
@@ -364,6 +570,62 @@ public class ServerManufactureSchematicObjectTemplate extends ServerIntangibleOb
 			for (int i = 0; i < param.getIngredientsCount(); ++i)
 				data.ingredients.add(param.getIngredients(i));
 			data.complexity = param.getComplexity();
+			data.skillCommand = param.getSkillCommand();
+
+			return data;
+		}
+
+		public Ingredient getIngredient() {
+			IngredientSlotObjectTemplate base = null;
+
+			if (baseData != null)
+				base = (IngredientSlotObjectTemplate) baseData;
+
+			if (!ingredient.isLoaded()) {
+				if (base == null) {
+					return null;
+				} else {
+					return base.getIngredientMin();
+				}
+			}
+
+			final ObjectTemplate structTemplate = ingredient.getValue();
+			Preconditions.checkNotNull(structTemplate);
+			final IngredientObjectTemplate param = (IngredientObjectTemplate) structTemplate;
+
+			final Ingredient data = new Ingredient();
+			data.ingredientType = param.getIngredientType();
+			for (int i = 0; i < param.getIngredientsCount(); ++i)
+				data.ingredients.add(param.getIngredientsMin(i));
+			data.complexity = param.getComplexityMin();
+			data.skillCommand = param.getSkillCommand();
+
+			return data;
+		}
+
+		public Ingredient getIngredient() {
+			IngredientSlotObjectTemplate base = null;
+
+			if (baseData != null)
+				base = (IngredientSlotObjectTemplate) baseData;
+
+			if (!ingredient.isLoaded()) {
+				if (base == null) {
+					return null;
+				} else {
+					return base.getIngredientMax();
+				}
+			}
+
+			final ObjectTemplate structTemplate = ingredient.getValue();
+			Preconditions.checkNotNull(structTemplate);
+			final IngredientObjectTemplate param = (IngredientObjectTemplate) structTemplate;
+
+			final Ingredient data = new Ingredient();
+			data.ingredientType = param.getIngredientType();
+			for (int i = 0; i < param.getIngredientsCount(); ++i)
+				data.ingredients.add(param.getIngredientsMax(i));
+			data.complexity = param.getComplexityMax();
 			data.skillCommand = param.getSkillCommand();
 
 			return data;

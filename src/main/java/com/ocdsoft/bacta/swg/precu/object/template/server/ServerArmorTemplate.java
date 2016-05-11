@@ -104,6 +104,80 @@ public class ServerArmorTemplate extends ObjectTemplate {
 		return value;
 	}
 
+	public int getIntegrityMin() {
+		ServerArmorTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerArmorTemplate) baseData;
+
+		if (!integrity.isLoaded()) {
+			if (base == null) {
+				return 0;
+			} else {
+				return base.getIntegrityMin();
+			}
+		}
+
+		int value = this.integrity.getMinValue();
+		final byte delta = this.integrity.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			int baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getIntegrityMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (int) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (int) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public int getIntegrityMax() {
+		ServerArmorTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerArmorTemplate) baseData;
+
+		if (!integrity.isLoaded()) {
+			if (base == null) {
+				return 0;
+			} else {
+				return base.getIntegrityMax();
+			}
+		}
+
+		int value = this.integrity.getMaxValue();
+		final byte delta = this.integrity.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			int baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getIntegrityMax();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (int) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (int) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
 	public int getEffectiveness() {
 		ServerArmorTemplate base = null;
 
@@ -127,6 +201,80 @@ public class ServerArmorTemplate extends ObjectTemplate {
 			if (baseData != null) {
 				if (base != null)
 					baseValue = base.getEffectiveness();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (int) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (int) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public int getEffectivenessMin() {
+		ServerArmorTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerArmorTemplate) baseData;
+
+		if (!effectiveness.isLoaded()) {
+			if (base == null) {
+				return 0;
+			} else {
+				return base.getEffectivenessMin();
+			}
+		}
+
+		int value = this.effectiveness.getMinValue();
+		final byte delta = this.effectiveness.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			int baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getEffectivenessMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (int) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (int) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public int getEffectivenessMax() {
+		ServerArmorTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerArmorTemplate) baseData;
+
+		if (!effectiveness.isLoaded()) {
+			if (base == null) {
+				return 0;
+			} else {
+				return base.getEffectivenessMax();
+			}
+		}
+
+		int value = this.effectiveness.getMaxValue();
+		final byte delta = this.effectiveness.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			int baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getEffectivenessMax();
 			}
 
 			if (delta == '+')
@@ -170,6 +318,72 @@ public class ServerArmorTemplate extends ObjectTemplate {
 		final SpecialProtection data = new SpecialProtection();
 		data.type = param.getType();
 		data.effectiveness = param.getEffectiveness();
+
+		return data;
+	}
+
+	public SpecialProtection getSpecialProtection(int index) {
+		ServerArmorTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerArmorTemplate) baseData;
+
+		if (!specialProtectionLoaded) {
+			if (base == null) {
+				return null;
+			} else {
+				return base.getSpecialProtectionMin(index);
+			}
+		}
+
+		if (specialProtectionAppend && base != null) {
+			int baseCount = base.getSpecialProtectionCount();
+
+			if (index < baseCount) {
+				return base.getSpecialProtectionMin(index);
+			}
+			index -= baseCount;
+		}
+		final ObjectTemplate structTemplate = specialProtection.get(index).getValue();
+		Preconditions.checkNotNull(structTemplate);
+		final SpecialProtectionObjectTemplate param = (SpecialProtectionObjectTemplate) structTemplate;
+
+		final SpecialProtection data = new SpecialProtection();
+		data.type = param.getType();
+		data.effectiveness = param.getEffectivenessMin();
+
+		return data;
+	}
+
+	public SpecialProtection getSpecialProtection(int index) {
+		ServerArmorTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerArmorTemplate) baseData;
+
+		if (!specialProtectionLoaded) {
+			if (base == null) {
+				return null;
+			} else {
+				return base.getSpecialProtectionMax(index);
+			}
+		}
+
+		if (specialProtectionAppend && base != null) {
+			int baseCount = base.getSpecialProtectionCount();
+
+			if (index < baseCount) {
+				return base.getSpecialProtectionMax(index);
+			}
+			index -= baseCount;
+		}
+		final ObjectTemplate structTemplate = specialProtection.get(index).getValue();
+		Preconditions.checkNotNull(structTemplate);
+		final SpecialProtectionObjectTemplate param = (SpecialProtectionObjectTemplate) structTemplate;
+
+		final SpecialProtection data = new SpecialProtection();
+		data.type = param.getType();
+		data.effectiveness = param.getEffectivenessMax();
 
 		return data;
 	}
@@ -230,6 +444,80 @@ public class ServerArmorTemplate extends ObjectTemplate {
 		return value;
 	}
 
+	public int getVulnerabilityMin() {
+		ServerArmorTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerArmorTemplate) baseData;
+
+		if (!vulnerability.isLoaded()) {
+			if (base == null) {
+				return 0;
+			} else {
+				return base.getVulnerabilityMin();
+			}
+		}
+
+		int value = this.vulnerability.getMinValue();
+		final byte delta = this.vulnerability.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			int baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getVulnerabilityMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (int) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (int) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public int getVulnerabilityMax() {
+		ServerArmorTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerArmorTemplate) baseData;
+
+		if (!vulnerability.isLoaded()) {
+			if (base == null) {
+				return 0;
+			} else {
+				return base.getVulnerabilityMax();
+			}
+		}
+
+		int value = this.vulnerability.getMaxValue();
+		final byte delta = this.vulnerability.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			int baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getVulnerabilityMax();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (int) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (int) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
 	public int getEncumbrance(int index) {
 		ServerArmorTemplate base = null;
 
@@ -253,6 +541,80 @@ public class ServerArmorTemplate extends ObjectTemplate {
 			if (baseData != null) {
 				if (base != null)
 					baseValue = base.getEncumbrance(index);
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (int) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (int) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public int getEncumbranceMin(int index) {
+		ServerArmorTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerArmorTemplate) baseData;
+
+		if (!encumbrance[index].isLoaded()) {
+			if (base == null) {
+				return 0;
+			} else {
+				return base.getEncumbranceMin(index);
+			}
+		}
+
+		int value = this.encumbrance[index].getMinValue();
+		final byte delta = this.encumbrance[index].getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			int baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getEncumbranceMin(index);
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (int) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (int) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public int getEncumbranceMax(int index) {
+		ServerArmorTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerArmorTemplate) baseData;
+
+		if (!encumbrance[index].isLoaded()) {
+			if (base == null) {
+				return 0;
+			} else {
+				return base.getEncumbranceMax(index);
+			}
+		}
+
+		int value = this.encumbrance[index].getMaxValue();
+		final byte delta = this.encumbrance[index].getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			int baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getEncumbranceMax(index);
 			}
 
 			if (delta == '+')
@@ -340,7 +702,7 @@ public class ServerArmorTemplate extends ObjectTemplate {
 
 	public enum ArmorRating {
 		AR_armorRealNone(-1), //needed for internal reasons, do not use in templates! This means you!
-		AR_armorNone(0),
+		AR_armorNone(0), 
 		AR_armorLight(1), 
 		AR_armorMedium(2), 
 		AR_armorHeavy(3); 
@@ -368,7 +730,7 @@ public class ServerArmorTemplate extends ObjectTemplate {
 		DT_elemental_cold(0x00000040),
 		DT_elemental_acid(0x00000080),
 		DT_elemental_electrical(0x00000100),
-		DT_environmental_heat(0x00000200),
+		DT_environmental_heat(0x00000200), 
 		DT_environmental_cold(0x00000400), 
 		DT_environmental_acid(0x00000800), 
 		DT_environmental_electrical(0x00001000); 
@@ -448,6 +810,80 @@ public class ServerArmorTemplate extends ObjectTemplate {
 				if (baseData != null) {
 					if (base != null)
 						baseValue = base.getEffectiveness();
+				}
+
+				if (delta == '+')
+					value = baseValue + value;
+				if (delta == '-')
+					value = baseValue - value;
+				if (delta == '=')
+					value = baseValue + (int) (baseValue * (value / 100.0f));
+				if (delta == '_')
+					value = baseValue - (int) (baseValue * (value / 100.0f));
+			}
+			return value;
+		}
+
+		public int getEffectivenessMin() {
+			SpecialProtectionObjectTemplate base = null;
+
+			if (baseData != null)
+				base = (SpecialProtectionObjectTemplate) baseData;
+
+			if (!effectiveness.isLoaded()) {
+				if (base == null) {
+					return 0;
+				} else {
+					return base.getEffectivenessMin();
+				}
+			}
+
+			int value = this.effectiveness.getMinValue();
+			final byte delta = this.effectiveness.getDeltaType();
+
+			if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+				int baseValue = 0;
+
+				if (baseData != null) {
+					if (base != null)
+						baseValue = base.getEffectivenessMin();
+				}
+
+				if (delta == '+')
+					value = baseValue + value;
+				if (delta == '-')
+					value = baseValue - value;
+				if (delta == '=')
+					value = baseValue + (int) (baseValue * (value / 100.0f));
+				if (delta == '_')
+					value = baseValue - (int) (baseValue * (value / 100.0f));
+			}
+			return value;
+		}
+
+		public int getEffectivenessMax() {
+			SpecialProtectionObjectTemplate base = null;
+
+			if (baseData != null)
+				base = (SpecialProtectionObjectTemplate) baseData;
+
+			if (!effectiveness.isLoaded()) {
+				if (base == null) {
+					return 0;
+				} else {
+					return base.getEffectivenessMax();
+				}
+			}
+
+			int value = this.effectiveness.getMaxValue();
+			final byte delta = this.effectiveness.getDeltaType();
+
+			if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+				int baseValue = 0;
+
+				if (baseData != null) {
+					if (base != null)
+						baseValue = base.getEffectivenessMax();
 				}
 
 				if (delta == '+')

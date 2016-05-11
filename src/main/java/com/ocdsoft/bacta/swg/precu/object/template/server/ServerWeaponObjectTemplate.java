@@ -153,6 +153,80 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 		return value;
 	}
 
+	public int getElementalValueMin() {
+		ServerWeaponObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerWeaponObjectTemplate) baseData;
+
+		if (!elementalValue.isLoaded()) {
+			if (base == null) {
+				return 0;
+			} else {
+				return base.getElementalValueMin();
+			}
+		}
+
+		int value = this.elementalValue.getMinValue();
+		final byte delta = this.elementalValue.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			int baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getElementalValueMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (int) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (int) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public int getElementalValueMax() {
+		ServerWeaponObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerWeaponObjectTemplate) baseData;
+
+		if (!elementalValue.isLoaded()) {
+			if (base == null) {
+				return 0;
+			} else {
+				return base.getElementalValueMax();
+			}
+		}
+
+		int value = this.elementalValue.getMaxValue();
+		final byte delta = this.elementalValue.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			int baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getElementalValueMax();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (int) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (int) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
 	public int getMinDamageAmount() {
 		ServerWeaponObjectTemplate base = null;
 
@@ -176,6 +250,80 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 			if (baseData != null) {
 				if (base != null)
 					baseValue = base.getMinDamageAmount();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (int) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (int) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public int getMinDamageAmountMin() {
+		ServerWeaponObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerWeaponObjectTemplate) baseData;
+
+		if (!minDamageAmount.isLoaded()) {
+			if (base == null) {
+				return 0;
+			} else {
+				return base.getMinDamageAmountMin();
+			}
+		}
+
+		int value = this.minDamageAmount.getMinValue();
+		final byte delta = this.minDamageAmount.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			int baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getMinDamageAmountMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (int) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (int) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public int getMinDamageAmountMax() {
+		ServerWeaponObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerWeaponObjectTemplate) baseData;
+
+		if (!minDamageAmount.isLoaded()) {
+			if (base == null) {
+				return 0;
+			} else {
+				return base.getMinDamageAmountMax();
+			}
+		}
+
+		int value = this.minDamageAmount.getMaxValue();
+		final byte delta = this.minDamageAmount.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			int baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getMinDamageAmountMax();
 			}
 
 			if (delta == '+')
@@ -227,6 +375,80 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 		return value;
 	}
 
+	public int getMaxDamageAmountMin() {
+		ServerWeaponObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerWeaponObjectTemplate) baseData;
+
+		if (!maxDamageAmount.isLoaded()) {
+			if (base == null) {
+				return 0;
+			} else {
+				return base.getMaxDamageAmountMin();
+			}
+		}
+
+		int value = this.maxDamageAmount.getMinValue();
+		final byte delta = this.maxDamageAmount.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			int baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getMaxDamageAmountMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (int) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (int) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public int getMaxDamageAmountMax() {
+		ServerWeaponObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerWeaponObjectTemplate) baseData;
+
+		if (!maxDamageAmount.isLoaded()) {
+			if (base == null) {
+				return 0;
+			} else {
+				return base.getMaxDamageAmountMax();
+			}
+		}
+
+		int value = this.maxDamageAmount.getMaxValue();
+		final byte delta = this.maxDamageAmount.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			int baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getMaxDamageAmountMax();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (int) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (int) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
 	public float getAttackSpeed() {
 		ServerWeaponObjectTemplate base = null;
 
@@ -250,6 +472,80 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 			if (baseData != null) {
 				if (base != null)
 					baseValue = base.getAttackSpeed();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getAttackSpeedMin() {
+		ServerWeaponObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerWeaponObjectTemplate) baseData;
+
+		if (!attackSpeed.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getAttackSpeedMin();
+			}
+		}
+
+		float value = this.attackSpeed.getMinValue();
+		final byte delta = this.attackSpeed.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getAttackSpeedMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getAttackSpeedMax() {
+		ServerWeaponObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerWeaponObjectTemplate) baseData;
+
+		if (!attackSpeed.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getAttackSpeedMax();
+			}
+		}
+
+		float value = this.attackSpeed.getMaxValue();
+		final byte delta = this.attackSpeed.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getAttackSpeedMax();
 			}
 
 			if (delta == '+')
@@ -301,6 +597,80 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 		return value;
 	}
 
+	public float getAudibleRangeMin() {
+		ServerWeaponObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerWeaponObjectTemplate) baseData;
+
+		if (!audibleRange.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getAudibleRangeMin();
+			}
+		}
+
+		float value = this.audibleRange.getMinValue();
+		final byte delta = this.audibleRange.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getAudibleRangeMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getAudibleRangeMax() {
+		ServerWeaponObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerWeaponObjectTemplate) baseData;
+
+		if (!audibleRange.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getAudibleRangeMax();
+			}
+		}
+
+		float value = this.audibleRange.getMaxValue();
+		final byte delta = this.audibleRange.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getAudibleRangeMax();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
 	public float getMinRange() {
 		ServerWeaponObjectTemplate base = null;
 
@@ -324,6 +694,80 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 			if (baseData != null) {
 				if (base != null)
 					baseValue = base.getMinRange();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getMinRangeMin() {
+		ServerWeaponObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerWeaponObjectTemplate) baseData;
+
+		if (!minRange.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getMinRangeMin();
+			}
+		}
+
+		float value = this.minRange.getMinValue();
+		final byte delta = this.minRange.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getMinRangeMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getMinRangeMax() {
+		ServerWeaponObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerWeaponObjectTemplate) baseData;
+
+		if (!minRange.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getMinRangeMax();
+			}
+		}
+
+		float value = this.minRange.getMaxValue();
+		final byte delta = this.minRange.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getMinRangeMax();
 			}
 
 			if (delta == '+')
@@ -375,6 +819,80 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 		return value;
 	}
 
+	public float getMaxRangeMin() {
+		ServerWeaponObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerWeaponObjectTemplate) baseData;
+
+		if (!maxRange.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getMaxRangeMin();
+			}
+		}
+
+		float value = this.maxRange.getMinValue();
+		final byte delta = this.maxRange.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getMaxRangeMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getMaxRangeMax() {
+		ServerWeaponObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerWeaponObjectTemplate) baseData;
+
+		if (!maxRange.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getMaxRangeMax();
+			}
+		}
+
+		float value = this.maxRange.getMaxValue();
+		final byte delta = this.maxRange.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getMaxRangeMax();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
 	public float getDamageRadius() {
 		ServerWeaponObjectTemplate base = null;
 
@@ -398,6 +916,80 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 			if (baseData != null) {
 				if (base != null)
 					baseValue = base.getDamageRadius();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getDamageRadiusMin() {
+		ServerWeaponObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerWeaponObjectTemplate) baseData;
+
+		if (!damageRadius.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getDamageRadiusMin();
+			}
+		}
+
+		float value = this.damageRadius.getMinValue();
+		final byte delta = this.damageRadius.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getDamageRadiusMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getDamageRadiusMax() {
+		ServerWeaponObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerWeaponObjectTemplate) baseData;
+
+		if (!damageRadius.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getDamageRadiusMax();
+			}
+		}
+
+		float value = this.damageRadius.getMaxValue();
+		final byte delta = this.damageRadius.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getDamageRadiusMax();
 			}
 
 			if (delta == '+')
@@ -449,6 +1041,80 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 		return value;
 	}
 
+	public float getWoundChanceMin() {
+		ServerWeaponObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerWeaponObjectTemplate) baseData;
+
+		if (!woundChance.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getWoundChanceMin();
+			}
+		}
+
+		float value = this.woundChance.getMinValue();
+		final byte delta = this.woundChance.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getWoundChanceMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getWoundChanceMax() {
+		ServerWeaponObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerWeaponObjectTemplate) baseData;
+
+		if (!woundChance.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getWoundChanceMax();
+			}
+		}
+
+		float value = this.woundChance.getMaxValue();
+		final byte delta = this.woundChance.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getWoundChanceMax();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
 	public int getAttackCost() {
 		ServerWeaponObjectTemplate base = null;
 
@@ -486,6 +1152,80 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 		return value;
 	}
 
+	public int getAttackCostMin() {
+		ServerWeaponObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerWeaponObjectTemplate) baseData;
+
+		if (!attackCost.isLoaded()) {
+			if (base == null) {
+				return 0;
+			} else {
+				return base.getAttackCostMin();
+			}
+		}
+
+		int value = this.attackCost.getMinValue();
+		final byte delta = this.attackCost.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			int baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getAttackCostMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (int) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (int) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public int getAttackCostMax() {
+		ServerWeaponObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerWeaponObjectTemplate) baseData;
+
+		if (!attackCost.isLoaded()) {
+			if (base == null) {
+				return 0;
+			} else {
+				return base.getAttackCostMax();
+			}
+		}
+
+		int value = this.attackCost.getMaxValue();
+		final byte delta = this.attackCost.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			int baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getAttackCostMax();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (int) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (int) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
 	public int getAccuracy() {
 		ServerWeaponObjectTemplate base = null;
 
@@ -509,6 +1249,80 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 			if (baseData != null) {
 				if (base != null)
 					baseValue = base.getAccuracy();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (int) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (int) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public int getAccuracyMin() {
+		ServerWeaponObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerWeaponObjectTemplate) baseData;
+
+		if (!accuracy.isLoaded()) {
+			if (base == null) {
+				return 0;
+			} else {
+				return base.getAccuracyMin();
+			}
+		}
+
+		int value = this.accuracy.getMinValue();
+		final byte delta = this.accuracy.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			int baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getAccuracyMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (int) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (int) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public int getAccuracyMax() {
+		ServerWeaponObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerWeaponObjectTemplate) baseData;
+
+		if (!accuracy.isLoaded()) {
+			if (base == null) {
+				return 0;
+			} else {
+				return base.getAccuracyMax();
+			}
+		}
+
+		int value = this.accuracy.getMaxValue();
+		final byte delta = this.accuracy.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			int baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getAccuracyMax();
 			}
 
 			if (delta == '+')
@@ -612,7 +1426,7 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 		WT_polearm(7),
 		WT_thrown(8),
 		WT_1handLightsaber(9),
-		WT_2handLightsaber(10),
+		WT_2handLightsaber(10), 
 		WT_polearmLightsaber(11), 
 		WT_groundTargetting(12), 
 		WT_directionTargetting(13); 

@@ -23,7 +23,7 @@ public class SharedShipObjectTemplate extends SharedTangibleObjectTemplate {
 
 	private int templateVersion;
 
-	private final StringParam cockpitFilename = new StringParam();
+	private final StringParam cockpitFilename = new StringParam(); 
 	private final BoolParam hasWings = new BoolParam(); 
 	private final BoolParam playerControlled = new BoolParam(); 
 	private final StringParam interiorLayoutFileName = new StringParam(); 

@@ -70,6 +70,80 @@ public class ServerResourceContainerObjectTemplate extends ServerTangibleObjectT
 		return value;
 	}
 
+	public int getMaxResourcesMin() {
+		ServerResourceContainerObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerResourceContainerObjectTemplate) baseData;
+
+		if (!maxResources.isLoaded()) {
+			if (base == null) {
+				return 0;
+			} else {
+				return base.getMaxResourcesMin();
+			}
+		}
+
+		int value = this.maxResources.getMinValue();
+		final byte delta = this.maxResources.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			int baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getMaxResourcesMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (int) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (int) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public int getMaxResourcesMax() {
+		ServerResourceContainerObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerResourceContainerObjectTemplate) baseData;
+
+		if (!maxResources.isLoaded()) {
+			if (base == null) {
+				return 0;
+			} else {
+				return base.getMaxResourcesMax();
+			}
+		}
+
+		int value = this.maxResources.getMaxValue();
+		final byte delta = this.maxResources.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			int baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getMaxResourcesMax();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (int) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (int) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
 	@Override
 	protected void load(final Iff iff) {
 		if (iff.getCurrentName() != TAG_SERVERRESOURCECONTAINEROBJECTTEMPLATE) {

@@ -82,6 +82,80 @@ public class SharedVehicleObjectTemplate extends SharedTangibleObjectTemplate {
 		return value;
 	}
 
+	public float getSpeedMin(MovementTypes index) {
+		SharedVehicleObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedVehicleObjectTemplate) baseData;
+
+		if (!speed[(int) index.value].isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getSpeedMin(index);
+			}
+		}
+
+		float value = this.speed[(int) index.value].getMinValue();
+		final byte delta = this.speed[(int) index.value].getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getSpeedMin(index);
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getSpeedMax(MovementTypes index) {
+		SharedVehicleObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedVehicleObjectTemplate) baseData;
+
+		if (!speed[(int) index.value].isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getSpeedMax(index);
+			}
+		}
+
+		float value = this.speed[(int) index.value].getMaxValue();
+		final byte delta = this.speed[(int) index.value].getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getSpeedMax(index);
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
 	public float getSlopeAversion() {
 		SharedVehicleObjectTemplate base = null;
 
@@ -105,6 +179,80 @@ public class SharedVehicleObjectTemplate extends SharedTangibleObjectTemplate {
 			if (baseData != null) {
 				if (base != null)
 					baseValue = base.getSlopeAversion();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getSlopeAversionMin() {
+		SharedVehicleObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedVehicleObjectTemplate) baseData;
+
+		if (!slopeAversion.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getSlopeAversionMin();
+			}
+		}
+
+		float value = this.slopeAversion.getMinValue();
+		final byte delta = this.slopeAversion.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getSlopeAversionMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getSlopeAversionMax() {
+		SharedVehicleObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedVehicleObjectTemplate) baseData;
+
+		if (!slopeAversion.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getSlopeAversionMax();
+			}
+		}
+
+		float value = this.slopeAversion.getMaxValue();
+		final byte delta = this.slopeAversion.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getSlopeAversionMax();
 			}
 
 			if (delta == '+')
@@ -156,6 +304,80 @@ public class SharedVehicleObjectTemplate extends SharedTangibleObjectTemplate {
 		return value;
 	}
 
+	public float getHoverValueMin() {
+		SharedVehicleObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedVehicleObjectTemplate) baseData;
+
+		if (!hoverValue.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getHoverValueMin();
+			}
+		}
+
+		float value = this.hoverValue.getMinValue();
+		final byte delta = this.hoverValue.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getHoverValueMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getHoverValueMax() {
+		SharedVehicleObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedVehicleObjectTemplate) baseData;
+
+		if (!hoverValue.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getHoverValueMax();
+			}
+		}
+
+		float value = this.hoverValue.getMaxValue();
+		final byte delta = this.hoverValue.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getHoverValueMax();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
 	public float getTurnRate() {
 		SharedVehicleObjectTemplate base = null;
 
@@ -179,6 +401,80 @@ public class SharedVehicleObjectTemplate extends SharedTangibleObjectTemplate {
 			if (baseData != null) {
 				if (base != null)
 					baseValue = base.getTurnRate();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getTurnRateMin() {
+		SharedVehicleObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedVehicleObjectTemplate) baseData;
+
+		if (!turnRate.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getTurnRateMin();
+			}
+		}
+
+		float value = this.turnRate.getMinValue();
+		final byte delta = this.turnRate.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getTurnRateMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getTurnRateMax() {
+		SharedVehicleObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedVehicleObjectTemplate) baseData;
+
+		if (!turnRate.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getTurnRateMax();
+			}
+		}
+
+		float value = this.turnRate.getMaxValue();
+		final byte delta = this.turnRate.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getTurnRateMax();
 			}
 
 			if (delta == '+')
@@ -230,6 +526,80 @@ public class SharedVehicleObjectTemplate extends SharedTangibleObjectTemplate {
 		return value;
 	}
 
+	public float getMaxVelocityMin() {
+		SharedVehicleObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedVehicleObjectTemplate) baseData;
+
+		if (!maxVelocity.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getMaxVelocityMin();
+			}
+		}
+
+		float value = this.maxVelocity.getMinValue();
+		final byte delta = this.maxVelocity.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getMaxVelocityMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getMaxVelocityMax() {
+		SharedVehicleObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedVehicleObjectTemplate) baseData;
+
+		if (!maxVelocity.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getMaxVelocityMax();
+			}
+		}
+
+		float value = this.maxVelocity.getMaxValue();
+		final byte delta = this.maxVelocity.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getMaxVelocityMax();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
 	public float getAcceleration() {
 		SharedVehicleObjectTemplate base = null;
 
@@ -267,6 +637,80 @@ public class SharedVehicleObjectTemplate extends SharedTangibleObjectTemplate {
 		return value;
 	}
 
+	public float getAccelerationMin() {
+		SharedVehicleObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedVehicleObjectTemplate) baseData;
+
+		if (!acceleration.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getAccelerationMin();
+			}
+		}
+
+		float value = this.acceleration.getMinValue();
+		final byte delta = this.acceleration.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getAccelerationMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getAccelerationMax() {
+		SharedVehicleObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedVehicleObjectTemplate) baseData;
+
+		if (!acceleration.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getAccelerationMax();
+			}
+		}
+
+		float value = this.acceleration.getMaxValue();
+		final byte delta = this.acceleration.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getAccelerationMax();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
 	public float getBraking() {
 		SharedVehicleObjectTemplate base = null;
 
@@ -290,6 +734,80 @@ public class SharedVehicleObjectTemplate extends SharedTangibleObjectTemplate {
 			if (baseData != null) {
 				if (base != null)
 					baseValue = base.getBraking();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getBrakingMin() {
+		SharedVehicleObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedVehicleObjectTemplate) baseData;
+
+		if (!braking.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getBrakingMin();
+			}
+		}
+
+		float value = this.braking.getMinValue();
+		final byte delta = this.braking.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getBrakingMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getBrakingMax() {
+		SharedVehicleObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedVehicleObjectTemplate) baseData;
+
+		if (!braking.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getBrakingMax();
+			}
+		}
+
+		float value = this.braking.getMaxValue();
+		final byte delta = this.braking.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getBrakingMax();
 			}
 
 			if (delta == '+')
@@ -375,7 +893,7 @@ public class SharedVehicleObjectTemplate extends SharedTangibleObjectTemplate {
 
 	public enum MovementTypes {
 		MT_hover(0),
-		MT_underwater(1),
+		MT_underwater(1), 
 		MT_ground(2), 
 		MT_swim(3), 
 		MT_walker(4); 

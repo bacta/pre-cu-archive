@@ -84,6 +84,72 @@ public class SharedDraftSchematicObjectTemplate extends SharedIntangibleObjectTe
 		return data;
 	}
 
+	public IngredientSlot getSlots(int index) {
+		SharedDraftSchematicObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedDraftSchematicObjectTemplate) baseData;
+
+		if (!slotsLoaded) {
+			if (base == null) {
+				return null;
+			} else {
+				return base.getSlotsMin(index);
+			}
+		}
+
+		if (slotsAppend && base != null) {
+			int baseCount = base.getSlotsCount();
+
+			if (index < baseCount) {
+				return base.getSlotsMin(index);
+			}
+			index -= baseCount;
+		}
+		final ObjectTemplate structTemplate = slots.get(index).getValue();
+		Preconditions.checkNotNull(structTemplate);
+		final IngredientSlotObjectTemplate param = (IngredientSlotObjectTemplate) structTemplate;
+
+		final IngredientSlot data = new IngredientSlot();
+		data.name = param.getName();
+		data.hardpoint = param.getHardpoint();
+
+		return data;
+	}
+
+	public IngredientSlot getSlots(int index) {
+		SharedDraftSchematicObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedDraftSchematicObjectTemplate) baseData;
+
+		if (!slotsLoaded) {
+			if (base == null) {
+				return null;
+			} else {
+				return base.getSlotsMax(index);
+			}
+		}
+
+		if (slotsAppend && base != null) {
+			int baseCount = base.getSlotsCount();
+
+			if (index < baseCount) {
+				return base.getSlotsMax(index);
+			}
+			index -= baseCount;
+		}
+		final ObjectTemplate structTemplate = slots.get(index).getValue();
+		Preconditions.checkNotNull(structTemplate);
+		final IngredientSlotObjectTemplate param = (IngredientSlotObjectTemplate) structTemplate;
+
+		final IngredientSlot data = new IngredientSlot();
+		data.name = param.getName();
+		data.hardpoint = param.getHardpoint();
+
+		return data;
+	}
+
 	public int getSlotsCount() {
 		if (!slotsLoaded) {
 			if (baseData == null)
@@ -133,6 +199,74 @@ public class SharedDraftSchematicObjectTemplate extends SharedIntangibleObjectTe
 		data.name = param.getName();
 		data.experiment = param.getExperiment();
 		data.value = param.getValue();
+
+		return data;
+	}
+
+	public SchematicAttribute getAttributes(int index) {
+		SharedDraftSchematicObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedDraftSchematicObjectTemplate) baseData;
+
+		if (!attributesLoaded) {
+			if (base == null) {
+				return null;
+			} else {
+				return base.getAttributesMin(index);
+			}
+		}
+
+		if (attributesAppend && base != null) {
+			int baseCount = base.getAttributesCount();
+
+			if (index < baseCount) {
+				return base.getAttributesMin(index);
+			}
+			index -= baseCount;
+		}
+		final ObjectTemplate structTemplate = attributes.get(index).getValue();
+		Preconditions.checkNotNull(structTemplate);
+		final SchematicAttributeObjectTemplate param = (SchematicAttributeObjectTemplate) structTemplate;
+
+		final SchematicAttribute data = new SchematicAttribute();
+		data.name = param.getName();
+		data.experiment = param.getExperiment();
+		data.value = param.getValueMin();
+
+		return data;
+	}
+
+	public SchematicAttribute getAttributes(int index) {
+		SharedDraftSchematicObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedDraftSchematicObjectTemplate) baseData;
+
+		if (!attributesLoaded) {
+			if (base == null) {
+				return null;
+			} else {
+				return base.getAttributesMax(index);
+			}
+		}
+
+		if (attributesAppend && base != null) {
+			int baseCount = base.getAttributesCount();
+
+			if (index < baseCount) {
+				return base.getAttributesMax(index);
+			}
+			index -= baseCount;
+		}
+		final ObjectTemplate structTemplate = attributes.get(index).getValue();
+		Preconditions.checkNotNull(structTemplate);
+		final SchematicAttributeObjectTemplate param = (SchematicAttributeObjectTemplate) structTemplate;
+
+		final SchematicAttribute data = new SchematicAttribute();
+		data.name = param.getName();
+		data.experiment = param.getExperiment();
+		data.value = param.getValueMax();
 
 		return data;
 	}
@@ -245,7 +379,7 @@ public class SharedDraftSchematicObjectTemplate extends SharedIntangibleObjectTe
 	}
 
 	public enum ArmorRating {
-		AR_armorNone(0),
+		AR_armorNone(0), 
 		AR_armorLight(1), 
 		AR_armorMedium(2), 
 		AR_armorHeavy(3); 
@@ -273,7 +407,7 @@ public class SharedDraftSchematicObjectTemplate extends SharedIntangibleObjectTe
 		DT_elemental_cold(0x00000040),
 		DT_elemental_acid(0x00000080),
 		DT_elemental_electrical(0x00000100),
-		DT_environmental_heat(0x00000200),
+		DT_environmental_heat(0x00000200), 
 		DT_environmental_cold(0x00000400), 
 		DT_environmental_acid(0x00000800), 
 		DT_environmental_electrical(0x00001000); 
@@ -458,6 +592,80 @@ public class SharedDraftSchematicObjectTemplate extends SharedIntangibleObjectTe
 				if (baseData != null) {
 					if (base != null)
 						baseValue = base.getValue();
+				}
+
+				if (delta == '+')
+					value = baseValue + value;
+				if (delta == '-')
+					value = baseValue - value;
+				if (delta == '=')
+					value = baseValue + (int) (baseValue * (value / 100.0f));
+				if (delta == '_')
+					value = baseValue - (int) (baseValue * (value / 100.0f));
+			}
+			return value;
+		}
+
+		public int getValueMin() {
+			SchematicAttributeObjectTemplate base = null;
+
+			if (baseData != null)
+				base = (SchematicAttributeObjectTemplate) baseData;
+
+			if (!value.isLoaded()) {
+				if (base == null) {
+					return 0;
+				} else {
+					return base.getValueMin();
+				}
+			}
+
+			int value = this.value.getMinValue();
+			final byte delta = this.value.getDeltaType();
+
+			if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+				int baseValue = 0;
+
+				if (baseData != null) {
+					if (base != null)
+						baseValue = base.getValueMin();
+				}
+
+				if (delta == '+')
+					value = baseValue + value;
+				if (delta == '-')
+					value = baseValue - value;
+				if (delta == '=')
+					value = baseValue + (int) (baseValue * (value / 100.0f));
+				if (delta == '_')
+					value = baseValue - (int) (baseValue * (value / 100.0f));
+			}
+			return value;
+		}
+
+		public int getValueMax() {
+			SchematicAttributeObjectTemplate base = null;
+
+			if (baseData != null)
+				base = (SchematicAttributeObjectTemplate) baseData;
+
+			if (!value.isLoaded()) {
+				if (base == null) {
+					return 0;
+				} else {
+					return base.getValueMax();
+				}
+			}
+
+			int value = this.value.getMaxValue();
+			final byte delta = this.value.getDeltaType();
+
+			if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+				int baseValue = 0;
+
+				if (baseData != null) {
+					if (base != null)
+						baseValue = base.getValueMax();
 				}
 
 				if (delta == '+')

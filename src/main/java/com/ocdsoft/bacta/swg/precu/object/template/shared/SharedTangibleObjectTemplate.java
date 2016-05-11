@@ -99,6 +99,74 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 		return data;
 	}
 
+	public PaletteColorCustomizationVariable getPaletteColorCustomizationVariables(int index) {
+		SharedTangibleObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedTangibleObjectTemplate) baseData;
+
+		if (!paletteColorCustomizationVariablesLoaded) {
+			if (base == null) {
+				return null;
+			} else {
+				return base.getPaletteColorCustomizationVariablesMin(index);
+			}
+		}
+
+		if (paletteColorCustomizationVariablesAppend && base != null) {
+			int baseCount = base.getPaletteColorCustomizationVariablesCount();
+
+			if (index < baseCount) {
+				return base.getPaletteColorCustomizationVariablesMin(index);
+			}
+			index -= baseCount;
+		}
+		final ObjectTemplate structTemplate = paletteColorCustomizationVariables.get(index).getValue();
+		Preconditions.checkNotNull(structTemplate);
+		final PaletteColorCustomizationVariableObjectTemplate param = (PaletteColorCustomizationVariableObjectTemplate) structTemplate;
+
+		final PaletteColorCustomizationVariable data = new PaletteColorCustomizationVariable();
+		data.variableName = param.getVariableName();
+		data.palettePathName = param.getPalettePathName();
+		data.defaultPaletteIndex = param.getDefaultPaletteIndexMin();
+
+		return data;
+	}
+
+	public PaletteColorCustomizationVariable getPaletteColorCustomizationVariables(int index) {
+		SharedTangibleObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedTangibleObjectTemplate) baseData;
+
+		if (!paletteColorCustomizationVariablesLoaded) {
+			if (base == null) {
+				return null;
+			} else {
+				return base.getPaletteColorCustomizationVariablesMax(index);
+			}
+		}
+
+		if (paletteColorCustomizationVariablesAppend && base != null) {
+			int baseCount = base.getPaletteColorCustomizationVariablesCount();
+
+			if (index < baseCount) {
+				return base.getPaletteColorCustomizationVariablesMax(index);
+			}
+			index -= baseCount;
+		}
+		final ObjectTemplate structTemplate = paletteColorCustomizationVariables.get(index).getValue();
+		Preconditions.checkNotNull(structTemplate);
+		final PaletteColorCustomizationVariableObjectTemplate param = (PaletteColorCustomizationVariableObjectTemplate) structTemplate;
+
+		final PaletteColorCustomizationVariable data = new PaletteColorCustomizationVariable();
+		data.variableName = param.getVariableName();
+		data.palettePathName = param.getPalettePathName();
+		data.defaultPaletteIndex = param.getDefaultPaletteIndexMax();
+
+		return data;
+	}
+
 	public int getPaletteColorCustomizationVariablesCount() {
 		if (!paletteColorCustomizationVariablesLoaded) {
 			if (baseData == null)
@@ -153,6 +221,76 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 		return data;
 	}
 
+	public RangedIntCustomizationVariable getRangedIntCustomizationVariables(int index) {
+		SharedTangibleObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedTangibleObjectTemplate) baseData;
+
+		if (!rangedIntCustomizationVariablesLoaded) {
+			if (base == null) {
+				return null;
+			} else {
+				return base.getRangedIntCustomizationVariablesMin(index);
+			}
+		}
+
+		if (rangedIntCustomizationVariablesAppend && base != null) {
+			int baseCount = base.getRangedIntCustomizationVariablesCount();
+
+			if (index < baseCount) {
+				return base.getRangedIntCustomizationVariablesMin(index);
+			}
+			index -= baseCount;
+		}
+		final ObjectTemplate structTemplate = rangedIntCustomizationVariables.get(index).getValue();
+		Preconditions.checkNotNull(structTemplate);
+		final RangedIntCustomizationVariableObjectTemplate param = (RangedIntCustomizationVariableObjectTemplate) structTemplate;
+
+		final RangedIntCustomizationVariable data = new RangedIntCustomizationVariable();
+		data.variableName = param.getVariableName();
+		data.minValueInclusive = param.getMinValueInclusiveMin();
+		data.defaultValue = param.getDefaultValueMin();
+		data.maxValueExclusive = param.getMaxValueExclusiveMin();
+
+		return data;
+	}
+
+	public RangedIntCustomizationVariable getRangedIntCustomizationVariables(int index) {
+		SharedTangibleObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedTangibleObjectTemplate) baseData;
+
+		if (!rangedIntCustomizationVariablesLoaded) {
+			if (base == null) {
+				return null;
+			} else {
+				return base.getRangedIntCustomizationVariablesMax(index);
+			}
+		}
+
+		if (rangedIntCustomizationVariablesAppend && base != null) {
+			int baseCount = base.getRangedIntCustomizationVariablesCount();
+
+			if (index < baseCount) {
+				return base.getRangedIntCustomizationVariablesMax(index);
+			}
+			index -= baseCount;
+		}
+		final ObjectTemplate structTemplate = rangedIntCustomizationVariables.get(index).getValue();
+		Preconditions.checkNotNull(structTemplate);
+		final RangedIntCustomizationVariableObjectTemplate param = (RangedIntCustomizationVariableObjectTemplate) structTemplate;
+
+		final RangedIntCustomizationVariable data = new RangedIntCustomizationVariable();
+		data.variableName = param.getVariableName();
+		data.minValueInclusive = param.getMinValueInclusiveMax();
+		data.defaultValue = param.getDefaultValueMax();
+		data.maxValueExclusive = param.getMaxValueExclusiveMax();
+
+		return data;
+	}
+
 	public int getRangedIntCustomizationVariablesCount() {
 		if (!rangedIntCustomizationVariablesLoaded) {
 			if (baseData == null)
@@ -191,6 +329,72 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 
 			if (index < baseCount) {
 				return base.getConstStringCustomizationVariables(index);
+			}
+			index -= baseCount;
+		}
+		final ObjectTemplate structTemplate = constStringCustomizationVariables.get(index).getValue();
+		Preconditions.checkNotNull(structTemplate);
+		final ConstStringCustomizationVariableObjectTemplate param = (ConstStringCustomizationVariableObjectTemplate) structTemplate;
+
+		final ConstStringCustomizationVariable data = new ConstStringCustomizationVariable();
+		data.variableName = param.getVariableName();
+		data.constValue = param.getConstValue();
+
+		return data;
+	}
+
+	public ConstStringCustomizationVariable getConstStringCustomizationVariables(int index) {
+		SharedTangibleObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedTangibleObjectTemplate) baseData;
+
+		if (!constStringCustomizationVariablesLoaded) {
+			if (base == null) {
+				return null;
+			} else {
+				return base.getConstStringCustomizationVariablesMin(index);
+			}
+		}
+
+		if (constStringCustomizationVariablesAppend && base != null) {
+			int baseCount = base.getConstStringCustomizationVariablesCount();
+
+			if (index < baseCount) {
+				return base.getConstStringCustomizationVariablesMin(index);
+			}
+			index -= baseCount;
+		}
+		final ObjectTemplate structTemplate = constStringCustomizationVariables.get(index).getValue();
+		Preconditions.checkNotNull(structTemplate);
+		final ConstStringCustomizationVariableObjectTemplate param = (ConstStringCustomizationVariableObjectTemplate) structTemplate;
+
+		final ConstStringCustomizationVariable data = new ConstStringCustomizationVariable();
+		data.variableName = param.getVariableName();
+		data.constValue = param.getConstValue();
+
+		return data;
+	}
+
+	public ConstStringCustomizationVariable getConstStringCustomizationVariables(int index) {
+		SharedTangibleObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedTangibleObjectTemplate) baseData;
+
+		if (!constStringCustomizationVariablesLoaded) {
+			if (base == null) {
+				return null;
+			} else {
+				return base.getConstStringCustomizationVariablesMax(index);
+			}
+		}
+
+		if (constStringCustomizationVariablesAppend && base != null) {
+			int baseCount = base.getConstStringCustomizationVariablesCount();
+
+			if (index < baseCount) {
+				return base.getConstStringCustomizationVariablesMax(index);
 			}
 			index -= baseCount;
 		}
@@ -400,6 +604,72 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 		return data;
 	}
 
+	public CustomizationVariableMapping getCustomizationVariableMapping(int index) {
+		SharedTangibleObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedTangibleObjectTemplate) baseData;
+
+		if (!customizationVariableMappingLoaded) {
+			if (base == null) {
+				return null;
+			} else {
+				return base.getCustomizationVariableMappingMin(index);
+			}
+		}
+
+		if (customizationVariableMappingAppend && base != null) {
+			int baseCount = base.getCustomizationVariableMappingCount();
+
+			if (index < baseCount) {
+				return base.getCustomizationVariableMappingMin(index);
+			}
+			index -= baseCount;
+		}
+		final ObjectTemplate structTemplate = customizationVariableMapping.get(index).getValue();
+		Preconditions.checkNotNull(structTemplate);
+		final CustomizationVariableMappingObjectTemplate param = (CustomizationVariableMappingObjectTemplate) structTemplate;
+
+		final CustomizationVariableMapping data = new CustomizationVariableMapping();
+		data.sourceVariable = param.getSourceVariable();
+		data.dependentVariable = param.getDependentVariable();
+
+		return data;
+	}
+
+	public CustomizationVariableMapping getCustomizationVariableMapping(int index) {
+		SharedTangibleObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedTangibleObjectTemplate) baseData;
+
+		if (!customizationVariableMappingLoaded) {
+			if (base == null) {
+				return null;
+			} else {
+				return base.getCustomizationVariableMappingMax(index);
+			}
+		}
+
+		if (customizationVariableMappingAppend && base != null) {
+			int baseCount = base.getCustomizationVariableMappingCount();
+
+			if (index < baseCount) {
+				return base.getCustomizationVariableMappingMax(index);
+			}
+			index -= baseCount;
+		}
+		final ObjectTemplate structTemplate = customizationVariableMapping.get(index).getValue();
+		Preconditions.checkNotNull(structTemplate);
+		final CustomizationVariableMappingObjectTemplate param = (CustomizationVariableMappingObjectTemplate) structTemplate;
+
+		final CustomizationVariableMapping data = new CustomizationVariableMapping();
+		data.sourceVariable = param.getSourceVariable();
+		data.dependentVariable = param.getDependentVariable();
+
+		return data;
+	}
+
 	public int getCustomizationVariableMappingCount() {
 		if (!customizationVariableMappingLoaded) {
 			if (baseData == null)
@@ -587,7 +857,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 			super(filename, objectTemplateList);
 		}
 
-		private final StringParam variableName = new StringParam();
+		private final StringParam variableName = new StringParam(); 
 		private final IntegerParam minValueInclusive = new IntegerParam(); 
 		private final IntegerParam defaultValue = new IntegerParam(); 
 		private final IntegerParam maxValueExclusive = new IntegerParam(); 
@@ -652,6 +922,80 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 			return value;
 		}
 
+		public int getMinValueInclusiveMin() {
+			RangedIntCustomizationVariableObjectTemplate base = null;
+
+			if (baseData != null)
+				base = (RangedIntCustomizationVariableObjectTemplate) baseData;
+
+			if (!minValueInclusive.isLoaded()) {
+				if (base == null) {
+					return 0;
+				} else {
+					return base.getMinValueInclusiveMin();
+				}
+			}
+
+			int value = this.minValueInclusive.getMinValue();
+			final byte delta = this.minValueInclusive.getDeltaType();
+
+			if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+				int baseValue = 0;
+
+				if (baseData != null) {
+					if (base != null)
+						baseValue = base.getMinValueInclusiveMin();
+				}
+
+				if (delta == '+')
+					value = baseValue + value;
+				if (delta == '-')
+					value = baseValue - value;
+				if (delta == '=')
+					value = baseValue + (int) (baseValue * (value / 100.0f));
+				if (delta == '_')
+					value = baseValue - (int) (baseValue * (value / 100.0f));
+			}
+			return value;
+		}
+
+		public int getMinValueInclusiveMax() {
+			RangedIntCustomizationVariableObjectTemplate base = null;
+
+			if (baseData != null)
+				base = (RangedIntCustomizationVariableObjectTemplate) baseData;
+
+			if (!minValueInclusive.isLoaded()) {
+				if (base == null) {
+					return 0;
+				} else {
+					return base.getMinValueInclusiveMax();
+				}
+			}
+
+			int value = this.minValueInclusive.getMaxValue();
+			final byte delta = this.minValueInclusive.getDeltaType();
+
+			if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+				int baseValue = 0;
+
+				if (baseData != null) {
+					if (base != null)
+						baseValue = base.getMinValueInclusiveMax();
+				}
+
+				if (delta == '+')
+					value = baseValue + value;
+				if (delta == '-')
+					value = baseValue - value;
+				if (delta == '=')
+					value = baseValue + (int) (baseValue * (value / 100.0f));
+				if (delta == '_')
+					value = baseValue - (int) (baseValue * (value / 100.0f));
+			}
+			return value;
+		}
+
 		public int getDefaultValue() {
 			RangedIntCustomizationVariableObjectTemplate base = null;
 
@@ -689,6 +1033,80 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 			return value;
 		}
 
+		public int getDefaultValueMin() {
+			RangedIntCustomizationVariableObjectTemplate base = null;
+
+			if (baseData != null)
+				base = (RangedIntCustomizationVariableObjectTemplate) baseData;
+
+			if (!defaultValue.isLoaded()) {
+				if (base == null) {
+					return 0;
+				} else {
+					return base.getDefaultValueMin();
+				}
+			}
+
+			int value = this.defaultValue.getMinValue();
+			final byte delta = this.defaultValue.getDeltaType();
+
+			if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+				int baseValue = 0;
+
+				if (baseData != null) {
+					if (base != null)
+						baseValue = base.getDefaultValueMin();
+				}
+
+				if (delta == '+')
+					value = baseValue + value;
+				if (delta == '-')
+					value = baseValue - value;
+				if (delta == '=')
+					value = baseValue + (int) (baseValue * (value / 100.0f));
+				if (delta == '_')
+					value = baseValue - (int) (baseValue * (value / 100.0f));
+			}
+			return value;
+		}
+
+		public int getDefaultValueMax() {
+			RangedIntCustomizationVariableObjectTemplate base = null;
+
+			if (baseData != null)
+				base = (RangedIntCustomizationVariableObjectTemplate) baseData;
+
+			if (!defaultValue.isLoaded()) {
+				if (base == null) {
+					return 0;
+				} else {
+					return base.getDefaultValueMax();
+				}
+			}
+
+			int value = this.defaultValue.getMaxValue();
+			final byte delta = this.defaultValue.getDeltaType();
+
+			if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+				int baseValue = 0;
+
+				if (baseData != null) {
+					if (base != null)
+						baseValue = base.getDefaultValueMax();
+				}
+
+				if (delta == '+')
+					value = baseValue + value;
+				if (delta == '-')
+					value = baseValue - value;
+				if (delta == '=')
+					value = baseValue + (int) (baseValue * (value / 100.0f));
+				if (delta == '_')
+					value = baseValue - (int) (baseValue * (value / 100.0f));
+			}
+			return value;
+		}
+
 		public int getMaxValueExclusive() {
 			RangedIntCustomizationVariableObjectTemplate base = null;
 
@@ -712,6 +1130,80 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 				if (baseData != null) {
 					if (base != null)
 						baseValue = base.getMaxValueExclusive();
+				}
+
+				if (delta == '+')
+					value = baseValue + value;
+				if (delta == '-')
+					value = baseValue - value;
+				if (delta == '=')
+					value = baseValue + (int) (baseValue * (value / 100.0f));
+				if (delta == '_')
+					value = baseValue - (int) (baseValue * (value / 100.0f));
+			}
+			return value;
+		}
+
+		public int getMaxValueExclusiveMin() {
+			RangedIntCustomizationVariableObjectTemplate base = null;
+
+			if (baseData != null)
+				base = (RangedIntCustomizationVariableObjectTemplate) baseData;
+
+			if (!maxValueExclusive.isLoaded()) {
+				if (base == null) {
+					return 0;
+				} else {
+					return base.getMaxValueExclusiveMin();
+				}
+			}
+
+			int value = this.maxValueExclusive.getMinValue();
+			final byte delta = this.maxValueExclusive.getDeltaType();
+
+			if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+				int baseValue = 0;
+
+				if (baseData != null) {
+					if (base != null)
+						baseValue = base.getMaxValueExclusiveMin();
+				}
+
+				if (delta == '+')
+					value = baseValue + value;
+				if (delta == '-')
+					value = baseValue - value;
+				if (delta == '=')
+					value = baseValue + (int) (baseValue * (value / 100.0f));
+				if (delta == '_')
+					value = baseValue - (int) (baseValue * (value / 100.0f));
+			}
+			return value;
+		}
+
+		public int getMaxValueExclusiveMax() {
+			RangedIntCustomizationVariableObjectTemplate base = null;
+
+			if (baseData != null)
+				base = (RangedIntCustomizationVariableObjectTemplate) baseData;
+
+			if (!maxValueExclusive.isLoaded()) {
+				if (base == null) {
+					return 0;
+				} else {
+					return base.getMaxValueExclusiveMax();
+				}
+			}
+
+			int value = this.maxValueExclusive.getMaxValue();
+			final byte delta = this.maxValueExclusive.getDeltaType();
+
+			if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+				int baseValue = 0;
+
+				if (baseData != null) {
+					if (base != null)
+						baseValue = base.getMaxValueExclusiveMax();
 				}
 
 				if (delta == '+')
@@ -839,6 +1331,80 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 				if (baseData != null) {
 					if (base != null)
 						baseValue = base.getDefaultPaletteIndex();
+				}
+
+				if (delta == '+')
+					value = baseValue + value;
+				if (delta == '-')
+					value = baseValue - value;
+				if (delta == '=')
+					value = baseValue + (int) (baseValue * (value / 100.0f));
+				if (delta == '_')
+					value = baseValue - (int) (baseValue * (value / 100.0f));
+			}
+			return value;
+		}
+
+		public int getDefaultPaletteIndexMin() {
+			PaletteColorCustomizationVariableObjectTemplate base = null;
+
+			if (baseData != null)
+				base = (PaletteColorCustomizationVariableObjectTemplate) baseData;
+
+			if (!defaultPaletteIndex.isLoaded()) {
+				if (base == null) {
+					return 0;
+				} else {
+					return base.getDefaultPaletteIndexMin();
+				}
+			}
+
+			int value = this.defaultPaletteIndex.getMinValue();
+			final byte delta = this.defaultPaletteIndex.getDeltaType();
+
+			if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+				int baseValue = 0;
+
+				if (baseData != null) {
+					if (base != null)
+						baseValue = base.getDefaultPaletteIndexMin();
+				}
+
+				if (delta == '+')
+					value = baseValue + value;
+				if (delta == '-')
+					value = baseValue - value;
+				if (delta == '=')
+					value = baseValue + (int) (baseValue * (value / 100.0f));
+				if (delta == '_')
+					value = baseValue - (int) (baseValue * (value / 100.0f));
+			}
+			return value;
+		}
+
+		public int getDefaultPaletteIndexMax() {
+			PaletteColorCustomizationVariableObjectTemplate base = null;
+
+			if (baseData != null)
+				base = (PaletteColorCustomizationVariableObjectTemplate) baseData;
+
+			if (!defaultPaletteIndex.isLoaded()) {
+				if (base == null) {
+					return 0;
+				} else {
+					return base.getDefaultPaletteIndexMax();
+				}
+			}
+
+			int value = this.defaultPaletteIndex.getMaxValue();
+			final byte delta = this.defaultPaletteIndex.getDeltaType();
+
+			if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+				int baseValue = 0;
+
+				if (baseData != null) {
+					if (base != null)
+						baseValue = base.getDefaultPaletteIndexMax();
 				}
 
 				if (delta == '+')

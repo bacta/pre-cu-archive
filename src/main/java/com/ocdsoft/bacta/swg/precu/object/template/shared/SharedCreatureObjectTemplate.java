@@ -187,6 +187,80 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 		return value;
 	}
 
+	public float getAccelerationMin(MovementTypes index) {
+		SharedCreatureObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedCreatureObjectTemplate) baseData;
+
+		if (!acceleration[(int) index.value].isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getAccelerationMin(index);
+			}
+		}
+
+		float value = this.acceleration[(int) index.value].getMinValue();
+		final byte delta = this.acceleration[(int) index.value].getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getAccelerationMin(index);
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getAccelerationMax(MovementTypes index) {
+		SharedCreatureObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedCreatureObjectTemplate) baseData;
+
+		if (!acceleration[(int) index.value].isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getAccelerationMax(index);
+			}
+		}
+
+		float value = this.acceleration[(int) index.value].getMaxValue();
+		final byte delta = this.acceleration[(int) index.value].getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getAccelerationMax(index);
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
 	public float getSpeed(MovementTypes index) {
 		SharedCreatureObjectTemplate base = null;
 
@@ -224,6 +298,80 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 		return value;
 	}
 
+	public float getSpeedMin(MovementTypes index) {
+		SharedCreatureObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedCreatureObjectTemplate) baseData;
+
+		if (!speed[(int) index.value].isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getSpeedMin(index);
+			}
+		}
+
+		float value = this.speed[(int) index.value].getMinValue();
+		final byte delta = this.speed[(int) index.value].getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getSpeedMin(index);
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getSpeedMax(MovementTypes index) {
+		SharedCreatureObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedCreatureObjectTemplate) baseData;
+
+		if (!speed[(int) index.value].isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getSpeedMax(index);
+			}
+		}
+
+		float value = this.speed[(int) index.value].getMaxValue();
+		final byte delta = this.speed[(int) index.value].getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getSpeedMax(index);
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
 	public float getTurnRate(MovementTypes index) {
 		SharedCreatureObjectTemplate base = null;
 
@@ -247,6 +395,80 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 			if (baseData != null) {
 				if (base != null)
 					baseValue = base.getTurnRate(index);
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getTurnRateMin(MovementTypes index) {
+		SharedCreatureObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedCreatureObjectTemplate) baseData;
+
+		if (!turnRate[(int) index.value].isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getTurnRateMin(index);
+			}
+		}
+
+		float value = this.turnRate[(int) index.value].getMinValue();
+		final byte delta = this.turnRate[(int) index.value].getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getTurnRateMin(index);
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getTurnRateMax(MovementTypes index) {
+		SharedCreatureObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedCreatureObjectTemplate) baseData;
+
+		if (!turnRate[(int) index.value].isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getTurnRateMax(index);
+			}
+		}
+
+		float value = this.turnRate[(int) index.value].getMaxValue();
+		final byte delta = this.turnRate[(int) index.value].getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getTurnRateMax(index);
 			}
 
 			if (delta == '+')
@@ -316,6 +538,80 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 		return value;
 	}
 
+	public float getSlopeModAngleMin() {
+		SharedCreatureObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedCreatureObjectTemplate) baseData;
+
+		if (!slopeModAngle.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getSlopeModAngleMin();
+			}
+		}
+
+		float value = this.slopeModAngle.getMinValue();
+		final byte delta = this.slopeModAngle.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getSlopeModAngleMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getSlopeModAngleMax() {
+		SharedCreatureObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedCreatureObjectTemplate) baseData;
+
+		if (!slopeModAngle.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getSlopeModAngleMax();
+			}
+		}
+
+		float value = this.slopeModAngle.getMaxValue();
+		final byte delta = this.slopeModAngle.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getSlopeModAngleMax();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
 	public float getSlopeModPercent() {
 		SharedCreatureObjectTemplate base = null;
 
@@ -339,6 +635,80 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 			if (baseData != null) {
 				if (base != null)
 					baseValue = base.getSlopeModPercent();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getSlopeModPercentMin() {
+		SharedCreatureObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedCreatureObjectTemplate) baseData;
+
+		if (!slopeModPercent.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getSlopeModPercentMin();
+			}
+		}
+
+		float value = this.slopeModPercent.getMinValue();
+		final byte delta = this.slopeModPercent.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getSlopeModPercentMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getSlopeModPercentMax() {
+		SharedCreatureObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedCreatureObjectTemplate) baseData;
+
+		if (!slopeModPercent.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getSlopeModPercentMax();
+			}
+		}
+
+		float value = this.slopeModPercent.getMaxValue();
+		final byte delta = this.slopeModPercent.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getSlopeModPercentMax();
 			}
 
 			if (delta == '+')
@@ -390,6 +760,80 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 		return value;
 	}
 
+	public float getWaterModPercentMin() {
+		SharedCreatureObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedCreatureObjectTemplate) baseData;
+
+		if (!waterModPercent.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getWaterModPercentMin();
+			}
+		}
+
+		float value = this.waterModPercent.getMinValue();
+		final byte delta = this.waterModPercent.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getWaterModPercentMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getWaterModPercentMax() {
+		SharedCreatureObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedCreatureObjectTemplate) baseData;
+
+		if (!waterModPercent.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getWaterModPercentMax();
+			}
+		}
+
+		float value = this.waterModPercent.getMaxValue();
+		final byte delta = this.waterModPercent.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getWaterModPercentMax();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
 	public float getStepHeight() {
 		SharedCreatureObjectTemplate base = null;
 
@@ -413,6 +857,80 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 			if (baseData != null) {
 				if (base != null)
 					baseValue = base.getStepHeight();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getStepHeightMin() {
+		SharedCreatureObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedCreatureObjectTemplate) baseData;
+
+		if (!stepHeight.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getStepHeightMin();
+			}
+		}
+
+		float value = this.stepHeight.getMinValue();
+		final byte delta = this.stepHeight.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getStepHeightMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getStepHeightMax() {
+		SharedCreatureObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedCreatureObjectTemplate) baseData;
+
+		if (!stepHeight.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getStepHeightMax();
+			}
+		}
+
+		float value = this.stepHeight.getMaxValue();
+		final byte delta = this.stepHeight.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getStepHeightMax();
 			}
 
 			if (delta == '+')
@@ -464,6 +982,80 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 		return value;
 	}
 
+	public float getCollisionHeightMin() {
+		SharedCreatureObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedCreatureObjectTemplate) baseData;
+
+		if (!collisionHeight.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getCollisionHeightMin();
+			}
+		}
+
+		float value = this.collisionHeight.getMinValue();
+		final byte delta = this.collisionHeight.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getCollisionHeightMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getCollisionHeightMax() {
+		SharedCreatureObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedCreatureObjectTemplate) baseData;
+
+		if (!collisionHeight.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getCollisionHeightMax();
+			}
+		}
+
+		float value = this.collisionHeight.getMaxValue();
+		final byte delta = this.collisionHeight.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getCollisionHeightMax();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
 	public float getCollisionRadius() {
 		SharedCreatureObjectTemplate base = null;
 
@@ -487,6 +1079,80 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 			if (baseData != null) {
 				if (base != null)
 					baseValue = base.getCollisionRadius();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getCollisionRadiusMin() {
+		SharedCreatureObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedCreatureObjectTemplate) baseData;
+
+		if (!collisionRadius.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getCollisionRadiusMin();
+			}
+		}
+
+		float value = this.collisionRadius.getMinValue();
+		final byte delta = this.collisionRadius.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getCollisionRadiusMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getCollisionRadiusMax() {
+		SharedCreatureObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedCreatureObjectTemplate) baseData;
+
+		if (!collisionRadius.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getCollisionRadiusMax();
+			}
+		}
+
+		float value = this.collisionRadius.getMaxValue();
+		final byte delta = this.collisionRadius.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getCollisionRadiusMax();
 			}
 
 			if (delta == '+')
@@ -574,6 +1240,80 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 		return value;
 	}
 
+	public float getSwimHeightMin() {
+		SharedCreatureObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedCreatureObjectTemplate) baseData;
+
+		if (!swimHeight.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getSwimHeightMin();
+			}
+		}
+
+		float value = this.swimHeight.getMinValue();
+		final byte delta = this.swimHeight.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getSwimHeightMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getSwimHeightMax() {
+		SharedCreatureObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedCreatureObjectTemplate) baseData;
+
+		if (!swimHeight.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getSwimHeightMax();
+			}
+		}
+
+		float value = this.swimHeight.getMaxValue();
+		final byte delta = this.swimHeight.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getSwimHeightMax();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
 	public float getWarpTolerance() {
 		SharedCreatureObjectTemplate base = null;
 
@@ -597,6 +1337,80 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 			if (baseData != null) {
 				if (base != null)
 					baseValue = base.getWarpTolerance();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getWarpToleranceMin() {
+		SharedCreatureObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedCreatureObjectTemplate) baseData;
+
+		if (!warpTolerance.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getWarpToleranceMin();
+			}
+		}
+
+		float value = this.warpTolerance.getMinValue();
+		final byte delta = this.warpTolerance.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getWarpToleranceMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getWarpToleranceMax() {
+		SharedCreatureObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedCreatureObjectTemplate) baseData;
+
+		if (!warpTolerance.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getWarpToleranceMax();
+			}
+		}
+
+		float value = this.warpTolerance.getMaxValue();
+		final byte delta = this.warpTolerance.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getWarpToleranceMax();
 			}
 
 			if (delta == '+')
@@ -648,6 +1462,80 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 		return value;
 	}
 
+	public float getCollisionOffsetXMin() {
+		SharedCreatureObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedCreatureObjectTemplate) baseData;
+
+		if (!collisionOffsetX.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getCollisionOffsetXMin();
+			}
+		}
+
+		float value = this.collisionOffsetX.getMinValue();
+		final byte delta = this.collisionOffsetX.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getCollisionOffsetXMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getCollisionOffsetXMax() {
+		SharedCreatureObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedCreatureObjectTemplate) baseData;
+
+		if (!collisionOffsetX.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getCollisionOffsetXMax();
+			}
+		}
+
+		float value = this.collisionOffsetX.getMaxValue();
+		final byte delta = this.collisionOffsetX.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getCollisionOffsetXMax();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
 	public float getCollisionOffsetZ() {
 		SharedCreatureObjectTemplate base = null;
 
@@ -671,6 +1559,80 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 			if (baseData != null) {
 				if (base != null)
 					baseValue = base.getCollisionOffsetZ();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getCollisionOffsetZMin() {
+		SharedCreatureObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedCreatureObjectTemplate) baseData;
+
+		if (!collisionOffsetZ.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getCollisionOffsetZMin();
+			}
+		}
+
+		float value = this.collisionOffsetZ.getMinValue();
+		final byte delta = this.collisionOffsetZ.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getCollisionOffsetZMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getCollisionOffsetZMax() {
+		SharedCreatureObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedCreatureObjectTemplate) baseData;
+
+		if (!collisionOffsetZ.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getCollisionOffsetZMax();
+			}
+		}
+
+		float value = this.collisionOffsetZ.getMaxValue();
+		final byte delta = this.collisionOffsetZ.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getCollisionOffsetZMax();
 			}
 
 			if (delta == '+')
@@ -722,6 +1684,80 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 		return value;
 	}
 
+	public float getCollisionLengthMin() {
+		SharedCreatureObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedCreatureObjectTemplate) baseData;
+
+		if (!collisionLength.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getCollisionLengthMin();
+			}
+		}
+
+		float value = this.collisionLength.getMinValue();
+		final byte delta = this.collisionLength.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getCollisionLengthMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getCollisionLengthMax() {
+		SharedCreatureObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedCreatureObjectTemplate) baseData;
+
+		if (!collisionLength.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getCollisionLengthMax();
+			}
+		}
+
+		float value = this.collisionLength.getMaxValue();
+		final byte delta = this.collisionLength.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getCollisionLengthMax();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
 	public float getCameraHeight() {
 		SharedCreatureObjectTemplate base = null;
 
@@ -745,6 +1781,80 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 			if (baseData != null) {
 				if (base != null)
 					baseValue = base.getCameraHeight();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getCameraHeightMin() {
+		SharedCreatureObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedCreatureObjectTemplate) baseData;
+
+		if (!cameraHeight.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getCameraHeightMin();
+			}
+		}
+
+		float value = this.cameraHeight.getMinValue();
+		final byte delta = this.cameraHeight.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getCameraHeightMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getCameraHeightMax() {
+		SharedCreatureObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (SharedCreatureObjectTemplate) baseData;
+
+		if (!cameraHeight.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getCameraHeightMax();
+			}
+		}
+
+		float value = this.cameraHeight.getMaxValue();
+		final byte delta = this.cameraHeight.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getCameraHeightMax();
 			}
 
 			if (delta == '+')
@@ -891,7 +2001,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 		Sitting(8),
 		SkillAnimating(9),
 		DrivingVehicle(10),
-		RidingCreature(11),
+		RidingCreature(11), 
 		KnockedDown(12), 
 		Incapacitated(13), 
 		Dead(14); 
@@ -925,7 +2035,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 		RA_nikto_southern(5), // M'shento'su'Nikto
 		RA_krayt_canyon(1),
 		RA_krayt_greater(2),
-		RA_R2(0),
+		RA_R2(0), 
 		RA_R3(1), 
 		RA_R4(2), 
 		RA_R5(3); 
@@ -951,7 +2061,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 		NI_vehicle(4),
 		NI_npc(5),
 		NI_monster(6),
-		NI_herbivore(7),
+		NI_herbivore(7), 
 		NI_carnivore(8), 
 		NI_predator(9), 
 		NI_android(10); 
@@ -1213,7 +2323,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 		SP_treadwell(223),
 		SP_ev9d9(224),
 		SP_maulProbeDroid(225),
-		SP_atst(226),
+		SP_atst(226), 
 		SP_atat(227), 
 		SP_geonosian(228), 
 		SP_veractyle(229); 

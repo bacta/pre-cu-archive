@@ -149,6 +149,80 @@ public class ServerTangibleObjectTemplate extends ServerObjectTemplate {
 		return value;
 	}
 
+	public int getMaxHitPointsMin() {
+		ServerTangibleObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerTangibleObjectTemplate) baseData;
+
+		if (!maxHitPoints.isLoaded()) {
+			if (base == null) {
+				return 0;
+			} else {
+				return base.getMaxHitPointsMin();
+			}
+		}
+
+		int value = this.maxHitPoints.getMinValue();
+		final byte delta = this.maxHitPoints.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			int baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getMaxHitPointsMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (int) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (int) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public int getMaxHitPointsMax() {
+		ServerTangibleObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerTangibleObjectTemplate) baseData;
+
+		if (!maxHitPoints.isLoaded()) {
+			if (base == null) {
+				return 0;
+			} else {
+				return base.getMaxHitPointsMax();
+			}
+		}
+
+		int value = this.maxHitPoints.getMaxValue();
+		final byte delta = this.maxHitPoints.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			int baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getMaxHitPointsMax();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (int) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (int) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
 	public ServerArmorTemplate getArmor() {
 		ServerTangibleObjectTemplate base = null;
 
@@ -213,6 +287,80 @@ public class ServerTangibleObjectTemplate extends ServerObjectTemplate {
 		return value;
 	}
 
+	public int getInterestRadiusMin() {
+		ServerTangibleObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerTangibleObjectTemplate) baseData;
+
+		if (!interestRadius.isLoaded()) {
+			if (base == null) {
+				return 0;
+			} else {
+				return base.getInterestRadiusMin();
+			}
+		}
+
+		int value = this.interestRadius.getMinValue();
+		final byte delta = this.interestRadius.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			int baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getInterestRadiusMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (int) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (int) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public int getInterestRadiusMax() {
+		ServerTangibleObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerTangibleObjectTemplate) baseData;
+
+		if (!interestRadius.isLoaded()) {
+			if (base == null) {
+				return 0;
+			} else {
+				return base.getInterestRadiusMax();
+			}
+		}
+
+		int value = this.interestRadius.getMaxValue();
+		final byte delta = this.interestRadius.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			int baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getInterestRadiusMax();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (int) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (int) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
 	public int getCount() {
 		ServerTangibleObjectTemplate base = null;
 
@@ -250,6 +398,80 @@ public class ServerTangibleObjectTemplate extends ServerObjectTemplate {
 		return value;
 	}
 
+	public int getCountMin() {
+		ServerTangibleObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerTangibleObjectTemplate) baseData;
+
+		if (!count.isLoaded()) {
+			if (base == null) {
+				return 0;
+			} else {
+				return base.getCountMin();
+			}
+		}
+
+		int value = this.count.getMinValue();
+		final byte delta = this.count.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			int baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getCountMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (int) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (int) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public int getCountMax() {
+		ServerTangibleObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerTangibleObjectTemplate) baseData;
+
+		if (!count.isLoaded()) {
+			if (base == null) {
+				return 0;
+			} else {
+				return base.getCountMax();
+			}
+		}
+
+		int value = this.count.getMaxValue();
+		final byte delta = this.count.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			int baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getCountMax();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (int) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (int) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
 	public int getCondition() {
 		ServerTangibleObjectTemplate base = null;
 
@@ -273,6 +495,80 @@ public class ServerTangibleObjectTemplate extends ServerObjectTemplate {
 			if (baseData != null) {
 				if (base != null)
 					baseValue = base.getCondition();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (int) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (int) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public int getConditionMin() {
+		ServerTangibleObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerTangibleObjectTemplate) baseData;
+
+		if (!condition.isLoaded()) {
+			if (base == null) {
+				return 0;
+			} else {
+				return base.getConditionMin();
+			}
+		}
+
+		int value = this.condition.getMinValue();
+		final byte delta = this.condition.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			int baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getConditionMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (int) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (int) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public int getConditionMax() {
+		ServerTangibleObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerTangibleObjectTemplate) baseData;
+
+		if (!condition.isLoaded()) {
+			if (base == null) {
+				return 0;
+			} else {
+				return base.getConditionMax();
+			}
+		}
+
+		int value = this.condition.getMaxValue();
+		final byte delta = this.condition.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			int baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getConditionMax();
 			}
 
 			if (delta == '+')
@@ -403,7 +699,7 @@ public class ServerTangibleObjectTemplate extends ServerObjectTemplate {
 		C_magicItem(0x00000020),
 		C_aggressive(0x00000040),
 		C_wantSawAttackTrigger(0x00000080),
-		C_invulnerable(0x00000100),
+		C_invulnerable(0x00000100), 
 		C_disabled(0x00000200), 
 		C_uninsurable(0x00000400), 
 		C_interesting(0x00000800), 
@@ -415,12 +711,12 @@ public class ServerTangibleObjectTemplate extends ServerObjectTemplate {
 		C_destroying(0x00020000), //Set programmatically by destruction system.  Do not set this in the template.
 		C_commable(0x00040000),
 		C_dockable(0x00080000),
-		C_eject(0x00100000),
+		C_eject(0x00100000), 
 		C_inspectable(0x00200000), 
 		C_transferable(0x00400000), 
 		C_inflightTutorial(0x00800000), 
 		C_spaceCombatMusic(0x01000000), //Set programmatically by the AI system.  Do not set this in the template.
-		C_encounterLocked(0x02000000),
+		C_encounterLocked(0x02000000), 
 		C_spawnedCreature(0x04000000), 
 		C_holidayInteresting(0x08000000), 
 		C_locked(0x10000000); 

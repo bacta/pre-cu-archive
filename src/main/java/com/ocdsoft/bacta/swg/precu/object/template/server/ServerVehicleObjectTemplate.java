@@ -92,6 +92,80 @@ public class ServerVehicleObjectTemplate extends ServerTangibleObjectTemplate {
 		return value;
 	}
 
+	public float getCurrentFuelMin() {
+		ServerVehicleObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerVehicleObjectTemplate) baseData;
+
+		if (!currentFuel.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getCurrentFuelMin();
+			}
+		}
+
+		float value = this.currentFuel.getMinValue();
+		final byte delta = this.currentFuel.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getCurrentFuelMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getCurrentFuelMax() {
+		ServerVehicleObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerVehicleObjectTemplate) baseData;
+
+		if (!currentFuel.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getCurrentFuelMax();
+			}
+		}
+
+		float value = this.currentFuel.getMaxValue();
+		final byte delta = this.currentFuel.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getCurrentFuelMax();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
 	public float getMaxFuel() {
 		ServerVehicleObjectTemplate base = null;
 
@@ -129,6 +203,80 @@ public class ServerVehicleObjectTemplate extends ServerTangibleObjectTemplate {
 		return value;
 	}
 
+	public float getMaxFuelMin() {
+		ServerVehicleObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerVehicleObjectTemplate) baseData;
+
+		if (!maxFuel.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getMaxFuelMin();
+			}
+		}
+
+		float value = this.maxFuel.getMinValue();
+		final byte delta = this.maxFuel.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getMaxFuelMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getMaxFuelMax() {
+		ServerVehicleObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerVehicleObjectTemplate) baseData;
+
+		if (!maxFuel.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getMaxFuelMax();
+			}
+		}
+
+		float value = this.maxFuel.getMaxValue();
+		final byte delta = this.maxFuel.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getMaxFuelMax();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
 	public float getConsumpsion() {
 		ServerVehicleObjectTemplate base = null;
 
@@ -152,6 +300,80 @@ public class ServerVehicleObjectTemplate extends ServerTangibleObjectTemplate {
 			if (baseData != null) {
 				if (base != null)
 					baseValue = base.getConsumpsion();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getConsumpsionMin() {
+		ServerVehicleObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerVehicleObjectTemplate) baseData;
+
+		if (!consumpsion.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getConsumpsionMin();
+			}
+		}
+
+		float value = this.consumpsion.getMinValue();
+		final byte delta = this.consumpsion.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getConsumpsionMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getConsumpsionMax() {
+		ServerVehicleObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerVehicleObjectTemplate) baseData;
+
+		if (!consumpsion.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getConsumpsionMax();
+			}
+		}
+
+		float value = this.consumpsion.getMaxValue();
+		final byte delta = this.consumpsion.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getConsumpsionMax();
 			}
 
 			if (delta == '+')

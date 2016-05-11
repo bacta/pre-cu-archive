@@ -74,6 +74,80 @@ public class ServerHarvesterInstallationObjectTemplate extends ServerInstallatio
 		return value;
 	}
 
+	public int getMaxExtractionRateMin() {
+		ServerHarvesterInstallationObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerHarvesterInstallationObjectTemplate) baseData;
+
+		if (!maxExtractionRate.isLoaded()) {
+			if (base == null) {
+				return 0;
+			} else {
+				return base.getMaxExtractionRateMin();
+			}
+		}
+
+		int value = this.maxExtractionRate.getMinValue();
+		final byte delta = this.maxExtractionRate.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			int baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getMaxExtractionRateMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (int) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (int) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public int getMaxExtractionRateMax() {
+		ServerHarvesterInstallationObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerHarvesterInstallationObjectTemplate) baseData;
+
+		if (!maxExtractionRate.isLoaded()) {
+			if (base == null) {
+				return 0;
+			} else {
+				return base.getMaxExtractionRateMax();
+			}
+		}
+
+		int value = this.maxExtractionRate.getMaxValue();
+		final byte delta = this.maxExtractionRate.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			int baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getMaxExtractionRateMax();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (int) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (int) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
 	public int getCurrentExtractionRate() {
 		ServerHarvesterInstallationObjectTemplate base = null;
 
@@ -111,6 +185,80 @@ public class ServerHarvesterInstallationObjectTemplate extends ServerInstallatio
 		return value;
 	}
 
+	public int getCurrentExtractionRateMin() {
+		ServerHarvesterInstallationObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerHarvesterInstallationObjectTemplate) baseData;
+
+		if (!currentExtractionRate.isLoaded()) {
+			if (base == null) {
+				return 0;
+			} else {
+				return base.getCurrentExtractionRateMin();
+			}
+		}
+
+		int value = this.currentExtractionRate.getMinValue();
+		final byte delta = this.currentExtractionRate.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			int baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getCurrentExtractionRateMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (int) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (int) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public int getCurrentExtractionRateMax() {
+		ServerHarvesterInstallationObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerHarvesterInstallationObjectTemplate) baseData;
+
+		if (!currentExtractionRate.isLoaded()) {
+			if (base == null) {
+				return 0;
+			} else {
+				return base.getCurrentExtractionRateMax();
+			}
+		}
+
+		int value = this.currentExtractionRate.getMaxValue();
+		final byte delta = this.currentExtractionRate.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			int baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getCurrentExtractionRateMax();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (int) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (int) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
 	public int getMaxHopperSize() {
 		ServerHarvesterInstallationObjectTemplate base = null;
 
@@ -134,6 +282,80 @@ public class ServerHarvesterInstallationObjectTemplate extends ServerInstallatio
 			if (baseData != null) {
 				if (base != null)
 					baseValue = base.getMaxHopperSize();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (int) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (int) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public int getMaxHopperSizeMin() {
+		ServerHarvesterInstallationObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerHarvesterInstallationObjectTemplate) baseData;
+
+		if (!maxHopperSize.isLoaded()) {
+			if (base == null) {
+				return 0;
+			} else {
+				return base.getMaxHopperSizeMin();
+			}
+		}
+
+		int value = this.maxHopperSize.getMinValue();
+		final byte delta = this.maxHopperSize.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			int baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getMaxHopperSizeMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (int) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (int) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public int getMaxHopperSizeMax() {
+		ServerHarvesterInstallationObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerHarvesterInstallationObjectTemplate) baseData;
+
+		if (!maxHopperSize.isLoaded()) {
+			if (base == null) {
+				return 0;
+			} else {
+				return base.getMaxHopperSizeMax();
+			}
+		}
+
+		int value = this.maxHopperSize.getMaxValue();
+		final byte delta = this.maxHopperSize.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			int baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getMaxHopperSizeMax();
 			}
 
 			if (delta == '+')

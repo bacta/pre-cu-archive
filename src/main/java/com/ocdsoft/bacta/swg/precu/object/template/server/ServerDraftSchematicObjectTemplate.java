@@ -163,6 +163,82 @@ public class ServerDraftSchematicObjectTemplate extends ServerIntangibleObjectTe
 		return data;
 	}
 
+	public IngredientSlot getSlots(int index) {
+		ServerDraftSchematicObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerDraftSchematicObjectTemplate) baseData;
+
+		if (!slotsLoaded) {
+			if (base == null) {
+				return null;
+			} else {
+				return base.getSlotsMin(index);
+			}
+		}
+
+		if (slotsAppend && base != null) {
+			int baseCount = base.getSlotsCount();
+
+			if (index < baseCount) {
+				return base.getSlotsMin(index);
+			}
+			index -= baseCount;
+		}
+		final ObjectTemplate structTemplate = slots.get(index).getValue();
+		Preconditions.checkNotNull(structTemplate);
+		final IngredientSlotObjectTemplate param = (IngredientSlotObjectTemplate) structTemplate;
+
+		final IngredientSlot data = new IngredientSlot();
+		data.optional = param.getOptional();
+		data.name = param.getName();
+		for (int i = 0; i < param.getOptionsCount(); ++i)
+			data.options.add(param.getOptionsMin(i));
+		data.optionalSkillCommand = param.getOptionalSkillCommand();
+		data.complexity = param.getComplexityMin();
+		data.appearance = param.getAppearance();
+
+		return data;
+	}
+
+	public IngredientSlot getSlots(int index) {
+		ServerDraftSchematicObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerDraftSchematicObjectTemplate) baseData;
+
+		if (!slotsLoaded) {
+			if (base == null) {
+				return null;
+			} else {
+				return base.getSlotsMax(index);
+			}
+		}
+
+		if (slotsAppend && base != null) {
+			int baseCount = base.getSlotsCount();
+
+			if (index < baseCount) {
+				return base.getSlotsMax(index);
+			}
+			index -= baseCount;
+		}
+		final ObjectTemplate structTemplate = slots.get(index).getValue();
+		Preconditions.checkNotNull(structTemplate);
+		final IngredientSlotObjectTemplate param = (IngredientSlotObjectTemplate) structTemplate;
+
+		final IngredientSlot data = new IngredientSlot();
+		data.optional = param.getOptional();
+		data.name = param.getName();
+		for (int i = 0; i < param.getOptionsCount(); ++i)
+			data.options.add(param.getOptionsMax(i));
+		data.optionalSkillCommand = param.getOptionalSkillCommand();
+		data.complexity = param.getComplexityMax();
+		data.appearance = param.getAppearance();
+
+		return data;
+	}
+
 	public int getSlotsCount() {
 		if (!slotsLoaded) {
 			if (baseData == null)
@@ -327,6 +403,80 @@ public class ServerDraftSchematicObjectTemplate extends ServerIntangibleObjectTe
 		return value;
 	}
 
+	public int getItemsPerContainerMin() {
+		ServerDraftSchematicObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerDraftSchematicObjectTemplate) baseData;
+
+		if (!itemsPerContainer.isLoaded()) {
+			if (base == null) {
+				return 0;
+			} else {
+				return base.getItemsPerContainerMin();
+			}
+		}
+
+		int value = this.itemsPerContainer.getMinValue();
+		final byte delta = this.itemsPerContainer.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			int baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getItemsPerContainerMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (int) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (int) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public int getItemsPerContainerMax() {
+		ServerDraftSchematicObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerDraftSchematicObjectTemplate) baseData;
+
+		if (!itemsPerContainer.isLoaded()) {
+			if (base == null) {
+				return 0;
+			} else {
+				return base.getItemsPerContainerMax();
+			}
+		}
+
+		int value = this.itemsPerContainer.getMaxValue();
+		final byte delta = this.itemsPerContainer.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			int baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getItemsPerContainerMax();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (int) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (int) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
 	public float getManufactureTime() {
 		ServerDraftSchematicObjectTemplate base = null;
 
@@ -364,6 +514,80 @@ public class ServerDraftSchematicObjectTemplate extends ServerIntangibleObjectTe
 		return value;
 	}
 
+	public float getManufactureTimeMin() {
+		ServerDraftSchematicObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerDraftSchematicObjectTemplate) baseData;
+
+		if (!manufactureTime.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getManufactureTimeMin();
+			}
+		}
+
+		float value = this.manufactureTime.getMinValue();
+		final byte delta = this.manufactureTime.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getManufactureTimeMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getManufactureTimeMax() {
+		ServerDraftSchematicObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerDraftSchematicObjectTemplate) baseData;
+
+		if (!manufactureTime.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getManufactureTimeMax();
+			}
+		}
+
+		float value = this.manufactureTime.getMaxValue();
+		final byte delta = this.manufactureTime.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getManufactureTimeMax();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
 	public float getPrototypeTime() {
 		ServerDraftSchematicObjectTemplate base = null;
 
@@ -387,6 +611,80 @@ public class ServerDraftSchematicObjectTemplate extends ServerIntangibleObjectTe
 			if (baseData != null) {
 				if (base != null)
 					baseValue = base.getPrototypeTime();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getPrototypeTimeMin() {
+		ServerDraftSchematicObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerDraftSchematicObjectTemplate) baseData;
+
+		if (!prototypeTime.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getPrototypeTimeMin();
+			}
+		}
+
+		float value = this.prototypeTime.getMinValue();
+		final byte delta = this.prototypeTime.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getPrototypeTimeMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getPrototypeTimeMax() {
+		ServerDraftSchematicObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerDraftSchematicObjectTemplate) baseData;
+
+		if (!prototypeTime.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getPrototypeTimeMax();
+			}
+		}
+
+		float value = this.prototypeTime.getMaxValue();
+		final byte delta = this.prototypeTime.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getPrototypeTimeMax();
 			}
 
 			if (delta == '+')
@@ -600,6 +898,78 @@ public class ServerDraftSchematicObjectTemplate extends ServerIntangibleObjectTe
 			return data;
 		}
 
+		public Ingredient getOptions(int index) {
+			IngredientSlotObjectTemplate base = null;
+
+			if (baseData != null)
+				base = (IngredientSlotObjectTemplate) baseData;
+
+			if (!optionsLoaded) {
+				if (base == null) {
+					return null;
+				} else {
+					return base.getOptionsMin(index);
+				}
+			}
+
+			if (optionsAppend && base != null) {
+				int baseCount = base.getOptionsCount();
+
+				if (index < baseCount) {
+					return base.getOptionsMin(index);
+				}
+				index -= baseCount;
+			}
+			final ObjectTemplate structTemplate = options.get(index).getValue();
+			Preconditions.checkNotNull(structTemplate);
+			final IngredientObjectTemplate param = (IngredientObjectTemplate) structTemplate;
+
+			final Ingredient data = new Ingredient();
+			data.ingredientType = param.getIngredientType();
+			for (int i = 0; i < param.getIngredientsCount(); ++i)
+				data.ingredients.add(param.getIngredientsMin(i));
+			data.complexity = param.getComplexityMin();
+			data.skillCommand = param.getSkillCommand();
+
+			return data;
+		}
+
+		public Ingredient getOptions(int index) {
+			IngredientSlotObjectTemplate base = null;
+
+			if (baseData != null)
+				base = (IngredientSlotObjectTemplate) baseData;
+
+			if (!optionsLoaded) {
+				if (base == null) {
+					return null;
+				} else {
+					return base.getOptionsMax(index);
+				}
+			}
+
+			if (optionsAppend && base != null) {
+				int baseCount = base.getOptionsCount();
+
+				if (index < baseCount) {
+					return base.getOptionsMax(index);
+				}
+				index -= baseCount;
+			}
+			final ObjectTemplate structTemplate = options.get(index).getValue();
+			Preconditions.checkNotNull(structTemplate);
+			final IngredientObjectTemplate param = (IngredientObjectTemplate) structTemplate;
+
+			final Ingredient data = new Ingredient();
+			data.ingredientType = param.getIngredientType();
+			for (int i = 0; i < param.getIngredientsCount(); ++i)
+				data.ingredients.add(param.getIngredientsMax(i));
+			data.complexity = param.getComplexityMax();
+			data.skillCommand = param.getSkillCommand();
+
+			return data;
+		}
+
 		public int getOptionsCount() {
 			if (!optionsLoaded) {
 				if (baseData == null)
@@ -660,6 +1030,80 @@ public class ServerDraftSchematicObjectTemplate extends ServerIntangibleObjectTe
 				if (baseData != null) {
 					if (base != null)
 						baseValue = base.getComplexity();
+				}
+
+				if (delta == '+')
+					value = baseValue + value;
+				if (delta == '-')
+					value = baseValue - value;
+				if (delta == '=')
+					value = baseValue + (float) (baseValue * (value / 100.0f));
+				if (delta == '_')
+					value = baseValue - (float) (baseValue * (value / 100.0f));
+			}
+			return value;
+		}
+
+		public float getComplexityMin() {
+			IngredientSlotObjectTemplate base = null;
+
+			if (baseData != null)
+				base = (IngredientSlotObjectTemplate) baseData;
+
+			if (!complexity.isLoaded()) {
+				if (base == null) {
+					return 0.0f;
+				} else {
+					return base.getComplexityMin();
+				}
+			}
+
+			float value = this.complexity.getMinValue();
+			final byte delta = this.complexity.getDeltaType();
+
+			if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+				float baseValue = 0;
+
+				if (baseData != null) {
+					if (base != null)
+						baseValue = base.getComplexityMin();
+				}
+
+				if (delta == '+')
+					value = baseValue + value;
+				if (delta == '-')
+					value = baseValue - value;
+				if (delta == '=')
+					value = baseValue + (float) (baseValue * (value / 100.0f));
+				if (delta == '_')
+					value = baseValue - (float) (baseValue * (value / 100.0f));
+			}
+			return value;
+		}
+
+		public float getComplexityMax() {
+			IngredientSlotObjectTemplate base = null;
+
+			if (baseData != null)
+				base = (IngredientSlotObjectTemplate) baseData;
+
+			if (!complexity.isLoaded()) {
+				if (base == null) {
+					return 0.0f;
+				} else {
+					return base.getComplexityMax();
+				}
+			}
+
+			float value = this.complexity.getMaxValue();
+			final byte delta = this.complexity.getDeltaType();
+
+			if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+				float baseValue = 0;
+
+				if (baseData != null) {
+					if (base != null)
+						baseValue = base.getComplexityMax();
 				}
 
 				if (delta == '+')

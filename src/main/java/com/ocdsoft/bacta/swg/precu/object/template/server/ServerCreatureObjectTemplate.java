@@ -149,6 +149,80 @@ public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 		return value;
 	}
 
+	public int getAttributesMin(Attributes index) {
+		ServerCreatureObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerCreatureObjectTemplate) baseData;
+
+		if (!attributes[(int) index.value].isLoaded()) {
+			if (base == null) {
+				return 0;
+			} else {
+				return base.getAttributesMin(index);
+			}
+		}
+
+		int value = this.attributes[(int) index.value].getMinValue();
+		final byte delta = this.attributes[(int) index.value].getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			int baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getAttributesMin(index);
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (int) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (int) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public int getAttributesMax(Attributes index) {
+		ServerCreatureObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerCreatureObjectTemplate) baseData;
+
+		if (!attributes[(int) index.value].isLoaded()) {
+			if (base == null) {
+				return 0;
+			} else {
+				return base.getAttributesMax(index);
+			}
+		}
+
+		int value = this.attributes[(int) index.value].getMaxValue();
+		final byte delta = this.attributes[(int) index.value].getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			int baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getAttributesMax(index);
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (int) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (int) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
 	public int getMinAttributes(Attributes index) {
 		ServerCreatureObjectTemplate base = null;
 
@@ -172,6 +246,80 @@ public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 			if (baseData != null) {
 				if (base != null)
 					baseValue = base.getMinAttributes(index);
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (int) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (int) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public int getMinAttributesMin(Attributes index) {
+		ServerCreatureObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerCreatureObjectTemplate) baseData;
+
+		if (!minAttributes[(int) index.value].isLoaded()) {
+			if (base == null) {
+				return 0;
+			} else {
+				return base.getMinAttributesMin(index);
+			}
+		}
+
+		int value = this.minAttributes[(int) index.value].getMinValue();
+		final byte delta = this.minAttributes[(int) index.value].getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			int baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getMinAttributesMin(index);
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (int) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (int) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public int getMinAttributesMax(Attributes index) {
+		ServerCreatureObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerCreatureObjectTemplate) baseData;
+
+		if (!minAttributes[(int) index.value].isLoaded()) {
+			if (base == null) {
+				return 0;
+			} else {
+				return base.getMinAttributesMax(index);
+			}
+		}
+
+		int value = this.minAttributes[(int) index.value].getMaxValue();
+		final byte delta = this.minAttributes[(int) index.value].getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			int baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getMinAttributesMax(index);
 			}
 
 			if (delta == '+')
@@ -223,6 +371,80 @@ public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 		return value;
 	}
 
+	public int getMaxAttributesMin(Attributes index) {
+		ServerCreatureObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerCreatureObjectTemplate) baseData;
+
+		if (!maxAttributes[(int) index.value].isLoaded()) {
+			if (base == null) {
+				return 0;
+			} else {
+				return base.getMaxAttributesMin(index);
+			}
+		}
+
+		int value = this.maxAttributes[(int) index.value].getMinValue();
+		final byte delta = this.maxAttributes[(int) index.value].getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			int baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getMaxAttributesMin(index);
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (int) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (int) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public int getMaxAttributesMax(Attributes index) {
+		ServerCreatureObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerCreatureObjectTemplate) baseData;
+
+		if (!maxAttributes[(int) index.value].isLoaded()) {
+			if (base == null) {
+				return 0;
+			} else {
+				return base.getMaxAttributesMax(index);
+			}
+		}
+
+		int value = this.maxAttributes[(int) index.value].getMaxValue();
+		final byte delta = this.maxAttributes[(int) index.value].getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			int baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getMaxAttributesMax(index);
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (int) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (int) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
 	public float getMinDrainModifier() {
 		ServerCreatureObjectTemplate base = null;
 
@@ -246,6 +468,80 @@ public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 			if (baseData != null) {
 				if (base != null)
 					baseValue = base.getMinDrainModifier();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getMinDrainModifierMin() {
+		ServerCreatureObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerCreatureObjectTemplate) baseData;
+
+		if (!minDrainModifier.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getMinDrainModifierMin();
+			}
+		}
+
+		float value = this.minDrainModifier.getMinValue();
+		final byte delta = this.minDrainModifier.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getMinDrainModifierMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getMinDrainModifierMax() {
+		ServerCreatureObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerCreatureObjectTemplate) baseData;
+
+		if (!minDrainModifier.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getMinDrainModifierMax();
+			}
+		}
+
+		float value = this.minDrainModifier.getMaxValue();
+		final byte delta = this.minDrainModifier.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getMinDrainModifierMax();
 			}
 
 			if (delta == '+')
@@ -297,6 +593,80 @@ public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 		return value;
 	}
 
+	public float getMaxDrainModifierMin() {
+		ServerCreatureObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerCreatureObjectTemplate) baseData;
+
+		if (!maxDrainModifier.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getMaxDrainModifierMin();
+			}
+		}
+
+		float value = this.maxDrainModifier.getMinValue();
+		final byte delta = this.maxDrainModifier.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getMaxDrainModifierMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getMaxDrainModifierMax() {
+		ServerCreatureObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerCreatureObjectTemplate) baseData;
+
+		if (!maxDrainModifier.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getMaxDrainModifierMax();
+			}
+		}
+
+		float value = this.maxDrainModifier.getMaxValue();
+		final byte delta = this.maxDrainModifier.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getMaxDrainModifierMax();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
 	public float getMinFaucetModifier() {
 		ServerCreatureObjectTemplate base = null;
 
@@ -320,6 +690,80 @@ public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 			if (baseData != null) {
 				if (base != null)
 					baseValue = base.getMinFaucetModifier();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getMinFaucetModifierMin() {
+		ServerCreatureObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerCreatureObjectTemplate) baseData;
+
+		if (!minFaucetModifier.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getMinFaucetModifierMin();
+			}
+		}
+
+		float value = this.minFaucetModifier.getMinValue();
+		final byte delta = this.minFaucetModifier.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getMinFaucetModifierMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getMinFaucetModifierMax() {
+		ServerCreatureObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerCreatureObjectTemplate) baseData;
+
+		if (!minFaucetModifier.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getMinFaucetModifierMax();
+			}
+		}
+
+		float value = this.minFaucetModifier.getMaxValue();
+		final byte delta = this.minFaucetModifier.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getMinFaucetModifierMax();
 			}
 
 			if (delta == '+')
@@ -371,6 +815,80 @@ public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 		return value;
 	}
 
+	public float getMaxFaucetModifierMin() {
+		ServerCreatureObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerCreatureObjectTemplate) baseData;
+
+		if (!maxFaucetModifier.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getMaxFaucetModifierMin();
+			}
+		}
+
+		float value = this.maxFaucetModifier.getMinValue();
+		final byte delta = this.maxFaucetModifier.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getMaxFaucetModifierMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getMaxFaucetModifierMax() {
+		ServerCreatureObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerCreatureObjectTemplate) baseData;
+
+		if (!maxFaucetModifier.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getMaxFaucetModifierMax();
+			}
+		}
+
+		float value = this.maxFaucetModifier.getMaxValue();
+		final byte delta = this.maxFaucetModifier.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getMaxFaucetModifierMax();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
 	public AttribMod getAttribMods(int index) {
 		ServerCreatureObjectTemplate base = null;
 
@@ -403,6 +921,78 @@ public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 		data.time = param.getTime();
 		data.timeAtValue = param.getTimeAtValue();
 		data.decay = param.getDecay();
+
+		return data;
+	}
+
+	public AttribMod getAttribMods(int index) {
+		ServerCreatureObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerCreatureObjectTemplate) baseData;
+
+		if (!attribModsLoaded) {
+			if (base == null) {
+				return null;
+			} else {
+				return base.getAttribModsMin(index);
+			}
+		}
+
+		if (attribModsAppend && base != null) {
+			int baseCount = base.getAttribModsCount();
+
+			if (index < baseCount) {
+				return base.getAttribModsMin(index);
+			}
+			index -= baseCount;
+		}
+		final ObjectTemplate structTemplate = attribMods.get(index).getValue();
+		Preconditions.checkNotNull(structTemplate);
+		final AttribModObjectTemplate param = (AttribModObjectTemplate) structTemplate;
+
+		final AttribMod data = new AttribMod();
+		data.target = param.getTarget();
+		data.value = param.getValueMin();
+		data.time = param.getTimeMin();
+		data.timeAtValue = param.getTimeAtValueMin();
+		data.decay = param.getDecayMin();
+
+		return data;
+	}
+
+	public AttribMod getAttribMods(int index) {
+		ServerCreatureObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerCreatureObjectTemplate) baseData;
+
+		if (!attribModsLoaded) {
+			if (base == null) {
+				return null;
+			} else {
+				return base.getAttribModsMax(index);
+			}
+		}
+
+		if (attribModsAppend && base != null) {
+			int baseCount = base.getAttribModsCount();
+
+			if (index < baseCount) {
+				return base.getAttribModsMax(index);
+			}
+			index -= baseCount;
+		}
+		final ObjectTemplate structTemplate = attribMods.get(index).getValue();
+		Preconditions.checkNotNull(structTemplate);
+		final AttribModObjectTemplate param = (AttribModObjectTemplate) structTemplate;
+
+		final AttribMod data = new AttribMod();
+		data.target = param.getTarget();
+		data.value = param.getValueMax();
+		data.time = param.getTimeMax();
+		data.timeAtValue = param.getTimeAtValueMax();
+		data.decay = param.getDecayMax();
 
 		return data;
 	}
@@ -449,6 +1039,80 @@ public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 			if (baseData != null) {
 				if (base != null)
 					baseValue = base.getShockWounds();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (int) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (int) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public int getShockWoundsMin() {
+		ServerCreatureObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerCreatureObjectTemplate) baseData;
+
+		if (!shockWounds.isLoaded()) {
+			if (base == null) {
+				return 0;
+			} else {
+				return base.getShockWoundsMin();
+			}
+		}
+
+		int value = this.shockWounds.getMinValue();
+		final byte delta = this.shockWounds.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			int baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getShockWoundsMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (int) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (int) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public int getShockWoundsMax() {
+		ServerCreatureObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerCreatureObjectTemplate) baseData;
+
+		if (!shockWounds.isLoaded()) {
+			if (base == null) {
+				return 0;
+			} else {
+				return base.getShockWoundsMax();
+			}
+		}
+
+		int value = this.shockWounds.getMaxValue();
+		final byte delta = this.shockWounds.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			int baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getShockWoundsMax();
 			}
 
 			if (delta == '+')
@@ -536,6 +1200,80 @@ public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 		return value;
 	}
 
+	public float getApproachTriggerRangeMin() {
+		ServerCreatureObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerCreatureObjectTemplate) baseData;
+
+		if (!approachTriggerRange.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getApproachTriggerRangeMin();
+			}
+		}
+
+		float value = this.approachTriggerRange.getMinValue();
+		final byte delta = this.approachTriggerRange.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getApproachTriggerRangeMin();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getApproachTriggerRangeMax() {
+		ServerCreatureObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerCreatureObjectTemplate) baseData;
+
+		if (!approachTriggerRange.isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getApproachTriggerRangeMax();
+			}
+		}
+
+		float value = this.approachTriggerRange.getMaxValue();
+		final byte delta = this.approachTriggerRange.getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getApproachTriggerRangeMax();
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
 	public float getMaxMentalStates(MentalStates index) {
 		ServerCreatureObjectTemplate base = null;
 
@@ -573,6 +1311,80 @@ public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 		return value;
 	}
 
+	public float getMaxMentalStatesMin(MentalStates index) {
+		ServerCreatureObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerCreatureObjectTemplate) baseData;
+
+		if (!maxMentalStates[(int) index.value].isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getMaxMentalStatesMin(index);
+			}
+		}
+
+		float value = this.maxMentalStates[(int) index.value].getMinValue();
+		final byte delta = this.maxMentalStates[(int) index.value].getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getMaxMentalStatesMin(index);
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getMaxMentalStatesMax(MentalStates index) {
+		ServerCreatureObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerCreatureObjectTemplate) baseData;
+
+		if (!maxMentalStates[(int) index.value].isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getMaxMentalStatesMax(index);
+			}
+		}
+
+		float value = this.maxMentalStates[(int) index.value].getMaxValue();
+		final byte delta = this.maxMentalStates[(int) index.value].getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getMaxMentalStatesMax(index);
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
 	public float getMentalStatesDecay(MentalStates index) {
 		ServerCreatureObjectTemplate base = null;
 
@@ -596,6 +1408,80 @@ public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 			if (baseData != null) {
 				if (base != null)
 					baseValue = base.getMentalStatesDecay(index);
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getMentalStatesDecayMin(MentalStates index) {
+		ServerCreatureObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerCreatureObjectTemplate) baseData;
+
+		if (!mentalStatesDecay[(int) index.value].isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getMentalStatesDecayMin(index);
+			}
+		}
+
+		float value = this.mentalStatesDecay[(int) index.value].getMinValue();
+		final byte delta = this.mentalStatesDecay[(int) index.value].getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getMentalStatesDecayMin(index);
+			}
+
+			if (delta == '+')
+				value = baseValue + value;
+			if (delta == '-')
+				value = baseValue - value;
+			if (delta == '=')
+				value = baseValue + (float) (baseValue * (value / 100.0f));
+			if (delta == '_')
+				value = baseValue - (float) (baseValue * (value / 100.0f));
+		}
+		return value;
+	}
+
+	public float getMentalStatesDecayMax(MentalStates index) {
+		ServerCreatureObjectTemplate base = null;
+
+		if (baseData != null)
+			base = (ServerCreatureObjectTemplate) baseData;
+
+		if (!mentalStatesDecay[(int) index.value].isLoaded()) {
+			if (base == null) {
+				return 0.0f;
+			} else {
+				return base.getMentalStatesDecayMax(index);
+			}
+		}
+
+		float value = this.mentalStatesDecay[(int) index.value].getMaxValue();
+		final byte delta = this.mentalStatesDecay[(int) index.value].getDeltaType();
+
+		if (delta == '+' || delta == '-' || delta == '_' || delta == '=') {
+			float baseValue = 0;
+
+			if (baseData != null) {
+				if (base != null)
+					baseValue = base.getMentalStatesDecayMax(index);
 			}
 
 			if (delta == '+')
