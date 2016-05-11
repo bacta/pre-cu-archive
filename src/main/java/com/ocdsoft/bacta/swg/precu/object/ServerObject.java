@@ -13,7 +13,10 @@ import com.ocdsoft.bacta.swg.precu.container.IntangibleVolumeContainer;
 import com.ocdsoft.bacta.swg.precu.container.TangibleVolumeContainer;
 import com.ocdsoft.bacta.swg.precu.event.ObservableGameEvent;
 import com.ocdsoft.bacta.swg.precu.message.game.object.ObjControllerMessage;
-import com.ocdsoft.bacta.swg.precu.message.game.scene.*;
+import com.ocdsoft.bacta.swg.precu.message.game.scene.BaselinesMessage;
+import com.ocdsoft.bacta.swg.precu.message.game.scene.SceneCreateObjectByCrc;
+import com.ocdsoft.bacta.swg.precu.message.game.scene.SceneDestroyObject;
+import com.ocdsoft.bacta.swg.precu.message.game.scene.UpdateContainmentMessage;
 import com.ocdsoft.bacta.swg.precu.object.archive.OnDirtyCallbackBase;
 import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaByteStream;
 import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaFloat;
@@ -348,8 +351,8 @@ public abstract class ServerObject extends GameObject implements Subject<Observa
 //            }
 //        }
 
-        SceneEndBaselines close = new SceneEndBaselines(this.getNetworkId());
-        theirConnection.sendMessage(close);
+        //SceneEndBaselines close = new SceneEndBaselines(this.getNetworkId());
+        //theirConnection.sendMessage(close);
     }
 
     public final void sendDestroyTo(SoeUdpConnection theirConnection) {

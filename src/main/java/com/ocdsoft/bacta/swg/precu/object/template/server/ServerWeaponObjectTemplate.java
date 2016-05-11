@@ -1425,7 +1425,7 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 		WT_unarmed(6),
 		WT_polearm(7),
 		WT_thrown(8),
-		WT_1handLightsaber(9),
+		WT_1handLightsaber(9), 
 		WT_2handLightsaber(10), 
 		WT_polearmLightsaber(11), 
 		WT_groundTargetting(12), 

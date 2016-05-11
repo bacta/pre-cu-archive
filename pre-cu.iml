@@ -40,14 +40,13 @@
     <orderEntry type="library" name="Maven: xml-apis:xml-apis:1.0.b2" level="project" />
     <orderEntry type="library" name="Maven: commons-logging:commons-logging-api:1.0.4" level="project" />
     <orderEntry type="module" module-name="iff" />
-    <orderEntry type="module" module-name="swg" />
-    <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.10" level="project" />
     <orderEntry type="library" name="Maven: steerio:steerio:1.0.0" level="project" />
     <orderEntry type="module" module-name="couchbase-connector" />
     <orderEntry type="library" name="Maven: com.couchbase.client:couchbase-client:1.4.12" level="project" />
     <orderEntry type="library" name="Maven: io.netty:netty:3.5.5.Final" level="project" />
     <orderEntry type="library" name="Maven: org.codehaus.jettison:jettison:1.1" level="project" />
     <orderEntry type="library" name="Maven: stax:stax-api:1.0.1" level="project" />
+    <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.10" level="project" />
     <orderEntry type="library" name="Maven: net.spy:spymemcached:2.12.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpcore:4.3" level="project" />
     <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpcore-nio:4.3" level="project" />

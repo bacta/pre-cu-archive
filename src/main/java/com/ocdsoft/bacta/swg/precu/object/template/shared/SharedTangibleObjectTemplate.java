@@ -99,7 +99,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 		return data;
 	}
 
-	public PaletteColorCustomizationVariable getPaletteColorCustomizationVariables(int index) {
+	public PaletteColorCustomizationVariable getPaletteColorCustomizationVariablesMin(int index) {
 		SharedTangibleObjectTemplate base = null;
 
 		if (baseData != null)
@@ -133,7 +133,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 		return data;
 	}
 
-	public PaletteColorCustomizationVariable getPaletteColorCustomizationVariables(int index) {
+	public PaletteColorCustomizationVariable getPaletteColorCustomizationVariablesMax(int index) {
 		SharedTangibleObjectTemplate base = null;
 
 		if (baseData != null)
@@ -221,7 +221,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 		return data;
 	}
 
-	public RangedIntCustomizationVariable getRangedIntCustomizationVariables(int index) {
+	public RangedIntCustomizationVariable getRangedIntCustomizationVariablesMin(int index) {
 		SharedTangibleObjectTemplate base = null;
 
 		if (baseData != null)
@@ -256,7 +256,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 		return data;
 	}
 
-	public RangedIntCustomizationVariable getRangedIntCustomizationVariables(int index) {
+	public RangedIntCustomizationVariable getRangedIntCustomizationVariablesMax(int index) {
 		SharedTangibleObjectTemplate base = null;
 
 		if (baseData != null)
@@ -343,7 +343,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 		return data;
 	}
 
-	public ConstStringCustomizationVariable getConstStringCustomizationVariables(int index) {
+	public ConstStringCustomizationVariable getConstStringCustomizationVariablesMin(int index) {
 		SharedTangibleObjectTemplate base = null;
 
 		if (baseData != null)
@@ -376,7 +376,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 		return data;
 	}
 
-	public ConstStringCustomizationVariable getConstStringCustomizationVariables(int index) {
+	public ConstStringCustomizationVariable getConstStringCustomizationVariablesMax(int index) {
 		SharedTangibleObjectTemplate base = null;
 
 		if (baseData != null)
@@ -604,7 +604,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 		return data;
 	}
 
-	public CustomizationVariableMapping getCustomizationVariableMapping(int index) {
+	public CustomizationVariableMapping getCustomizationVariableMappingMin(int index) {
 		SharedTangibleObjectTemplate base = null;
 
 		if (baseData != null)
@@ -637,7 +637,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 		return data;
 	}
 
-	public CustomizationVariableMapping getCustomizationVariableMapping(int index) {
+	public CustomizationVariableMapping getCustomizationVariableMappingMax(int index) {
 		SharedTangibleObjectTemplate base = null;
 
 		if (baseData != null)

@@ -163,7 +163,7 @@ public class ServerDraftSchematicObjectTemplate extends ServerIntangibleObjectTe
 		return data;
 	}
 
-	public IngredientSlot getSlots(int index) {
+	public IngredientSlot getSlotsMin(int index) {
 		ServerDraftSchematicObjectTemplate base = null;
 
 		if (baseData != null)
@@ -201,7 +201,7 @@ public class ServerDraftSchematicObjectTemplate extends ServerIntangibleObjectTe
 		return data;
 	}
 
-	public IngredientSlot getSlots(int index) {
+	public IngredientSlot getSlotsMax(int index) {
 		ServerDraftSchematicObjectTemplate base = null;
 
 		if (baseData != null)
@@ -898,7 +898,7 @@ public class ServerDraftSchematicObjectTemplate extends ServerIntangibleObjectTe
 			return data;
 		}
 
-		public Ingredient getOptions(int index) {
+		public Ingredient getOptionsMin(int index) {
 			IngredientSlotObjectTemplate base = null;
 
 			if (baseData != null)
@@ -934,7 +934,7 @@ public class ServerDraftSchematicObjectTemplate extends ServerIntangibleObjectTe
 			return data;
 		}
 
-		public Ingredient getOptions(int index) {
+		public Ingredient getOptionsMax(int index) {
 			IngredientSlotObjectTemplate base = null;
 
 			if (baseData != null)
