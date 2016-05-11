@@ -925,7 +925,7 @@ public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 		return data;
 	}
 
-	public AttribMod getAttribMods(int index) {
+	public AttribMod getAttribModsMin(int index) {
 		ServerCreatureObjectTemplate base = null;
 
 		if (baseData != null)
@@ -961,7 +961,7 @@ public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 		return data;
 	}
 
-	public AttribMod getAttribMods(int index) {
+	public AttribMod getAttribModsMax(int index) {
 		ServerCreatureObjectTemplate base = null;
 
 		if (baseData != null)

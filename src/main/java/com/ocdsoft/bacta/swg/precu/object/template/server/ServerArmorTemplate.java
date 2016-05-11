@@ -322,7 +322,7 @@ public class ServerArmorTemplate extends ObjectTemplate {
 		return data;
 	}
 
-	public SpecialProtection getSpecialProtection(int index) {
+	public SpecialProtection getSpecialProtectionMin(int index) {
 		ServerArmorTemplate base = null;
 
 		if (baseData != null)
@@ -355,7 +355,7 @@ public class ServerArmorTemplate extends ObjectTemplate {
 		return data;
 	}
 
-	public SpecialProtection getSpecialProtection(int index) {
+	public SpecialProtection getSpecialProtectionMax(int index) {
 		ServerArmorTemplate base = null;
 
 		if (baseData != null)
@@ -729,7 +729,7 @@ public class ServerArmorTemplate extends ObjectTemplate {
 		DT_elemental_heat(0x00000020),
 		DT_elemental_cold(0x00000040),
 		DT_elemental_acid(0x00000080),
-		DT_elemental_electrical(0x00000100),
+		DT_elemental_electrical(0x00000100), 
 		DT_environmental_heat(0x00000200), 
 		DT_environmental_cold(0x00000400), 
 		DT_environmental_acid(0x00000800), 

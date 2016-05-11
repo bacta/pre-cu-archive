@@ -508,7 +508,7 @@ public class ServerIntangibleObjectTemplate extends ServerObjectTemplate {
 			return data;
 		}
 
-		public SimpleIngredient getIngredients(int index) {
+		public SimpleIngredient getIngredientsMin(int index) {
 			IngredientObjectTemplate base = null;
 
 			if (baseData != null)
@@ -542,7 +542,7 @@ public class ServerIntangibleObjectTemplate extends ServerObjectTemplate {
 			return data;
 		}
 
-		public SimpleIngredient getIngredients(int index) {
+		public SimpleIngredient getIngredientsMax(int index) {
 			IngredientObjectTemplate base = null;
 
 			if (baseData != null)

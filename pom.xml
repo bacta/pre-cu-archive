@@ -52,10 +52,6 @@
             <artifactId>iff</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.ocdsoft.bacta</groupId>
-            <artifactId>swg</artifactId>
-        </dependency>
-        <dependency>
             <groupId>steerio</groupId>
             <artifactId>steerio</artifactId>
         </dependency>

@@ -892,7 +892,7 @@ public class SharedVehicleObjectTemplate extends SharedTangibleObjectTemplate {
 	}
 
 	public enum MovementTypes {
-		MT_hover(0),
+		MT_hover(0), 
 		MT_underwater(1), 
 		MT_ground(2), 
 		MT_swim(3), 

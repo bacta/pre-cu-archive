@@ -766,7 +766,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		return data;
 	}
 
-	public Contents getContents(int index) {
+	public Contents getContentsMin(int index) {
 		ServerObjectTemplate base = null;
 
 		if (baseData != null)
@@ -800,7 +800,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		return data;
 	}
 
-	public Contents getContents(int index) {
+	public Contents getContentsMax(int index) {
 		ServerObjectTemplate base = null;
 
 		if (baseData != null)
@@ -887,7 +887,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		return data;
 	}
 
-	public Xp getXpPoints(int index) {
+	public Xp getXpPointsMin(int index) {
 		ServerObjectTemplate base = null;
 
 		if (baseData != null)
@@ -921,7 +921,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		return data;
 	}
 
-	public Xp getXpPoints(int index) {
+	public Xp getXpPointsMax(int index) {
 		ServerObjectTemplate base = null;
 
 		if (baseData != null)
@@ -1214,7 +1214,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		CT_geneticsMission(0x80002000),
 		CT_mandalorianTailorMission(0x80004000),
 		CT_mandalorianArmorsmithMission(0x80008000),
-		CT_mandalorianDroidEngineerMission(0x80010000),
+		CT_mandalorianDroidEngineerMission(0x80010000), 
 		CT_spaceMission(0x80020000), 
 		CT_reverseEngineeringMission(0x80040000), 
 		CT_miscMission(0x80080000), 
@@ -1291,7 +1291,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 
 	public enum Attributes {
 		AT_health(0),
-		AT_constitution(1),
+		AT_constitution(1), 
 		AT_action(2), 
 		AT_stamina(3), 
 		AT_mind(4), 
@@ -1367,7 +1367,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		XP_craftingCreature(53),
 		XP_craftingTissue(54),
 		XP_craftingCamp(55),
-		XP_craftingTrapping(56),
+		XP_craftingTrapping(56), 
 		XP_craftingSpice(57), 
 		XP_jediGeneral(58), 
 		XP_shipwright(59), 
@@ -1430,7 +1430,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		DT_elemental_heat(0x00000020),
 		DT_elemental_cold(0x00000040),
 		DT_elemental_acid(0x00000080),
-		DT_elemental_electrical(0x00000100),
+		DT_elemental_electrical(0x00000100), 
 		DT_environmental_heat(0x00000200), 
 		DT_environmental_cold(0x00000400), 
 		DT_environmental_acid(0x00000800), 

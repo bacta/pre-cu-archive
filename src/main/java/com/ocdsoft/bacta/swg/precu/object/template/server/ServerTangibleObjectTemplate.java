@@ -698,7 +698,7 @@ public class ServerTangibleObjectTemplate extends ServerObjectTemplate {
 		C_hibernating(0x00000010),
 		C_magicItem(0x00000020),
 		C_aggressive(0x00000040),
-		C_wantSawAttackTrigger(0x00000080),
+		C_wantSawAttackTrigger(0x00000080), 
 		C_invulnerable(0x00000100), 
 		C_disabled(0x00000200), 
 		C_uninsurable(0x00000400), 
@@ -710,7 +710,7 @@ public class ServerTangibleObjectTemplate extends ServerObjectTemplate {
 		C_docking(0x00010000), //Set programmatically by docking system.  Do not set this in the template.
 		C_destroying(0x00020000), //Set programmatically by destruction system.  Do not set this in the template.
 		C_commable(0x00040000),
-		C_dockable(0x00080000),
+		C_dockable(0x00080000), 
 		C_eject(0x00100000), 
 		C_inspectable(0x00200000), 
 		C_transferable(0x00400000), 

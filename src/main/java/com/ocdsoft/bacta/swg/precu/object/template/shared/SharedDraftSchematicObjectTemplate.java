@@ -84,7 +84,7 @@ public class SharedDraftSchematicObjectTemplate extends SharedIntangibleObjectTe
 		return data;
 	}
 
-	public IngredientSlot getSlots(int index) {
+	public IngredientSlot getSlotsMin(int index) {
 		SharedDraftSchematicObjectTemplate base = null;
 
 		if (baseData != null)
@@ -117,7 +117,7 @@ public class SharedDraftSchematicObjectTemplate extends SharedIntangibleObjectTe
 		return data;
 	}
 
-	public IngredientSlot getSlots(int index) {
+	public IngredientSlot getSlotsMax(int index) {
 		SharedDraftSchematicObjectTemplate base = null;
 
 		if (baseData != null)
@@ -203,7 +203,7 @@ public class SharedDraftSchematicObjectTemplate extends SharedIntangibleObjectTe
 		return data;
 	}
 
-	public SchematicAttribute getAttributes(int index) {
+	public SchematicAttribute getAttributesMin(int index) {
 		SharedDraftSchematicObjectTemplate base = null;
 
 		if (baseData != null)
@@ -237,7 +237,7 @@ public class SharedDraftSchematicObjectTemplate extends SharedIntangibleObjectTe
 		return data;
 	}
 
-	public SchematicAttribute getAttributes(int index) {
+	public SchematicAttribute getAttributesMax(int index) {
 		SharedDraftSchematicObjectTemplate base = null;
 
 		if (baseData != null)
@@ -406,7 +406,7 @@ public class SharedDraftSchematicObjectTemplate extends SharedIntangibleObjectTe
 		DT_elemental_heat(0x00000020),
 		DT_elemental_cold(0x00000040),
 		DT_elemental_acid(0x00000080),
-		DT_elemental_electrical(0x00000100),
+		DT_elemental_electrical(0x00000100), 
 		DT_environmental_heat(0x00000200), 
 		DT_environmental_cold(0x00000400), 
 		DT_environmental_acid(0x00000800), 
