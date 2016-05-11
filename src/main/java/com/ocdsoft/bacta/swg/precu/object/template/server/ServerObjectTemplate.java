@@ -63,7 +63,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 	private final List<StructParam<ObjectTemplate>> xpPoints = new ArrayList<>(); //experience points for interacting with this object
 	private boolean xpPointsLoaded;
 	private boolean xpPointsAppend;
-	private final BoolParam persistByDefault = new BoolParam(); //flag to automatically persist this object on creation
+	private final BoolParam persistByDefault = new BoolParam(); //flag to automatically persist this object on player
 	private final BoolParam persistContents = new BoolParam(); //flag that this container persists its contents
 
 	public ServerObjectTemplate(final String filename, final DataResourceList<ObjectTemplate> objectTemplateList) {

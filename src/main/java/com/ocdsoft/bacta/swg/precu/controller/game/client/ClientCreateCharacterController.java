@@ -12,6 +12,7 @@ import com.ocdsoft.bacta.soe.controller.MessageHandled;
 import com.ocdsoft.bacta.soe.io.udp.game.GameServerState;
 import com.ocdsoft.bacta.soe.object.account.CharacterInfo;
 import com.ocdsoft.bacta.soe.object.account.SoeAccount;
+import com.ocdsoft.bacta.soe.service.ContainerService;
 import com.ocdsoft.bacta.soe.util.SOECRC32;
 import com.ocdsoft.bacta.swg.lang.Gender;
 import com.ocdsoft.bacta.swg.lang.Race;
@@ -22,15 +23,28 @@ import com.ocdsoft.bacta.swg.precu.message.game.client.ClientCreateCharacterFail
 import com.ocdsoft.bacta.swg.precu.message.game.client.ClientCreateCharacterSuccess;
 import com.ocdsoft.bacta.swg.precu.object.ServerObject;
 import com.ocdsoft.bacta.swg.precu.object.intangible.player.PlayerObject;
+import com.ocdsoft.bacta.swg.precu.object.tangible.TangibleObject;
 import com.ocdsoft.bacta.swg.precu.object.tangible.creature.CreatureObject;
 import com.ocdsoft.bacta.swg.precu.object.template.server.ServerCreatureObjectTemplate;
-import com.ocdsoft.bacta.swg.precu.object.template.shared.SharedCreatureObjectTemplate;
+import com.ocdsoft.bacta.swg.precu.object.template.server.ServerTangibleObjectTemplate;
+import com.ocdsoft.bacta.swg.precu.object.template.shared.SharedObjectTemplate;
+import com.ocdsoft.bacta.swg.precu.service.player.BiographyService;
+import com.ocdsoft.bacta.swg.precu.service.player.CharacterCreationService;
+import com.ocdsoft.bacta.swg.precu.service.player.NewbieTutorialService;
 import com.ocdsoft.bacta.swg.precu.service.data.ObjectTemplateService;
 import com.ocdsoft.bacta.swg.precu.service.data.creation.*;
 import com.ocdsoft.bacta.swg.precu.service.data.customization.AllowBald;
+import com.ocdsoft.bacta.swg.shared.collision.CollisionProperty;
+import com.ocdsoft.bacta.swg.shared.container.Container;
+import com.ocdsoft.bacta.swg.shared.container.SlotId;
+import com.ocdsoft.bacta.swg.shared.container.SlotIdManager;
+import com.ocdsoft.bacta.swg.shared.container.SlottedContainer;
+import com.ocdsoft.bacta.swg.shared.foundation.ConstCharCrcLowerString;
+import com.ocdsoft.bacta.swg.shared.foundation.CrcString;
 import com.ocdsoft.bacta.swg.shared.math.Transform;
 import com.ocdsoft.bacta.swg.shared.math.Vector;
 import com.ocdsoft.bacta.swg.shared.network.messages.chat.ChatAvatarId;
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,6 +56,13 @@ import java.util.Set;
 public class ClientCreateCharacterController implements GameNetworkMessageController<ClientCreateCharacter> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ClientCreateCharacterController.class);
+
+    private final CharacterCreationService characterCreationService;
+    private final NewbieTutorialService newbieTutorialService;
+    private final BiographyService biographyService;
+    private final ContainerService<ServerObject> containerService;
+    private final SlotIdManager slotIdManager;
+
 
     private final ObjectService<ServerObject> objectService;
     //    private final ZoneMap zoneMap;
@@ -56,7 +77,7 @@ public class ClientCreateCharacterController implements GameNetworkMessageContro
     private final NameService nameService;
     private final AllowBald allowBald;
     private final StartingLocations startingLocations;
-    //private final ContainerService<ServerObject> containerService;
+
 
     private final int minutesBetweenCreation;
     private final String defaultProfession;
@@ -65,6 +86,12 @@ public class ClientCreateCharacterController implements GameNetworkMessageContro
     //TODO: everything
     @Inject
     public ClientCreateCharacterController(
+            final CharacterCreationService characterCreationService,
+            final NewbieTutorialService newbieTutorialService,
+            final BiographyService biographyService,
+            final ContainerService<ServerObject> containerService,
+            final SlotIdManager slotIdManager,
+
             final ObjectTemplateService templateService,
             final ObjectService<ServerObject> objectService,
 //            final ZoneMap zoneMap,
@@ -76,9 +103,15 @@ public class ClientCreateCharacterController implements GameNetworkMessageContro
             final HairStyles hairStyles,
             final AllowBald allowBald,
             final StartingLocations startingLocations,
-            //final ContainerService<ServerObject> containerService,
+
             final BactaConfiguration bactaConfiguration,
             final NameService nameService) {
+
+        this.characterCreationService = characterCreationService;
+        this.newbieTutorialService = newbieTutorialService;
+        this.biographyService = biographyService;
+        this.containerService = containerService;
+        this.slotIdManager = slotIdManager;
 
         //this.sharedFileService = sharedFileService;
 //        this.zoneMap = zoneMap;
@@ -94,7 +127,6 @@ public class ClientCreateCharacterController implements GameNetworkMessageContro
         this.allowBald = allowBald;
         this.nameService = nameService;
         this.startingLocations = startingLocations;
-        //this.containerService = containerService;
 
         this.minutesBetweenCreation = bactaConfiguration.getIntWithDefault(
                 "Bacta/GameServer/CharacterCreation",
@@ -112,10 +144,10 @@ public class ClientCreateCharacterController implements GameNetworkMessageContro
     }
 
     @Override
-    public void handleIncoming(SoeUdpConnection connection, ClientCreateCharacter message) {
+    public void handleIncoming(SoeUdpConnection connection, ClientCreateCharacter createMessage) {
 
+        // Get the account object for this connection
         final SoeAccount account = accountService.getAccount(connection.getAccountUsername());
-
         if (account == null) {
             ErrorMessage error = new ErrorMessage("Error", "Account not found.", false);
             connection.sendMessage(error);
@@ -125,50 +157,14 @@ public class ClientCreateCharacterController implements GameNetworkMessageContro
             return;
         }
 
-        String profession = message.getProfession();
-        if (this.disabledProfessions.contains(profession)) {
-            profession = this.defaultProfession;
-        }
-
-        //TODO: Remove this after service side hair templates have been created...
-        StringBuilder stringBuilder = new StringBuilder(message.getHairTemplateName());
-        stringBuilder.insert(message.getHairTemplateName().lastIndexOf('/') + 1, "shared_");
-        String hairTemplate = stringBuilder.toString();
-
-        ServerCreatureObjectTemplate objectTemplate = templateService.getObjectTemplate(message.getTemplateName());
-
-        if (objectTemplate == null) {
-
-            LOGGER.error("Account <{}> attempted to create a player with invalid player template <{}>.",
-                    account.getUsername(),
-                    message.getTemplateName());
-
-            connection.sendMessage(new ClientCreateCharacterFailed(NameService.NAME_DECLINED_NO_TEMPLATE));
-            return;
-        }
-
-        ProfessionMods.ProfessionModInfo professionModInfo = professionMods.getProfessionModInfo(profession);
-        ProfessionDefaults.ProfessionInfo professionInfo = professionDefaults.getProfessionInfo(profession);
-        HairStyles.HairStyleInfo hairStyleInfo = hairStyles.getHairStyleInfo(objectTemplate.getResourceName());
-        StartingLocations.StartingLocationInfo startingLocationInfo = startingLocations.getStartingLocationInfo(message.getStartingLocation());
-
-        if (/*hairStyleInfo == null || */professionModInfo == null /*|| professionInfo == null*/) {
-            //Only way for this to happen is if client data is not loaded or missing.
-            LOGGER.error("Unable to retrieve profession information for profession <{}>.", profession);
-            connection.sendMessage(new ClientCreateCharacterFailed(NameService.NAME_DECLINED_INTERNAL_ERROR));
-            return;
-        }
-
-        //TODO: Remove this...it should just use the enums.
-        String genderSpecies = message.getTemplateName().substring(message.getTemplateName().lastIndexOf('/') + 1, message.getTemplateName().length() - 4); //Gets the file name of the racefile. i.e. human_male.
-
-        Race race = Race.valueOf(genderSpecies.substring(0, genderSpecies.indexOf("_")).toUpperCase());
+        // Validate name based on Gender and Race
+        String genderSpecies = createMessage.getTemplateName().substring(createMessage.getTemplateName().lastIndexOf('/') + 1, createMessage.getTemplateName().length() - 4); //Gets the file name of the racefile. i.e. human_male.
         Gender gender = Gender.valueOf(genderSpecies.substring(genderSpecies.indexOf("_") + 1).toUpperCase());
 
-        String firstName = message.getCharacterName().split(" ", 2)[0];
+        Race race = Race.valueOf(genderSpecies.substring(0, genderSpecies.indexOf("_")).toUpperCase());
 
-        String result = nameService.validateName(NameService.PLAYER, message.getCharacterName(), race, gender);
-
+        String firstName = createMessage.getCharacterName().split(" ", 2)[0];
+        String result = nameService.validateName(NameService.PLAYER, createMessage.getCharacterName(), race, gender);
         if (result.equals(NameService.NAME_DECLINED_DEVELOPER) && firstName.equalsIgnoreCase(account.getUsername())) {
             result = NameService.NAME_APPROVED;
         }
@@ -188,132 +184,151 @@ public class ClientCreateCharacterController implements GameNetworkMessageContro
             return;
         }
 
-        CreatureObject character = objectService.createObject(1, objectTemplate.getSharedTemplate());
-//        character.setCondition(TangibleObject.Conditions.onOff);
 
-        nameService.addPlayerName(firstName);
+        ServerCreatureObjectTemplate objectTemplate = templateService.getObjectTemplate(createMessage.getTemplateName());
+        if (objectTemplate == null) {
 
-//        character.setAppearanceData(appearanceData); //TODO: appearance data validation soon.
+            LOGGER.error("Account <{}> attempted to create a player with invalid player template <{}>.",
+                    account.getUsername(),
+                    createMessage.getTemplateName());
 
-        //TODO: Scale
-//        if (message.getScaleFactor() > objectTemplate.getScaleMax() || message.getScaleFactor() < objectTemplate.getScaleMin()) {
-//            LOGGER.error("Account <{}> attempted to create a character with scale factor of {} which is outside acceptable range.",
-//                    account.getUsername(),
-//                    message.getScaleFactor());
-//
-//            connection.sendMessage(new ClientCreateCharacterFailed(message.getCharacterName(), NameService.NAME_DECLINED_CANT_CREATE_AVATAR));
-//            return;
-//        }
+            connection.sendMessage(new ClientCreateCharacterFailed(NameService.NAME_DECLINED_NO_TEMPLATE));
+            return;
+        }
 
-//        character.setScaleFactor(scaleFactor);
-//        character.setObjectName(new UnicodeString(characterName));
-//        character.setRunSpeed(objectTemplate.getSpeed(SharedCreatureObjectTemplate.MovementTypes.Run));
-//        character.setWalkSpeed(objectTemplate.getSpeed(SharedCreatureObjectTemplate.MovementTypes.Walk));
-//        character.setSlopeModAngle(objectTemplate.getSlopeModAngle());
-//        character.setSlopeModPercent(objectTemplate.getSlopeModPercent());
-//        character.setWaterModPercent(objectTemplate.getWaterModPercent());
+        final CreatureObject newCharacterObject = objectService.createObject(objectTemplate.getSharedTemplate());
+        if (newCharacterObject == null) {
 
-        //TODO: Change this to take the player to the tutorial zone when it is implemented.
-        //TODO: Position should be a random point within the radius of these coordinates.
-        final Vector position = new Vector(
-                startingLocationInfo.getX(),
-                startingLocationInfo.getY(),
-                startingLocationInfo.getZ());
+            LOGGER.error("Account <{}> attempted to create a player but the object service returned null <{}>.",
+                    account.getUsername(),
+                    createMessage.getTemplateName());
+
+            connection.sendMessage(new ClientCreateCharacterFailed(NameService.NAME_DECLINED_CANT_CREATE_AVATAR));
+            return;
+        }
+
+        newCharacterObject.setAssignedObjectName();setObjectName(createMessage.getCharacterName());
+        newCharacterObject.setOwnerId(newCharacterObject.getNetworkId());
+        newCharacterObject.setPlayerControlled(true);
 
         final Transform transform = new Transform();
-        transform.setPositionInParentSpace(position);
-        transform.yaw(startingLocationInfo.getHeading());
+        if(createMessage.isUseNewbieTutorial()) {
+            newbieTutorialService.setupCharacterForTutorial(newCharacterObject);
+            transform.setPositionInParentSpace(newbieTutorialService.getTutorialLocation());
+        } else {
+            newbieTutorialService.setupCharacterToSkipTutorial(newCharacterObject);
+            StartingLocations.StartingLocationInfo startingLocationInfo = startingLocations.getStartingLocationInfo(createMessage.getStartingLocation());
 
-        character.setTransform(transform);
+            //TODO: Position should be a random point within the radius of these coordinates.
+            final Vector position = new Vector(
+                    startingLocationInfo.getX(),
+                    startingLocationInfo.getY(),
+                    startingLocationInfo.getZ());
 
-        PlayerObject ghost = objectService.createObject(0, "object/player/shared_player.iff");
-//        ghost.setClient(client);
-//        ghost.setBiography(biography);
-//        ghost.setInitialized();
+            transform.setPositionInParentSpace(position);
+            transform.yaw(startingLocationInfo.getHeading());
+        }
 
-        //containerService.transferItemToContainer(character, ghost);
+        newCharacterObject.setTransform(transform);
 
-//        TangibleObject bank = objectService.createObject(0, "object/tangible/bank/shared_character_bank.iff");
-//        bank.setInitialized();
-//        containerService.transferItemToContainer(character, bank);
-//
-//        TangibleObject datapad = objectService.createObject(0, "object/tangible/datapad/shared_character_datapad.iff");
-//        datapad.setInitialized();
-//        containerService.transferItemToContainer(character, datapad);
-//
-//        TangibleObject missionBag = objectService.createObject(0, "object/tangible/mission_bag/shared_mission_bag.iff");
-//        missionBag.setInitialized();
-//        containerService.transferItemToContainer(character, missionBag);
-//
-//        TangibleObject inventory = objectService.createObject(0, "object/tangible/inventory/shared_character_inventory.iff");
-//        inventory.setInitialized();
-//        containerService.transferItemToContainer(character, inventory);
+        final CollisionProperty collision = newCharacterObject.getCollisionProperty();
+        if(collision != null) {
+            collision.setPlayerControlled(true);
+        }
 
-//        if (!hairStyleInfo.containsTemplate(hairTemplate) && !allowBald.isAllowedBald(resourceName)) {//sharedTemplate.getResourceName())) {
-//            LOGGER.error("Invalid hair style <{}> chosen. Setting to default hair style.", hairTemplate);
-//            hairTemplate = hairStyleInfo.getDefaultTemplate();
-//        }
+        float scaleFactor = createMessage.getScaleFactor();
+        final SharedObjectTemplate tmpl = newCharacterObject.getSharedTemplate();
 
-        hairTemplate = "object/tangible/hair/human/hair_human_male_s01.iff";
+        if (tmpl != null) {
+            final float scaleMax = tmpl.getScaleMax();
+            final float scaleMin = tmpl.getScaleMin();
 
-//        TangibleObject hair = objectService.createObject(0, hairTemplate);
-//
-//        if (hair != null) {
-//            hair.setAppearanceData(hairAppearanceData);
-//            hair.setInitialized();
-//            containerService.transferItemToContainer(character, hair);
-//        } else {
-//            logger.error("Failed to create hair with template <{}>.", hairTemplateName);
-//        }
+            scaleFactor = Math.min(scaleFactor, scaleMax);
+            scaleFactor = Math.max(scaleFactor, scaleMin);
+        }
 
-//        character.setAttributes(professionModInfo.getAttributes());
-//        character.setMaxAttributes(professionModInfo.getAttributes());
-//        character.setUnmodifiedMaxAttributes(professionModInfo.getAttributes());
+        newCharacterObject.setScaleFactor(scaleFactor);
+        newCharacterObject.setScale(Vector.XYZ111.multiply(scaleFactor));
 
-//        for (String skill : professionInfo.getSkillsList())
-//            character.addSkill(skill);
-//
-//        for (String itemTemplate : professionInfo.getItemTemplates(sharedTemplate.getName())) {
-//            logger.debug("Creating profession item with template <{}>.", itemTemplate);
-//            SceneObject item = objectService.createObject(0, itemTemplate);
-//            item.setInitialized();
-//            containerService.transferItemToContainer(character, item);
-//        }
+        final TangibleObject tangibleObject = TangibleObject.asTangibleObject(newCharacterObject);
 
-//        character.setInitialized();
+        if (tangibleObject != null) {
+            tangibleObject.setAppearanceData(createMessage.getAppearanceData());
+        }
 
-        ClientCreateCharacterSuccess success = new ClientCreateCharacterSuccess(character.getNetworkId());
-        connection.sendMessage(success);
+        // hair equip hack - lives on
+        if(!createMessage.getHairTemplateName().isEmpty()) {
+            final ServerObject hair = objectService.createObject(createMessage.getHairTemplateName(), newCharacterObject);
+            assert hair != null : String.format("Could not create hair %s\n", createMessage.getHairTemplateName());
 
-        //Post character setup.
-        CharacterInfo info = new CharacterInfo(
-                message.getCharacterName(),
-                SOECRC32.hashCode(message.getTemplateName()),
-                character.getNetworkId(),
-                serverState.getId(),
-                CharacterInfo.Type.NORMAL,
-                false
-        );
+            final TangibleObject tangibleHair = TangibleObject.asTangibleObject(hair);
+            assert tangibleHair != null : String.format("Hair is not tangible, wtf.  Can't customize it.  (among other things, probably)...");
+        }
 
-        //Create a new chat avatar id, then register it with the chat server.
-        ChatAvatarId chatAvatarId = new ChatAvatarId(
-                bactaConfiguration.getStringWithDefault("Bacta/GameServer", "Game", "SWG"),
-                bactaConfiguration.getStringWithDefault("Bacta/GameServer", "Name", "Bacta"),
-                firstName
-        );
+        if (!createMessage.getProfession().isEmpty()) {
+            characterCreationService.setupPlayer(newCharacterObject, createMessage.getProfession(), createMessage.isJedi());
+        }
 
-        //TODO: Register chat avatar id here only.
-        //TODO: Where can we stash the chat avatar id...
+        if (!createMessage.getBiography().isEmpty()) {
+            biographyService.setBiography(newCharacterObject.getNetworkId(), createMessage.getBiography());
+        }
 
-        account.addCharacter(info);
-        account.setLastCharacterCreationTime(System.currentTimeMillis());
-        accountService.updateAccount(account);
+        PlayerObject play = objectService.createObject("object/player/player.iff", newCharacterObject);
 
-        LOGGER.trace("Successfully created character {} with network id {}. ",
-                message.getCharacterName(),
-                character.getNetworkId());
+        assert play != null : String.format("%d unable to create player object for new character %s", account.getId(), newCharacterObject.getNetworkId());
 
-        objectService.updateObject(character);
+        play.setStationId(account.getId());
+        play.setBornDate((int) DateTime.now().getMillis());
+        play.setSkillTemplate(createMessage.getSkillTemplate(), true);
+        play.setWorkingSkill(createMessage.getWorkingSkill(), true);
+
+        // Setup initial A-Tab inventory.
+        SlottedContainer container = newCharacterObject.getSlottedContainerProperty();
+        if(container != null) {
+            int slot = slotIdManager.findSlotId(SlotNames.appearance);
+            //Container::ContainerErrorCode tmp;
+            if(slot != SlotId.INVALID) {
+                Container itemId = container.getObjectInSlot(slot, tmp);
+                Object appearanceInventory = itemId.getObject();
+
+                if(appearanceInventory == null)  {
+                    WARNING(true, ("Player %s has lost their appearance inventory", newCharacterObject.getNetworkId());
+                    appearanceInventory = ServerWorld::createNewObject(s_appearanceTemplate, *newCharacterObject, slot, false);
+                    if(!appearanceInventory)
+                    {
+                        DEBUG_FATAL(true, ("Could not create an appearance inventory for the player who lost theirs"));
+                    }
+                }
+            }
+        }
+
+
+        newCharacterObject.setSceneIdOnThisAndContents(createMessage.getPlanetName());
+
+        // ----------------------------------------------------------------------
+        // Tell DB Process we're about to send it a character, then send it
+        AddCharacterMessage acm(createMessage->getStationId(), newCharacterObject->getNetworkId(),getProcessId(),createMessage->getCharacterName(),createMessage->getJedi());
+        sendToDatabaseServer(acm);
+        newCharacterObject.persist();
+        nameService.addPlayerName(firstName);
+
+        // ----------------------------------------------------------------------
+        // Delete the new character -- will reload it from DB when player logs in
+        // (This is so that the player could log in to a different server, or not log in at all, and things would still work.)
+        ServerWorld::removeObjectFromGame(*newCharacterObject);
+        delete newCharacterObject;
+
+        m_charactersPendingCreation->erase(vrn.getStationId());
+        delete createMessage;
+
+        // Destroy any existing chat avatar that may be using the new character's name
+        GenericValueTypeMessage<String> chatDestroyAvatar("ChatDestroyAvatar", firstName);
+        Chat::sendToChatServer(chatDestroyAvatar);
+
+    }
+
+    private static class SlotNames {
+        public static CrcString appearance = new ConstCharCrcLowerString("appearance_inventory");
     }
 }
 

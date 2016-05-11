@@ -17,7 +17,7 @@ import java.util.Map;
  */
 @Singleton
 public class RacialMods implements SharedFileLoader {
-    private static final String dataTableName = "datatables/creation/racial_mods.iff";
+    private static final String dataTableName = "datatables/player/racial_mods.iff";
     private static final Logger logger = LoggerFactory.getLogger(RacialMods.class);
 
     private final Map<String, RacialModInfo> racialMods = new HashMap<>();

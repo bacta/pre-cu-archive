@@ -46,7 +46,7 @@ public final class ProfessionDefaults implements SharedFileLoader {
 
         //TODO: Replace with new Iff.
 //
-//        final ChunkReader chunkReader = new ChunkReader("creation/profession_defaults.iff", treeFile.open("creation/profession_defaults.iff"));
+//        final ChunkReader chunkReader = new ChunkReader("player/profession_defaults.iff", treeFile.open("player/profession_defaults.iff"));
 //
 //        ChunkBufferContext root = chunkReader.openChunk();
 //

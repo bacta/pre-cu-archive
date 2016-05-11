@@ -44,7 +44,7 @@ public class LoadoutEquipment implements SharedFileLoader {
 
         //TODO: Replace with new Iff library.
 
-//        final ChunkReader chunkReader = new ChunkReader("creation/default_pc_equipment.iff", treeFile.open("creation/default_pc_equipment.iff"));
+//        final ChunkReader chunkReader = new ChunkReader("player/default_pc_equipment.iff", treeFile.open("player/default_pc_equipment.iff"));
 //
 //        ChunkBufferContext root = chunkReader.openChunk();
 //

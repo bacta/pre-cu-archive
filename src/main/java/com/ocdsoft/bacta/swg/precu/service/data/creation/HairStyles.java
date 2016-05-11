@@ -51,7 +51,7 @@ public class HairStyles implements SharedFileLoader {
 
 //
 //
-//        final ChunkReader chunkReader = new ChunkReader("creation/default_pc_hairstyles.iff", treeFile.open("creation/default_pc_hairstyles.iff"));
+//        final ChunkReader chunkReader = new ChunkReader("player/default_pc_hairstyles.iff", treeFile.open("player/default_pc_hairstyles.iff"));
 //
 //        ChunkBufferContext root = chunkReader.openChunk();
 //

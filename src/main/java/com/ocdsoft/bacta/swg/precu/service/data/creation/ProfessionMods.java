@@ -19,7 +19,7 @@ import java.util.Map;
  */
 @Singleton
 public class ProfessionMods implements SharedFileLoader {
-    private static final String dataTableName = "datatables/creation/profession_mods.iff";
+    private static final String dataTableName = "datatables/player/profession_mods.iff";
     private static final Logger logger = LoggerFactory.getLogger(ProfessionMods.class);
 
     private Map<String, ProfessionModInfo> professionMods = new HashMap<>();

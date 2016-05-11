@@ -90,7 +90,7 @@ public class ObjectTemplateService {
 
     /**
      * This gets the class associated with the provided template type
-     * this is used in object creation.
+     * this is used in object player.
      *
      * @param template template to get class object for
      * @return Class object related to the specified type

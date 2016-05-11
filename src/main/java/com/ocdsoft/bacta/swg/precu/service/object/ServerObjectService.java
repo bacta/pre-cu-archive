@@ -53,7 +53,12 @@ public final class ServerObjectService implements ObjectService<ServerObject> {
     }
 
     @Override
-    public <T extends ServerObject> T createObject(final long creator, final String templatePath) {
+    public <T extends ServerObject> T createObject(final String templatePath) {
+        return createObject(templatePath, null);
+    }
+
+    @Override
+    public <T extends ServerObject> T createObject(final String templatePath, final ServerObject creator) {
         final ServerObjectTemplate template = objectTemplateService.getObjectTemplate(templatePath);
         final Class<T> objectClass = objectTemplateService.getClassForTemplate(template);
         final T newObject = networkObjectFactory.createNetworkObject(objectClass);

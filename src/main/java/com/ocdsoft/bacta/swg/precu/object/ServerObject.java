@@ -35,6 +35,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 
@@ -53,6 +54,10 @@ public abstract class ServerObject extends GameObject implements Subject<Observa
     private final AutoDeltaVariable<StringId> descriptionStringId;
 
     private ServerSynchronizedUi synchornizedUi;
+
+    @Getter
+    @Setter
+    private String sceneId;
 
     @Inject
     public ServerObject(final ObjectTemplateList objectTemplateList,
@@ -255,6 +260,26 @@ public abstract class ServerObject extends GameObject implements Subject<Observa
 
     public final void setSharedTemplate(final SharedObjectTemplate template) {
         this.sharedTemplate = template;
+    }
+
+    public final void setSceneIdOnThisAndContents(final String newSceneId)  {
+
+        setSceneId(newSceneId);
+
+        Container container = getContainerProperty();
+        if (container != null) {
+            Iterator<GameObject> containerIterator = container.iterator();
+            containerIterator.forEachRemaining(containedObject -> {
+                containedObject.setSceneIdOnThisAndContents(newSceneId);
+            })
+            {
+                ServerObject containedObject = safe_cast<ServerObject *>((*containerIterator).getObject());
+                if (containedObject)
+                {
+
+                }
+            }
+        }
     }
 
     public final int getBalanceBank() {
