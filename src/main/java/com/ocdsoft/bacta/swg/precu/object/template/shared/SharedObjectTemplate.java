@@ -3,6 +3,8 @@ package com.ocdsoft.bacta.swg.precu.object.template.shared;
 import bacta.iff.Iff;
 import com.google.common.base.Preconditions;
 import com.ocdsoft.bacta.swg.localization.StringId;
+import com.ocdsoft.bacta.swg.shared.container.ArrangementDescriptor;
+import com.ocdsoft.bacta.swg.shared.container.SlotDescriptor;
 import com.ocdsoft.bacta.swg.shared.foundation.DataResourceList;
 import com.ocdsoft.bacta.swg.shared.foundation.Tag;
 import com.ocdsoft.bacta.swg.shared.template.ObjectTemplate;
@@ -1410,5 +1412,38 @@ public class SharedObjectTemplate extends ObjectTemplate {
 		}
 	}
 
+	//@TDF-USER-START
+	private ArrangementDescriptor arrangementDescriptor;
+	private SlotDescriptor slotDescriptor;
+
+	public ArrangementDescriptor getArrangementDescriptor() {
+		return arrangementDescriptor;
+	}
+
+	public SlotDescriptor getSlotDescriptor() {
+		return slotDescriptor;
+	}
+
+	public void setArrangementDescriptor(final ArrangementDescriptor arrangementDescriptor) {
+		this.arrangementDescriptor = arrangementDescriptor;
+	}
+
+	public void setSlotDescriptor(final SlotDescriptor slotDescriptor) {
+		this.slotDescriptor = slotDescriptor;
+	}
+
+	@Override
+	protected void postLoad() {
+		//TODO: Instead of storing a reference to arrangementDescriptorList and slotDescriptorList just for
+		//this one method, we will create setters, and allot it to be set after creation, externally.
+		//if (slotFilename != null && !slotFilename.isEmpty())
+		//	slotDescriptor = slotDescriptorList.fetch(slotFilename);
+
+		//if (arrangementFilename != null && !arrangementFilename.isEmpty())
+		//	arrangementDescriptor = arrangementDescriptorList.fetch(arrangementFilename);
+
+		//load the client data file?!
+	}
+	//@TDF-USER-END
 }
 
