@@ -28,6 +28,7 @@ import com.ocdsoft.bacta.swg.precu.dispatch.PreCuCommandDispatcher;
 import com.ocdsoft.bacta.swg.precu.dispatch.PreCuObjectDispatcher;
 import com.ocdsoft.bacta.swg.precu.message.game.object.ObjControllerMessage;
 import com.ocdsoft.bacta.swg.precu.message.game.object.command.CommandMessage;
+import com.ocdsoft.bacta.swg.precu.object.PreCuObjectTemplateList;
 import com.ocdsoft.bacta.swg.precu.object.ServerObject;
 import com.ocdsoft.bacta.swg.precu.object.login.ClusterEntry;
 import com.ocdsoft.bacta.swg.precu.object.tangible.TangibleObject;
@@ -37,6 +38,7 @@ import com.ocdsoft.bacta.swg.precu.service.object.ServerObjectService;
 import com.ocdsoft.bacta.swg.precu.zone.PlanetMap;
 import com.ocdsoft.bacta.swg.precu.zone.ZoneMap;
 import com.ocdsoft.bacta.swg.shared.container.SlotIdManager;
+import com.ocdsoft.bacta.swg.shared.template.ObjectTemplateList;
 
 public class GameModule extends AbstractModule implements Module {
 
@@ -69,6 +71,8 @@ public class GameModule extends AbstractModule implements Module {
         bind(GameServerState.class).to(PreCuGameServerState.class);
         bind(ServerState.class).to(PreCuGameServerState.class);
         bind(NameService.class).to(DefaultNameService.class);
+
+        bind(ObjectTemplateList.class).to(PreCuObjectTemplateList.class);
     }
 
 }
