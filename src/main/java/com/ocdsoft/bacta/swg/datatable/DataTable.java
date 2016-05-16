@@ -2,6 +2,7 @@ package com.ocdsoft.bacta.swg.datatable;
 
 import bacta.iff.Iff;
 import com.google.common.base.Preconditions;
+import com.ocdsoft.bacta.swg.shared.foundation.Tag;
 import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
 import lombok.Getter;
@@ -14,8 +15,6 @@ import java.util.List;
  */
 public final class DataTable {
     public static final int TAG_DTII = Iff.createChunkId("DTII");
-    public static final int TAG_0000 = Iff.createChunkId("0000");
-    public static final int TAG_0001 = Iff.createChunkId("0001");
     public static final int TAG_COLS = Iff.createChunkId("COLS");
     public static final int TAG_ROWS = Iff.createChunkId("ROWS");
     public static final int TAG_TYPE = Iff.createChunkId("TYPE");
@@ -348,9 +347,9 @@ public final class DataTable {
 
         int version = iff.getCurrentName();
 
-        if (version == DataTable.TAG_0000) {
+        if (version == Tag.TAG_0000) {
             load0000(iff, dataTableManager);
-        } else if (version == DataTable.TAG_0001) {
+        } else if (version == Tag.TAG_0001) {
             load0001(iff, dataTableManager);
         } else {
             Preconditions.checkArgument(false, "UNKNOWN DataTable file format [%s].", Iff.getChunkName(version));
@@ -404,7 +403,7 @@ public final class DataTable {
     }
 
     private void load0000(final Iff iff, final DataTableManager dataTableManager) {
-        iff.enterForm(DataTable.TAG_0000);
+        iff.enterForm(Tag.TAG_0000);
         iff.enterChunk(DataTable.TAG_COLS);
 
         int numCols = iff.readInt();
@@ -457,11 +456,11 @@ public final class DataTable {
         }
 
         iff.exitChunk(DataTable.TAG_ROWS);
-        iff.exitForm(DataTable.TAG_0000);
+        iff.exitForm(Tag.TAG_0000);
     }
 
     private void load0001(Iff iff, final DataTableManager dataTableManager) {
-        iff.enterForm(DataTable.TAG_0001);
+        iff.enterForm(Tag.TAG_0001);
 
         iff.enterChunk(DataTable.TAG_COLS);
 
@@ -496,7 +495,7 @@ public final class DataTable {
         }
 
         iff.exitChunk(DataTable.TAG_ROWS);
-        iff.exitForm(DataTable.TAG_0001);
+        iff.exitForm(Tag.TAG_0001);
 
     }
 

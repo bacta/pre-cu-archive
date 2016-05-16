@@ -3,14 +3,14 @@ package com.ocdsoft.bacta.swg.precu.object.tangible;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import com.google.inject.Inject;
+import com.ocdsoft.bacta.swg.archive.delta.AutoDeltaBoolean;
+import com.ocdsoft.bacta.swg.archive.delta.AutoDeltaInt;
+import com.ocdsoft.bacta.swg.archive.delta.AutoDeltaString;
+import com.ocdsoft.bacta.swg.archive.delta.set.AutoDeltaIntSet;
+import com.ocdsoft.bacta.swg.archive.delta.set.AutoDeltaLongSet;
 import com.ocdsoft.bacta.swg.precu.message.game.scene.UpdateTransformMessage;
 import com.ocdsoft.bacta.swg.precu.object.ServerObject;
 import com.ocdsoft.bacta.swg.precu.object.UpdateTransformCallback;
-import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaBoolean;
-import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaInt;
-import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaString;
-import com.ocdsoft.bacta.swg.precu.object.archive.delta.set.AutoDeltaIntSet;
-import com.ocdsoft.bacta.swg.precu.object.archive.delta.set.AutoDeltaLongSet;
 import com.ocdsoft.bacta.swg.precu.object.template.server.ServerTangibleObjectTemplate;
 import com.ocdsoft.bacta.swg.precu.zone.Zone;
 import com.ocdsoft.bacta.swg.shared.container.SlotIdManager;
@@ -170,7 +170,7 @@ public class TangibleObject extends ServerObject implements SteerSubject<Vec3> {
         }
 
         UpdateTransformCallback updateTransformCallback = new UpdateTransformCallback(this);
-        zone.contains(transform.getPositionInParentSpace(), 160.f, Integer.MAX_VALUE, 1, updateTransformCallback);
+        zone.contains(transform.getPositionInParent(), 160.f, Integer.MAX_VALUE, 1, updateTransformCallback);
 
         return updateTransformCallback.getNearObjects();
     }

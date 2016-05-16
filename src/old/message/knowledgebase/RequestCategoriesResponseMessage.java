@@ -1,7 +1,7 @@
 package com.ocdsoft.bacta.swg.precu.message.knowledgebase;
 
 import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
-import com.ocdsoft.bacta.swg.precu.object.archive.AutoArray;
+import com.ocdsoft.bacta.swg.archive.AutoArray;
 import com.ocdsoft.bacta.swg.precu.object.knowledgebase.CustomerServiceCategory;
 
 /**

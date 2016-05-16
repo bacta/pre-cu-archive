@@ -3,6 +3,7 @@ package com.ocdsoft.bacta.swg.datatable;
 import bacta.iff.Iff;
 import com.google.common.base.Preconditions;
 import com.ocdsoft.bacta.swg.lang.NotImplementedException;
+import com.ocdsoft.bacta.swg.shared.foundation.Tag;
 import lombok.Data;
 import lombok.Setter;
 import org.slf4j.Logger;
@@ -255,7 +256,7 @@ public final class DataTableWriter {
 
         checkIntegrity(ndt);
         iff.insertForm(DataTable.TAG_DTII);
-        iff.insertForm(DataTable.TAG_0001);
+        iff.insertForm(Tag.TAG_0001);
 
         saveColumns(ndt, iff);
         saveTypes(ndt, iff);

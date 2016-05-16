@@ -1,8 +1,8 @@
 package com.ocdsoft.bacta.swg.precu.object.tangible.weapon;
 
 import com.google.inject.Inject;
-import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaFloat;
-import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaInt;
+import com.ocdsoft.bacta.swg.archive.delta.AutoDeltaFloat;
+import com.ocdsoft.bacta.swg.archive.delta.AutoDeltaInt;
 import com.ocdsoft.bacta.swg.precu.object.tangible.TangibleObject;
 import com.ocdsoft.bacta.swg.precu.object.template.server.ServerObjectTemplate.DamageType;
 import com.ocdsoft.bacta.swg.precu.object.template.server.ServerWeaponObjectTemplate;

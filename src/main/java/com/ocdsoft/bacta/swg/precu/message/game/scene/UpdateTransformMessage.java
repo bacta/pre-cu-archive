@@ -34,7 +34,7 @@ public final class UpdateTransformMessage extends GameNetworkMessage {
         this.sequenceNumber = sequenceNumber;
         this.speed = speed;
 
-        final Vector pos = transform.getPositionInParentSpace();
+        final Vector pos = transform.getPositionInParent();
         this.positionX = (short) (pos.x * 4);
         this.positionY = (short) (pos.y * 4);
         this.positionZ = (short) (pos.z * 4);

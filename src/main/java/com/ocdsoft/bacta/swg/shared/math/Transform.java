@@ -12,6 +12,8 @@ import java.util.List;
  */
 @Data
 public final class Transform implements ByteBufferWritable {
+    public static final Transform IDENTITY = new Transform(); // TODO: Can we make this immutable?
+
     public final float[][] matrix = new float[3][4];
 
     public Transform() {
@@ -255,7 +257,7 @@ public final class Transform implements ByteBufferWritable {
         final Vector i = rotateLocalToParent(transform.getLocalFrameIInParentSpace());
         final Vector j = rotateLocalToParent(transform.getLocalFrameJInParentSpace());
         final Vector k = rotateLocalToParent(transform.getLocalFrameKInParentSpace());
-        final Vector p = rotateTranslateLocalToParent(transform.getPositionInParentSpace());
+        final Vector p = rotateTranslateLocalToParent(transform.getPositionInParent());
 
         final Transform rotatedTransform = new Transform();
         rotatedTransform.setLocalFrameIJKInParentSpace(i, j, k);
@@ -269,7 +271,7 @@ public final class Transform implements ByteBufferWritable {
         final Vector i = rotateParentToLocal(transform.getLocalFrameIInParentSpace());
         final Vector j = rotateParentToLocal(transform.getLocalFrameJInParentSpace());
         final Vector k = rotateParentToLocal(transform.getLocalFrameKInParentSpace());
-        final Vector p = rotateTranslateParentToLocal(transform.getPositionInParentSpace());
+        final Vector p = rotateTranslateParentToLocal(transform.getPositionInParent());
 
         final Transform rotatedTransform = new Transform();
         rotatedTransform.setLocalFrameIJKInParentSpace(i, j, k);
@@ -466,7 +468,7 @@ public final class Transform implements ByteBufferWritable {
      *
      * @return The positional offest of this transform in parent space.
      */
-    public Vector getPositionInParentSpace() {
+    public Vector getPositionInParent() {
         return new Vector(matrix[0][3], matrix[1][3], matrix[2][3]);
     }
 
@@ -719,7 +721,7 @@ public final class Transform implements ByteBufferWritable {
     @Override
     public void writeToBuffer(final ByteBuffer buffer) {
         final Quaternion q = new Quaternion(this);
-        final Vector v = getPositionInParentSpace();
+        final Vector v = getPositionInParent();
 
         q.writeToBuffer(buffer);
         v.writeToBuffer(buffer);

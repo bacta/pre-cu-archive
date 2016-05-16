@@ -2,10 +2,10 @@ package com.ocdsoft.bacta.swg.precu.object.intangible.mission;
 
 import com.google.inject.Inject;
 import com.ocdsoft.bacta.engine.lang.UnicodeString;
+import com.ocdsoft.bacta.swg.archive.delta.AutoDeltaInt;
+import com.ocdsoft.bacta.swg.archive.delta.AutoDeltaString;
+import com.ocdsoft.bacta.swg.archive.delta.AutoDeltaVariable;
 import com.ocdsoft.bacta.swg.localization.StringId;
-import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaInt;
-import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaString;
-import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaVariable;
 import com.ocdsoft.bacta.swg.precu.object.intangible.IntangibleObject;
 import com.ocdsoft.bacta.swg.precu.object.template.server.ServerMissionObjectTemplate;
 import com.ocdsoft.bacta.swg.precu.object.waypoint.Waypoint;

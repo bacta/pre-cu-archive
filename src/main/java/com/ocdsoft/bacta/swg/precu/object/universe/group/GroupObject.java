@@ -1,11 +1,11 @@
 package com.ocdsoft.bacta.swg.precu.object.universe.group;
 
 import com.google.inject.Inject;
-import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaInt;
-import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaLong;
-import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaShort;
-import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaString;
-import com.ocdsoft.bacta.swg.precu.object.archive.delta.vector.AutoDeltaObjectVector;
+import com.ocdsoft.bacta.swg.archive.delta.AutoDeltaInt;
+import com.ocdsoft.bacta.swg.archive.delta.AutoDeltaLong;
+import com.ocdsoft.bacta.swg.archive.delta.AutoDeltaShort;
+import com.ocdsoft.bacta.swg.archive.delta.AutoDeltaString;
+import com.ocdsoft.bacta.swg.archive.delta.vector.AutoDeltaObjectVector;
 import com.ocdsoft.bacta.swg.precu.object.tangible.ship.ShipFormationGroupMember;
 import com.ocdsoft.bacta.swg.precu.object.template.server.ServerGroupObjectTemplate;
 import com.ocdsoft.bacta.swg.precu.object.universe.UniverseObject;

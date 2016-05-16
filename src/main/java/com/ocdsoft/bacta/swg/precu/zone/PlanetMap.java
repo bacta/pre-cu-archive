@@ -23,7 +23,7 @@ public class PlanetMap extends TreeMap<String, Zone> implements ZoneMap {
             logger.info("Loading Planet: " + zone);
             String terrain = bactaConfiguration.getString("Bacta/Zones/" + zone, "Terrain");
 
-            // TODO: Terrain loading
+            // TODO: TERRAIN loading
             Planet newPlanet = new Planet(this, zone.toLowerCase()/*, null*/);
 
             put(zone.toLowerCase(), newPlanet);

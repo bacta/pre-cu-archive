@@ -1,6 +1,7 @@
 package com.ocdsoft.bacta.swg.shared.template;
 
 import bacta.iff.Iff;
+import com.ocdsoft.bacta.swg.precu.object.template.shared.SharedObjectTemplate;
 import com.ocdsoft.bacta.swg.shared.foundation.DataResource;
 import com.ocdsoft.bacta.swg.shared.foundation.DataResourceList;
 
@@ -74,5 +75,12 @@ public abstract class ObjectTemplate extends DataResource {
      * Specifies work that should occur after the loading process.
      */
     protected void postLoad() {
+    }
+
+    public SharedObjectTemplate asSharedObjectTemplate() {
+        if (this instanceof SharedObjectTemplate)
+            return (SharedObjectTemplate) this;
+
+        return null;
     }
 }

@@ -2,17 +2,17 @@ package com.ocdsoft.bacta.swg.precu.object.tangible.creature;
 
 
 import com.google.inject.Inject;
+import com.ocdsoft.bacta.swg.archive.delta.*;
+import com.ocdsoft.bacta.swg.archive.delta.map.AutoDeltaIntObjectMap;
+import com.ocdsoft.bacta.swg.archive.delta.map.AutoDeltaStringIntMap;
+import com.ocdsoft.bacta.swg.archive.delta.map.AutoDeltaStringObjectMap;
+import com.ocdsoft.bacta.swg.archive.delta.packedmap.AutoDeltaPackedBuffMap;
+import com.ocdsoft.bacta.swg.archive.delta.set.AutoDeltaStringSet;
+import com.ocdsoft.bacta.swg.archive.delta.vector.AutoDeltaFloatVector;
+import com.ocdsoft.bacta.swg.archive.delta.vector.AutoDeltaIntVector;
+import com.ocdsoft.bacta.swg.archive.delta.vector.AutoDeltaObjectVector;
 import com.ocdsoft.bacta.swg.precu.event.ObservableGameEvent;
 import com.ocdsoft.bacta.swg.precu.message.game.object.PostureMessage;
-import com.ocdsoft.bacta.swg.precu.object.archive.delta.*;
-import com.ocdsoft.bacta.swg.precu.object.archive.delta.map.AutoDeltaIntObjectMap;
-import com.ocdsoft.bacta.swg.precu.object.archive.delta.map.AutoDeltaStringIntMap;
-import com.ocdsoft.bacta.swg.precu.object.archive.delta.map.AutoDeltaStringObjectMap;
-import com.ocdsoft.bacta.swg.precu.object.archive.delta.packedmap.AutoDeltaPackedBuffMap;
-import com.ocdsoft.bacta.swg.precu.object.archive.delta.set.AutoDeltaStringSet;
-import com.ocdsoft.bacta.swg.precu.object.archive.delta.vector.AutoDeltaFloatVector;
-import com.ocdsoft.bacta.swg.precu.object.archive.delta.vector.AutoDeltaIntVector;
-import com.ocdsoft.bacta.swg.precu.object.archive.delta.vector.AutoDeltaObjectVector;
 import com.ocdsoft.bacta.swg.precu.object.buff.Buff;
 import com.ocdsoft.bacta.swg.precu.object.tangible.TangibleObject;
 import com.ocdsoft.bacta.swg.precu.object.template.server.ServerCreatureObjectTemplate;

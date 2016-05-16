@@ -2,8 +2,8 @@ package com.ocdsoft.bacta.swg.precu.message.game.scene;
 
 import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
 import com.ocdsoft.bacta.soe.message.Priority;
+import com.ocdsoft.bacta.swg.archive.delta.AutoDeltaByteStream;
 import com.ocdsoft.bacta.swg.precu.object.ServerObject;
-import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaByteStream;
 import lombok.Getter;
 
 import java.nio.ByteBuffer;
