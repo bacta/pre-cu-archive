@@ -62,6 +62,7 @@ public class GameObject extends NetworkObject {
     //private DpvsObjects dpvsObjects;
 
     private int rotations;
+    @Getter
     private Vector scale;
     private Transform objectToParent;
     private Transform objectToWorld;
@@ -435,7 +436,7 @@ public class GameObject extends NetworkObject {
      * @return
      */
     public Vector getPositionInWorld() {
-        return getTransformObjectToWorld().getPositionInParentSpace();
+        return getTransformObjectToWorld().getPositionInParent();
     }
 
     /**
@@ -444,7 +445,7 @@ public class GameObject extends NetworkObject {
      * @return
      */
     public Vector getPositionInParent() {
-        return objectToParent.getPositionInParentSpace();
+        return objectToParent.getPositionInParent();
     }
 
     /**
@@ -453,7 +454,7 @@ public class GameObject extends NetworkObject {
      * @return
      */
     public Vector getPositionInCell() {
-        return getTransformObjectToCell().getPositionInParentSpace();
+        return getTransformObjectToCell().getPositionInParent();
     }
 
     /**

@@ -1,37 +1,58 @@
 package com.ocdsoft.bacta.swg.shared.math;
 
+import bacta.iff.Iff;
+import bacta.iff.IffWritable;
 import com.ocdsoft.bacta.engine.buffer.ByteBufferWritable;
-import lombok.Data;
+import lombok.AllArgsConstructor;
 import org.magnos.steer.vec.Vec3;
 
 import java.nio.ByteBuffer;
+import java.util.Random;
 
 /**
  * Created by kyle on 4/7/2016.
+ * <p>
+ * Vector is an immutable class. Any mutating operations must return a new Vector.
+ * This will allow us to take advantage of value types in Java 10. Furthermore, it allows us to have static
+ * vector types available without worrying about them being modified.
  */
-@Data
-public final class Vector implements ByteBufferWritable {
-    public static final Vector UNIT_X = new Vector(1, 0, 0);
-    public static final Vector UNIT_Y = new Vector(0, 1, 0);
-    public static final Vector UNIT_Z = new Vector(0, 0, 1);
-    public static final Vector NEGATIVE_UNIT_X = new Vector(-1, 0, 0);
-    public static final Vector NEGATIVE_UNIT_Y = new Vector(0, -1, 0);
-    public static final Vector NEGATIVE_UNIT_Z = new Vector(0, 0, -1);
+public final class Vector implements ByteBufferWritable, IffWritable {
+    public static final Vector UNIT_X = new Vector(1.f, 0.f, 0.f);
+    public static final Vector UNIT_Y = new Vector(0.f, 1.f, 0.f);
+    public static final Vector UNIT_Z = new Vector(0.f, 0.f, 1.f);
+    public static final Vector NEGATIVE_UNIT_X = new Vector(-1.f, 0.f, 0.f);
+    public static final Vector NEGATIVE_UNIT_Y = new Vector(0.f, -1.f, 0.f);
+    public static final Vector NEGATIVE_UNIT_Z = new Vector(0.f, 0.f, -1.f);
     public static final Vector ZERO = new Vector(0, 0, 0);
     public static final Vector XYZ111 = new Vector(1, 1, 1);
+    public static final Vector MAX_XYZ = new Vector(Float.MAX_VALUE, Float.MAX_VALUE, Float.MAX_VALUE);
+    public static final Vector NEGATIVE_MAX_XYZ = new Vector(-Float.MAX_VALUE, -Float.MAX_VALUE, -Float.MAX_VALUE);
+
     public static final float NORMALIZE_THRESHOLD = 0.00001f;
-    public static final float NORMALIZE_EPSILON = 0.00001f;
+    public static final float NORMALIZED_EPSILON = 0.00001f;
+    public static final float NORMALIZED_RANGE_SQUARED_MIN = (1.f - (2.f * Vector.NORMALIZED_EPSILON)) + (NORMALIZED_EPSILON * NORMALIZED_EPSILON);
+    public static final float NORMALIZED_RANGE_SQUARED_MAX = (1.f + (2.f * Vector.NORMALIZED_EPSILON)) + (NORMALIZED_EPSILON * NORMALIZED_EPSILON);
 
-    public float x;
-    public float y;
-    public float z;
+    private static final Random random = new Random();
 
+    public final float x;
+    public final float y;
+    public final float z;
+
+    /**
+     * Makes a new vector that is zeroed out.
+     */
     public Vector() {
         x = 0.f;
         y = 0.f;
         z = 0.f;
     }
 
+    /**
+     * Makes a new vector based on an existing vector.
+     *
+     * @param vector
+     */
     public Vector(final Vector vector) {
         this.x = vector.x;
         this.y = vector.y;
@@ -56,6 +77,12 @@ public final class Vector implements ByteBufferWritable {
         this.z = buffer.getFloat();
     }
 
+    public Vector(final Iff iff) {
+        this.x = iff.readFloat();
+        this.y = iff.readFloat();
+        this.z = iff.readFloat();
+    }
+
     public final Vec3 asVec3() {
         return new Vec3(x, y, z);
     }
@@ -73,7 +100,7 @@ public final class Vector implements ByteBufferWritable {
     }
 
     public Vector divide(final float scalar) {
-        return multiply(1 / scalar);
+        return multiply(1.f / scalar);
     }
 
     public Vector inverse() {
@@ -81,16 +108,16 @@ public final class Vector implements ByteBufferWritable {
     }
 
     /***
-     * Normalizes the vector. If it succeeds, returns a new normalized Vector instance. Otherwise,
-     * returns the original instance.
+     * Normalizes the vector.
      *
-     * @return
+     * @return If it succeeds, returns a new normalized Vector instance. Otherwise,
+     * returns null.
      */
     public Vector normalize() {
         final float mag = magnitude();
 
         if (mag < NORMALIZE_THRESHOLD)
-            return this;
+            return null;
 
         return divide(mag);
     }
@@ -105,6 +132,34 @@ public final class Vector implements ByteBufferWritable {
      */
     public float magnitudeSquared() {
         return x * x + y * y + z * z;
+    }
+
+    /**
+     * Calculate the square of the magnitude of the vector between this vector and the specified vector.
+     * <p>
+     * This routine is much faster than magnitudeBetween().
+     *
+     * @param vector The other endpoint of the delta vector.
+     * @return The square of the magnitude of the delta vector.
+     * @see Vector#magnitudeBetween(Vector)
+     */
+    public float magnitudeBetweenSquared(final Vector vector) {
+        final float vx = x - vector.x;
+        final float vy = y - vector.y;
+        final float vz = z - vector.z;
+
+        return (vx * vx + vy * vy + vz * vz);
+    }
+
+    /**
+     * Calculate the magnitude of the vector between this vector and the specified vector.
+     *
+     * @param vector The other endpoint of the delta vector.
+     * @return The magnitude of the delta vector.
+     * @see Vector#magnitudeBetweenSquared(Vector)
+     */
+    public float magnitudeBetween(final Vector vector) {
+        return (float) Math.sqrt(magnitudeBetweenSquared(vector));
     }
 
     /**
@@ -159,13 +214,13 @@ public final class Vector implements ByteBufferWritable {
      * <p>
      * If the vector is too small, it cannot be normalized.
      *
-     * @return True if the vector has been approximately normalized, otherwise false.
+     * @return Returns the approximately normalized vector. Otherwise, null.
      */
     public Vector approximateNormalize() {
         final float mag = approximateMagnitude();
 
         if (mag < NORMALIZE_THRESHOLD)
-            return this;
+            return null;
 
         return divide(mag);
     }
@@ -220,6 +275,126 @@ public final class Vector implements ByteBufferWritable {
         return new Vector(y * rhs.z - z * rhs.y, z * rhs.x - x * rhs.z, x * rhs.y - y * rhs.x);
     }
 
+    public boolean inPolygon(final Vector v0, final Vector v1, final Vector v2) {
+        return sameSide(this, v0, v1, v2) && sameSide(this, v1, v2, v0) && sameSide(this, v2, v0, v1);
+    }
+
+    /**
+     * Find the point on the specified line that is as close to this point as possible.
+     * <p>
+     * The line is treated as an infinite line, not a line segment.
+     *
+     * @param line0 First point on the line.
+     * @param line1 Second point on the line.
+     * @return A result that encapsulates the point on the specified line as close to this point as possible, and the
+     * parametric time along that line that is closest.
+     */
+    public ClosestPointResult findClosestPointOnLine(final Vector line0, final Vector line1) {
+        final Vector delta = line1.subtract(line0);
+        final float r = subtract(line0).dot(delta) / delta.magnitudeSquared();
+
+        return new ClosestPointResult(line0.add(delta.multiply(r)), r);
+    }
+
+    public ClosestPointResult findClosestPointOnLineSegment(final Vector startPoint, final Vector endPoint) {
+        final Vector delta = endPoint.subtract(startPoint);
+
+        final float deltaMagnitudeSquared = delta.magnitudeSquared();
+
+        if (deltaMagnitudeSquared < NORMALIZE_THRESHOLD)
+            return new ClosestPointResult(startPoint, 0.f);
+
+        final float r = MathUtil.clamp(0.f, subtract(startPoint).dot(delta) / deltaMagnitudeSquared, 1.f);
+
+        return new ClosestPointResult(startPoint.add(delta.multiply(r)), r);
+    }
+
+    /**
+     * Calculate the distance from this point to the specified line.
+     * <p>
+     * The line is treated as an infinite line, not a line segment.
+     *
+     * @param line0 First point on the line.
+     * @param line1 Second point on the line.
+     * @return Distance to the line.
+     */
+    public float distanceToLine(final Vector line0, final Vector line1) {
+        return magnitudeBetween(findClosestPointOnLine(line0, line1).point);
+    }
+
+    /**
+     * Calculate the distance from this point to the specified line segment.
+     *
+     * @param line0 First point on the line.
+     * @param line1 Second point on the line.
+     * @return Distance to the line segment.
+     */
+    public float distanceToLineSegment(final Vector line0, final Vector line1) {
+        return magnitudeBetween(findClosestPointOnLineSegment(line0, line1).point);
+    }
+
+    @Override
+    public void writeToBuffer(final ByteBuffer buffer) {
+        buffer.putFloat(x);
+        buffer.putFloat(y);
+        buffer.putFloat(z);
+    }
+
+    @Override
+    public void writeToIff(final Iff iff) {
+        iff.insertChunkData(x);
+        iff.insertChunkData(y);
+        iff.insertChunkData(z);
+    }
+
+    /**
+     * Linearly interpolate between two vectors.
+     * <p>
+     * The time parameter should be between 0.0 and 1.0 inclusive in order to have
+     * the result be between the two endpoints. At time 0.0, the result will be
+     * vector1, and at time 1.0 the result will be vector2.
+     *
+     * @param begin The starting endpoint.
+     * @param end   The terminating endpoint.
+     * @param t     The time to interpolate.
+     * @return A new vector linearly interpolated.
+     */
+    public static Vector linearInterpolate(final Vector begin, final Vector end, final float t) {
+        return new Vector(
+                begin.x + (end.x - begin.x) * t,
+                begin.y + (end.y - begin.y) * t,
+                begin.z + (end.z - begin.z) * t);
+    }
+
+    /**
+     * Create a random unit vector that is evenly distributed on the unit sphere.
+     *
+     * @return A new vector randomly distributed on unit sphere.
+     */
+    public static Vector randomUnit() {
+        final float lz = (float) Math.cos(random.nextFloat() * Math.PI);
+        final float t = random.nextFloat() * MathUtil.PI_TIMES_2;
+        final float r = (float) Math.sqrt(1.f - lz * lz);
+
+        final float x = (float) (r * Math.cos(t));
+        final float y = (float) (r * Math.sin(t));
+
+        return new Vector(x, y, lz);
+    }
+
+    /**
+     * Create a random vector. The vector will be within the cube [-halfSideLength .. halfSideLength].
+     *
+     * @param halfSideLength Size of the cube.
+     * @return A new vector representing the cube.
+     */
+    public static Vector randomCube(final float halfSideLength) {
+        return new Vector(
+                random.nextFloat() * halfSideLength * 2 - halfSideLength,
+                random.nextFloat() * halfSideLength * 2 - halfSideLength,
+                random.nextFloat() * halfSideLength * 2 - halfSideLength);
+    }
+
     /**
      * Compute the midpoint of two vectors.
      * <p>
@@ -258,10 +433,30 @@ public final class Vector implements ByteBufferWritable {
         return result;
     }
 
-    @Override
-    public void writeToBuffer(final ByteBuffer buffer) {
-        buffer.putFloat(x);
-        buffer.putFloat(y);
-        buffer.putFloat(z);
+    /**
+     * Tests whether a point lies withing a trinagle.
+     * <p>
+     * This should be on at least the plane for the test to work.
+     * <p>
+     * Adapated from http://www.blackpawn.com/texts/pointinpoly/default.html
+     *
+     * @param point1 Point 1
+     * @param point2 Point 2
+     * @param a      Side a
+     * @param b      Side b
+     * @return True if the points are on same side. Otherwise, false.
+     */
+    public static boolean sameSide(final Vector point1, final Vector point2, final Vector a, final Vector b) {
+        final Vector ba = b.subtract(a);
+        final Vector cp1 = ba.cross(point1.subtract(a));
+        final Vector cp2 = ba.cross(point2.subtract(a));
+
+        return cp1.dot(cp2) >= 0.0f;
+    }
+
+    @AllArgsConstructor
+    public static final class ClosestPointResult {
+        public final Vector point;
+        public final float time;
     }
 }

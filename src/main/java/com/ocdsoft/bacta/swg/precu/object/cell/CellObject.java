@@ -2,10 +2,10 @@ package com.ocdsoft.bacta.swg.precu.object.cell;
 
 import com.google.inject.Inject;
 import com.ocdsoft.bacta.engine.lang.UnicodeString;
+import com.ocdsoft.bacta.swg.archive.delta.AutoDeltaBoolean;
+import com.ocdsoft.bacta.swg.archive.delta.AutoDeltaInt;
+import com.ocdsoft.bacta.swg.archive.delta.AutoDeltaVariable;
 import com.ocdsoft.bacta.swg.precu.object.ServerObject;
-import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaBoolean;
-import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaInt;
-import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaVariable;
 import com.ocdsoft.bacta.swg.precu.object.template.server.ServerCellObjectTemplate;
 import com.ocdsoft.bacta.swg.shared.container.SlotIdManager;
 import com.ocdsoft.bacta.swg.shared.math.Vector;

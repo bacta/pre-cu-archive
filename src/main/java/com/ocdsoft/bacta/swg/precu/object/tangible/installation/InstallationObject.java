@@ -1,8 +1,8 @@
 package com.ocdsoft.bacta.swg.precu.object.tangible.installation;
 
 import com.google.inject.Inject;
-import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaBoolean;
-import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaFloat;
+import com.ocdsoft.bacta.swg.archive.delta.AutoDeltaBoolean;
+import com.ocdsoft.bacta.swg.archive.delta.AutoDeltaFloat;
 import com.ocdsoft.bacta.swg.precu.object.tangible.TangibleObject;
 import com.ocdsoft.bacta.swg.precu.object.template.server.ServerInstallationObjectTemplate;
 import com.ocdsoft.bacta.swg.shared.container.SlotIdManager;

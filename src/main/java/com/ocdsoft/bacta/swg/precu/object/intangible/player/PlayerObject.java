@@ -1,13 +1,13 @@
 package com.ocdsoft.bacta.swg.precu.object.intangible.player;
 
 import com.google.inject.Inject;
-import com.ocdsoft.bacta.swg.precu.object.archive.delta.*;
-import com.ocdsoft.bacta.swg.precu.object.archive.delta.map.AutoDeltaLongObjectMap;
-import com.ocdsoft.bacta.swg.precu.object.archive.delta.map.AutoDeltaObjectIntMap;
-import com.ocdsoft.bacta.swg.precu.object.archive.delta.map.AutoDeltaStringIntMap;
-import com.ocdsoft.bacta.swg.precu.object.archive.delta.packedmap.AutoDeltaPackedPlayerQuestDataMap;
-import com.ocdsoft.bacta.swg.precu.object.archive.delta.set.AutoDeltaLongSet;
-import com.ocdsoft.bacta.swg.precu.object.archive.delta.vector.AutoDeltaStringVector;
+import com.ocdsoft.bacta.swg.archive.delta.*;
+import com.ocdsoft.bacta.swg.archive.delta.map.AutoDeltaLongObjectMap;
+import com.ocdsoft.bacta.swg.archive.delta.map.AutoDeltaObjectIntMap;
+import com.ocdsoft.bacta.swg.archive.delta.map.AutoDeltaStringIntMap;
+import com.ocdsoft.bacta.swg.archive.delta.packedmap.AutoDeltaPackedPlayerQuestDataMap;
+import com.ocdsoft.bacta.swg.archive.delta.set.AutoDeltaLongSet;
+import com.ocdsoft.bacta.swg.archive.delta.vector.AutoDeltaStringVector;
 import com.ocdsoft.bacta.swg.precu.object.intangible.IntangibleObject;
 import com.ocdsoft.bacta.swg.precu.object.intangible.schematic.DraftSchematicCombinedCrcs;
 import com.ocdsoft.bacta.swg.precu.object.matchmaking.MatchMakingId;

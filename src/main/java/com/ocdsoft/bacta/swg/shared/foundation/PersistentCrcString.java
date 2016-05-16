@@ -13,6 +13,10 @@ public class PersistentCrcString extends CrcString {
     public PersistentCrcString() {
     }
 
+    public PersistentCrcString(final CrcString rhs) {
+        set(rhs.getString(), rhs.getCrc());
+    }
+
     public PersistentCrcString(final String string, boolean applyNormalize) {
         set(string, applyNormalize);
     }

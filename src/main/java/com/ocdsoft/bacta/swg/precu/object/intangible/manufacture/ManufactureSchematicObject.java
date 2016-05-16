@@ -1,9 +1,9 @@
 package com.ocdsoft.bacta.swg.precu.object.intangible.manufacture;
 
 import com.google.inject.Inject;
+import com.ocdsoft.bacta.swg.archive.delta.*;
+import com.ocdsoft.bacta.swg.archive.delta.map.AutoDeltaObjectFloatMap;
 import com.ocdsoft.bacta.swg.localization.StringId;
-import com.ocdsoft.bacta.swg.precu.object.archive.delta.*;
-import com.ocdsoft.bacta.swg.precu.object.archive.delta.map.AutoDeltaObjectFloatMap;
 import com.ocdsoft.bacta.swg.precu.object.intangible.IntangibleObject;
 import com.ocdsoft.bacta.swg.precu.object.template.server.ServerManufactureSchematicObjectTemplate;
 import com.ocdsoft.bacta.swg.shared.container.SlotIdManager;

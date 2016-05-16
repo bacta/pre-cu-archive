@@ -1,13 +1,13 @@
 package com.ocdsoft.bacta.swg.precu.synchronizedui;
 
+import com.ocdsoft.bacta.swg.archive.delta.AutoDeltaBoolean;
+import com.ocdsoft.bacta.swg.archive.delta.AutoDeltaByte;
+import com.ocdsoft.bacta.swg.archive.delta.AutoDeltaFloat;
+import com.ocdsoft.bacta.swg.archive.delta.vector.AutoDeltaFloatVector;
+import com.ocdsoft.bacta.swg.archive.delta.vector.AutoDeltaIntVector;
+import com.ocdsoft.bacta.swg.archive.delta.vector.AutoDeltaObjectVector;
+import com.ocdsoft.bacta.swg.archive.delta.vector.AutoDeltaStringVector;
 import com.ocdsoft.bacta.swg.localization.StringId;
-import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaBoolean;
-import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaByte;
-import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaFloat;
-import com.ocdsoft.bacta.swg.precu.object.archive.delta.vector.AutoDeltaFloatVector;
-import com.ocdsoft.bacta.swg.precu.object.archive.delta.vector.AutoDeltaIntVector;
-import com.ocdsoft.bacta.swg.precu.object.archive.delta.vector.AutoDeltaObjectVector;
-import com.ocdsoft.bacta.swg.precu.object.archive.delta.vector.AutoDeltaStringVector;
 import com.ocdsoft.bacta.swg.precu.object.intangible.manufacture.ManufactureSchematicObject;
 
 /**

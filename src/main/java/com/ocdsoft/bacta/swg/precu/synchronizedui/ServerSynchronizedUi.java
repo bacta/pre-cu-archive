@@ -1,11 +1,11 @@
 package com.ocdsoft.bacta.swg.precu.synchronizedui;
 
 import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
+import com.ocdsoft.bacta.swg.archive.delta.AutoDeltaByteStream;
+import com.ocdsoft.bacta.swg.archive.delta.AutoDeltaVariableBase;
 import com.ocdsoft.bacta.swg.precu.message.game.scene.BaselinesMessage;
 import com.ocdsoft.bacta.swg.precu.message.game.scene.DeltasMessage;
 import com.ocdsoft.bacta.swg.precu.object.ServerObject;
-import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaByteStream;
-import com.ocdsoft.bacta.swg.precu.object.archive.delta.AutoDeltaVariableBase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
