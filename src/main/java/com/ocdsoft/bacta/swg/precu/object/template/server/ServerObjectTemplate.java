@@ -8,6 +8,8 @@ import com.ocdsoft.bacta.swg.shared.template.ObjectTemplate;
 import com.ocdsoft.bacta.swg.shared.template.definition.TemplateDefinition;
 import com.ocdsoft.bacta.swg.shared.utility.*;
 import lombok.Getter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +20,7 @@ import java.util.List;
  */
 @TemplateDefinition
 public class ServerObjectTemplate extends ObjectTemplate {
+	private static final Logger LOGGER = LoggerFactory.getLogger(ServerObjectTemplate.class);
 	public static final int TAG_SERVEROBJECTTEMPLATE = Tag.convertStringToTag("SWOO");
 
 	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
@@ -1131,7 +1134,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 			} else if ("persistContents".equalsIgnoreCase(parameterName)) {
 				persistContents.loadFromIff(objectTemplateList, iff);
 			} else {
-				throw new IllegalStateException(String.format("Unexpected parameter %s", parameterName));
+				LOGGER.error("Unexpected parameter {}", parameterName);
 			}
 
 			iff.exitChunk();
@@ -1213,7 +1216,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		CT_genericItemMission(0x80001000),
 		CT_geneticsMission(0x80002000),
 		CT_mandalorianTailorMission(0x80004000),
-		CT_mandalorianArmorsmithMission(0x80008000),
+		CT_mandalorianArmorsmithMission(0x80008000), 
 		CT_mandalorianDroidEngineerMission(0x80010000), 
 		CT_spaceMission(0x80020000), 
 		CT_reverseEngineeringMission(0x80040000), 
@@ -1290,7 +1293,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 	}
 
 	public enum Attributes {
-		AT_health(0),
+		AT_health(0), 
 		AT_constitution(1), 
 		AT_action(2), 
 		AT_stamina(3), 
@@ -1366,7 +1369,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		XP_craftingScout(52),
 		XP_craftingCreature(53),
 		XP_craftingTissue(54),
-		XP_craftingCamp(55),
+		XP_craftingCamp(55), 
 		XP_craftingTrapping(56), 
 		XP_craftingSpice(57), 
 		XP_jediGeneral(58), 
@@ -1429,7 +1432,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		DT_restraint(0x00000010),
 		DT_elemental_heat(0x00000020),
 		DT_elemental_cold(0x00000040),
-		DT_elemental_acid(0x00000080),
+		DT_elemental_acid(0x00000080), 
 		DT_elemental_electrical(0x00000100), 
 		DT_environmental_heat(0x00000200), 
 		DT_environmental_cold(0x00000400), 
@@ -1481,6 +1484,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 	}
 
 	protected static class AttribModObjectTemplate extends ObjectTemplate {
+		private static final Logger LOGGER = LoggerFactory.getLogger(AttribModObjectTemplate.class);
 		public static final int TAG_ATTRIBMOD = Tag.convertStringToTag("ATTS");
 
 		public AttribModObjectTemplate(final String filename, final DataResourceList<ObjectTemplate> objectTemplateList) {
@@ -1980,7 +1984,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 				} else if ("decay".equalsIgnoreCase(parameterName)) {
 					decay.loadFromIff(objectTemplateList, iff);
 				} else {
-					throw new IllegalStateException(String.format("Unexpected parameter %s", parameterName));
+					LOGGER.error("Unexpected parameter {}", parameterName);
 				}
 
 				iff.exitChunk();
@@ -2004,6 +2008,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 	}
 
 	protected static class MentalStateModObjectTemplate extends ObjectTemplate {
+		private static final Logger LOGGER = LoggerFactory.getLogger(MentalStateModObjectTemplate.class);
 		public static final int TAG_MENTALSTATEMOD = Tag.convertStringToTag("MESM");
 
 		public MentalStateModObjectTemplate(final String filename, final DataResourceList<ObjectTemplate> objectTemplateList) {
@@ -2503,7 +2508,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 				} else if ("decay".equalsIgnoreCase(parameterName)) {
 					decay.loadFromIff(objectTemplateList, iff);
 				} else {
-					throw new IllegalStateException(String.format("Unexpected parameter %s", parameterName));
+					LOGGER.error("Unexpected parameter {}", parameterName);
 				}
 
 				iff.exitChunk();
@@ -2523,6 +2528,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 	}
 
 	protected static class ContentsObjectTemplate extends ObjectTemplate {
+		private static final Logger LOGGER = LoggerFactory.getLogger(ContentsObjectTemplate.class);
 		public static final int TAG_CONTENTS = Tag.convertStringToTag("CONT");
 
 		public ContentsObjectTemplate(final String filename, final DataResourceList<ObjectTemplate> objectTemplateList) {
@@ -2618,7 +2624,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 				} else if ("content".equalsIgnoreCase(parameterName)) {
 					content.loadFromIff(objectTemplateList, iff);
 				} else {
-					throw new IllegalStateException(String.format("Unexpected parameter %s", parameterName));
+					LOGGER.error("Unexpected parameter {}", parameterName);
 				}
 
 				iff.exitChunk();
@@ -2638,6 +2644,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 	}
 
 	protected static class XpObjectTemplate extends ObjectTemplate {
+		private static final Logger LOGGER = LoggerFactory.getLogger(XpObjectTemplate.class);
 		public static final int TAG_XP = Tag.convertStringToTag("EXPS");
 
 		public XpObjectTemplate(final String filename, final DataResourceList<ObjectTemplate> objectTemplateList) {
@@ -2909,7 +2916,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 				} else if ("value".equalsIgnoreCase(parameterName)) {
 					value.loadFromIff(objectTemplateList, iff);
 				} else {
-					throw new IllegalStateException(String.format("Unexpected parameter %s", parameterName));
+					LOGGER.error("Unexpected parameter {}", parameterName);
 				}
 
 				iff.exitChunk();

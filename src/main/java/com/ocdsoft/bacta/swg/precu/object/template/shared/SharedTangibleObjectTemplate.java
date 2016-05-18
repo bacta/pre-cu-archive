@@ -11,6 +11,8 @@ import com.ocdsoft.bacta.swg.shared.utility.IntegerParam;
 import com.ocdsoft.bacta.swg.shared.utility.StringParam;
 import com.ocdsoft.bacta.swg.shared.utility.StructParam;
 import lombok.Getter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +23,7 @@ import java.util.List;
  */
 @TemplateDefinition
 public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
+	private static final Logger LOGGER = LoggerFactory.getLogger(SharedTangibleObjectTemplate.class);
 	public static final int TAG_SHAREDTANGIBLEOBJECTTEMPLATE = Tag.convertStringToTag("STOT");
 
 	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
@@ -811,7 +814,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 			} else if ("clientVisabilityFlag".equalsIgnoreCase(parameterName)) {
 				clientVisabilityFlag.loadFromIff(objectTemplateList, iff);
 			} else {
-				throw new IllegalStateException(String.format("Unexpected parameter %s", parameterName));
+				LOGGER.error("Unexpected parameter {}", parameterName);
 			}
 
 			iff.exitChunk();
@@ -851,6 +854,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 	}
 
 	protected static class RangedIntCustomizationVariableObjectTemplate extends ObjectTemplate {
+		private static final Logger LOGGER = LoggerFactory.getLogger(RangedIntCustomizationVariableObjectTemplate.class);
 		public static final int TAG_RANGEDINTCUSTOMIZATIONVARIABLE = Tag.convertStringToTag("RICV");
 
 		public RangedIntCustomizationVariableObjectTemplate(final String filename, final DataResourceList<ObjectTemplate> objectTemplateList) {
@@ -1237,7 +1241,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 				} else if ("maxValueExclusive".equalsIgnoreCase(parameterName)) {
 					maxValueExclusive.loadFromIff(objectTemplateList, iff);
 				} else {
-					throw new IllegalStateException(String.format("Unexpected parameter %s", parameterName));
+					LOGGER.error("Unexpected parameter {}", parameterName);
 				}
 
 				iff.exitChunk();
@@ -1257,6 +1261,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 	}
 
 	protected static class PaletteColorCustomizationVariableObjectTemplate extends ObjectTemplate {
+		private static final Logger LOGGER = LoggerFactory.getLogger(PaletteColorCustomizationVariableObjectTemplate.class);
 		public static final int TAG_PALETTECOLORCUSTOMIZATIONVARIABLE = Tag.convertStringToTag("PCCV");
 
 		public PaletteColorCustomizationVariableObjectTemplate(final String filename, final DataResourceList<ObjectTemplate> objectTemplateList) {
@@ -1436,7 +1441,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 				} else if ("defaultPaletteIndex".equalsIgnoreCase(parameterName)) {
 					defaultPaletteIndex.loadFromIff(objectTemplateList, iff);
 				} else {
-					throw new IllegalStateException(String.format("Unexpected parameter %s", parameterName));
+					LOGGER.error("Unexpected parameter {}", parameterName);
 				}
 
 				iff.exitChunk();
@@ -1454,6 +1459,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 	}
 
 	protected static class ConstStringCustomizationVariableObjectTemplate extends ObjectTemplate {
+		private static final Logger LOGGER = LoggerFactory.getLogger(ConstStringCustomizationVariableObjectTemplate.class);
 		public static final int TAG_CONSTSTRINGCUSTOMIZATIONVARIABLE = Tag.convertStringToTag("CSCV");
 
 		public ConstStringCustomizationVariableObjectTemplate(final String filename, final DataResourceList<ObjectTemplate> objectTemplateList) {
@@ -1519,7 +1525,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 				} else if ("constValue".equalsIgnoreCase(parameterName)) {
 					constValue.loadFromIff(objectTemplateList, iff);
 				} else {
-					throw new IllegalStateException(String.format("Unexpected parameter %s", parameterName));
+					LOGGER.error("Unexpected parameter {}", parameterName);
 				}
 
 				iff.exitChunk();
@@ -1537,6 +1543,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 	}
 
 	protected static class CustomizationVariableMappingObjectTemplate extends ObjectTemplate {
+		private static final Logger LOGGER = LoggerFactory.getLogger(CustomizationVariableMappingObjectTemplate.class);
 		public static final int TAG_CUSTOMIZATIONVARIABLEMAPPING = Tag.convertStringToTag("CVMM");
 
 		public CustomizationVariableMappingObjectTemplate(final String filename, final DataResourceList<ObjectTemplate> objectTemplateList) {
@@ -1602,7 +1609,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 				} else if ("dependentVariable".equalsIgnoreCase(parameterName)) {
 					dependentVariable.loadFromIff(objectTemplateList, iff);
 				} else {
-					throw new IllegalStateException(String.format("Unexpected parameter %s", parameterName));
+					LOGGER.error("Unexpected parameter {}", parameterName);
 				}
 
 				iff.exitChunk();

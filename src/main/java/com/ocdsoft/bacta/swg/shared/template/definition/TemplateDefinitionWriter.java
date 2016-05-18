@@ -87,6 +87,7 @@ public class TemplateDefinitionWriter {
             printStream.println("@TemplateDefinition");
 
         printStream.printf("%s%s class %s extends %s {\n", tabs, access, name, baseName);
+        printStream.printf("\tprivate static final Logger LOGGER = LoggerFactory.getLogger(%s.class);\n", name);
     }
 
     private void printTemplateTag(final PrintStream printStream, final TemplateData templateData) {
@@ -590,7 +591,7 @@ public class TemplateDefinitionWriter {
                     .forEach(parameter -> printParameterLoad(printStream, tabs, parameter));
 
             printStream.printf(" {\n");
-            printStream.printf("%s\t\t\t\tthrow new IllegalStateException(String.format(\"Unexpected parameter %%s\", parameterName));\n", tabs);
+            printStream.printf("%s\t\t\t\tLOGGER.error(\"Unexpected parameter {}\", parameterName);\n", tabs);
             printStream.printf("%s\t\t\t}\n", tabs);
             printStream.println();
             printStream.printf("%s\t\t\tiff.exitChunk();\n", tabs);
@@ -850,6 +851,8 @@ public class TemplateDefinitionWriter {
             "com.ocdsoft.bacta.swg.shared.utility.DynamicVariableParamData",
             "java.util.ArrayList",
             "java.util.List",
+            "org.slf4j.Logger",
+            "org.slf4j.LoggerFactory"
     };
 
     private static final String[] dataVariableNames = new String[]{

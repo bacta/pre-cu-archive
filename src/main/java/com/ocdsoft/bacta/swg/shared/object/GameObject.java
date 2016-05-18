@@ -2,6 +2,7 @@ package com.ocdsoft.bacta.swg.shared.object;
 
 import com.google.common.base.Preconditions;
 import com.ocdsoft.bacta.engine.object.NetworkObject;
+import com.ocdsoft.bacta.swg.precu.object.ServerObject;
 import com.ocdsoft.bacta.swg.shared.appearance.Appearance;
 import com.ocdsoft.bacta.swg.shared.collision.CollisionProperty;
 import com.ocdsoft.bacta.swg.shared.container.ContainedByProperty;
@@ -1080,6 +1081,13 @@ public class GameObject extends NetworkObject {
             LOGGER.error(errorMssage);
             throw new IllegalStateException(errorMssage);
         }
+    }
+
+    public ServerObject asServerObject() {
+        if (this instanceof ServerObject)
+            return (ServerObject) this;
+
+        return null;
     }
 
     public enum DetachFlags {

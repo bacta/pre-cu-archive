@@ -1,12 +1,12 @@
 package com.ocdsoft.bacta.swg.precu.service.container;
 
+import com.google.inject.Inject;
 import com.ocdsoft.bacta.engine.conf.BactaConfiguration;
 import com.ocdsoft.bacta.engine.utils.ReflectionUtil;
-import com.ocdsoft.bacta.swg.precu.object.ServerObject;
 import com.ocdsoft.bacta.swg.shared.container.ContainedByProperty;
 import com.ocdsoft.bacta.swg.shared.container.Container;
 import com.ocdsoft.bacta.swg.shared.container.ContainerErrorCode;
-import com.ocdsoft.bacta.swg.shared.container.ContainerTransferSession;
+import com.ocdsoft.bacta.swg.shared.container.ContainerResult;
 import com.ocdsoft.bacta.swg.shared.object.GameObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +30,7 @@ public class ContainerService {
     private final boolean loopChecking;
     private final int maxDepth;
 
+    @Inject
     public ContainerService(final BactaConfiguration configuration) {
         loopChecking = configuration.getBooleanWithDefault("SharedObject", "containerLoopChecking", true);
         maxDepth = configuration.getIntWithDefault("SharedObject", "containerMaxDepth", 9);
@@ -47,11 +48,11 @@ public class ContainerService {
         return false;
     }
 
-    public boolean mayAdd(final Container container, final GameObject item, final ContainerTransferSession<ServerObject> session) {
-        session.setErrorCode(ContainerErrorCode.SUCCESS);
+    public boolean mayAdd(final Container container, final GameObject item, final ContainerResult containerResult) {
+        containerResult.setError(ContainerErrorCode.SUCCESS);
 
         if (item == container.getOwner()) {
-            session.setErrorCode(ContainerErrorCode.ADD_SELF);
+            containerResult.setError(ContainerErrorCode.ADD_SELF);
             return false;
         }
 
@@ -71,7 +72,7 @@ public class ContainerService {
                         for (int count = 0; iterObject != null; ++count) {
                             if (count > maxDepth) {
                                 LOGGER.warn("Too deep a container hierarchy.");
-                                session.setErrorCode(ContainerErrorCode.TOO_DEEP);
+                                containerResult.setError(ContainerErrorCode.TOO_DEEP);
                                 return false;
                             }
 
@@ -91,7 +92,8 @@ public class ContainerService {
                             LOGGER.warn("Adding item {} to {} would have introduced a container loop.",
                                     item.getNetworkId(),
                                     container.getOwner().getNetworkId());
-                            session.setErrorCode(ContainerErrorCode.ALREADY_IN);
+
+                            containerResult.setError(ContainerErrorCode.ALREADY_IN);
                             return false;
                         }
                     }
@@ -100,15 +102,15 @@ public class ContainerService {
         }
 
         if (checkDepth(container) > maxDepth) {
-            session.setErrorCode(ContainerErrorCode.TOO_DEEP);
+            containerResult.setError(ContainerErrorCode.TOO_DEEP);
             return false;
         }
 
         return true;
     }
 
-    public boolean remove(final Container container, final GameObject item, final ContainerTransferSession<ServerObject> session) {
-        session.setErrorCode(ContainerErrorCode.UNKNOWN);
+    public boolean remove(final Container container, final GameObject item, final ContainerResult containerResult) {
+        containerResult.setError(ContainerErrorCode.UNKNOWN);
 
         boolean returnValue = false;
 
@@ -119,7 +121,7 @@ public class ContainerService {
                 LOGGER.warn("Cannot remove an item [{}] from container [{}] whose containedBy says it isn't in this container.",
                         item.getNetworkId(),
                         container.getOwner().getNetworkId());
-                session.setErrorCode(ContainerErrorCode.NOT_FOUND);
+                containerResult.setError(ContainerErrorCode.NOT_FOUND);
                 return false;
             }
 
@@ -127,7 +129,7 @@ public class ContainerService {
             returnValue = contents.remove(item);
 
             if (returnValue) {
-                session.setErrorCode(ContainerErrorCode.SUCCESS);
+                containerResult.setError(ContainerErrorCode.SUCCESS);
                 property.setContainedBy(null);
             }
         }
@@ -135,8 +137,8 @@ public class ContainerService {
         return returnValue;
     }
 
-    public boolean remove(final Container container, final int position, final ContainerTransferSession<ServerObject> session) {
-        session.setErrorCode(ContainerErrorCode.SUCCESS);
+    public boolean remove(final Container container, final int position, final ContainerResult containerResult) {
+        containerResult.setError(ContainerErrorCode.SUCCESS);
 
         final List<GameObject> contents = ReflectionUtil.getFieldValue(contentsField, container);
         final GameObject obj = contents.get(position);
@@ -149,7 +151,7 @@ public class ContainerService {
                     LOGGER.warn("Cannot remove an item [{}] from container [{}] whose containedBy says it isn't in this container.",
                             obj.getNetworkId(),
                             container.getOwner().getNetworkId());
-                    session.setErrorCode(ContainerErrorCode.NOT_FOUND);
+                    containerResult.setError(ContainerErrorCode.NOT_FOUND);
                     return false;
                 }
                 property.setContainedBy(null);
@@ -159,14 +161,14 @@ public class ContainerService {
             return true;
         }
 
-        session.setErrorCode(ContainerErrorCode.UNKNOWN);
+        containerResult.setError(ContainerErrorCode.UNKNOWN);
         return false;
     }
 
-    protected int addToContents(final Container container, final GameObject item, final ContainerTransferSession<ServerObject> session) {
-        session.setErrorCode(ContainerErrorCode.SUCCESS);
+    protected int addToContents(final Container container, final GameObject item, final ContainerResult containerResult) {
+        containerResult.setError(ContainerErrorCode.SUCCESS);
 
-        if (!mayAdd(container, item, session))
+        if (!mayAdd(container, item, containerResult))
             return -1;
 
         ContainedByProperty containedItem = item.getContainedByProperty();
@@ -177,7 +179,7 @@ public class ContainerService {
             LOGGER.warn("Cannot add an item [{}] to a container [{}] when it is already contained!",
                     item.getNetworkId(),
                     container.getOwner().getNetworkId());
-            session.setErrorCode(ContainerErrorCode.ALREADY_IN);
+            containerResult.setError(ContainerErrorCode.ALREADY_IN);
             return -1;
         }
 
@@ -197,7 +199,7 @@ public class ContainerService {
                         for (int count = 0; iterObject != null; ++count) {
                             if (count > maxDepth) {
                                 LOGGER.warn("Too deep a container hierarchy.");
-                                session.setErrorCode(ContainerErrorCode.TOO_DEEP);
+                                containerResult.setError(ContainerErrorCode.TOO_DEEP);
                                 return -1;
                             }
 
@@ -217,7 +219,7 @@ public class ContainerService {
                             LOGGER.warn("Adding item {} to {} would have introduced a container loop.",
                                     item.getNetworkId(),
                                     container.getOwner().getNetworkId());
-                            session.setErrorCode(ContainerErrorCode.ALREADY_IN);
+                            containerResult.setError(ContainerErrorCode.ALREADY_IN);
                             return -1;
                         }
                     }
@@ -226,15 +228,15 @@ public class ContainerService {
         }
 
         if (checkDepth(container) > maxDepth) {
-            session.setErrorCode(ContainerErrorCode.TOO_DEEP);
+            containerResult.setError(ContainerErrorCode.TOO_DEEP);
             return -1;
         }
 
-        if (isItemContained(container, item, session)) {
+        if (isItemContained(container, item, containerResult)) {
             LOGGER.warn("Cannot add an item {} to a container {} when it is already in it! This shouldn't happen because the item's contained by property says it is not in this container, but it is in the container's internal list.",
                     item.getNetworkId(),
                     container.getOwner().getNetworkId());
-            session.setErrorCode(ContainerErrorCode.ALREADY_IN);
+            containerResult.setError(ContainerErrorCode.ALREADY_IN);
             return -1;
         }
 
@@ -246,14 +248,14 @@ public class ContainerService {
         return contents.size();
     }
 
-    protected int find(final Container container, final GameObject item, final ContainerTransferSession<ServerObject> session) {
-        session.setErrorCode(ContainerErrorCode.SUCCESS);
+    protected int find(final Container container, final GameObject item, final ContainerResult containerResult) {
+        containerResult.setError(ContainerErrorCode.SUCCESS);
 
         final List<GameObject> contents = ReflectionUtil.getFieldValue(contentsField, container);
         int index = contents.indexOf(item);
 
         if (index == -1)
-            session.setErrorCode(ContainerErrorCode.NOT_FOUND);
+            containerResult.setError(ContainerErrorCode.NOT_FOUND);
 
         return index;
     }
@@ -263,8 +265,8 @@ public class ContainerService {
         return contents.get(position);
     }
 
-    private boolean isItemContained(final Container container, final GameObject item, final ContainerTransferSession<ServerObject> session) {
-        return find(container, item, session) != -1;
+    private boolean isItemContained(final Container container, final GameObject item, final ContainerResult containerResult) {
+        return find(container, item, containerResult) != -1;
     }
 
     public static int checkDepth(final Container container) {

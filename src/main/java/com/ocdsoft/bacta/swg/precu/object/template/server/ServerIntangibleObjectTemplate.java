@@ -9,6 +9,8 @@ import com.ocdsoft.bacta.swg.shared.template.ObjectTemplate;
 import com.ocdsoft.bacta.swg.shared.template.definition.TemplateDefinition;
 import com.ocdsoft.bacta.swg.shared.utility.*;
 import lombok.Getter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +21,7 @@ import java.util.List;
  */
 @TemplateDefinition
 public class ServerIntangibleObjectTemplate extends ServerObjectTemplate {
+	private static final Logger LOGGER = LoggerFactory.getLogger(ServerIntangibleObjectTemplate.class);
 	public static final int TAG_SERVERINTANGIBLEOBJECTTEMPLATE = Tag.convertStringToTag("ITNO");
 
 	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
@@ -195,7 +198,7 @@ public class ServerIntangibleObjectTemplate extends ServerObjectTemplate {
 			if ("count".equalsIgnoreCase(parameterName)) {
 				count.loadFromIff(objectTemplateList, iff);
 			} else {
-				throw new IllegalStateException(String.format("Unexpected parameter %s", parameterName));
+				LOGGER.error("Unexpected parameter {}", parameterName);
 			}
 
 			iff.exitChunk();
@@ -239,6 +242,7 @@ public class ServerIntangibleObjectTemplate extends ServerObjectTemplate {
 	}
 
 	protected static class SimpleIngredientObjectTemplate extends ObjectTemplate {
+		private static final Logger LOGGER = LoggerFactory.getLogger(SimpleIngredientObjectTemplate.class);
 		public static final int TAG_SIMPLEINGREDIENT = Tag.convertStringToTag("SING");
 
 		public SimpleIngredientObjectTemplate(final String filename, final DataResourceList<ObjectTemplate> objectTemplateList) {
@@ -418,7 +422,7 @@ public class ServerIntangibleObjectTemplate extends ServerObjectTemplate {
 				} else if ("count".equalsIgnoreCase(parameterName)) {
 					count.loadFromIff(objectTemplateList, iff);
 				} else {
-					throw new IllegalStateException(String.format("Unexpected parameter %s", parameterName));
+					LOGGER.error("Unexpected parameter {}", parameterName);
 				}
 
 				iff.exitChunk();
@@ -439,6 +443,7 @@ public class ServerIntangibleObjectTemplate extends ServerObjectTemplate {
 	}
 
 	protected static class IngredientObjectTemplate extends ObjectTemplate {
+		private static final Logger LOGGER = LoggerFactory.getLogger(IngredientObjectTemplate.class);
 		public static final int TAG_INGREDIENT = Tag.convertStringToTag("INGR");
 
 		public IngredientObjectTemplate(final String filename, final DataResourceList<ObjectTemplate> objectTemplateList) {
@@ -751,7 +756,7 @@ public class ServerIntangibleObjectTemplate extends ServerObjectTemplate {
 				} else if ("skillCommand".equalsIgnoreCase(parameterName)) {
 					skillCommand.loadFromIff(objectTemplateList, iff);
 				} else {
-					throw new IllegalStateException(String.format("Unexpected parameter %s", parameterName));
+					LOGGER.error("Unexpected parameter {}", parameterName);
 				}
 
 				iff.exitChunk();
@@ -769,6 +774,7 @@ public class ServerIntangibleObjectTemplate extends ServerObjectTemplate {
 	}
 
 	protected static class SchematicAttributeObjectTemplate extends ObjectTemplate {
+		private static final Logger LOGGER = LoggerFactory.getLogger(SchematicAttributeObjectTemplate.class);
 		public static final int TAG_SCHEMATICATTRIBUTE = Tag.convertStringToTag("ITAT");
 
 		public SchematicAttributeObjectTemplate(final String filename, final DataResourceList<ObjectTemplate> objectTemplateList) {
@@ -927,7 +933,7 @@ public class ServerIntangibleObjectTemplate extends ServerObjectTemplate {
 				} else if ("value".equalsIgnoreCase(parameterName)) {
 					value.loadFromIff(objectTemplateList, iff);
 				} else {
-					throw new IllegalStateException(String.format("Unexpected parameter %s", parameterName));
+					LOGGER.error("Unexpected parameter {}", parameterName);
 				}
 
 				iff.exitChunk();

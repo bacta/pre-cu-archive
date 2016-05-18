@@ -7,6 +7,8 @@ import com.ocdsoft.bacta.swg.shared.foundation.Tag;
 import com.ocdsoft.bacta.swg.shared.template.ObjectTemplate;
 import com.ocdsoft.bacta.swg.shared.template.definition.TemplateDefinition;
 import com.ocdsoft.bacta.swg.shared.utility.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +19,7 @@ import java.util.List;
  */
 @TemplateDefinition
 public class ServerTangibleObjectTemplate extends ServerObjectTemplate {
+	private static final Logger LOGGER = LoggerFactory.getLogger(ServerTangibleObjectTemplate.class);
 	public static final int TAG_SERVERTANGIBLEOBJECTTEMPLATE = Tag.convertStringToTag("TANO");
 
 	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
@@ -662,7 +665,7 @@ public class ServerTangibleObjectTemplate extends ServerObjectTemplate {
 			} else if ("wantSawAttackTriggers".equalsIgnoreCase(parameterName)) {
 				wantSawAttackTriggers.loadFromIff(objectTemplateList, iff);
 			} else {
-				throw new IllegalStateException(String.format("Unexpected parameter %s", parameterName));
+				LOGGER.error("Unexpected parameter {}", parameterName);
 			}
 
 			iff.exitChunk();
@@ -697,7 +700,7 @@ public class ServerTangibleObjectTemplate extends ServerObjectTemplate {
 		C_conversable(0x00000008),
 		C_hibernating(0x00000010),
 		C_magicItem(0x00000020),
-		C_aggressive(0x00000040),
+		C_aggressive(0x00000040), 
 		C_wantSawAttackTrigger(0x00000080), 
 		C_invulnerable(0x00000100), 
 		C_disabled(0x00000200), 
@@ -709,7 +712,7 @@ public class ServerTangibleObjectTemplate extends ServerObjectTemplate {
 		C_spaceInteresting(0x00008000), 
 		C_docking(0x00010000), //Set programmatically by docking system.  Do not set this in the template.
 		C_destroying(0x00020000), //Set programmatically by destruction system.  Do not set this in the template.
-		C_commable(0x00040000),
+		C_commable(0x00040000), 
 		C_dockable(0x00080000), 
 		C_eject(0x00100000), 
 		C_inspectable(0x00200000), 
