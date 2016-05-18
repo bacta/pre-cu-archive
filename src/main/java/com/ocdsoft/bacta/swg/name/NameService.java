@@ -1,5 +1,8 @@
 package com.ocdsoft.bacta.swg.name;
 
+import com.ocdsoft.bacta.swg.lang.Gender;
+import com.ocdsoft.bacta.swg.lang.Race;
+
 /**
  * Created by kburkhardt on 3/28/14.
  */
@@ -26,9 +29,9 @@ public interface NameService {
     public static final int CREATURE = 2;
     public static final int RESOURCE = 3;
 
-    String generateName(int type, Object... args);
+    String generateName(int type, final Race race, final Gender gender);
 
-    String validateName(int type, String name, Object... args);
+    String validateName(int type, String name, Race race, Gender gender);
 
     void addPlayerName(String firstName);
 }

@@ -28,8 +28,8 @@ public final class ClientCreateCharacterFailed extends GameNetworkMessage {
     /**
      * Responses are found in the ui package starting with "name_declined"
      */
-    public ClientCreateCharacterFailed(final String errorKey) {
-        this.name = "";
+    public ClientCreateCharacterFailed(final String name, final String errorKey) {
+        this.name = name;
         this.errorMessage = new StringId("ui", errorKey);
     }
 

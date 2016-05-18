@@ -1,5 +1,8 @@
 package com.ocdsoft.bacta.swg.name.generator;
 
+import com.ocdsoft.bacta.swg.lang.Gender;
+import com.ocdsoft.bacta.swg.lang.Race;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -10,11 +13,11 @@ import java.util.ResourceBundle;
  */
 public abstract class NameGenerator {
 
-    protected final Map<String, String> letterMapping;
-    protected final Map<String, String> letterRules;
+    private final Map<String, String> letterMapping;
+    private final Map<String, String> letterRules;
     private final Random random;
 
-    public NameGenerator() {
+    NameGenerator() {
 
         random = new Random();
 
@@ -33,11 +36,11 @@ public abstract class NameGenerator {
         }
     }
 
-    public abstract String validateName(String name, Object... args);
+    public abstract String validateName(String name, Race race, Gender gender);
 
-    public abstract String createName(Object... args);
+    public abstract String createName(Race race, Gender gender);
 
-    protected String generateRandomCharacterSet(int minLength, int maxlength) {
+    String generateRandomCharacterSet(int minLength, int maxlength) {
 
         int length = random.nextInt(maxlength - minLength) + minLength;
         String newName = "";

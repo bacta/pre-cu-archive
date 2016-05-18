@@ -42,13 +42,14 @@ public class NewbieTutorialService {
         return new Vector(x, 0.0f, z);
     }
 
+    // TODO: ObjVars
     public void setupCharacterForTutorial(final CreatureObject character) {
-        if (character != null)
-            character.setObjVarItem(tutorialObjVar, 1);
+//        if (character != null)
+//            character.setObjVarItem(tutorialObjVar, 1);
     }
 
     public void setupCharacterToSkipTutorial(final CreatureObject character) {
-        if (character != null)
-            character.setObjVarItem(skipTutorialObjVar, 1);
+//        if (character != null)
+//            character.setObjVarItem(skipTutorialObjVar, 1);
     }
 }

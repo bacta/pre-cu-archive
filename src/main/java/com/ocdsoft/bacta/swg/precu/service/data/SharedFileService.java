@@ -16,7 +16,7 @@ import java.util.Set;
  * <p>
  * To add a new shared data resource to the class, simply implement the {@link SharedFileLoader} interface on
  * the class, and then add it as a field (visibility doesn't matter). When a new instance of SharedDataService is created,
- * the {@link SharedFileLoader#load(TreeFile)} method will be called on each field.
+ * the {@link SharedFileLoader(TreeFile)} method will be called on each field.
  * </p>
  * <p>
  * For this reason, it is important to remember to initialize your field before the field reflection is done in
@@ -46,7 +46,11 @@ public final class SharedFileService {
         while(fileLoader.hasNext()) {
             Class<? extends SharedFileLoader> clazz = fileLoader.next();
             if(clazz.isAnnotationPresent(Singleton.class)) {
-                injector.getInstance(clazz);
+                try {
+                    injector.getInstance(clazz);
+                } catch(Exception e) {
+                    logger.error("Unable to load shared file loader {}", clazz.getClass().getName(), e);
+                }
             } else {
                 logger.error(clazz.getName() + " is not annotated as a singleton when it should be");
             }
@@ -63,7 +67,11 @@ public final class SharedFileService {
         Iterator<Class<? extends SharedFileLoader>> fileLoader = loaders.iterator();
         while(fileLoader.hasNext()) {
             SharedFileLoader loader = injector.getInstance(fileLoader.next());
-            loader.reload();
+            try {
+                loader.reload();
+            } catch(Exception e) {
+                logger.error("Unable to load shared file loader {}", loader.getClass().getName(), e);
+            }
         }
     }
 }

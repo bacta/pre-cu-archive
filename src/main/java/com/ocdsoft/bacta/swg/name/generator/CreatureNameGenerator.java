@@ -6,33 +6,21 @@ import com.ocdsoft.bacta.swg.lang.Race;
 import com.ocdsoft.bacta.swg.name.NameService;
 import org.apache.commons.lang.WordUtils;
 
-import java.security.InvalidParameterException;
-
 /**
  * Created by Kyle on 8/17/2014.
  */
 public class CreatureNameGenerator extends NameGenerator {
 
     @Override
-    public String validateName(String name, Object... args) {
-
-        Race race;
-        Gender gender;
-
-        try {
-            race = (Race) args[0];
-            gender = (Gender) args[1];
-        } catch (Exception e) {
-            throw new InvalidParameterException("Expecting args [Race, Gender]");
-        }
+    public String validateName(final String name, final Race race, final Gender gender) {
 
         // No Digits
         if (CharMatcher.DIGIT.countIn(name) > 0) {
             return NameService.NAME_DECLINED_NUMBER;
         }
 
-        String firstName = name.indexOf(" ") != -1 ? name.substring(0, name.indexOf(" ")) : name;
-        String lastName = name.indexOf(" ") != -1 ? name.substring(name.indexOf(" ") + 1) : "";
+        String firstName = name.contains(" ") ? name.substring(0, name.indexOf(" ")) : name;
+        String lastName = name.contains(" ") ? name.substring(name.indexOf(" ") + 1) : "";
 
         if (firstName.length() < 3 || firstName.length() > 15) {
             return NameService.NAME_DECLINED_RACIALLY_INAPPROPRIATE;
@@ -87,7 +75,7 @@ public class CreatureNameGenerator extends NameGenerator {
     }
 
     @Override
-    public String createName(Object... args) {
+    public String createName(final Race race, final Gender gender) {
 
         String firstName = WordUtils.capitalize(generateRandomCharacterSet(3, 9));
         String lastName = WordUtils.capitalize(generateRandomCharacterSet(3, 13));

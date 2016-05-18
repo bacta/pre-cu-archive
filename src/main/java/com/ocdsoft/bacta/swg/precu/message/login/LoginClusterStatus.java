@@ -10,6 +10,7 @@ import com.ocdsoft.bacta.soe.message.Priority;
 import com.ocdsoft.bacta.soe.util.SOECRC32;
 import com.ocdsoft.bacta.soe.util.SoeMessageUtil;
 import com.ocdsoft.bacta.swg.precu.object.login.ClusterEntry;
+import com.ocdsoft.bacta.swg.precu.object.login.PopulationStatus;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -81,12 +82,19 @@ public class LoginClusterStatus extends GameNetworkMessage {
         private String connectionServerAddress;
         private short connectionServerPort;
         private short connectionServerPingPort;
-        @Setter private int populationOnline;
-        @Setter private int onlinePlayerLimit;
+        @Setter
+        private int populationOnline;
+        @Setter
+        private PopulationStatus populationOnlineStatus;
         private int maxCharactersPerAccount;
         private int timeZone;
-        @Setter private ServerStatus status; //enum
+        @Setter
+        private ServerStatus status; //enum
         private boolean dontRecommend;
+        @Setter
+        private int onlinePlayerLimit;
+        @Setter
+        private int onlineFreeTrialLimit;
 
         public ClusterData(final ByteBuffer buffer) {
             id = buffer.getInt();
@@ -94,11 +102,13 @@ public class LoginClusterStatus extends GameNetworkMessage {
             connectionServerPort = buffer.getShort();
             connectionServerPingPort = buffer.getShort();
             populationOnline = buffer.getInt();
-            onlinePlayerLimit = buffer.getInt();
+            populationOnlineStatus = PopulationStatus.values()[buffer.getInt()];
             maxCharactersPerAccount = buffer.getInt();
             timeZone = buffer.getInt();
             status = ServerStatus.values()[buffer.getInt()];
             dontRecommend = BufferUtil.getBoolean(buffer);
+            onlinePlayerLimit = buffer.getInt();
+            onlineFreeTrialLimit = buffer.getInt();
         }
 
         public ClusterData(final BactaConfiguration configuration) {
@@ -107,11 +117,13 @@ public class LoginClusterStatus extends GameNetworkMessage {
             connectionServerPort = (short) configuration.getInt("Bacta/GameServer", "Port");
             connectionServerPingPort = (short) configuration.getInt("Bacta/GameServer", "Ping");
             populationOnline = 0;
-            onlinePlayerLimit = configuration.getInt("Bacta/GameServer", "OnlinePlayerLimit");
+            populationOnlineStatus = PopulationStatus.PS_very_light;
             maxCharactersPerAccount = configuration.getInt("Bacta/GameServer", "MaxCharsPerAccount");
             timeZone = SoeMessageUtil.getTimeZoneValue();
             status = ServerStatus.DOWN;
             dontRecommend = configuration.getBoolean("Bacta/GameServer", "DontRecommended");
+            onlinePlayerLimit = configuration.getInt("Bacta/GameServer", "OnlinePlayerLimit");
+            onlineFreeTrialLimit = configuration.getInt("Bacta/GameServer", "OnlineFreeTrialLimit");
         }
 
         public ClusterData(Map<String, Object> clusterInfo) {
@@ -120,11 +132,13 @@ public class LoginClusterStatus extends GameNetworkMessage {
             connectionServerPort = ((Double)clusterInfo.get("connectionServerPort")).shortValue();
             connectionServerPingPort = ((Double)clusterInfo.get("connectionServerPingPort")).shortValue();
             populationOnline = ((Double)clusterInfo.get("populationOnline")).intValue();
-            onlinePlayerLimit = ((Double)clusterInfo.get("onlinePlayerLimit")).intValue();
+            populationOnlineStatus = PopulationStatus.PS_very_light;
             maxCharactersPerAccount = ((Double)clusterInfo.get("maxCharactersPerAccount")).intValue();
             timeZone = ((Double)clusterInfo.get("timeZone")).intValue();
             status = ServerStatus.DOWN;
             dontRecommend = (boolean) clusterInfo.get("dontRecommend");
+            onlinePlayerLimit = ((Double)clusterInfo.get("onlinePlayerLimit")).intValue();
+            onlineFreeTrialLimit = ((Double)clusterInfo.get("onlineFreeTrialLimit")).intValue();
         }
 
         @Override
@@ -134,11 +148,13 @@ public class LoginClusterStatus extends GameNetworkMessage {
             buffer.putShort(connectionServerPort);
             buffer.putShort(connectionServerPingPort);
             buffer.putInt(populationOnline);
-            buffer.putInt(onlinePlayerLimit);
+            populationOnlineStatus.writeToBuffer(buffer);
             buffer.putInt(maxCharactersPerAccount);
             buffer.putInt(timeZone);
             status.writeToBuffer(buffer);
             BufferUtil.putBoolean(buffer, dontRecommend);
+            buffer.putInt(onlinePlayerLimit);
+            buffer.putInt(onlineFreeTrialLimit);
         }
 
         public boolean isDown() { return status == ServerStatus.DOWN; }

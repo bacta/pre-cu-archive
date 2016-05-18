@@ -10,17 +10,27 @@ import com.ocdsoft.bacta.swg.archive.delta.set.AutoDeltaLongSet;
 import com.ocdsoft.bacta.swg.archive.delta.vector.AutoDeltaStringVector;
 import com.ocdsoft.bacta.swg.precu.object.intangible.IntangibleObject;
 import com.ocdsoft.bacta.swg.precu.object.intangible.schematic.DraftSchematicCombinedCrcs;
+import com.ocdsoft.bacta.swg.precu.object.matchmaking.LfgCharacterData;
 import com.ocdsoft.bacta.swg.precu.object.matchmaking.MatchMakingId;
+import com.ocdsoft.bacta.swg.precu.object.tangible.creature.CreatureObject;
 import com.ocdsoft.bacta.swg.precu.object.template.server.ServerPlayerObjectTemplate;
+import com.ocdsoft.bacta.swg.precu.object.universe.group.GroupObject;
 import com.ocdsoft.bacta.swg.precu.object.waypoint.Waypoint;
 import com.ocdsoft.bacta.swg.shared.container.SlotIdManager;
 import com.ocdsoft.bacta.swg.shared.foundation.BitArray;
+import com.ocdsoft.bacta.swg.shared.object.GameObject;
 import com.ocdsoft.bacta.swg.shared.template.ObjectTemplateList;
+import lombok.Getter;
+import lombok.Setter;
 
 
 public final class PlayerObject extends IntangibleObject {
     private String biography;
     private long houseId;
+
+    @Getter
+    @Setter
+    private int stationId;
 
     //private StationId stationId;
     private final AutoDeltaInt accountNumLotsOverLimitSpam; /// controls whether the player should be spammed for exceeding the lot limit
@@ -292,5 +302,91 @@ public final class PlayerObject extends IntangibleObject {
         matchMakingId.unset(MatchMakingId.LINK_DEAD);
         matchMakingCharacterProfileId.set(matchMakingId);
         setDirty(true);
+    }
+
+    public boolean setSkillTemplate(final String templateName, final boolean clientRequest) {
+        final String previousTemplateName = skillTemplate.get();
+
+        // we need to pass an empty string to script to do cleanup, but we don't want to actually change the player's skill
+        if (!templateName.isEmpty())
+            skillTemplate.set(templateName);
+
+        final CreatureObject owner = getCreatureObject();
+        if(owner != null) {
+
+            // TODO: Scripting hooks
+//            GameScriptObject * const script = owner->getScriptObject();
+//
+//            if(script) {
+//                ScriptParams params;
+//
+//                params.addParam(templateName.c_str());
+//                params.addParam(clientRequest);
+//
+//                if (script->trigAllScripts(Scripting::TRIG_SKILL_TEMPLATE_CHANGED, params) == SCRIPT_DEFAULT)
+//                {
+//                    m_skillTemplate.set(previousTemplateName);
+//                    LOG("ScriptInvestigation", ("Scripts blocked setSkillTemplate( %s ) on Player( %s ).  Reverting to %s.", templateName.c_str(), getAccountDescription().c_str(), previousTemplateName.c_str()));
+//                }
+//            }
+
+            if (!previousTemplateName.equals(skillTemplate.get())) {
+
+                // TODO: Looking for group stuff
+                /*
+                final short newProfession = LfgCharacterData.convertSkillTemplateToProfession(skillTemplate.get());
+
+                final GroupObject group = owner.getGroup();
+                if (group != null) {
+                    final short currentProfessionForGroup = group.getMemberProfession(owner.getNetworkId());
+
+                    if (newProfession != currentProfessionForGroup)
+                        group.setMemberProfession(owner.getNetworkId(), newProfession);
+                }
+
+                std::map<NetworkId, LfgCharacterData> const & connectedCharacterLfgData = ServerUniverse::getConnectedCharacterLfgData();
+                std::map<NetworkId, LfgCharacterData>::const_iterator iterFind = connectedCharacterLfgData.find(owner->getNetworkId());
+                if ((iterFind != connectedCharacterLfgData.end()) && (iterFind->second.profession != static_cast<LfgCharacterData::Profession>(newProfession)))
+                    ServerUniverse::setConnectedCharacterProfessionData(owner->getNetworkId(), static_cast<LfgCharacterData::Profession>(newProfession));
+                */
+            }
+        }
+
+        return (!templateName.equals(previousTemplateName));
+    }
+
+    public boolean setWorkingSkill(final String skillName, final boolean clientRequest) {
+        final String previousWorkingSkill = workingSkill.get();
+
+        workingSkill.set(skillName);
+
+        CreatureObject owner = getCreatureObject();
+        if(owner != null) {
+
+            // TODO: Scripting Hooks
+//            GameScriptObject * const script = owner->getScriptObject();
+//            if(script) {
+//                ScriptParams params;
+//
+//                params.addParam(skillName.c_str());
+//                params.addParam(clientRequest);
+//
+//                if (script->trigAllScripts(Scripting::TRIG_WORKING_SKILL_CHANGED, params) == SCRIPT_DEFAULT)
+//                {
+//                    m_workingSkill.set(previousWorkingSkill);
+//                    LOG("ScriptInvestigation", ("Scripts blocked setWorkingSkill( %s ) on Player( %s ). Reverting to %s.", skillName.c_str(), getAccountDescription().c_str(), previousWorkingSkill.c_str()));
+//                }
+//            }
+        }
+
+        return (!previousWorkingSkill.equals(skillName));
+    }
+
+    public CreatureObject getCreatureObject() {
+        final GameObject owner = this.getContainedByProperty().getContainedBy();
+        if (owner != null) {
+            return CreatureObject.asCreatureObject(owner);
+        }
+        return null;
     }
 }

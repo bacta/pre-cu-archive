@@ -1,5 +1,6 @@
 package com.ocdsoft.bacta.swg.precu.object;
 
+import com.google.common.base.Preconditions;
 import com.google.inject.Inject;
 import com.ocdsoft.bacta.engine.lang.ObservableEventRegistry;
 import com.ocdsoft.bacta.engine.lang.Observer;
@@ -9,10 +10,7 @@ import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
 import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
 import com.ocdsoft.bacta.soe.util.SoeMessageUtil;
 import com.ocdsoft.bacta.swg.archive.OnDirtyCallbackBase;
-import com.ocdsoft.bacta.swg.archive.delta.AutoDeltaByteStream;
-import com.ocdsoft.bacta.swg.archive.delta.AutoDeltaFloat;
-import com.ocdsoft.bacta.swg.archive.delta.AutoDeltaInt;
-import com.ocdsoft.bacta.swg.archive.delta.AutoDeltaVariable;
+import com.ocdsoft.bacta.swg.archive.delta.*;
 import com.ocdsoft.bacta.swg.localization.StringId;
 import com.ocdsoft.bacta.swg.precu.container.IntangibleVolumeContainer;
 import com.ocdsoft.bacta.swg.precu.container.TangibleVolumeContainer;
@@ -51,7 +49,7 @@ public abstract class ServerObject extends GameObject implements Subject<Observa
     private final AutoDeltaInt cashBalance;
     private final AutoDeltaFloat complexity;
     private final AutoDeltaVariable<StringId> nameStringId;
-    private final AutoDeltaVariable<UnicodeString> objectName;
+    private final AutoDeltaUnicodeString objectName;
     private final AutoDeltaInt volume;
     private final AutoDeltaInt authServerProcessId;
     private final AutoDeltaVariable<StringId> descriptionStringId;
@@ -61,6 +59,10 @@ public abstract class ServerObject extends GameObject implements Subject<Observa
     @Getter
     @Setter
     private String sceneId;
+
+    @Getter
+    @Setter
+    private boolean playerControlled;
 
     @Inject
     public ServerObject(final ObjectTemplateList objectTemplateList,
@@ -74,7 +76,7 @@ public abstract class ServerObject extends GameObject implements Subject<Observa
         cashBalance = new AutoDeltaInt(0);
         complexity = new AutoDeltaFloat(template.getComplexity());
         nameStringId = new AutoDeltaVariable<>(StringId.INVALID, StringId::new);
-        objectName = new AutoDeltaVariable<>(UnicodeString.EMPTY, UnicodeString::new);
+        objectName = new AutoDeltaUnicodeString();
         volume = new AutoDeltaInt(template.getVolume());
         descriptionStringId = new AutoDeltaVariable<>(StringId.INVALID, StringId::new);
         authServerProcessId = new AutoDeltaInt();
@@ -271,17 +273,10 @@ public abstract class ServerObject extends GameObject implements Subject<Observa
 
         Container container = getContainerProperty();
         if (container != null) {
-            Iterator<GameObject> containerIterator = container.iterator();
+            Iterator<ServerObject> containerIterator = container.iterator();
             containerIterator.forEachRemaining(containedObject -> {
                 containedObject.setSceneIdOnThisAndContents(newSceneId);
-            })
-            {
-                ServerObject containedObject = safe_cast<ServerObject *>((*containerIterator).getObject());
-                if (containedObject)
-                {
-
-                }
-            }
+            });
         }
     }
 
@@ -321,11 +316,11 @@ public abstract class ServerObject extends GameObject implements Subject<Observa
         setDirty(true);
     }
 
-    public final UnicodeString getAssignedObjectName() {
+    public final String getAssignedObjectName() {
         return objectName.get();
     }
 
-    public final void setAssignedObjectName(final UnicodeString value) {
+    public final void setAssignedObjectName(final String value) {
         objectName.set(value);
         setDirty(true);
     }
@@ -651,6 +646,33 @@ public abstract class ServerObject extends GameObject implements Subject<Observa
         //TODO: Finish this logic?
     }
 
+    public void setObjectName(final String newName) {
+
+        if (isPlayerControlled()) {
+            LOGGER.debug("You cannot set the name of a player controlled object directly.  Name:{}", newName);
+            return;
+        }
+
+        if (newName.length() > 127) {
+            LOGGER.debug("Tried to set object {} name to something too long (truncating). [{}]", getNetworkId(), newName);
+            objectName.set(newName.substring(0, 127));
+        } else
+            objectName.set(newName);
+
+        if (newName.startsWith("@")) {
+            StringId id = new StringId(newName);
+            setObjectNameStringId(id);
+            setObjectName("");
+        }
+    }
+
+    public void setObjectNameStringId(final StringId id) {
+        nameStringId.set(id);
+    }
+
+    public void setOwnerId(final long id) {
+
+    };
 
     public static class LocalObjectFlags {
         public static final int INITIALIZED = 0;

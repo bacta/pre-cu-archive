@@ -8,11 +8,14 @@ import com.ocdsoft.bacta.swg.archive.delta.AutoDeltaInt;
 import com.ocdsoft.bacta.swg.archive.delta.AutoDeltaString;
 import com.ocdsoft.bacta.swg.archive.delta.set.AutoDeltaIntSet;
 import com.ocdsoft.bacta.swg.archive.delta.set.AutoDeltaLongSet;
+import com.ocdsoft.bacta.swg.lang.NotImplementedException;
 import com.ocdsoft.bacta.swg.precu.message.game.scene.UpdateTransformMessage;
 import com.ocdsoft.bacta.swg.precu.object.ServerObject;
 import com.ocdsoft.bacta.swg.precu.object.UpdateTransformCallback;
+import com.ocdsoft.bacta.swg.precu.object.tangible.creature.CreatureObject;
 import com.ocdsoft.bacta.swg.precu.object.template.server.ServerTangibleObjectTemplate;
 import com.ocdsoft.bacta.swg.precu.zone.Zone;
+import com.ocdsoft.bacta.swg.shared.container.Container;
 import com.ocdsoft.bacta.swg.shared.container.SlotIdManager;
 import com.ocdsoft.bacta.swg.shared.math.Transform;
 import com.ocdsoft.bacta.swg.shared.object.GameObject;
@@ -21,10 +24,16 @@ import lombok.Getter;
 import lombok.Setter;
 import org.magnos.steer.SteerSubject;
 import org.magnos.steer.vec.Vec3;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.util.Iterator;
 import java.util.Set;
 
 public class TangibleObject extends ServerObject implements SteerSubject<Vec3> {
+    private static final transient Logger LOGGER = LoggerFactory.getLogger(TangibleObject.class);
+
+
     @Override
     public int getObjectType() {
         return 0x54414E4F;
@@ -47,8 +56,13 @@ public class TangibleObject extends ServerObject implements SteerSubject<Vec3> {
 
     private String customAppearnce;
     //private LocationData locationTargets
-    //private long ownerId;
+
+    @Getter
+    private long ownerId;
     //private List<PvpEnemy> pvpEnemies;
+
+    @Getter
+    private boolean hidden;
 
     private final AutoDeltaInt pvpFaction;
     private final AutoDeltaInt pvpType;
@@ -202,9 +216,105 @@ public class TangibleObject extends ServerObject implements SteerSubject<Vec3> {
 
     }
 
-    public final void setCondition(int condition) {
+    public final void setCondition(ServerTangibleObjectTemplate.Conditions condition) {
         int currentCondition = this.condition.get();
-        this.condition.set(currentCondition | condition);
+        this.condition.set(currentCondition | (int) condition.value);
+    }
+
+    public final void clearCondition(ServerTangibleObjectTemplate.Conditions condition) {
+        int currentCondition = this.condition.get();
+        this.condition.set(currentCondition & ((int) (~condition.value)));
+    }
+
+    @Override
+    public void setOwnerId(final long id) {
+
+        // if we are changing owners, we are no longer insured
+        boolean ownerChanged = false;
+        if (ownerId != id) {
+            ownerChanged = true;
+            setInsured(false);
+        }
+
+        ownerId = id;
+        final Container container = getContainerProperty();
+        if (container != null) {
+            final Iterator<ServerObject> i = container.iterator();
+            while (i.hasNext()) {
+
+                ServerObject content = i.next();
+
+                if (content != null && CreatureObject.asCreatureObject(content) == null)  {
+                    content.setOwnerId(id);
+                }
+            }
+        }
+
+        // if we're hidden, who can see us has changed
+        if (ownerChanged && isInWorld() && isHidden()) {
+            visibilityDataModified();
+        }
+    }
+
+    public void setHidden(final boolean hidden) {
+        if (this.hidden != hidden) {
+            visibilityDataModified();
+            this.hidden = hidden;
+        }
+    }
+
+    public void visibilityDataModified() {
+        LOGGER.error("This method is not implemented");
+        //TODO: Implement visibility modification
+//        if (isInWorld()) {
+//            if (isVisible() && !isHidden()) {
+//                // show the object
+//                final TriggerVolume triggerVolume = getTriggerVolume(NetworkTriggerVolumeNamespace::NetworkTriggerVolumeName);
+//                if (triggerVolume != null) {
+//                    std::vector<ServerObject *> observers;
+//                    ServerWorld::findPlayerCreaturesInRange(getPosition_w(), triggerVolume->getRadius(), observers);
+//                    if (!observers.empty())
+//                        ObserveTracker::onObjectMadeVisibleTo(*this, observers);
+//                }
+//            }
+//            else {
+//                // hide the object
+//                ObserveTracker::onObjectMadeInvisible(*this);
+//
+//                // if the object is hidden, show the object to
+//                // players who have passively revealed the object
+//                if (isVisible() && isHidden() && !m_passiveRevealPlayerCharacter.empty())
+//                {
+//                    const TriggerVolume * triggerVolume = getTriggerVolume(NetworkTriggerVolumeNamespace::NetworkTriggerVolumeName);
+//                    if (triggerVolume != NULL) {
+//                        std::vector<ServerObject *> possibleObservers;
+//                        ServerWorld::findPlayerCreaturesInRange(getPosition_w(), triggerVolume->getRadius(), possibleObservers);
+//                        if (!possibleObservers.empty())
+//                        {
+//                            std::vector<ServerObject *> allowedObservers;
+//                            for (std::vector<ServerObject *>::const_iterator i = possibleObservers.begin(); i != possibleObservers.end(); ++i) {
+//                                if (m_passiveRevealPlayerCharacter.contains((*i)->getNetworkId()))
+//                                allowedObservers.push_back(*i);
+//                            }
+//
+//                            if (!allowedObservers.empty())
+//                                ObserveTracker::onObjectMadeVisibleTo(*this, allowedObservers);
+//                        }
+//                    }
+//                }
+//            }
+//        }
+    }
+
+    public boolean isVisible() {
+        return visible.get();
+    }
+
+    public void setInsured(final boolean insured)  {
+        if (insured)
+            setCondition(ServerTangibleObjectTemplate.Conditions.C_insured);
+        else
+            clearCondition(ServerTangibleObjectTemplate.Conditions.C_insured);
     }
 
     @Override

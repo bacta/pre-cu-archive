@@ -17,7 +17,7 @@ import java.util.Map;
  */
 @Singleton
 public class StartingLocations implements SharedFileLoader {
-    private static final String dataTableName = "datatables/player/starting_locations.iff";
+    private static final String dataTableName = "datatables/creation/starting_locations.iff";
     private static final Logger logger = LoggerFactory.getLogger(StartingLocations.class);
 
     private final Map<String, StartingLocationInfo> startingLocations = new HashMap<>();

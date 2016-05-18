@@ -62,6 +62,8 @@ public final class ClientCreateCharacter extends GameNetworkMessage {
     private final float scaleFactor;
     private final String biography;
     private final boolean useNewbieTutorial;
+    private final String skillTemplate;  //NGE Only
+    private final String workingSkill;  // NGE Only
 
     public ClientCreateCharacter(final ByteBuffer buffer) {
         this.appearanceData = BufferUtil.getAscii(buffer);
@@ -75,6 +77,8 @@ public final class ClientCreateCharacter extends GameNetworkMessage {
         this.scaleFactor = buffer.getFloat();
         this.biography = BufferUtil.getUnicode(buffer);
         this.useNewbieTutorial = BufferUtil.getBoolean(buffer);
+        this.skillTemplate = BufferUtil.getAscii(buffer);
+        this.workingSkill = BufferUtil.getAscii(buffer);
     }
 
     @Override
@@ -90,5 +94,7 @@ public final class ClientCreateCharacter extends GameNetworkMessage {
         buffer.putFloat(scaleFactor);
         BufferUtil.putUnicode(buffer, biography);
         BufferUtil.putBoolean(buffer, useNewbieTutorial);
+        BufferUtil.putAscii(buffer, skillTemplate);
+        BufferUtil.putAscii(buffer, workingSkill);
     }
 }

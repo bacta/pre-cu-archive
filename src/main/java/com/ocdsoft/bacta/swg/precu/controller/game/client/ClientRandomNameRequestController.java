@@ -34,8 +34,8 @@ public class ClientRandomNameRequestController implements GameNetworkMessageCont
     @Override
     public void handleIncoming(SoeUdpConnection connection, ClientRandomNameRequest message) {
 
-        Race race = parseRace(message.getCreatureTemplate());
-        Gender gender = parseGender(message.getCreatureTemplate());
+        Race race = Race.parseRace(message.getCreatureTemplate());
+        Gender gender = Gender.parseGender(message.getCreatureTemplate());
 
         String fullName = nameService.generateName(NameService.PLAYER, race, gender);
 
@@ -47,14 +47,5 @@ public class ClientRandomNameRequestController implements GameNetworkMessageCont
                 )
         );    }
 
-    private Race parseRace(String raceString) {
-        String race = raceString.substring(raceString.lastIndexOf("/") + 1, raceString.lastIndexOf("_"));
-        return Race.valueOf(race.toUpperCase());
-    }
-
-    private Gender parseGender(String raceString) {
-        String gender = raceString.substring(raceString.lastIndexOf("_") + 1, raceString.indexOf(".iff"));
-        return Gender.valueOf(gender.toUpperCase());
-    }
 }
 

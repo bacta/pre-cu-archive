@@ -25,17 +25,7 @@ public class PlayerNameGenerator extends CreatureNameGenerator {
     }
 
     @Override
-    public String validateName(String name, Object... args) {
-
-        Race race;
-        Gender gender;
-
-        try {
-            race = (Race) args[0];
-            gender = (Gender) args[1];
-        } catch (Exception e) {
-            throw new InvalidParameterException("Expecting args [Race, Gender]");
-        }
+    public String validateName(final String name, final Race race, final Gender gender) {
 
         String firstName = name.indexOf(" ") != -1 ? name.substring(0, name.indexOf(" ")) : name;
 
@@ -43,7 +33,7 @@ public class PlayerNameGenerator extends CreatureNameGenerator {
             return NameService.NAME_DECLINED_IN_USE;
         }
 
-        return super.validateName(name, args);
+        return super.validateName(name, race, gender);
     }
 
     public void addPlayerName(String firstName) {

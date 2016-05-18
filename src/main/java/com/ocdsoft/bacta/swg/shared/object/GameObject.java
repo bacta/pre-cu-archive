@@ -40,8 +40,6 @@ public class GameObject extends NetworkObject {
     @Getter
     private boolean kill;
     @Getter
-    private boolean authoritative;
-    @Getter
     private boolean childObject;
     @Getter
     @Setter
@@ -63,7 +61,9 @@ public class GameObject extends NetworkObject {
     //private DpvsObjects dpvsObjects;
 
     private int rotations;
+
     @Getter
+    @Setter
     private Vector scale;
     private Transform objectToParent;
     private Transform objectToWorld;
@@ -72,6 +72,8 @@ public class GameObject extends NetworkObject {
 
     @Getter
     private Container containerProperty;
+
+    @Getter
     private CollisionProperty collisionProperty;
 
     //private SpatialSubdivisionHandle spatialSubdivisionHandle;
@@ -97,7 +99,6 @@ public class GameObject extends NetworkObject {
         this.inWorld = false;
         this.active = true;
         this.kill = false;
-        this.authoritative = false;
         this.childObject = false;
         this.objectToWorldDirty = true;
         this.destroyed = false;

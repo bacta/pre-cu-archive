@@ -7,6 +7,7 @@ import com.ocdsoft.bacta.tre.TreeFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.util.Collection;
 
 /**
@@ -37,30 +38,37 @@ public class SetupSharedFile {
 
             for (int feature = 0; feature <= subscriptionFeatures; feature++) {
                 for (int priority = 0; priority < maxSearchPriority; priority++) {
-                    String propertyName = String.format("searchPath_%02d_%d", feature, priority);
-                    Collection<String> filePaths = configuration.getStringCollection("SharedFile", propertyName);
 
-                    if (filePaths != null) {
-                        for (String filePath : filePaths)
-                            treeFile.addSearchPath(rootPath + filePath, priority);
-                    }
+                    try {
 
-                    propertyName = String.format("searchTree_%02d_%d", feature, priority);
-                    filePaths = configuration.getStringCollection("SharedFile", propertyName);
+                        String propertyName = String.format("searchPath_%02d_%d", feature, priority);
+                        Collection<String> filePaths = configuration.getStringCollection("SharedFile", propertyName);
 
-                    if (filePaths != null) {
-                        for (String filePath : filePaths)
-                            treeFile.addSearchTree(rootPath + filePath, priority);
-                    }
+                        if (filePaths != null) {
+                            for (String filePath : filePaths)
+                                treeFile.addSearchPath(rootPath + filePath, priority);
+                        }
 
-                    propertyName = String.format("searchTOC_%02d_%d", feature, priority);
-                    filePaths = configuration.getStringCollection("SharedFile", propertyName);
+                        propertyName = String.format("searchTree_%02d_%d", feature, priority);
+                        filePaths = configuration.getStringCollection("SharedFile", propertyName);
 
-                    if (filePaths != null) {
-                        for (String filePath : filePaths)
-                            treeFile.addSearchTOC(rootPath + filePath, priority);
+                        if (filePaths != null) {
+                            for (String filePath : filePaths)
+                                treeFile.addSearchTree(rootPath + filePath, priority);
+                        }
+
+                        propertyName = String.format("searchTOC_%02d_%d", feature, priority);
+                        filePaths = configuration.getStringCollection("SharedFile", propertyName);
+
+                        if (filePaths != null) {
+                            for (String filePath : filePaths)
+                                treeFile.addSearchTOC(rootPath + filePath, priority);
+                        }
+                    } catch (IOException e) {
+                        LOGGER.error("Unable to open file", e);
                     }
                 }
+
             }
 
             treeFile.addSearchAbsolute(configuration.getIntWithDefault("SharedFile", "searchAbsolute", maxSearchPriority + 1));

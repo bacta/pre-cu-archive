@@ -13,5 +13,10 @@ public enum Race {
     TRANDOSHAN,
     TWILEK,
     WOOKIE,
-    ZABRAK
+    ZABRAK;
+
+    public static Race parseRace(String templateString) {
+        String race = templateString.substring(templateString.lastIndexOf("/") + 1, templateString.lastIndexOf("_"));
+        return Race.valueOf(race.toUpperCase());
+    }
 }

@@ -1,5 +1,6 @@
 package com.ocdsoft.bacta.swg.shared.container;
 
+import com.ocdsoft.bacta.swg.precu.object.ServerObject;
 import com.ocdsoft.bacta.swg.shared.object.GameObject;
 import com.ocdsoft.bacta.swg.shared.property.Property;
 import org.slf4j.Logger;
@@ -19,14 +20,14 @@ public abstract class Container extends Property {
         return 0x55DC5726;
     }
 
-    private final List<GameObject> contents = new ArrayList<>();
+    private final List<ServerObject> contents = new ArrayList<>();
     private boolean changed = false;
 
     public Container(final int propertyId, final GameObject owner) {
         super(propertyId, owner);
     }
 
-    public Iterator<GameObject> iterator() {
+    public Iterator<ServerObject> iterator() {
         return contents.iterator();
     }
 

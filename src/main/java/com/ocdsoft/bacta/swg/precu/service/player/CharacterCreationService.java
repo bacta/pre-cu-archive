@@ -1,6 +1,8 @@
 package com.ocdsoft.bacta.swg.precu.service.player;
 
+import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import com.ocdsoft.bacta.engine.conf.BactaConfiguration;
 import com.ocdsoft.bacta.soe.object.account.CharacterInfo;
 import com.ocdsoft.bacta.soe.util.SOECRC32;
 import com.ocdsoft.bacta.swg.lang.Gender;
@@ -18,16 +20,33 @@ import com.ocdsoft.bacta.swg.precu.service.data.creation.StartingLocations;
 import com.ocdsoft.bacta.swg.shared.math.Vector;
 import com.ocdsoft.bacta.swg.shared.network.messages.chat.ChatAvatarId;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Created by kyle on 5/9/2016.
  */
 @Singleton
-public class CharacterCreationService {
-    public void setupPlayer(CreatureObject newCharacterObject, String profession, boolean jedi) {
+public final class CharacterCreationService {
 
+    private final String defaultProfession;
+    private final Set<String> disabledProfessions;
 
-        String profession = message.getProfession();
-        if (this.disabledProfessions.contains(profession)) {
+    @Inject
+    public CharacterCreationService(final BactaConfiguration bactaConfiguration) {
+        this.disabledProfessions = new HashSet<>(bactaConfiguration.getStringCollection(
+                "Bacta/GameServer/CharacterCreation",
+                "DisabledProfession"));
+
+        this.defaultProfession = bactaConfiguration.getStringWithDefault(
+                "Bacta/GameServer/CharacterCreation",
+                "DefaultProfession",
+                "crafting_artisan");
+    }
+
+    public void setupPlayer(final CreatureObject newCharacterObject, String profession, final boolean jedi) {
+
+        /*if (this.disabledProfessions.contains(profession)) {
             profession = this.defaultProfession;
         }
 
@@ -37,13 +56,13 @@ public class CharacterCreationService {
         String hairTemplate = stringBuilder.toString();
 
 
-
+/*
         ProfessionMods.ProfessionModInfo professionModInfo = professionMods.getProfessionModInfo(profession);
         //TODO: Iff reading
         ProfessionDefaults.ProfessionInfo professionInfo = professionDefaults.getProfessionInfo(profession);
         HairStyles.HairStyleInfo hairStyleInfo = hairStyles.getHairStyleInfo(objectTemplate.getResourceName());
 
-        if (/*hairStyleInfo == null || */professionModInfo == null /*|| professionInfo == null*/) {
+        if (hairStyleInfo == null || professionModInfo == null || professionInfo == null) {
             //Only way for this to happen is if client data is not loaded or missing.
             LOGGER.error("Unable to retrieve profession information for profession <{}>.", profession);
             connection.sendMessage(new ClientCreateCharacterFailed(NameService.NAME_DECLINED_INTERNAL_ERROR));
@@ -169,6 +188,6 @@ public class CharacterCreationService {
                 character.getNetworkId());
 
         objectService.updateObject(character);
-
+        */
     }
 }

@@ -2,6 +2,8 @@ package com.ocdsoft.bacta.swg.name;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import com.ocdsoft.bacta.swg.lang.Gender;
+import com.ocdsoft.bacta.swg.lang.Race;
 import com.ocdsoft.bacta.swg.name.generator.CreatureNameGenerator;
 import com.ocdsoft.bacta.swg.name.generator.NameGenerator;
 import com.ocdsoft.bacta.swg.name.generator.PlayerNameGenerator;
@@ -74,23 +76,23 @@ public final class DefaultNameService implements NameService {
     }
 
     @Override
-    public String generateName(int type, Object... args) {
+    public String generateName(int type, final Race race, final Gender gender) {
         NameGenerator generator = nameGenerators.get(type);
         if (generator == null) {
             logger.error("Name Generator for type " + type + " not available");
             return NAME_DECLINED_NO_NAME_GENERATOR;
         }
 
-        String name = generator.createName(args);
-        while (validateName(type, name, args) != NameService.NAME_APPROVED) {
-            name = generator.createName(args);
+        String name = generator.createName(race, gender);
+        while (!validateName(type, name, race, gender).equals(NameService.NAME_APPROVED)) {
+            name = generator.createName(race, gender);
         }
 
         return name;
     }
 
     @Override
-    public String validateName(int type, String name, Object... args) {
+    public String validateName(int type, String name, Race race, Gender gender) {
 
         NameGenerator generator = nameGenerators.get(type);
         if (generator == null) {
@@ -102,12 +104,12 @@ public final class DefaultNameService implements NameService {
         while (nameTokens.hasMoreTokens()) {
             String token = nameTokens.nextToken();
             String result = namePreChecks(token);
-            if (result != NameService.NAME_APPROVED) {
+            if (!result.equals(NameService.NAME_APPROVED)) {
                 return result;
             }
         }
 
-        return generator.validateName(name, args);
+        return generator.validateName(name, race, gender);
     }
 
     private String namePreChecks(String name) {
