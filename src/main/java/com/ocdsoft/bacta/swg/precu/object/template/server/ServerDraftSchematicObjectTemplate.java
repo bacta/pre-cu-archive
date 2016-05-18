@@ -9,6 +9,8 @@ import com.ocdsoft.bacta.swg.shared.template.ObjectTemplate;
 import com.ocdsoft.bacta.swg.shared.template.definition.TemplateDefinition;
 import com.ocdsoft.bacta.swg.shared.utility.*;
 import lombok.Getter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +21,7 @@ import java.util.List;
  */
 @TemplateDefinition
 public class ServerDraftSchematicObjectTemplate extends ServerIntangibleObjectTemplate {
+	private static final Logger LOGGER = LoggerFactory.getLogger(ServerDraftSchematicObjectTemplate.class);
 	public static final int TAG_SERVERDRAFTSCHEMATICOBJECTTEMPLATE = Tag.convertStringToTag("DSCO");
 
 	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
@@ -780,7 +783,7 @@ public class ServerDraftSchematicObjectTemplate extends ServerIntangibleObjectTe
 			} else if ("prototypeTime".equalsIgnoreCase(parameterName)) {
 				prototypeTime.loadFromIff(objectTemplateList, iff);
 			} else {
-				throw new IllegalStateException(String.format("Unexpected parameter %s", parameterName));
+				LOGGER.error("Unexpected parameter {}", parameterName);
 			}
 
 			iff.exitChunk();
@@ -806,6 +809,7 @@ public class ServerDraftSchematicObjectTemplate extends ServerIntangibleObjectTe
 	}
 
 	protected static class IngredientSlotObjectTemplate extends ObjectTemplate {
+		private static final Logger LOGGER = LoggerFactory.getLogger(IngredientSlotObjectTemplate.class);
 		public static final int TAG_INGREDIENTSLOT = Tag.convertStringToTag("DINS");
 
 		public IngredientSlotObjectTemplate(final String filename, final DataResourceList<ObjectTemplate> objectTemplateList) {
@@ -1167,7 +1171,7 @@ public class ServerDraftSchematicObjectTemplate extends ServerIntangibleObjectTe
 				} else if ("appearance".equalsIgnoreCase(parameterName)) {
 					appearance.loadFromIff(objectTemplateList, iff);
 				} else {
-					throw new IllegalStateException(String.format("Unexpected parameter %s", parameterName));
+					LOGGER.error("Unexpected parameter {}", parameterName);
 				}
 
 				iff.exitChunk();

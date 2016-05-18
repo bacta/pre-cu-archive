@@ -9,6 +9,8 @@ import com.ocdsoft.bacta.swg.shared.template.definition.TemplateDefinition;
 import com.ocdsoft.bacta.swg.shared.utility.IntegerParam;
 import com.ocdsoft.bacta.swg.shared.utility.StructParam;
 import lombok.Getter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +21,7 @@ import java.util.List;
  */
 @TemplateDefinition
 public class ServerArmorTemplate extends ObjectTemplate {
+	private static final Logger LOGGER = LoggerFactory.getLogger(ServerArmorTemplate.class);
 	public static final int TAG_SERVERARMORTEMPLATE = Tag.convertStringToTag("ARMO");
 
 	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
@@ -692,7 +695,7 @@ public class ServerArmorTemplate extends ObjectTemplate {
 					dummy.loadFromIff(objectTemplateList, iff);
 				}
 			} else {
-				throw new IllegalStateException(String.format("Unexpected parameter %s", parameterName));
+				LOGGER.error("Unexpected parameter {}", parameterName);
 			}
 
 			iff.exitChunk();
@@ -728,7 +731,7 @@ public class ServerArmorTemplate extends ObjectTemplate {
 		DT_restraint(0x00000010),
 		DT_elemental_heat(0x00000020),
 		DT_elemental_cold(0x00000040),
-		DT_elemental_acid(0x00000080),
+		DT_elemental_acid(0x00000080), 
 		DT_elemental_electrical(0x00000100), 
 		DT_environmental_heat(0x00000200), 
 		DT_environmental_cold(0x00000400), 
@@ -756,6 +759,7 @@ public class ServerArmorTemplate extends ObjectTemplate {
 	}
 
 	protected static class SpecialProtectionObjectTemplate extends ObjectTemplate {
+		private static final Logger LOGGER = LoggerFactory.getLogger(SpecialProtectionObjectTemplate.class);
 		public static final int TAG_SPECIALPROTECTION = Tag.convertStringToTag("ARSP");
 
 		public SpecialProtectionObjectTemplate(final String filename, final DataResourceList<ObjectTemplate> objectTemplateList) {
@@ -913,7 +917,7 @@ public class ServerArmorTemplate extends ObjectTemplate {
 				} else if ("effectiveness".equalsIgnoreCase(parameterName)) {
 					effectiveness.loadFromIff(objectTemplateList, iff);
 				} else {
-					throw new IllegalStateException(String.format("Unexpected parameter %s", parameterName));
+					LOGGER.error("Unexpected parameter {}", parameterName);
 				}
 
 				iff.exitChunk();

@@ -12,6 +12,8 @@ import com.ocdsoft.bacta.swg.shared.utility.StringIdParam;
 import com.ocdsoft.bacta.swg.shared.utility.StringParam;
 import com.ocdsoft.bacta.swg.shared.utility.StructParam;
 import lombok.Getter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +24,7 @@ import java.util.List;
  */
 @TemplateDefinition
 public class ServerManufactureSchematicObjectTemplate extends ServerIntangibleObjectTemplate {
+	private static final Logger LOGGER = LoggerFactory.getLogger(ServerManufactureSchematicObjectTemplate.class);
 	public static final int TAG_SERVERMANUFACTURESCHEMATICOBJECTTEMPLATE = Tag.convertStringToTag("MSCO");
 
 	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
@@ -496,7 +499,7 @@ public class ServerManufactureSchematicObjectTemplate extends ServerIntangibleOb
 				}
 				attributesLoaded = true;
 			} else {
-				throw new IllegalStateException(String.format("Unexpected parameter %s", parameterName));
+				LOGGER.error("Unexpected parameter {}", parameterName);
 			}
 
 			iff.exitChunk();
@@ -515,6 +518,7 @@ public class ServerManufactureSchematicObjectTemplate extends ServerIntangibleOb
 	}
 
 	protected static class IngredientSlotObjectTemplate extends ObjectTemplate {
+		private static final Logger LOGGER = LoggerFactory.getLogger(IngredientSlotObjectTemplate.class);
 		public static final int TAG_INGREDIENTSLOT = Tag.convertStringToTag("MINS");
 
 		public IngredientSlotObjectTemplate(final String filename, final DataResourceList<ObjectTemplate> objectTemplateList) {
@@ -646,7 +650,7 @@ public class ServerManufactureSchematicObjectTemplate extends ServerIntangibleOb
 				} else if ("ingredient".equalsIgnoreCase(parameterName)) {
 					ingredient.loadFromIff(objectTemplateList, iff);
 				} else {
-					throw new IllegalStateException(String.format("Unexpected parameter %s", parameterName));
+					LOGGER.error("Unexpected parameter {}", parameterName);
 				}
 
 				iff.exitChunk();

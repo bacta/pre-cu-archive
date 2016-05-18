@@ -78,7 +78,7 @@ public class SlotDescriptor {
                     final int slotId = slotIdManager.findSlotId(slotName);
 
                     if (slotId == SlotId.INVALID)
-                        LOGGER.warn("SlotDescritor {} specified invalid slot {}, ignoring.", name, slotNameString);
+                        LOGGER.warn("SlotDescriptor {} specified invalid slot {}, ignoring.", name.getString(), slotNameString);
                     else
                         slots.add(slotId);
                 }

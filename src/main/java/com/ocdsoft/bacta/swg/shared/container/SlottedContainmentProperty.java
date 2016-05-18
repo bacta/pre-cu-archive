@@ -87,7 +87,7 @@ public class SlottedContainmentProperty extends Property {
      * The best arrangement is the one that has the given slotId nearest to the front of
      * the slot list.
      */
-    public int getBestArrangementForslot(final int slotId) {
+    public int getBestArrangementForSlot(final int slotId) {
         int bestValue = MAX_ARRANGEMENT_SIZE;
         int bestArrangement = -1;
         int arrangementIndex = 0;

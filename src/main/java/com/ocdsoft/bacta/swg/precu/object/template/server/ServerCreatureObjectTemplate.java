@@ -7,6 +7,8 @@ import com.ocdsoft.bacta.swg.shared.foundation.Tag;
 import com.ocdsoft.bacta.swg.shared.template.ObjectTemplate;
 import com.ocdsoft.bacta.swg.shared.template.definition.TemplateDefinition;
 import com.ocdsoft.bacta.swg.shared.utility.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +19,7 @@ import java.util.List;
  */
 @TemplateDefinition
 public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
+	private static final Logger LOGGER = LoggerFactory.getLogger(ServerCreatureObjectTemplate.class);
 	public static final int TAG_SERVERCREATUREOBJECTTEMPLATE = Tag.convertStringToTag("CREO");
 
 	private static void registerTemplateConstructors(final DataResourceList<ObjectTemplate> objectTemplateList) {
@@ -1606,7 +1609,7 @@ public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 					dummy.loadFromIff(objectTemplateList, iff);
 				}
 			} else {
-				throw new IllegalStateException(String.format("Unexpected parameter %s", parameterName));
+				LOGGER.error("Unexpected parameter {}", parameterName);
 			}
 
 			iff.exitChunk();
