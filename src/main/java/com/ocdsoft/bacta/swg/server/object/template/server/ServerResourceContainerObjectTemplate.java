@@ -39,7 +39,7 @@ public class ServerResourceContainerObjectTemplate extends ServerTangibleObjectT
 	public int getMaxResources() {
 		ServerResourceContainerObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof ServerResourceContainerObjectTemplate)
 			base = (ServerResourceContainerObjectTemplate) baseData;
 
 		if (!maxResources.isLoaded()) {
@@ -76,7 +76,7 @@ public class ServerResourceContainerObjectTemplate extends ServerTangibleObjectT
 	public int getMaxResourcesMin() {
 		ServerResourceContainerObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof ServerResourceContainerObjectTemplate)
 			base = (ServerResourceContainerObjectTemplate) baseData;
 
 		if (!maxResources.isLoaded()) {
@@ -113,7 +113,7 @@ public class ServerResourceContainerObjectTemplate extends ServerTangibleObjectT
 	public int getMaxResourcesMax() {
 		ServerResourceContainerObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof ServerResourceContainerObjectTemplate)
 			base = (ServerResourceContainerObjectTemplate) baseData;
 
 		if (!maxResources.isLoaded()) {

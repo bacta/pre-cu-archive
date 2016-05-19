@@ -56,7 +56,7 @@ public class ServerTangibleObjectTemplate extends ServerObjectTemplate {
 	public TriggerVolumeData getTriggerVolumes(int index) {
 		ServerTangibleObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof ServerTangibleObjectTemplate)
 			base = (ServerTangibleObjectTemplate) baseData;
 
 		if (!triggerVolumesLoaded) {
@@ -101,7 +101,7 @@ public class ServerTangibleObjectTemplate extends ServerObjectTemplate {
 	public CombatSkeleton getCombatSkeleton() {
 		ServerTangibleObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof ServerTangibleObjectTemplate)
 			base = (ServerTangibleObjectTemplate) baseData;
 
 		if (!combatSkeleton.isLoaded()) {
@@ -118,7 +118,7 @@ public class ServerTangibleObjectTemplate extends ServerObjectTemplate {
 	public int getMaxHitPoints() {
 		ServerTangibleObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof ServerTangibleObjectTemplate)
 			base = (ServerTangibleObjectTemplate) baseData;
 
 		if (!maxHitPoints.isLoaded()) {
@@ -155,7 +155,7 @@ public class ServerTangibleObjectTemplate extends ServerObjectTemplate {
 	public int getMaxHitPointsMin() {
 		ServerTangibleObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof ServerTangibleObjectTemplate)
 			base = (ServerTangibleObjectTemplate) baseData;
 
 		if (!maxHitPoints.isLoaded()) {
@@ -192,7 +192,7 @@ public class ServerTangibleObjectTemplate extends ServerObjectTemplate {
 	public int getMaxHitPointsMax() {
 		ServerTangibleObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof ServerTangibleObjectTemplate)
 			base = (ServerTangibleObjectTemplate) baseData;
 
 		if (!maxHitPoints.isLoaded()) {
@@ -229,7 +229,7 @@ public class ServerTangibleObjectTemplate extends ServerObjectTemplate {
 	public ServerArmorTemplate getArmor() {
 		ServerTangibleObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof ServerTangibleObjectTemplate)
 			base = (ServerTangibleObjectTemplate) baseData;
 
 		if (!armor.isLoaded()) {
@@ -256,7 +256,7 @@ public class ServerTangibleObjectTemplate extends ServerObjectTemplate {
 	public int getInterestRadius() {
 		ServerTangibleObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof ServerTangibleObjectTemplate)
 			base = (ServerTangibleObjectTemplate) baseData;
 
 		if (!interestRadius.isLoaded()) {
@@ -293,7 +293,7 @@ public class ServerTangibleObjectTemplate extends ServerObjectTemplate {
 	public int getInterestRadiusMin() {
 		ServerTangibleObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof ServerTangibleObjectTemplate)
 			base = (ServerTangibleObjectTemplate) baseData;
 
 		if (!interestRadius.isLoaded()) {
@@ -330,7 +330,7 @@ public class ServerTangibleObjectTemplate extends ServerObjectTemplate {
 	public int getInterestRadiusMax() {
 		ServerTangibleObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof ServerTangibleObjectTemplate)
 			base = (ServerTangibleObjectTemplate) baseData;
 
 		if (!interestRadius.isLoaded()) {
@@ -367,7 +367,7 @@ public class ServerTangibleObjectTemplate extends ServerObjectTemplate {
 	public int getCount() {
 		ServerTangibleObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof ServerTangibleObjectTemplate)
 			base = (ServerTangibleObjectTemplate) baseData;
 
 		if (!count.isLoaded()) {
@@ -404,7 +404,7 @@ public class ServerTangibleObjectTemplate extends ServerObjectTemplate {
 	public int getCountMin() {
 		ServerTangibleObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof ServerTangibleObjectTemplate)
 			base = (ServerTangibleObjectTemplate) baseData;
 
 		if (!count.isLoaded()) {
@@ -441,7 +441,7 @@ public class ServerTangibleObjectTemplate extends ServerObjectTemplate {
 	public int getCountMax() {
 		ServerTangibleObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof ServerTangibleObjectTemplate)
 			base = (ServerTangibleObjectTemplate) baseData;
 
 		if (!count.isLoaded()) {
@@ -478,7 +478,7 @@ public class ServerTangibleObjectTemplate extends ServerObjectTemplate {
 	public int getCondition() {
 		ServerTangibleObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof ServerTangibleObjectTemplate)
 			base = (ServerTangibleObjectTemplate) baseData;
 
 		if (!condition.isLoaded()) {
@@ -515,7 +515,7 @@ public class ServerTangibleObjectTemplate extends ServerObjectTemplate {
 	public int getConditionMin() {
 		ServerTangibleObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof ServerTangibleObjectTemplate)
 			base = (ServerTangibleObjectTemplate) baseData;
 
 		if (!condition.isLoaded()) {
@@ -552,7 +552,7 @@ public class ServerTangibleObjectTemplate extends ServerObjectTemplate {
 	public int getConditionMax() {
 		ServerTangibleObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof ServerTangibleObjectTemplate)
 			base = (ServerTangibleObjectTemplate) baseData;
 
 		if (!condition.isLoaded()) {
@@ -589,7 +589,7 @@ public class ServerTangibleObjectTemplate extends ServerObjectTemplate {
 	public boolean getWantSawAttackTriggers() {
 		ServerTangibleObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof ServerTangibleObjectTemplate)
 			base = (ServerTangibleObjectTemplate) baseData;
 
 		if (!wantSawAttackTriggers.isLoaded()) {
@@ -699,7 +699,7 @@ public class ServerTangibleObjectTemplate extends ServerObjectTemplate {
 		C_insured(0x00000004),
 		C_conversable(0x00000008),
 		C_hibernating(0x00000010),
-		C_magicItem(0x00000020),
+		C_magicItem(0x00000020), 
 		C_aggressive(0x00000040), 
 		C_wantSawAttackTrigger(0x00000080), 
 		C_invulnerable(0x00000100), 

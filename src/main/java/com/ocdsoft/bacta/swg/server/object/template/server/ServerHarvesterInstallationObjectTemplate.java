@@ -43,7 +43,7 @@ public class ServerHarvesterInstallationObjectTemplate extends ServerInstallatio
 	public int getMaxExtractionRate() {
 		ServerHarvesterInstallationObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof ServerHarvesterInstallationObjectTemplate)
 			base = (ServerHarvesterInstallationObjectTemplate) baseData;
 
 		if (!maxExtractionRate.isLoaded()) {
@@ -80,7 +80,7 @@ public class ServerHarvesterInstallationObjectTemplate extends ServerInstallatio
 	public int getMaxExtractionRateMin() {
 		ServerHarvesterInstallationObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof ServerHarvesterInstallationObjectTemplate)
 			base = (ServerHarvesterInstallationObjectTemplate) baseData;
 
 		if (!maxExtractionRate.isLoaded()) {
@@ -117,7 +117,7 @@ public class ServerHarvesterInstallationObjectTemplate extends ServerInstallatio
 	public int getMaxExtractionRateMax() {
 		ServerHarvesterInstallationObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof ServerHarvesterInstallationObjectTemplate)
 			base = (ServerHarvesterInstallationObjectTemplate) baseData;
 
 		if (!maxExtractionRate.isLoaded()) {
@@ -154,7 +154,7 @@ public class ServerHarvesterInstallationObjectTemplate extends ServerInstallatio
 	public int getCurrentExtractionRate() {
 		ServerHarvesterInstallationObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof ServerHarvesterInstallationObjectTemplate)
 			base = (ServerHarvesterInstallationObjectTemplate) baseData;
 
 		if (!currentExtractionRate.isLoaded()) {
@@ -191,7 +191,7 @@ public class ServerHarvesterInstallationObjectTemplate extends ServerInstallatio
 	public int getCurrentExtractionRateMin() {
 		ServerHarvesterInstallationObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof ServerHarvesterInstallationObjectTemplate)
 			base = (ServerHarvesterInstallationObjectTemplate) baseData;
 
 		if (!currentExtractionRate.isLoaded()) {
@@ -228,7 +228,7 @@ public class ServerHarvesterInstallationObjectTemplate extends ServerInstallatio
 	public int getCurrentExtractionRateMax() {
 		ServerHarvesterInstallationObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof ServerHarvesterInstallationObjectTemplate)
 			base = (ServerHarvesterInstallationObjectTemplate) baseData;
 
 		if (!currentExtractionRate.isLoaded()) {
@@ -265,7 +265,7 @@ public class ServerHarvesterInstallationObjectTemplate extends ServerInstallatio
 	public int getMaxHopperSize() {
 		ServerHarvesterInstallationObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof ServerHarvesterInstallationObjectTemplate)
 			base = (ServerHarvesterInstallationObjectTemplate) baseData;
 
 		if (!maxHopperSize.isLoaded()) {
@@ -302,7 +302,7 @@ public class ServerHarvesterInstallationObjectTemplate extends ServerInstallatio
 	public int getMaxHopperSizeMin() {
 		ServerHarvesterInstallationObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof ServerHarvesterInstallationObjectTemplate)
 			base = (ServerHarvesterInstallationObjectTemplate) baseData;
 
 		if (!maxHopperSize.isLoaded()) {
@@ -339,7 +339,7 @@ public class ServerHarvesterInstallationObjectTemplate extends ServerInstallatio
 	public int getMaxHopperSizeMax() {
 		ServerHarvesterInstallationObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof ServerHarvesterInstallationObjectTemplate)
 			base = (ServerHarvesterInstallationObjectTemplate) baseData;
 
 		if (!maxHopperSize.isLoaded()) {
@@ -376,7 +376,7 @@ public class ServerHarvesterInstallationObjectTemplate extends ServerInstallatio
 	public String getMasterClassName() {
 		ServerHarvesterInstallationObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof ServerHarvesterInstallationObjectTemplate)
 			base = (ServerHarvesterInstallationObjectTemplate) baseData;
 
 		if (!masterClassName.isLoaded()) {

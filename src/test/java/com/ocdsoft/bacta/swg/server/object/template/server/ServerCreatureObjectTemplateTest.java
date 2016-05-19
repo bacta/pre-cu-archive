@@ -1,6 +1,6 @@
-package com.ocdsoft.bacta.swg.precu.object.template.server;
+package com.ocdsoft.bacta.swg.server.object.template.server;
 
-import com.ocdsoft.bacta.swg.precu.service.data.ObjectTemplateService;
+import com.ocdsoft.bacta.swg.server.service.data.ObjectTemplateService;
 import com.ocdsoft.bacta.swg.shared.template.ObjectTemplateList;
 import com.ocdsoft.bacta.tre.TreeFile;
 import org.junit.Assert;

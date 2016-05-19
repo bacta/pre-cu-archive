@@ -51,7 +51,7 @@ public class ServerIntangibleObjectTemplate extends ServerObjectTemplate {
 	public int getCount() {
 		ServerIntangibleObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof ServerIntangibleObjectTemplate)
 			base = (ServerIntangibleObjectTemplate) baseData;
 
 		if (!count.isLoaded()) {
@@ -88,7 +88,7 @@ public class ServerIntangibleObjectTemplate extends ServerObjectTemplate {
 	public int getCountMin() {
 		ServerIntangibleObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof ServerIntangibleObjectTemplate)
 			base = (ServerIntangibleObjectTemplate) baseData;
 
 		if (!count.isLoaded()) {
@@ -125,7 +125,7 @@ public class ServerIntangibleObjectTemplate extends ServerObjectTemplate {
 	public int getCountMax() {
 		ServerIntangibleObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof ServerIntangibleObjectTemplate)
 			base = (ServerIntangibleObjectTemplate) baseData;
 
 		if (!count.isLoaded()) {
@@ -261,7 +261,7 @@ public class ServerIntangibleObjectTemplate extends ServerObjectTemplate {
 		public StringId getName() {
 			SimpleIngredientObjectTemplate base = null;
 
-			if (baseData != null)
+			if (baseData != null && baseData instanceof SimpleIngredientObjectTemplate)
 				base = (SimpleIngredientObjectTemplate) baseData;
 
 			if (!name.isLoaded()) {
@@ -279,7 +279,7 @@ public class ServerIntangibleObjectTemplate extends ServerObjectTemplate {
 		public String getIngredient() {
 			SimpleIngredientObjectTemplate base = null;
 
-			if (baseData != null)
+			if (baseData != null && baseData instanceof SimpleIngredientObjectTemplate)
 				base = (SimpleIngredientObjectTemplate) baseData;
 
 			if (!ingredient.isLoaded()) {
@@ -297,7 +297,7 @@ public class ServerIntangibleObjectTemplate extends ServerObjectTemplate {
 		public int getCount() {
 			SimpleIngredientObjectTemplate base = null;
 
-			if (baseData != null)
+			if (baseData != null && baseData instanceof SimpleIngredientObjectTemplate)
 				base = (SimpleIngredientObjectTemplate) baseData;
 
 			if (!count.isLoaded()) {
@@ -334,7 +334,7 @@ public class ServerIntangibleObjectTemplate extends ServerObjectTemplate {
 		public int getCountMin() {
 			SimpleIngredientObjectTemplate base = null;
 
-			if (baseData != null)
+			if (baseData != null && baseData instanceof SimpleIngredientObjectTemplate)
 				base = (SimpleIngredientObjectTemplate) baseData;
 
 			if (!count.isLoaded()) {
@@ -371,7 +371,7 @@ public class ServerIntangibleObjectTemplate extends ServerObjectTemplate {
 		public int getCountMax() {
 			SimpleIngredientObjectTemplate base = null;
 
-			if (baseData != null)
+			if (baseData != null && baseData instanceof SimpleIngredientObjectTemplate)
 				base = (SimpleIngredientObjectTemplate) baseData;
 
 			if (!count.isLoaded()) {
@@ -465,7 +465,7 @@ public class ServerIntangibleObjectTemplate extends ServerObjectTemplate {
 		public IngredientType getIngredientType() {
 			IngredientObjectTemplate base = null;
 
-			if (baseData != null)
+			if (baseData != null && baseData instanceof IngredientObjectTemplate)
 				base = (IngredientObjectTemplate) baseData;
 
 			if (!ingredientType.isLoaded()) {
@@ -482,7 +482,7 @@ public class ServerIntangibleObjectTemplate extends ServerObjectTemplate {
 		public SimpleIngredient getIngredients(int index) {
 			IngredientObjectTemplate base = null;
 
-			if (baseData != null)
+			if (baseData != null && baseData instanceof IngredientObjectTemplate)
 				base = (IngredientObjectTemplate) baseData;
 
 			if (!ingredientsLoaded) {
@@ -516,7 +516,7 @@ public class ServerIntangibleObjectTemplate extends ServerObjectTemplate {
 		public SimpleIngredient getIngredientsMin(int index) {
 			IngredientObjectTemplate base = null;
 
-			if (baseData != null)
+			if (baseData != null && baseData instanceof IngredientObjectTemplate)
 				base = (IngredientObjectTemplate) baseData;
 
 			if (!ingredientsLoaded) {
@@ -550,7 +550,7 @@ public class ServerIntangibleObjectTemplate extends ServerObjectTemplate {
 		public SimpleIngredient getIngredientsMax(int index) {
 			IngredientObjectTemplate base = null;
 
-			if (baseData != null)
+			if (baseData != null && baseData instanceof IngredientObjectTemplate)
 				base = (IngredientObjectTemplate) baseData;
 
 			if (!ingredientsLoaded) {
@@ -603,7 +603,7 @@ public class ServerIntangibleObjectTemplate extends ServerObjectTemplate {
 		public float getComplexity() {
 			IngredientObjectTemplate base = null;
 
-			if (baseData != null)
+			if (baseData != null && baseData instanceof IngredientObjectTemplate)
 				base = (IngredientObjectTemplate) baseData;
 
 			if (!complexity.isLoaded()) {
@@ -640,7 +640,7 @@ public class ServerIntangibleObjectTemplate extends ServerObjectTemplate {
 		public float getComplexityMin() {
 			IngredientObjectTemplate base = null;
 
-			if (baseData != null)
+			if (baseData != null && baseData instanceof IngredientObjectTemplate)
 				base = (IngredientObjectTemplate) baseData;
 
 			if (!complexity.isLoaded()) {
@@ -677,7 +677,7 @@ public class ServerIntangibleObjectTemplate extends ServerObjectTemplate {
 		public float getComplexityMax() {
 			IngredientObjectTemplate base = null;
 
-			if (baseData != null)
+			if (baseData != null && baseData instanceof IngredientObjectTemplate)
 				base = (IngredientObjectTemplate) baseData;
 
 			if (!complexity.isLoaded()) {
@@ -714,7 +714,7 @@ public class ServerIntangibleObjectTemplate extends ServerObjectTemplate {
 		public String getSkillCommand() {
 			IngredientObjectTemplate base = null;
 
-			if (baseData != null)
+			if (baseData != null && baseData instanceof IngredientObjectTemplate)
 				base = (IngredientObjectTemplate) baseData;
 
 			if (!skillCommand.isLoaded()) {
@@ -792,7 +792,7 @@ public class ServerIntangibleObjectTemplate extends ServerObjectTemplate {
 		public StringId getName() {
 			SchematicAttributeObjectTemplate base = null;
 
-			if (baseData != null)
+			if (baseData != null && baseData instanceof SchematicAttributeObjectTemplate)
 				base = (SchematicAttributeObjectTemplate) baseData;
 
 			if (!name.isLoaded()) {
@@ -810,7 +810,7 @@ public class ServerIntangibleObjectTemplate extends ServerObjectTemplate {
 		public int getValue() {
 			SchematicAttributeObjectTemplate base = null;
 
-			if (baseData != null)
+			if (baseData != null && baseData instanceof SchematicAttributeObjectTemplate)
 				base = (SchematicAttributeObjectTemplate) baseData;
 
 			if (!value.isLoaded()) {
@@ -847,7 +847,7 @@ public class ServerIntangibleObjectTemplate extends ServerObjectTemplate {
 		public int getValueMin() {
 			SchematicAttributeObjectTemplate base = null;
 
-			if (baseData != null)
+			if (baseData != null && baseData instanceof SchematicAttributeObjectTemplate)
 				base = (SchematicAttributeObjectTemplate) baseData;
 
 			if (!value.isLoaded()) {
@@ -884,7 +884,7 @@ public class ServerIntangibleObjectTemplate extends ServerObjectTemplate {
 		public int getValueMax() {
 			SchematicAttributeObjectTemplate base = null;
 
-			if (baseData != null)
+			if (baseData != null && baseData instanceof SchematicAttributeObjectTemplate)
 				base = (SchematicAttributeObjectTemplate) baseData;
 
 			if (!value.isLoaded()) {

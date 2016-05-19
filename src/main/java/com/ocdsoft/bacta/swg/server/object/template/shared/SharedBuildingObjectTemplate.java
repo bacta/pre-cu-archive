@@ -40,7 +40,7 @@ public class SharedBuildingObjectTemplate extends SharedTangibleObjectTemplate {
 	public String getTerrainModificationFileName() {
 		SharedBuildingObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof SharedBuildingObjectTemplate)
 			base = (SharedBuildingObjectTemplate) baseData;
 
 		if (!terrainModificationFileName.isLoaded()) {
@@ -58,7 +58,7 @@ public class SharedBuildingObjectTemplate extends SharedTangibleObjectTemplate {
 	public String getInteriorLayoutFileName() {
 		SharedBuildingObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof SharedBuildingObjectTemplate)
 			base = (SharedBuildingObjectTemplate) baseData;
 
 		if (!interiorLayoutFileName.isLoaded()) {

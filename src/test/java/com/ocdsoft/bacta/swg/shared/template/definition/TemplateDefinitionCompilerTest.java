@@ -14,13 +14,13 @@ public class TemplateDefinitionCompilerTest {
         try {
             //Shared
             final File sharedSourceDirectory = new File("C:\\Users\\crush\\Downloads\\swg-src_orig_noshare\\whitengold\\dsrc\\sku.0\\sys.shared\\compiled\\game");
-            final File sharedDestinationDirectory = new File("C:/users/crush/git/bacta/pre-cu-master/pre-cu/src/main/java/com/ocdsoft/bacta/swg/precu/object/template/shared");
-            final String sharedTemplatePackage = "com.ocdsoft.bacta.swg.precu.object.template.shared";
+            final File sharedDestinationDirectory = new File("C:/users/crush/git/bacta/pre-cu-master/pre-cu/src/main/java/com/ocdsoft/bacta/swg/server/object/template/shared");
+            final String sharedTemplatePackage = "com.ocdsoft.bacta.swg.server.object.template.shared";
 
             //Server
             final File serverSourceDirectory = new File("C:\\Users\\crush\\Downloads\\swg-src_orig_noshare\\whitengold\\dsrc\\sku.0\\sys.server\\compiled\\game");
-            final File serverDestinationDirectory = new File("C:/users/crush/git/bacta/pre-cu-master/pre-cu/src/main/java/com/ocdsoft/bacta/swg/precu/object/template/server");
-            final String serverTemplatePackage = "com.ocdsoft.bacta.swg.precu.object.template.server";
+            final File serverDestinationDirectory = new File("C:/users/crush/git/bacta/pre-cu-master/pre-cu/src/main/java/com/ocdsoft/bacta/swg/server/object/template/server");
+            final String serverTemplatePackage = "com.ocdsoft.bacta.swg.server.object.template.server";
 
             final TemplateDefinitionCompiler compiler = new TemplateDefinitionCompiler();
             compiler.compile(sharedSourceDirectory, sharedDestinationDirectory, sharedTemplatePackage);

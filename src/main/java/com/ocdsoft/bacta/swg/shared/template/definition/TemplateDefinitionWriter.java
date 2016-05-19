@@ -478,7 +478,7 @@ public class TemplateDefinitionWriter {
 
         printStream.printf("%s\t\t%s base = null;\n", tabs, templateName);
         printStream.println();
-        printStream.printf("%s\t\tif (baseData != null)\n", tabs);
+        printStream.printf("%s\t\tif (baseData != null && baseData instanceof %s)\n", tabs, templateName);
         printStream.printf("%s\t\t\tbase = (%s)baseData;\n", tabs, templateName);
         printStream.println();
     }

@@ -51,7 +51,7 @@ public class SharedVehicleObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getSpeed(MovementTypes index) {
 		SharedVehicleObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof SharedVehicleObjectTemplate)
 			base = (SharedVehicleObjectTemplate) baseData;
 
 		if (!speed[(int) index.value].isLoaded()) {
@@ -88,7 +88,7 @@ public class SharedVehicleObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getSpeedMin(MovementTypes index) {
 		SharedVehicleObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof SharedVehicleObjectTemplate)
 			base = (SharedVehicleObjectTemplate) baseData;
 
 		if (!speed[(int) index.value].isLoaded()) {
@@ -125,7 +125,7 @@ public class SharedVehicleObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getSpeedMax(MovementTypes index) {
 		SharedVehicleObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof SharedVehicleObjectTemplate)
 			base = (SharedVehicleObjectTemplate) baseData;
 
 		if (!speed[(int) index.value].isLoaded()) {
@@ -162,7 +162,7 @@ public class SharedVehicleObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getSlopeAversion() {
 		SharedVehicleObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof SharedVehicleObjectTemplate)
 			base = (SharedVehicleObjectTemplate) baseData;
 
 		if (!slopeAversion.isLoaded()) {
@@ -199,7 +199,7 @@ public class SharedVehicleObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getSlopeAversionMin() {
 		SharedVehicleObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof SharedVehicleObjectTemplate)
 			base = (SharedVehicleObjectTemplate) baseData;
 
 		if (!slopeAversion.isLoaded()) {
@@ -236,7 +236,7 @@ public class SharedVehicleObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getSlopeAversionMax() {
 		SharedVehicleObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof SharedVehicleObjectTemplate)
 			base = (SharedVehicleObjectTemplate) baseData;
 
 		if (!slopeAversion.isLoaded()) {
@@ -273,7 +273,7 @@ public class SharedVehicleObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getHoverValue() {
 		SharedVehicleObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof SharedVehicleObjectTemplate)
 			base = (SharedVehicleObjectTemplate) baseData;
 
 		if (!hoverValue.isLoaded()) {
@@ -310,7 +310,7 @@ public class SharedVehicleObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getHoverValueMin() {
 		SharedVehicleObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof SharedVehicleObjectTemplate)
 			base = (SharedVehicleObjectTemplate) baseData;
 
 		if (!hoverValue.isLoaded()) {
@@ -347,7 +347,7 @@ public class SharedVehicleObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getHoverValueMax() {
 		SharedVehicleObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof SharedVehicleObjectTemplate)
 			base = (SharedVehicleObjectTemplate) baseData;
 
 		if (!hoverValue.isLoaded()) {
@@ -384,7 +384,7 @@ public class SharedVehicleObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getTurnRate() {
 		SharedVehicleObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof SharedVehicleObjectTemplate)
 			base = (SharedVehicleObjectTemplate) baseData;
 
 		if (!turnRate.isLoaded()) {
@@ -421,7 +421,7 @@ public class SharedVehicleObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getTurnRateMin() {
 		SharedVehicleObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof SharedVehicleObjectTemplate)
 			base = (SharedVehicleObjectTemplate) baseData;
 
 		if (!turnRate.isLoaded()) {
@@ -458,7 +458,7 @@ public class SharedVehicleObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getTurnRateMax() {
 		SharedVehicleObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof SharedVehicleObjectTemplate)
 			base = (SharedVehicleObjectTemplate) baseData;
 
 		if (!turnRate.isLoaded()) {
@@ -495,7 +495,7 @@ public class SharedVehicleObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getMaxVelocity() {
 		SharedVehicleObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof SharedVehicleObjectTemplate)
 			base = (SharedVehicleObjectTemplate) baseData;
 
 		if (!maxVelocity.isLoaded()) {
@@ -532,7 +532,7 @@ public class SharedVehicleObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getMaxVelocityMin() {
 		SharedVehicleObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof SharedVehicleObjectTemplate)
 			base = (SharedVehicleObjectTemplate) baseData;
 
 		if (!maxVelocity.isLoaded()) {
@@ -569,7 +569,7 @@ public class SharedVehicleObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getMaxVelocityMax() {
 		SharedVehicleObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof SharedVehicleObjectTemplate)
 			base = (SharedVehicleObjectTemplate) baseData;
 
 		if (!maxVelocity.isLoaded()) {
@@ -606,7 +606,7 @@ public class SharedVehicleObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getAcceleration() {
 		SharedVehicleObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof SharedVehicleObjectTemplate)
 			base = (SharedVehicleObjectTemplate) baseData;
 
 		if (!acceleration.isLoaded()) {
@@ -643,7 +643,7 @@ public class SharedVehicleObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getAccelerationMin() {
 		SharedVehicleObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof SharedVehicleObjectTemplate)
 			base = (SharedVehicleObjectTemplate) baseData;
 
 		if (!acceleration.isLoaded()) {
@@ -680,7 +680,7 @@ public class SharedVehicleObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getAccelerationMax() {
 		SharedVehicleObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof SharedVehicleObjectTemplate)
 			base = (SharedVehicleObjectTemplate) baseData;
 
 		if (!acceleration.isLoaded()) {
@@ -717,7 +717,7 @@ public class SharedVehicleObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getBraking() {
 		SharedVehicleObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof SharedVehicleObjectTemplate)
 			base = (SharedVehicleObjectTemplate) baseData;
 
 		if (!braking.isLoaded()) {
@@ -754,7 +754,7 @@ public class SharedVehicleObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getBrakingMin() {
 		SharedVehicleObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof SharedVehicleObjectTemplate)
 			base = (SharedVehicleObjectTemplate) baseData;
 
 		if (!braking.isLoaded()) {
@@ -791,7 +791,7 @@ public class SharedVehicleObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getBrakingMax() {
 		SharedVehicleObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof SharedVehicleObjectTemplate)
 			base = (SharedVehicleObjectTemplate) baseData;
 
 		if (!braking.isLoaded()) {

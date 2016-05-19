@@ -43,7 +43,7 @@ public class ServerVehicleObjectTemplate extends ServerTangibleObjectTemplate {
 	public String getFuelType() {
 		ServerVehicleObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof ServerVehicleObjectTemplate)
 			base = (ServerVehicleObjectTemplate) baseData;
 
 		if (!fuelType.isLoaded()) {
@@ -61,7 +61,7 @@ public class ServerVehicleObjectTemplate extends ServerTangibleObjectTemplate {
 	public float getCurrentFuel() {
 		ServerVehicleObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof ServerVehicleObjectTemplate)
 			base = (ServerVehicleObjectTemplate) baseData;
 
 		if (!currentFuel.isLoaded()) {
@@ -98,7 +98,7 @@ public class ServerVehicleObjectTemplate extends ServerTangibleObjectTemplate {
 	public float getCurrentFuelMin() {
 		ServerVehicleObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof ServerVehicleObjectTemplate)
 			base = (ServerVehicleObjectTemplate) baseData;
 
 		if (!currentFuel.isLoaded()) {
@@ -135,7 +135,7 @@ public class ServerVehicleObjectTemplate extends ServerTangibleObjectTemplate {
 	public float getCurrentFuelMax() {
 		ServerVehicleObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof ServerVehicleObjectTemplate)
 			base = (ServerVehicleObjectTemplate) baseData;
 
 		if (!currentFuel.isLoaded()) {
@@ -172,7 +172,7 @@ public class ServerVehicleObjectTemplate extends ServerTangibleObjectTemplate {
 	public float getMaxFuel() {
 		ServerVehicleObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof ServerVehicleObjectTemplate)
 			base = (ServerVehicleObjectTemplate) baseData;
 
 		if (!maxFuel.isLoaded()) {
@@ -209,7 +209,7 @@ public class ServerVehicleObjectTemplate extends ServerTangibleObjectTemplate {
 	public float getMaxFuelMin() {
 		ServerVehicleObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof ServerVehicleObjectTemplate)
 			base = (ServerVehicleObjectTemplate) baseData;
 
 		if (!maxFuel.isLoaded()) {
@@ -246,7 +246,7 @@ public class ServerVehicleObjectTemplate extends ServerTangibleObjectTemplate {
 	public float getMaxFuelMax() {
 		ServerVehicleObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof ServerVehicleObjectTemplate)
 			base = (ServerVehicleObjectTemplate) baseData;
 
 		if (!maxFuel.isLoaded()) {
@@ -283,7 +283,7 @@ public class ServerVehicleObjectTemplate extends ServerTangibleObjectTemplate {
 	public float getConsumpsion() {
 		ServerVehicleObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof ServerVehicleObjectTemplate)
 			base = (ServerVehicleObjectTemplate) baseData;
 
 		if (!consumpsion.isLoaded()) {
@@ -320,7 +320,7 @@ public class ServerVehicleObjectTemplate extends ServerTangibleObjectTemplate {
 	public float getConsumpsionMin() {
 		ServerVehicleObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof ServerVehicleObjectTemplate)
 			base = (ServerVehicleObjectTemplate) baseData;
 
 		if (!consumpsion.isLoaded()) {
@@ -357,7 +357,7 @@ public class ServerVehicleObjectTemplate extends ServerTangibleObjectTemplate {
 	public float getConsumpsionMax() {
 		ServerVehicleObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof ServerVehicleObjectTemplate)
 			base = (ServerVehicleObjectTemplate) baseData;
 
 		if (!consumpsion.isLoaded()) {

@@ -7,11 +7,11 @@ import com.ocdsoft.bacta.soe.object.account.SoeAccount
 import com.ocdsoft.bacta.soe.serialize.GameNetworkMessageSerializerImpl
 import com.ocdsoft.bacta.soe.util.SOECRC32
 import com.ocdsoft.bacta.soe.util.SoeMessageUtil
-import com.ocdsoft.bacta.swg.precu.message.login.EnumerateCharacterId
-import com.ocdsoft.bacta.swg.precu.message.login.LoginClientToken
-import com.ocdsoft.bacta.swg.precu.message.login.LoginClusterStatus
-import com.ocdsoft.bacta.swg.precu.message.login.LoginEnumCluster
-import com.ocdsoft.bacta.swg.precu.object.login.ClusterEntry
+import com.ocdsoft.bacta.swg.server.message.login.EnumerateCharacterId
+import com.ocdsoft.bacta.swg.server.message.login.LoginClientToken
+import com.ocdsoft.bacta.swg.server.message.login.LoginClusterStatus
+import com.ocdsoft.bacta.swg.server.message.login.LoginEnumCluster
+import com.ocdsoft.bacta.swg.server.object.login.ClusterEntry
 import spock.lang.Specification
 
 /**

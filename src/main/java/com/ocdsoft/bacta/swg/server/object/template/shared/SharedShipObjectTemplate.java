@@ -43,7 +43,7 @@ public class SharedShipObjectTemplate extends SharedTangibleObjectTemplate {
 	public String getCockpitFilename() {
 		SharedShipObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof SharedShipObjectTemplate)
 			base = (SharedShipObjectTemplate) baseData;
 
 		if (!cockpitFilename.isLoaded()) {
@@ -61,7 +61,7 @@ public class SharedShipObjectTemplate extends SharedTangibleObjectTemplate {
 	public boolean getHasWings() {
 		SharedShipObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof SharedShipObjectTemplate)
 			base = (SharedShipObjectTemplate) baseData;
 
 		if (!hasWings.isLoaded()) {
@@ -79,7 +79,7 @@ public class SharedShipObjectTemplate extends SharedTangibleObjectTemplate {
 	public boolean getPlayerControlled() {
 		SharedShipObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof SharedShipObjectTemplate)
 			base = (SharedShipObjectTemplate) baseData;
 
 		if (!playerControlled.isLoaded()) {
@@ -97,7 +97,7 @@ public class SharedShipObjectTemplate extends SharedTangibleObjectTemplate {
 	public String getInteriorLayoutFileName() {
 		SharedShipObjectTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof SharedShipObjectTemplate)
 			base = (SharedShipObjectTemplate) baseData;
 
 		if (!interiorLayoutFileName.isLoaded()) {

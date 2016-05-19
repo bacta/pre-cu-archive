@@ -56,7 +56,7 @@ public class ServerArmorTemplate extends ObjectTemplate {
 	public ArmorRating getRating() {
 		ServerArmorTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof ServerArmorTemplate)
 			base = (ServerArmorTemplate) baseData;
 
 		if (!rating.isLoaded()) {
@@ -73,7 +73,7 @@ public class ServerArmorTemplate extends ObjectTemplate {
 	public int getIntegrity() {
 		ServerArmorTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof ServerArmorTemplate)
 			base = (ServerArmorTemplate) baseData;
 
 		if (!integrity.isLoaded()) {
@@ -110,7 +110,7 @@ public class ServerArmorTemplate extends ObjectTemplate {
 	public int getIntegrityMin() {
 		ServerArmorTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof ServerArmorTemplate)
 			base = (ServerArmorTemplate) baseData;
 
 		if (!integrity.isLoaded()) {
@@ -147,7 +147,7 @@ public class ServerArmorTemplate extends ObjectTemplate {
 	public int getIntegrityMax() {
 		ServerArmorTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof ServerArmorTemplate)
 			base = (ServerArmorTemplate) baseData;
 
 		if (!integrity.isLoaded()) {
@@ -184,7 +184,7 @@ public class ServerArmorTemplate extends ObjectTemplate {
 	public int getEffectiveness() {
 		ServerArmorTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof ServerArmorTemplate)
 			base = (ServerArmorTemplate) baseData;
 
 		if (!effectiveness.isLoaded()) {
@@ -221,7 +221,7 @@ public class ServerArmorTemplate extends ObjectTemplate {
 	public int getEffectivenessMin() {
 		ServerArmorTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof ServerArmorTemplate)
 			base = (ServerArmorTemplate) baseData;
 
 		if (!effectiveness.isLoaded()) {
@@ -258,7 +258,7 @@ public class ServerArmorTemplate extends ObjectTemplate {
 	public int getEffectivenessMax() {
 		ServerArmorTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof ServerArmorTemplate)
 			base = (ServerArmorTemplate) baseData;
 
 		if (!effectiveness.isLoaded()) {
@@ -295,7 +295,7 @@ public class ServerArmorTemplate extends ObjectTemplate {
 	public SpecialProtection getSpecialProtection(int index) {
 		ServerArmorTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof ServerArmorTemplate)
 			base = (ServerArmorTemplate) baseData;
 
 		if (!specialProtectionLoaded) {
@@ -328,7 +328,7 @@ public class ServerArmorTemplate extends ObjectTemplate {
 	public SpecialProtection getSpecialProtectionMin(int index) {
 		ServerArmorTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof ServerArmorTemplate)
 			base = (ServerArmorTemplate) baseData;
 
 		if (!specialProtectionLoaded) {
@@ -361,7 +361,7 @@ public class ServerArmorTemplate extends ObjectTemplate {
 	public SpecialProtection getSpecialProtectionMax(int index) {
 		ServerArmorTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof ServerArmorTemplate)
 			base = (ServerArmorTemplate) baseData;
 
 		if (!specialProtectionLoaded) {
@@ -413,7 +413,7 @@ public class ServerArmorTemplate extends ObjectTemplate {
 	public int getVulnerability() {
 		ServerArmorTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof ServerArmorTemplate)
 			base = (ServerArmorTemplate) baseData;
 
 		if (!vulnerability.isLoaded()) {
@@ -450,7 +450,7 @@ public class ServerArmorTemplate extends ObjectTemplate {
 	public int getVulnerabilityMin() {
 		ServerArmorTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof ServerArmorTemplate)
 			base = (ServerArmorTemplate) baseData;
 
 		if (!vulnerability.isLoaded()) {
@@ -487,7 +487,7 @@ public class ServerArmorTemplate extends ObjectTemplate {
 	public int getVulnerabilityMax() {
 		ServerArmorTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof ServerArmorTemplate)
 			base = (ServerArmorTemplate) baseData;
 
 		if (!vulnerability.isLoaded()) {
@@ -524,7 +524,7 @@ public class ServerArmorTemplate extends ObjectTemplate {
 	public int getEncumbrance(int index) {
 		ServerArmorTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof ServerArmorTemplate)
 			base = (ServerArmorTemplate) baseData;
 
 		if (!encumbrance[index].isLoaded()) {
@@ -561,7 +561,7 @@ public class ServerArmorTemplate extends ObjectTemplate {
 	public int getEncumbranceMin(int index) {
 		ServerArmorTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof ServerArmorTemplate)
 			base = (ServerArmorTemplate) baseData;
 
 		if (!encumbrance[index].isLoaded()) {
@@ -598,7 +598,7 @@ public class ServerArmorTemplate extends ObjectTemplate {
 	public int getEncumbranceMax(int index) {
 		ServerArmorTemplate base = null;
 
-		if (baseData != null)
+		if (baseData != null && baseData instanceof ServerArmorTemplate)
 			base = (ServerArmorTemplate) baseData;
 
 		if (!encumbrance[index].isLoaded()) {
@@ -730,7 +730,7 @@ public class ServerArmorTemplate extends ObjectTemplate {
 		DT_stun(0x00000008),
 		DT_restraint(0x00000010),
 		DT_elemental_heat(0x00000020),
-		DT_elemental_cold(0x00000040),
+		DT_elemental_cold(0x00000040), 
 		DT_elemental_acid(0x00000080), 
 		DT_elemental_electrical(0x00000100), 
 		DT_environmental_heat(0x00000200), 
@@ -777,7 +777,7 @@ public class ServerArmorTemplate extends ObjectTemplate {
 		public DamageType getType() {
 			SpecialProtectionObjectTemplate base = null;
 
-			if (baseData != null)
+			if (baseData != null && baseData instanceof SpecialProtectionObjectTemplate)
 				base = (SpecialProtectionObjectTemplate) baseData;
 
 			if (!type.isLoaded()) {
@@ -794,7 +794,7 @@ public class ServerArmorTemplate extends ObjectTemplate {
 		public int getEffectiveness() {
 			SpecialProtectionObjectTemplate base = null;
 
-			if (baseData != null)
+			if (baseData != null && baseData instanceof SpecialProtectionObjectTemplate)
 				base = (SpecialProtectionObjectTemplate) baseData;
 
 			if (!effectiveness.isLoaded()) {
@@ -831,7 +831,7 @@ public class ServerArmorTemplate extends ObjectTemplate {
 		public int getEffectivenessMin() {
 			SpecialProtectionObjectTemplate base = null;
 
-			if (baseData != null)
+			if (baseData != null && baseData instanceof SpecialProtectionObjectTemplate)
 				base = (SpecialProtectionObjectTemplate) baseData;
 
 			if (!effectiveness.isLoaded()) {
@@ -868,7 +868,7 @@ public class ServerArmorTemplate extends ObjectTemplate {
 		public int getEffectivenessMax() {
 			SpecialProtectionObjectTemplate base = null;
 
-			if (baseData != null)
+			if (baseData != null && baseData instanceof SpecialProtectionObjectTemplate)
 				base = (SpecialProtectionObjectTemplate) baseData;
 
 			if (!effectiveness.isLoaded()) {
