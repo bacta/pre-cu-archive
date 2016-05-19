@@ -174,7 +174,7 @@ public class CreatureObject extends TangibleObject {
 
         //Get the attribute values.
 
-        for (int i = 0; i < CreatureAttribute.SIZE; ++i) {
+        for (int i = 0; i < ServerObjectTemplate.Attributes.Attributes_Last.value + 1; ++i) {
             attributes.set(i, serverTemplate.getAttributes(ServerObjectTemplate.Attributes.from(i)));
             maxAttributes.set(i, attributes.get(i));
             //cachedCurrentAttributeModValues.set(i, 0);

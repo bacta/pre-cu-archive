@@ -2,8 +2,6 @@ package com.ocdsoft.bacta.swg.server.object.template.shared;
 
 import bacta.iff.Iff;
 import com.google.common.base.Preconditions;
-import com.ocdsoft.bacta.swg.shared.container.ArrangementDescriptor;
-import com.ocdsoft.bacta.swg.shared.container.SlotDescriptor;
 import com.ocdsoft.bacta.swg.shared.foundation.DataResourceList;
 import com.ocdsoft.bacta.swg.shared.foundation.Tag;
 import com.ocdsoft.bacta.swg.shared.localization.StringId;
@@ -47,7 +45,7 @@ public class SharedObjectTemplate extends ObjectTemplate {
 	private final FloatParam clearFloraRadius = new FloatParam(); // distance to clear collidable flora around this object
 	private final IntegerParam surfaceType = new IntegerParam(); 
 	private final FloatParam noBuildRadius = new FloatParam(); // distance to not allow structure placement around this object
-	private final BoolParam onlyVisibleInTools = new BoolParam();
+	private final BoolParam onlyVisibleInTools = new BoolParam(); 
 	private final FloatParam locationReservationRadius = new FloatParam(); 
 	private final BoolParam forceNoCollision = new BoolParam(); 
 
@@ -59,28 +57,6 @@ public class SharedObjectTemplate extends ObjectTemplate {
 	public int getId() {
 		return TAG_SHAREDOBJECTTEMPLATE;
 	}
-
-	//@TDF-USER-START
-	private ArrangementDescriptor arrangementDescriptor;
-	private SlotDescriptor slotDescriptor;
-
-	public ArrangementDescriptor getArrangementDescriptor() {
-		return arrangementDescriptor;
-	}
-
-	public SlotDescriptor getSlotDescriptor() {
-		return slotDescriptor;
-	}
-
-	public void setArrangementDescriptor(final ArrangementDescriptor arrangementDescriptor) {
-		this.arrangementDescriptor = arrangementDescriptor;
-	}
-
-	public void setSlotDescriptor(final SlotDescriptor slotDescriptor) {
-		this.slotDescriptor = slotDescriptor;
-	}
-
-	//@TDF-USER-END
 
 	public StringId getObjectName() {
 		SharedObjectTemplate base = null;
@@ -1128,7 +1104,7 @@ public class SharedObjectTemplate extends ObjectTemplate {
 		GOT_guild(3),
 		GOT_lair(4),
 		GOT_static(5),
-		GOT_camp(6),
+		GOT_camp(6), 
 		GOT_vendor(7), 
 		GOT_loadbeacon(8), 
 		GOT_armor(0x00000100), //if you add armor types, please add them to the GOT_powerups as well
@@ -1174,7 +1150,7 @@ public class SharedObjectTemplate extends ObjectTemplate {
 		GOT_installation_harvester(4099),
 		GOT_installation_turret(4100),
 		GOT_installation_minefield(4101),
-		GOT_misc(0x00002000),
+		GOT_misc(0x00002000), 
 		GOT_misc_ammunition(8193), 
 		GOT_misc_chemical(8194), 
 		GOT_misc_clothing_DUMMY(8195), // when you remove this, please recompile all the shared object templates
@@ -1185,12 +1161,12 @@ public class SharedObjectTemplate extends ObjectTemplate {
 		GOT_misc_electronics(8200),
 		GOT_misc_flora(8201),
 		GOT_misc_food(8202),
-		GOT_misc_furniture(8203),
+		GOT_misc_furniture(8203), 
 		GOT_misc_instrument(8204), 
 		GOT_misc_pharmaceutical(8205), 
 		GOT_misc_resource_container_DUMMY(8206), // when you remove this, please recompile all the shared object templates
 		GOT_misc_sign(8207),
-		GOT_misc_counter(8208),
+		GOT_misc_counter(8208), 
 		GOT_misc_factory_crate(8209), 
 		GOT_misc_ticket_travel(8210), 
 		GOT_misc_item(8211), // generic 'usable' item
@@ -1247,7 +1223,7 @@ public class SharedObjectTemplate extends ObjectTemplate {
 		GOT_tool_repair(32771),
 		GOT_tool_camp_kit(32772),
 		GOT_tool_ship_component_repair(32773),
-		GOT_vehicle(0x00010000),
+		GOT_vehicle(0x00010000), 
 		GOT_vehicle_hover(65537), 
 		GOT_vehicle_hover_ai(65538), 
 		GOT_weapon(0x00020000), //if you add weapon types, please add them to the GOT_powerups as well
@@ -1337,7 +1313,7 @@ public class SharedObjectTemplate extends ObjectTemplate {
 		GOT_clothing_robe(16777229),
 		GOT_clothing_shirt(16777230),
 		GOT_clothing_vest(16777231),
-		GOT_clothing_wookiee(16777232),
+		GOT_clothing_wookiee(16777232), 
 		GOT_clothing_misc(16777233), 
 		GOT_clothing_skirt(16777234), 
 		GOT_ship_component(0x40000000), //add space-specific GOTS at the "end" to make merging easier
@@ -1376,9 +1352,10 @@ public class SharedObjectTemplate extends ObjectTemplate {
 		GOT_chronicles(0x00001100),
 		GOT_chronicles_relic(4353),
 		GOT_chronicles_chronicle(4354),
-		GOT_chronicles_quest_holocron(4355),
-		GOT_chronicles_quest_holocron_recipe(4356), 
-		GOT_chronicles_relic_fragment(4357); 
+		GOT_chronicles_quest_holocron(4355), 
+		GOT_chronicles_quest_holocron_recipe(4356),
+		GOT_chronicles_relic_fragment(4357),
+		GameObjectType_Last(GOT_chronicles_relic_fragment.value);
 
 		private static final GameObjectType[] values = values();
 		public final long value;
@@ -1399,7 +1376,8 @@ public class SharedObjectTemplate extends ObjectTemplate {
 		CT_volume(2), //This kind of container can hold tangible objects
 		CT_volumeIntangible(3), //This kind of container can hold intangible objects
 		CT_volumeGeneric(4), //This kind of container can hold any object tangible or not.
-		CT_ridable(5); //This should be used for vehicles and mounts only: provides a slotted container with contents visible to the world
+		CT_ridable(5), //This should be used for vehicles and mounts only: provides a slotted container with contents visible to the world
+		ContainerType_Last(CT_ridable.value);
 
 		private static final ContainerType[] values = values();
 		public final long value;
@@ -1420,9 +1398,10 @@ public class SharedObjectTemplate extends ObjectTemplate {
 		ST_stone(2),
 		ST_wood(3),
 		ST_acid(4),
-		ST_ice(5),
-		ST_molten(6), 
-		ST_obsidian(7); 
+		ST_ice(5), 
+		ST_molten(6),
+		ST_obsidian(7),
+		SurfaceType_Last(ST_obsidian.value);
 
 		private static final SurfaceType[] values = values();
 		public final long value;

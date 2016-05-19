@@ -707,8 +707,9 @@ public class ServerArmorTemplate extends ObjectTemplate {
 		AR_armorRealNone(-1), //needed for internal reasons, do not use in templates! This means you!
 		AR_armorNone(0), 
 		AR_armorLight(1), 
-		AR_armorMedium(2), 
-		AR_armorHeavy(3); 
+		AR_armorMedium(2),
+		AR_armorHeavy(3),
+		ArmorRating_Last(AR_armorHeavy.value);
 
 		private static final ArmorRating[] values = values();
 		public final long value;
@@ -728,15 +729,16 @@ public class ServerArmorTemplate extends ObjectTemplate {
 		DT_energy(0x00000002),
 		DT_blast(0x00000004),
 		DT_stun(0x00000008),
-		DT_restraint(0x00000010),
+		DT_restraint(0x00000010), 
 		DT_elemental_heat(0x00000020), 
 		DT_elemental_cold(0x00000040), 
 		DT_elemental_acid(0x00000080), 
 		DT_elemental_electrical(0x00000100), 
 		DT_environmental_heat(0x00000200), 
 		DT_environmental_cold(0x00000400), 
-		DT_environmental_acid(0x00000800), 
-		DT_environmental_electrical(0x00001000); 
+		DT_environmental_acid(0x00000800),
+		DT_environmental_electrical(0x00001000),
+		DamageType_Last(DT_environmental_electrical.value);
 
 		private static final DamageType[] values = values();
 		public final long value;

@@ -826,8 +826,9 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 	}
 
 	public enum ClientVisabilityFlags {
-		CVF_always(0), 
-		CVF_gm_only(1); 
+		CVF_always(0),
+		CVF_gm_only(1),
+		ClientVisabilityFlags_Last(CVF_gm_only.value);
 
 		private static final ClientVisabilityFlags[] values = values();
 		public final long value;

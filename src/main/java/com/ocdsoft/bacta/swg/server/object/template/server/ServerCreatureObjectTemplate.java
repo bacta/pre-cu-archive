@@ -1629,7 +1629,8 @@ public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 		PN_NaturalPath(5), //paths and trails
 		PN_ArtificialPath(6), //roads
 		PN_PassableWater(7), //rivers, ponds, shorelines
-		PN_ImpassableWater(8); //big lakes and oceans
+		PN_ImpassableWater(8), //big lakes and oceans
+		PathNodeType_Last(PN_ImpassableWater.value);
 
 		private static final PathNodeType[] values = values();
 		public final long value;

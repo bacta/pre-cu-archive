@@ -1424,15 +1424,16 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 		WT_pistol(2),
 		WT_heavyWeapon(3),
 		WT_1handMelee(4),
-		WT_2handMelee(5),
+		WT_2handMelee(5), 
 		WT_unarmed(6), 
 		WT_polearm(7), 
 		WT_thrown(8), 
 		WT_1handLightsaber(9), 
 		WT_2handLightsaber(10), 
 		WT_polearmLightsaber(11), 
-		WT_groundTargetting(12), 
-		WT_directionTargetting(13); 
+		WT_groundTargetting(12),
+		WT_directionTargetting(13),
+		WeaponType_Last(WT_directionTargetting.value);
 
 		private static final WeaponType[] values = values();
 		public final long value;
@@ -1450,7 +1451,8 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 	public enum AttribModDecaySpecial {
 		AMDS_pool(-1), //use the attribute pool recovery rate (normal recovery)
 		AMDS_wound(-2), //can only be healed by skill/item use, heal difficulty adjusted by shock wound value
-		AMDS_antidote(-3); //used to clear all attrib mods for a given attribute
+		AMDS_antidote(-3), //used to clear all attrib mods for a given attribute
+		AttribModDecaySpecial_Last(AMDS_antidote.value);
 
 		private static final AttribModDecaySpecial[] values = values();
 		public final long value;
@@ -1467,8 +1469,9 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 
 	public enum AttackType {
 		AT_melee(0), 
-		AT_ranged(1), 
-		AT_thrown(2); 
+		AT_ranged(1),
+		AT_thrown(2),
+		AttackType_Last(AT_thrown.value);
 
 		private static final AttackType[] values = values();
 		public final long value;

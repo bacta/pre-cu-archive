@@ -2,6 +2,8 @@ package com.ocdsoft.bacta.swg.server.object.template.server;
 
 import bacta.iff.Iff;
 import com.google.common.base.Preconditions;
+import com.ocdsoft.bacta.swg.shared.container.ArrangementDescriptor;
+import com.ocdsoft.bacta.swg.shared.container.SlotDescriptor;
 import com.ocdsoft.bacta.swg.shared.foundation.DataResourceList;
 import com.ocdsoft.bacta.swg.shared.foundation.Tag;
 import com.ocdsoft.bacta.swg.shared.template.ObjectTemplate;
@@ -77,6 +79,28 @@ public class ServerObjectTemplate extends ObjectTemplate {
 	public int getId() {
 		return TAG_SERVEROBJECTTEMPLATE;
 	}
+
+	//@TDF-USER-START
+	private ArrangementDescriptor arrangementDescriptor;
+	private SlotDescriptor slotDescriptor;
+
+	public ArrangementDescriptor getArrangementDescriptor() {
+		return arrangementDescriptor;
+	}
+
+	public SlotDescriptor getSlotDescriptor() {
+		return slotDescriptor;
+	}
+
+	public void setArrangementDescriptor(final ArrangementDescriptor arrangementDescriptor) {
+		this.arrangementDescriptor = arrangementDescriptor;
+	}
+
+	public void setSlotDescriptor(final SlotDescriptor slotDescriptor) {
+		this.slotDescriptor = slotDescriptor;
+	}
+
+	//@TDF-USER-END
 
 	public String getSharedTemplate() {
 		ServerObjectTemplate base = null;
@@ -1145,8 +1169,9 @@ public class ServerObjectTemplate extends ObjectTemplate {
 	public enum ArmorRating {
 		AR_armorNone(0), 
 		AR_armorLight(1), 
-		AR_armorMedium(2), 
-		AR_armorHeavy(3); 
+		AR_armorMedium(2),
+		AR_armorHeavy(3),
+		ArmorRating_Last(AR_armorHeavy.value);
 
 		private static final ArmorRating[] values = values();
 		public final long value;
@@ -1162,8 +1187,9 @@ public class ServerObjectTemplate extends ObjectTemplate {
 	}
 
 	public enum VisibleFlags {
-		VF_gm(0), 
-		VF_player(1); 
+		VF_gm(0),
+		VF_player(1),
+		VisibleFlags_Last(VF_player.value);
 
 		private static final VisibleFlags[] values = values();
 		public final long value;
@@ -1213,15 +1239,16 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		CT_furnitureMission(0x80000200),
 		CT_installationMission(0x80000400),
 		CT_lightsaberMission(0x80000800),
-		CT_genericItemMission(0x80001000),
+		CT_genericItemMission(0x80001000), 
 		CT_geneticsMission(0x80002000), 
 		CT_mandalorianTailorMission(0x80004000), 
 		CT_mandalorianArmorsmithMission(0x80008000), 
 		CT_mandalorianDroidEngineerMission(0x80010000), 
 		CT_spaceMission(0x80020000), 
 		CT_reverseEngineeringMission(0x80040000), 
-		CT_miscMission(0x80080000), 
-		CT_spaceComponentMission(0x80100000); 
+		CT_miscMission(0x80080000),
+		CT_spaceComponentMission(0x80100000),
+		CraftingType_Last(CT_spaceComponentMission.value);
 
 		private static final CraftingType[] values = values();
 		public final long value;
@@ -1238,8 +1265,9 @@ public class ServerObjectTemplate extends ObjectTemplate {
 
 	public enum UpdateRanges {
 		UR_near(0), 
-		UR_normal(1), 
-		UR_far(2); 
+		UR_normal(1),
+		UR_far(2),
+		UpdateRanges_Last(UR_far.value);
 
 		private static final UpdateRanges[] values = values();
 		public final long value;
@@ -1257,8 +1285,9 @@ public class ServerObjectTemplate extends ObjectTemplate {
 	public enum ArmorCategory {
 		AC_reconnaissance(0), 
 		AC_battle(1), 
-		AC_assault(2), 
-		AC_psg(3); // personal shield generator
+		AC_assault(2),
+		AC_psg(3), // personal shield generator
+		ArmorCategory_Last(AC_psg.value);
 
 		private static final ArmorCategory[] values = values();
 		public final long value;
@@ -1276,8 +1305,9 @@ public class ServerObjectTemplate extends ObjectTemplate {
 	public enum MentalStates {
 		MS_fear(0), 
 		MS_anger(1), 
-		MS_interest(2), 
-		MS_distress(3); 
+		MS_interest(2),
+		MS_distress(3),
+		MentalStates_Last(MS_distress.value);
 
 		private static final MentalStates[] values = values();
 		public final long value;
@@ -1297,8 +1327,9 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		AT_constitution(1), 
 		AT_action(2), 
 		AT_stamina(3), 
-		AT_mind(4), 
-		AT_willpower(5); 
+		AT_mind(4),
+		AT_willpower(5),
+		Attributes_Last(AT_willpower.value);
 
 		private static final Attributes[] values = values();
 		public final long value;
@@ -1366,15 +1397,16 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		XP_craftingWeaponsRanged(49),
 		XP_craftingWeaponsMunition(50),
 		XP_industrialist(51),
-		XP_craftingScout(52),
+		XP_craftingScout(52), 
 		XP_craftingCreature(53), 
 		XP_craftingTissue(54), 
 		XP_craftingCamp(55), 
 		XP_craftingTrapping(56), 
 		XP_craftingSpice(57), 
 		XP_jediGeneral(58), 
-		XP_shipwright(59), 
-		XP_reverseEngineering(60); 
+		XP_shipwright(59),
+		XP_reverseEngineering(60),
+		XpTypes_Last(XP_reverseEngineering.value);
 
 		private static final XpTypes[] values = values();
 		public final long value;
@@ -1390,8 +1422,9 @@ public class ServerObjectTemplate extends ObjectTemplate {
 	}
 
 	public enum MoveFlags {
-		MF_gm(0), 
-		MF_player(1); 
+		MF_gm(0),
+		MF_player(1),
+		MoveFlags_Last(MF_player.value);
 
 		private static final MoveFlags[] values = values();
 		public final long value;
@@ -1407,8 +1440,9 @@ public class ServerObjectTemplate extends ObjectTemplate {
 	}
 
 	public enum DeleteFlags {
-		DF_gm(0), 
-		DF_player(1); 
+		DF_gm(0),
+		DF_player(1),
+		DeleteFlags_Last(DF_player.value);
 
 		private static final DeleteFlags[] values = values();
 		public final long value;
@@ -1429,15 +1463,16 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		DT_energy(0x00000002),
 		DT_blast(0x00000004),
 		DT_stun(0x00000008),
-		DT_restraint(0x00000010),
+		DT_restraint(0x00000010), 
 		DT_elemental_heat(0x00000020), 
 		DT_elemental_cold(0x00000040), 
 		DT_elemental_acid(0x00000080), 
 		DT_elemental_electrical(0x00000100), 
 		DT_environmental_heat(0x00000200), 
 		DT_environmental_cold(0x00000400), 
-		DT_environmental_acid(0x00000800), 
-		DT_environmental_electrical(0x00001000); 
+		DT_environmental_acid(0x00000800),
+		DT_environmental_electrical(0x00001000),
+		DamageType_Last(DT_environmental_electrical.value);
 
 		private static final DamageType[] values = values();
 		public final long value;
@@ -1454,8 +1489,9 @@ public class ServerObjectTemplate extends ObjectTemplate {
 
 	public enum ArmorLevel {
 		AL_basic(0), 
-		AL_standard(1), 
-		AL_advanced(2); 
+		AL_standard(1),
+		AL_advanced(2),
+		ArmorLevel_Last(AL_advanced.value);
 
 		private static final ArmorLevel[] values = values();
 		public final long value;

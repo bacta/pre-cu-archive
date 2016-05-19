@@ -673,13 +673,14 @@ public class TemplateDefinitionWriter {
             for (int i = 0; i < count; ++i) {
                 final EnumData data = enumList.get(i);
 
-                printStream.printf("%s\t\t%s(%s)%c %s\n",
+                printStream.printf("%s\t\t%s(%s), %s\n",
                         tabs,
                         data.name,
                         data.valueName != null ? data.valueName : data.value,
-                        (i == count - 1) ? ';' : ',',
                         fixComment(data.comment));
             }
+
+            printStream.printf("%s\t\t%s_Last(%s.value);\n", tabs, enumName, enumList.get(enumList.size() - 1).name);
 
             //Helper methods for each enum.
             printStream.println();

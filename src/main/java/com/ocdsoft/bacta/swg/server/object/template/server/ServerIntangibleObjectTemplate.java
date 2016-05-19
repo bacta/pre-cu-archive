@@ -217,7 +217,8 @@ public class ServerIntangibleObjectTemplate extends ServerObjectTemplate {
 		IT_resourceClass(4), //any resource of a resource class (ferrous metal)
 		IT_templateGeneric(5), //same as IT_template, but if multiple components are required, they don't have to be the same exact type as the first component used
 		IT_schematic(6), //item crafted from a draft schematic
-		IT_schematicGeneric(7); //same as IT_schematic, but if multiple components are required, they don't have to be the same exact type as the first component used
+		IT_schematicGeneric(7), //same as IT_schematic, but if multiple components are required, they don't have to be the same exact type as the first component used
+		IngredientType_Last(IT_schematicGeneric.value);
 
 		private static final IngredientType[] values = values();
 		public final long value;

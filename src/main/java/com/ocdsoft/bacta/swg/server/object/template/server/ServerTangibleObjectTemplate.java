@@ -678,7 +678,8 @@ public class ServerTangibleObjectTemplate extends ServerObjectTemplate {
 
 	public enum CombatSkeleton {
 		CS_none(0), // all "body" or not attackable
-		CS_humanoid(1); // head, body, 2 arms, 2 legs, standard human proportions/layout
+		CS_humanoid(1), // head, body, 2 arms, 2 legs, standard human proportions/layout
+		CombatSkeleton_Last(CS_humanoid.value);
 
 		private static final CombatSkeleton[] values = values();
 		public final long value;
@@ -697,7 +698,7 @@ public class ServerTangibleObjectTemplate extends ServerObjectTemplate {
 		C_onOff(0x00000001),
 		C_vendor(0x00000002),
 		C_insured(0x00000004),
-		C_conversable(0x00000008),
+		C_conversable(0x00000008), 
 		C_hibernating(0x00000010), 
 		C_magicItem(0x00000020), 
 		C_aggressive(0x00000040), 
@@ -721,8 +722,9 @@ public class ServerTangibleObjectTemplate extends ServerObjectTemplate {
 		C_spaceCombatMusic(0x01000000), //Set programmatically by the AI system.  Do not set this in the template.
 		C_encounterLocked(0x02000000), 
 		C_spawnedCreature(0x04000000), 
-		C_holidayInteresting(0x08000000), 
-		C_locked(0x10000000); 
+		C_holidayInteresting(0x08000000),
+		C_locked(0x10000000),
+		Conditions_Last(C_locked.value);
 
 		private static final Conditions[] values = values();
 		public final long value;

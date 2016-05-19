@@ -76,7 +76,7 @@ public class AutoDeltaObjectVector<T extends ByteBufferWritable> extends AutoDel
         commands.add(command);
         ++baselineCommandCount;
 
-        //Resize v to element + 1
+        //Resize v to element + 1 - TIntObjectList has no fill method.
         if (element >= v.size()) {
             for (int i = 0, size = v.size(); i < element + 1 - size; ++i)
                 v.add(null);

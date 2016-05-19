@@ -75,10 +75,8 @@ public class AutoDeltaByteVector extends AutoDeltaContainer {
         ++baselineCommandCount;
 
         //Resize v to element + 1
-        if (element >= v.size()) {
-            for (int i = 0, size = v.size(); i < element + 1 - size; ++i)
-                v.add((byte) 0);
-        }
+        if (element >= v.size())
+            v.fill(v.size(), element + 1, (byte) 0);
 
         final byte oldValue = v.get(element);
         v.set(element, value);

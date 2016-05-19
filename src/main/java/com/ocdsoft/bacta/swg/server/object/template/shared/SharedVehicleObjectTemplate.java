@@ -898,8 +898,9 @@ public class SharedVehicleObjectTemplate extends SharedTangibleObjectTemplate {
 		MT_hover(0), 
 		MT_underwater(1), 
 		MT_ground(2), 
-		MT_swim(3), 
-		MT_walker(4); 
+		MT_swim(3),
+		MT_walker(4),
+		MovementTypes_Last(MT_walker.value);
 
 		private static final MovementTypes[] values = values();
 		public final long value;

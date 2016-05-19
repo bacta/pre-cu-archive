@@ -1999,15 +1999,16 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 		Sneaking(3),
 		Blocking(4),
 		Climbing(5),
-		Flying(6),
+		Flying(6), 
 		LyingDown(7), 
 		Sitting(8), 
 		SkillAnimating(9), 
 		DrivingVehicle(10), 
 		RidingCreature(11), 
 		KnockedDown(12), 
-		Incapacitated(13), 
-		Dead(14); 
+		Incapacitated(13),
+		Dead(14),
+		Postures_Last(Dead.value);
 
 		private static final Postures[] values = values();
 		public final long value;
@@ -2040,8 +2041,9 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 		RA_krayt_greater(2), 
 		RA_R2(0), 
 		RA_R3(1), 
-		RA_R4(2), 
-		RA_R5(3); 
+		RA_R4(2),
+		RA_R5(3),
+		Race_Last(RA_R5.value);
 
 		private static final Race[] values = values();
 		public final long value;
@@ -2059,15 +2061,16 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 	public enum Niche {
 		NI_none(0),
 		NI_pc(1),
-		NI_ai(2),
+		NI_ai(2), 
 		NI_droid(3), 
 		NI_vehicle(4), 
 		NI_npc(5), 
 		NI_monster(6), 
 		NI_herbivore(7), 
 		NI_carnivore(8), 
-		NI_predator(9), 
-		NI_android(10); 
+		NI_predator(9),
+		NI_android(10),
+		Niche_Last(NI_android.value);
 
 		private static final Niche[] values = values();
 		public final long value;
@@ -2084,8 +2087,9 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 
 	public enum Gender {
 		GE_male(0), 
-		GE_female(1), 
-		GE_other(2); 
+		GE_female(1),
+		GE_other(2),
+		Gender_Last(GE_other.value);
 
 		private static final Gender[] values = values();
 		public final long value;
@@ -2321,15 +2325,16 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 		SP_repairDroid(218),
 		SP_spiderDroid(219),
 		SP_surgicalDroid(220),
-		SP_tattletaleDroid(221),
+		SP_tattletaleDroid(221), 
 		SP_trackerDroid(222), 
 		SP_treadwell(223), 
 		SP_ev9d9(224), 
 		SP_maulProbeDroid(225), 
 		SP_atst(226), 
 		SP_atat(227), 
-		SP_geonosian(228), 
-		SP_veractyle(229); 
+		SP_geonosian(228),
+		SP_veractyle(229),
+		Species_Last(SP_veractyle.value);
 
 		private static final Species[] values = values();
 		public final long value;
@@ -2345,8 +2350,9 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 	}
 
 	public enum MovementTypes {
-		MT_run(0), 
-		MT_walk(1); 
+		MT_run(0),
+		MT_walk(1),
+		MovementTypes_Last(MT_walk.value);
 
 		private static final MovementTypes[] values = values();
 		public final long value;
