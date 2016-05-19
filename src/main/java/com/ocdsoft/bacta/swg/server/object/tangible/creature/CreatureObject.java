@@ -12,6 +12,7 @@ import com.ocdsoft.bacta.swg.archive.delta.set.AutoDeltaStringSet;
 import com.ocdsoft.bacta.swg.archive.delta.vector.AutoDeltaFloatVector;
 import com.ocdsoft.bacta.swg.archive.delta.vector.AutoDeltaIntVector;
 import com.ocdsoft.bacta.swg.archive.delta.vector.AutoDeltaObjectVector;
+import com.ocdsoft.bacta.swg.server.controller.game.UpdatePostureMessage;
 import com.ocdsoft.bacta.swg.server.event.ObservableGameEvent;
 import com.ocdsoft.bacta.swg.server.message.game.object.PostureMessage;
 import com.ocdsoft.bacta.swg.server.object.buff.Buff;
@@ -762,7 +763,17 @@ public class CreatureObject extends TangibleObject {
     protected void sendObjectSpecificBaselinesToClient(final SoeUdpConnection client) {
         super.sendObjectSpecificBaselinesToClient(client);
 
+//        final Property property = getProperty(SlowDownProperty.getClassPropertyId());
+//
+//        if (property != null) {
+//            final SlowDownProperty slowDownProperty = (SlowDownProperty)property;
+//
+//            final SlowDownEffectMessage message = new SlowDownEffectMessage();
+//            client.sendMessage(message);
+//        }
 
+        final UpdatePostureMessage updatePostureMessage = new UpdatePostureMessage(getNetworkId(), getPosture());
+        client.sendMessage(updatePostureMessage);
     }
 
     /**
