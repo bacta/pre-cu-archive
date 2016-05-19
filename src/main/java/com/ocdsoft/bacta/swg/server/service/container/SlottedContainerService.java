@@ -1,6 +1,7 @@
 package com.ocdsoft.bacta.swg.server.service.container;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import com.ocdsoft.bacta.engine.utils.ReflectionUtil;
 import com.ocdsoft.bacta.swg.shared.container.*;
 import com.ocdsoft.bacta.swg.shared.object.GameObject;
@@ -17,6 +18,7 @@ import java.util.List;
 /**
  * Created by crush on 5/3/2016.
  */
+@Singleton
 public class SlottedContainerService {
     private static final Logger LOGGER = LoggerFactory.getLogger(SlottedContainerService.class);
     private static final Field slotMapField = ReflectionUtil.getFieldOrNull(SlottedContainer.class, "slotMap");

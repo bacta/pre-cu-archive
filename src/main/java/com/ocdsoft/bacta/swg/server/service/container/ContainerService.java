@@ -1,6 +1,7 @@
 package com.ocdsoft.bacta.swg.server.service.container;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import com.ocdsoft.bacta.engine.conf.BactaConfiguration;
 import com.ocdsoft.bacta.engine.utils.ReflectionUtil;
 import com.ocdsoft.bacta.swg.shared.container.ContainedByProperty;
@@ -21,6 +22,7 @@ import java.util.List;
  * Used for making transfers with a Container object directly. Please go through the
  * {@link ContainerTransferService} if making transfers.
  */
+@Singleton
 public class ContainerService {
     private static final Logger LOGGER = LoggerFactory.getLogger(ContainerService.class);
 
