@@ -6,7 +6,7 @@ import com.ocdsoft.bacta.swg.archive.delta.AutoDeltaBoolean;
 import com.ocdsoft.bacta.swg.archive.delta.AutoDeltaInt;
 import com.ocdsoft.bacta.swg.archive.delta.AutoDeltaVariable;
 import com.ocdsoft.bacta.swg.server.object.ServerObject;
-import com.ocdsoft.bacta.swg.server.object.template.server.ServerCellObjectTemplate;
+import com.ocdsoft.bacta.swg.server.object.template.server.ServerObjectTemplate;
 import com.ocdsoft.bacta.swg.shared.container.SlotIdManager;
 import com.ocdsoft.bacta.swg.shared.math.Vector;
 import com.ocdsoft.bacta.swg.shared.template.ObjectTemplateList;
@@ -23,7 +23,7 @@ public class CellObject extends ServerObject {
     @Inject
     public CellObject(final ObjectTemplateList objectTemplateList,
                       final SlotIdManager slotIdManager,
-                      final ServerCellObjectTemplate template) {
+                      final ServerObjectTemplate template) {
         super(objectTemplateList, slotIdManager, template, false);
 
         isPublic = new AutoDeltaBoolean(true);

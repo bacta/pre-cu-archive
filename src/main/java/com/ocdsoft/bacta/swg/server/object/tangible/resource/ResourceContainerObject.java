@@ -2,7 +2,7 @@ package com.ocdsoft.bacta.swg.server.object.tangible.resource;
 
 import com.google.inject.Inject;
 import com.ocdsoft.bacta.swg.server.object.tangible.TangibleObject;
-import com.ocdsoft.bacta.swg.server.object.template.server.ServerResourceContainerObjectTemplate;
+import com.ocdsoft.bacta.swg.server.object.template.server.ServerObjectTemplate;
 import com.ocdsoft.bacta.swg.shared.container.SlotIdManager;
 import com.ocdsoft.bacta.swg.shared.template.ObjectTemplateList;
 
@@ -20,7 +20,7 @@ public class ResourceContainerObject extends TangibleObject {
     @Inject
     public ResourceContainerObject(final ObjectTemplateList objectTemplateList,
                                    final SlotIdManager slotIdManager,
-                                   final ServerResourceContainerObjectTemplate template) {
+                                   final ServerObjectTemplate template) {
         super(objectTemplateList, slotIdManager, template);
     }
 }

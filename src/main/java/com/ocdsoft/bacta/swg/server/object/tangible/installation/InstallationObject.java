@@ -4,7 +4,7 @@ import com.google.inject.Inject;
 import com.ocdsoft.bacta.swg.archive.delta.AutoDeltaBoolean;
 import com.ocdsoft.bacta.swg.archive.delta.AutoDeltaFloat;
 import com.ocdsoft.bacta.swg.server.object.tangible.TangibleObject;
-import com.ocdsoft.bacta.swg.server.object.template.server.ServerInstallationObjectTemplate;
+import com.ocdsoft.bacta.swg.server.object.template.server.ServerObjectTemplate;
 import com.ocdsoft.bacta.swg.shared.container.SlotIdManager;
 import com.ocdsoft.bacta.swg.shared.template.ObjectTemplateList;
 
@@ -37,7 +37,7 @@ public class InstallationObject extends TangibleObject {
     @Inject
     public InstallationObject(final ObjectTemplateList objectTemplateList,
                               final SlotIdManager slotIdManager,
-                              final ServerInstallationObjectTemplate template) {
+                              final ServerObjectTemplate template) {
         super(objectTemplateList, slotIdManager, template);
 
         activated = new AutoDeltaBoolean();

@@ -1,7 +1,7 @@
 package com.ocdsoft.bacta.swg.server.object.universe.planet;
 
 import com.google.inject.Inject;
-import com.ocdsoft.bacta.swg.server.object.template.server.ServerPlanetObjectTemplate;
+import com.ocdsoft.bacta.swg.server.object.template.server.ServerObjectTemplate;
 import com.ocdsoft.bacta.swg.server.object.universe.UniverseObject;
 import com.ocdsoft.bacta.swg.shared.container.SlotIdManager;
 import com.ocdsoft.bacta.swg.shared.template.ObjectTemplateList;
@@ -15,7 +15,7 @@ public class PlanetObject extends UniverseObject {
     @Inject
     public PlanetObject(final ObjectTemplateList objectTemplateList,
                         final SlotIdManager slotIdManager,
-                        final ServerPlanetObjectTemplate template) {
+                        final ServerObjectTemplate template) {
         super(objectTemplateList, slotIdManager, template);
 
     }

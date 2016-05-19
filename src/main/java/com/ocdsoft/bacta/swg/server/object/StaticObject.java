@@ -1,7 +1,7 @@
 package com.ocdsoft.bacta.swg.server.object;
 
 import com.google.inject.Inject;
-import com.ocdsoft.bacta.swg.server.object.template.server.ServerStaticObjectTemplate;
+import com.ocdsoft.bacta.swg.server.object.template.server.ServerObjectTemplate;
 import com.ocdsoft.bacta.swg.shared.container.SlotIdManager;
 import com.ocdsoft.bacta.swg.shared.template.ObjectTemplateList;
 
@@ -12,7 +12,7 @@ public class StaticObject extends ServerObject {
     @Inject
     public StaticObject(final ObjectTemplateList objectTemplateList,
                         final SlotIdManager slotIdManager,
-                        final ServerStaticObjectTemplate template) {
+                        final ServerObjectTemplate template) {
         super(objectTemplateList, slotIdManager, template, false);
     }
 }

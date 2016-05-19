@@ -17,14 +17,18 @@ import com.ocdsoft.bacta.swg.server.message.game.scene.UpdateTransformMessage;
 import com.ocdsoft.bacta.swg.server.object.ServerObject;
 import com.ocdsoft.bacta.swg.server.object.UpdateTransformCallback;
 import com.ocdsoft.bacta.swg.server.object.tangible.creature.CreatureObject;
+import com.ocdsoft.bacta.swg.server.object.template.server.ServerObjectTemplate;
 import com.ocdsoft.bacta.swg.server.object.template.server.ServerTangibleObjectTemplate;
+import com.ocdsoft.bacta.swg.server.object.template.shared.SharedTangibleObjectTemplate;
 import com.ocdsoft.bacta.swg.server.zone.Zone;
 import com.ocdsoft.bacta.swg.shared.container.Container;
 import com.ocdsoft.bacta.swg.shared.container.SlotIdManager;
 import com.ocdsoft.bacta.swg.shared.math.Transform;
 import com.ocdsoft.bacta.swg.shared.math.Vector;
 import com.ocdsoft.bacta.swg.shared.object.GameObject;
+import com.ocdsoft.bacta.swg.shared.property.CustomizationDataProperty;
 import com.ocdsoft.bacta.swg.shared.template.ObjectTemplateList;
+import com.ocdsoft.bacta.swg.shared.utility.TriggerVolumeData;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -91,17 +95,23 @@ public class TangibleObject extends ServerObject implements SteerSubject<Vec3> {
     @Inject
     public TangibleObject(final ObjectTemplateList objectTemplateList,
                           final SlotIdManager slotIdManager,
-                          final ServerTangibleObjectTemplate template) {
+                          final ServerObjectTemplate template) {
         super(objectTemplateList, slotIdManager, template, false);
+
+        assert template instanceof ServerTangibleObjectTemplate;
+
+        final ServerTangibleObjectTemplate objectTemplate = (ServerTangibleObjectTemplate) template;
+
+        //hateList.setOwner(this);
 
         pvpFaction = new AutoDeltaInt();
         pvpType = new AutoDeltaInt();
         appearanceData = new AutoDeltaString("");
         components = new AutoDeltaIntSet();
-        condition = new AutoDeltaInt(template.getCondition());
-        count = new AutoDeltaInt(template.getCount());
+        condition = new AutoDeltaInt(objectTemplate.getCondition());
+        count = new AutoDeltaInt(objectTemplate.getCount());
         damageTaken = new AutoDeltaInt();
-        maxHitPoints = new AutoDeltaInt(template.getMaxHitPoints());
+        maxHitPoints = new AutoDeltaInt(objectTemplate.getMaxHitPoints());
         visible = new AutoDeltaBoolean(true);
         inCombat = new AutoDeltaBoolean();
         passiveRevealPlayerCharacter = new AutoDeltaLongSet();
@@ -109,6 +119,56 @@ public class TangibleObject extends ServerObject implements SteerSubject<Vec3> {
         accessList = new AutoDeltaLongSet();
         guildAccessList = new AutoDeltaIntSet();
         effectsMap = new AutoDeltaStringObjectMap<>(TangibleObjectEffect::new);
+
+        //Set to not disabled, and set invulnerable and wantSawAttack from template
+        int condition = this.condition.get();
+        condition &= ~(ServerTangibleObjectTemplate.Conditions.C_disabled.value
+                | ServerTangibleObjectTemplate.Conditions.C_invulnerable.value
+                | ServerTangibleObjectTemplate.Conditions.C_wantSawAttackTrigger.value);
+
+        if (objectTemplate.getInvulnerable())
+            condition |= ServerTangibleObjectTemplate.Conditions.C_invulnerable.value;
+
+        if (objectTemplate.getWantSawAttackTriggers())
+            condition |= ServerTangibleObjectTemplate.Conditions.C_wantSawAttackTrigger.value;
+
+        this.condition.set(condition);
+
+
+        //TODO: Attach trigger volumes to this object.
+        int i, count = objectTemplate.getTriggerVolumesCount();
+
+        for (i = 0; i < count; ++i) {
+            final TriggerVolumeData trigger = objectTemplate.getTriggerVolumes(i);
+            //createTriggerVolume(trigger.getRadius(), trigger.getName(), true);
+        }
+
+        //Initialize customization data property if any customization variables are declared for the shared tangible object template.
+        final SharedTangibleObjectTemplate sharedObjectTemplate = (SharedTangibleObjectTemplate) getSharedTemplate();
+
+        if (sharedObjectTemplate != null) {
+            //TODO: WTF?!?
+            //sharedObjectTemplate.createCustomizationDataPropertyAsNeeded(this);
+
+            final CustomizationDataProperty cdProperty = getProperty(CustomizationDataProperty.getClassPropertyId());
+
+            if (cdProperty != null) {
+                //retrieve the customization data instance associated with the property.
+                //final CustomizationData customizationData = cdProperty.fetchCustomizationData();
+
+                //customizationData.registerModificationListener(customizaitonDataModificationCallback, this);
+            }
+
+            //CreateAppearances
+        }
+
+        //if (isWaypoint())
+        //addNotification(ServerPathfindingNotification::getInstance());
+
+        //Attach the collision property
+        //final ServerCollisionProperty collision = new ServerCollisionProperty(this, getSharedTemplate());
+
+        //addProperty(collision);
 
         addMembersToPackages();
     }

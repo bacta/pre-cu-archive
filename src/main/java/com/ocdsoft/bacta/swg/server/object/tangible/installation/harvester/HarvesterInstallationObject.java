@@ -2,7 +2,7 @@ package com.ocdsoft.bacta.swg.server.object.tangible.installation.harvester;
 
 import com.google.inject.Inject;
 import com.ocdsoft.bacta.swg.server.object.tangible.installation.InstallationObject;
-import com.ocdsoft.bacta.swg.server.object.template.server.ServerHarvesterInstallationObjectTemplate;
+import com.ocdsoft.bacta.swg.server.object.template.server.ServerObjectTemplate;
 import com.ocdsoft.bacta.swg.shared.container.SlotIdManager;
 import com.ocdsoft.bacta.swg.shared.template.ObjectTemplateList;
 
@@ -22,7 +22,7 @@ public class HarvesterInstallationObject extends InstallationObject {
     @Inject
     public HarvesterInstallationObject(final ObjectTemplateList objectTemplateList,
                                        final SlotIdManager slotIdManager,
-                                       final ServerHarvesterInstallationObjectTemplate template) {
+                                       final ServerObjectTemplate template) {
         super(objectTemplateList, slotIdManager, template);
 
 

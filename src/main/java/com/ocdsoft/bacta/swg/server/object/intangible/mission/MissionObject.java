@@ -6,7 +6,7 @@ import com.ocdsoft.bacta.swg.archive.delta.AutoDeltaInt;
 import com.ocdsoft.bacta.swg.archive.delta.AutoDeltaString;
 import com.ocdsoft.bacta.swg.archive.delta.AutoDeltaVariable;
 import com.ocdsoft.bacta.swg.server.object.intangible.IntangibleObject;
-import com.ocdsoft.bacta.swg.server.object.template.server.ServerMissionObjectTemplate;
+import com.ocdsoft.bacta.swg.server.object.template.server.ServerObjectTemplate;
 import com.ocdsoft.bacta.swg.server.object.waypoint.Waypoint;
 import com.ocdsoft.bacta.swg.shared.container.SlotIdManager;
 import com.ocdsoft.bacta.swg.shared.localization.StringId;
@@ -35,7 +35,7 @@ public class MissionObject extends IntangibleObject {
     @Inject
     public MissionObject(final ObjectTemplateList objectTemplateList,
                          final SlotIdManager slotIdManager,
-                         final ServerMissionObjectTemplate template) {
+                         final ServerObjectTemplate template) {
         super(objectTemplateList, slotIdManager, template);
 
         description = new AutoDeltaVariable<>(StringId.INVALID, StringId::new);

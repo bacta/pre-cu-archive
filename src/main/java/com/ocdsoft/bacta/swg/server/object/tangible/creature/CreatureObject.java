@@ -17,7 +17,7 @@ import com.ocdsoft.bacta.swg.server.event.ObservableGameEvent;
 import com.ocdsoft.bacta.swg.server.message.game.object.PostureMessage;
 import com.ocdsoft.bacta.swg.server.object.buff.Buff;
 import com.ocdsoft.bacta.swg.server.object.tangible.TangibleObject;
-import com.ocdsoft.bacta.swg.server.object.template.server.ServerCreatureObjectTemplate;
+import com.ocdsoft.bacta.swg.server.object.template.server.ServerObjectTemplate;
 import com.ocdsoft.bacta.swg.server.object.template.shared.SharedCreatureObjectTemplate;
 import com.ocdsoft.bacta.swg.server.object.template.shared.SharedCreatureObjectTemplate.MovementTypes;
 import com.ocdsoft.bacta.swg.server.object.universe.group.GroupInviter;
@@ -93,7 +93,7 @@ public class CreatureObject extends TangibleObject {
     @Inject
     public CreatureObject(final ObjectTemplateList objectTempalteList,
                           final SlotIdManager slotIdManager,
-                          final ServerCreatureObjectTemplate template) {
+                          final ServerObjectTemplate template) {
         super(objectTempalteList, slotIdManager, template);
 
         unmodifiedMaxAttributes = new AutoDeltaIntVector();

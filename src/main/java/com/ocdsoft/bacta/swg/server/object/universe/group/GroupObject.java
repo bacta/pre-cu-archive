@@ -7,7 +7,7 @@ import com.ocdsoft.bacta.swg.archive.delta.AutoDeltaShort;
 import com.ocdsoft.bacta.swg.archive.delta.AutoDeltaString;
 import com.ocdsoft.bacta.swg.archive.delta.vector.AutoDeltaObjectVector;
 import com.ocdsoft.bacta.swg.server.object.tangible.ship.ShipFormationGroupMember;
-import com.ocdsoft.bacta.swg.server.object.template.server.ServerGroupObjectTemplate;
+import com.ocdsoft.bacta.swg.server.object.template.server.ServerObjectTemplate;
 import com.ocdsoft.bacta.swg.server.object.universe.UniverseObject;
 import com.ocdsoft.bacta.swg.shared.container.SlotIdManager;
 import com.ocdsoft.bacta.swg.shared.template.ObjectTemplateList;
@@ -31,7 +31,7 @@ public final class GroupObject extends UniverseObject {
     @Inject
     public GroupObject(final ObjectTemplateList objectTemplateList,
                        final SlotIdManager slotIdManager,
-                       final ServerGroupObjectTemplate template) {
+                       final ServerObjectTemplate template) {
         super(objectTemplateList, slotIdManager, template);
 
         groupMembers = new AutoDeltaObjectVector<>(GroupMember::new);

@@ -2,7 +2,7 @@ package com.ocdsoft.bacta.swg.server.object.intangible.schematic;
 
 import com.google.inject.Inject;
 import com.ocdsoft.bacta.swg.server.object.intangible.IntangibleObject;
-import com.ocdsoft.bacta.swg.server.object.template.server.ServerDraftSchematicObjectTemplate;
+import com.ocdsoft.bacta.swg.server.object.template.server.ServerObjectTemplate;
 import com.ocdsoft.bacta.swg.shared.container.SlotIdManager;
 import com.ocdsoft.bacta.swg.shared.template.ObjectTemplateList;
 
@@ -13,7 +13,7 @@ public class DraftSchematicObject extends IntangibleObject {
     @Inject
     public DraftSchematicObject(final ObjectTemplateList objectTemplateList,
                                 final SlotIdManager slotIdManager,
-                                final ServerDraftSchematicObjectTemplate template) {
+                                final ServerObjectTemplate template) {
         super(objectTemplateList, slotIdManager, template);
     }
 }

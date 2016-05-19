@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import com.ocdsoft.bacta.swg.archive.delta.AutoDeltaFloat;
 import com.ocdsoft.bacta.swg.archive.delta.AutoDeltaInt;
 import com.ocdsoft.bacta.swg.server.object.tangible.TangibleObject;
+import com.ocdsoft.bacta.swg.server.object.template.server.ServerObjectTemplate;
 import com.ocdsoft.bacta.swg.server.object.template.server.ServerObjectTemplate.DamageType;
 import com.ocdsoft.bacta.swg.server.object.template.server.ServerWeaponObjectTemplate;
 import com.ocdsoft.bacta.swg.server.object.template.server.ServerWeaponObjectTemplate.AttackType;
@@ -33,17 +34,21 @@ public class WeaponObject extends TangibleObject {
     @Inject
     public WeaponObject(final ObjectTemplateList objectTemplateList,
                         final SlotIdManager slotIdManager,
-                        final ServerWeaponObjectTemplate template) {
+                        final ServerObjectTemplate template) {
         super(objectTemplateList, slotIdManager, template);
+
+        assert template instanceof ServerWeaponObjectTemplate;
+
+        final ServerWeaponObjectTemplate objectTemplate = (ServerWeaponObjectTemplate) template;
 
         attackSpeed = new AutoDeltaFloat();
         accuracy = new AutoDeltaInt();
         minRange = new AutoDeltaFloat();
         maxRange = new AutoDeltaFloat();
-        damageType = new AutoDeltaInt((int) template.getDamageType().value);
+        damageType = new AutoDeltaInt((int) objectTemplate.getDamageType().value);
         elementalType = new AutoDeltaInt();
         elementalValue = new AutoDeltaInt();
-        weaponType = new AutoDeltaInt((int) template.getWeaponType().value);
+        weaponType = new AutoDeltaInt((int) objectTemplate.getWeaponType().value);
 
         sharedPackage.addVariable(attackSpeed);
         sharedPackage.addVariable(accuracy);

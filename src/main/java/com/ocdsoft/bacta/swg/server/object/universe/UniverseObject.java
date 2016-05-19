@@ -3,7 +3,7 @@ package com.ocdsoft.bacta.swg.server.object.universe;
 
 import com.google.inject.Inject;
 import com.ocdsoft.bacta.swg.server.object.ServerObject;
-import com.ocdsoft.bacta.swg.server.object.template.server.ServerUniverseObjectTemplate;
+import com.ocdsoft.bacta.swg.server.object.template.server.ServerObjectTemplate;
 import com.ocdsoft.bacta.swg.server.object.template.shared.SharedObjectTemplate;
 import com.ocdsoft.bacta.swg.shared.container.SlotIdManager;
 import com.ocdsoft.bacta.swg.shared.template.ObjectTemplateList;
@@ -21,7 +21,7 @@ public abstract class UniverseObject extends ServerObject {
     @Inject
     public UniverseObject(final ObjectTemplateList objectTemplateList,
                           final SlotIdManager slotIdManager,
-                          final ServerUniverseObjectTemplate template) {
+                          final ServerObjectTemplate template) {
         super(objectTemplateList, slotIdManager, template, false);
     }
 }

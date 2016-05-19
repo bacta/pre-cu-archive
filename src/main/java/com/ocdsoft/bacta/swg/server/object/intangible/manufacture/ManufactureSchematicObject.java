@@ -4,7 +4,7 @@ import com.google.inject.Inject;
 import com.ocdsoft.bacta.swg.archive.delta.*;
 import com.ocdsoft.bacta.swg.archive.delta.map.AutoDeltaObjectFloatMap;
 import com.ocdsoft.bacta.swg.server.object.intangible.IntangibleObject;
-import com.ocdsoft.bacta.swg.server.object.template.server.ServerManufactureSchematicObjectTemplate;
+import com.ocdsoft.bacta.swg.server.object.template.server.ServerObjectTemplate;
 import com.ocdsoft.bacta.swg.shared.container.SlotIdManager;
 import com.ocdsoft.bacta.swg.shared.localization.StringId;
 import com.ocdsoft.bacta.swg.shared.template.ObjectTemplateList;
@@ -25,7 +25,7 @@ public class ManufactureSchematicObject extends IntangibleObject {
     @Inject
     public ManufactureSchematicObject(final ObjectTemplateList objectTemplateList,
                                       final SlotIdManager slotIdManager,
-                                      final ServerManufactureSchematicObjectTemplate template) {
+                                      final ServerObjectTemplate template) {
         super(objectTemplateList, slotIdManager, template);
 
         attributes = new AutoDeltaObjectFloatMap<>(StringId::new);

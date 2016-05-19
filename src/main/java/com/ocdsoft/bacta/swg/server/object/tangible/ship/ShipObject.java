@@ -2,7 +2,7 @@ package com.ocdsoft.bacta.swg.server.object.tangible.ship;
 
 import com.google.inject.Inject;
 import com.ocdsoft.bacta.swg.server.object.tangible.TangibleObject;
-import com.ocdsoft.bacta.swg.server.object.template.server.ServerShipObjectTemplate;
+import com.ocdsoft.bacta.swg.server.object.template.server.ServerObjectTemplate;
 import com.ocdsoft.bacta.swg.shared.container.SlotIdManager;
 import com.ocdsoft.bacta.swg.shared.template.ObjectTemplateList;
 
@@ -91,7 +91,7 @@ public class ShipObject extends TangibleObject {
     @Inject
     public ShipObject(final ObjectTemplateList objectTemplateList,
                       final SlotIdManager slotIdManager,
-                      final ServerShipObjectTemplate template) {
+                      final ServerObjectTemplate template) {
         super(objectTemplateList, slotIdManager, template);
     }
 }

@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import com.ocdsoft.bacta.swg.archive.delta.AutoDeltaInt;
 import com.ocdsoft.bacta.swg.server.object.ServerObject;
 import com.ocdsoft.bacta.swg.server.object.template.server.ServerIntangibleObjectTemplate;
+import com.ocdsoft.bacta.swg.server.object.template.server.ServerObjectTemplate;
 import com.ocdsoft.bacta.swg.shared.container.SlotIdManager;
 import com.ocdsoft.bacta.swg.shared.template.ObjectTemplateList;
 
@@ -13,10 +14,14 @@ public class IntangibleObject extends ServerObject {
     @Inject
     public IntangibleObject(final ObjectTemplateList objectTemplateList,
                             final SlotIdManager slotIdManager,
-                            final ServerIntangibleObjectTemplate template) {
+                            final ServerObjectTemplate template) {
         super(objectTemplateList, slotIdManager, template, false);
 
-        count = new AutoDeltaInt(template.getCount());
+        assert template instanceof ServerIntangibleObjectTemplate;
+
+        final ServerIntangibleObjectTemplate objectTemplate = (ServerIntangibleObjectTemplate) template;
+
+        count = new AutoDeltaInt(objectTemplate.getCount());
 
         addMembersToPackages();
     }

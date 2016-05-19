@@ -2,7 +2,7 @@ package com.ocdsoft.bacta.swg.server.object.tangible.factory;
 
 import com.google.inject.Inject;
 import com.ocdsoft.bacta.swg.server.object.tangible.TangibleObject;
-import com.ocdsoft.bacta.swg.server.object.template.server.ServerFactoryObjectTemplate;
+import com.ocdsoft.bacta.swg.server.object.template.server.ServerObjectTemplate;
 import com.ocdsoft.bacta.swg.shared.container.SlotIdManager;
 import com.ocdsoft.bacta.swg.shared.template.ObjectTemplateList;
 
@@ -10,7 +10,7 @@ public final class FactoryObject extends TangibleObject {
     @Inject
     public FactoryObject(final ObjectTemplateList objectTemplateList,
                          final SlotIdManager slotIdManager,
-                         final ServerFactoryObjectTemplate template) {
+                         final ServerObjectTemplate template) {
         super(objectTemplateList, slotIdManager, template);
     }
 }

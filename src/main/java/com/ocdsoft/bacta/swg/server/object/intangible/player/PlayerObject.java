@@ -12,7 +12,7 @@ import com.ocdsoft.bacta.swg.server.object.intangible.IntangibleObject;
 import com.ocdsoft.bacta.swg.server.object.intangible.schematic.DraftSchematicCombinedCrcs;
 import com.ocdsoft.bacta.swg.server.object.matchmaking.MatchMakingId;
 import com.ocdsoft.bacta.swg.server.object.tangible.creature.CreatureObject;
-import com.ocdsoft.bacta.swg.server.object.template.server.ServerPlayerObjectTemplate;
+import com.ocdsoft.bacta.swg.server.object.template.server.ServerObjectTemplate;
 import com.ocdsoft.bacta.swg.server.object.waypoint.Waypoint;
 import com.ocdsoft.bacta.swg.shared.container.SlotIdManager;
 import com.ocdsoft.bacta.swg.shared.foundation.BitArray;
@@ -106,7 +106,7 @@ public final class PlayerObject extends IntangibleObject {
     @Inject
     public PlayerObject(final ObjectTemplateList objectTemplateList,
                         final SlotIdManager slotIdManager,
-                        final ServerPlayerObjectTemplate template) {
+                        final ServerObjectTemplate template) {
         super(objectTemplateList, slotIdManager, template);
 
         accountNumLotsOverLimitSpam = new AutoDeltaInt();
