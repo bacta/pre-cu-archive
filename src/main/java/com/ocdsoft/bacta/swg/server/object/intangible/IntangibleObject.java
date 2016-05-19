@@ -1,6 +1,7 @@
 package com.ocdsoft.bacta.swg.server.object.intangible;
 
 import com.google.inject.Inject;
+import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
 import com.ocdsoft.bacta.swg.archive.delta.AutoDeltaInt;
 import com.ocdsoft.bacta.swg.server.object.ServerObject;
 import com.ocdsoft.bacta.swg.server.object.template.server.ServerIntangibleObjectTemplate;
@@ -28,6 +29,11 @@ public class IntangibleObject extends ServerObject {
 
     private void addMembersToPackages() {
         sharedPackage.addVariable(count);
+    }
+
+    @Override
+    protected void sendObjectSpecificBaselinesToClient(final SoeUdpConnection client) {
+        //IsFlattenedTheaterMessage<pair<long, bool>>
     }
 
     public enum TheaterLocationType {

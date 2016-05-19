@@ -12,17 +12,21 @@ import com.ocdsoft.bacta.swg.archive.delta.set.AutoDeltaStringSet;
 import com.ocdsoft.bacta.swg.archive.delta.vector.AutoDeltaFloatVector;
 import com.ocdsoft.bacta.swg.archive.delta.vector.AutoDeltaIntVector;
 import com.ocdsoft.bacta.swg.archive.delta.vector.AutoDeltaObjectVector;
+import com.ocdsoft.bacta.swg.server.command.CommandQueue;
 import com.ocdsoft.bacta.swg.server.controller.game.UpdatePostureMessage;
 import com.ocdsoft.bacta.swg.server.event.ObservableGameEvent;
 import com.ocdsoft.bacta.swg.server.message.game.object.PostureMessage;
 import com.ocdsoft.bacta.swg.server.object.buff.Buff;
 import com.ocdsoft.bacta.swg.server.object.tangible.TangibleObject;
+import com.ocdsoft.bacta.swg.server.object.template.server.ServerCreatureObjectTemplate;
 import com.ocdsoft.bacta.swg.server.object.template.server.ServerObjectTemplate;
 import com.ocdsoft.bacta.swg.server.object.template.shared.SharedCreatureObjectTemplate;
 import com.ocdsoft.bacta.swg.server.object.template.shared.SharedCreatureObjectTemplate.MovementTypes;
 import com.ocdsoft.bacta.swg.server.object.universe.group.GroupInviter;
 import com.ocdsoft.bacta.swg.server.object.universe.group.GroupMissionCriticalObject;
+import com.ocdsoft.bacta.swg.shared.collision.CollisionProperty;
 import com.ocdsoft.bacta.swg.shared.container.SlotIdManager;
+import com.ocdsoft.bacta.swg.shared.math.Vector;
 import com.ocdsoft.bacta.swg.shared.object.GameObject;
 import com.ocdsoft.bacta.swg.shared.template.ObjectTemplateList;
 import gnu.trove.list.TIntList;
@@ -135,7 +139,6 @@ public class CreatureObject extends TangibleObject {
         wearableData = new AutoDeltaObjectVector<>(WearableEntry::new);
         alternateAppearanceSharedObjectTemplateName = new AutoDeltaString();
         coverVisibility = new AutoDeltaBoolean(true);
-
         totalAttributes = new AutoDeltaIntVector();
         totalMaxAttributes = new AutoDeltaIntVector();
         buffs = new AutoDeltaIntObjectMap<>(Buff.PackedBuff::new);
@@ -157,6 +160,56 @@ public class CreatureObject extends TangibleObject {
         timedModUpdateTime = new AutoDeltaIntVector();
         intendedTarget = new AutoDeltaLong();
         mood = new AutoDeltaByte();
+
+        assert template instanceof ServerCreatureObjectTemplate;
+
+        final ServerCreatureObjectTemplate serverTemplate = (ServerCreatureObjectTemplate) template;
+        final SharedCreatureObjectTemplate sharedTemplate = (SharedCreatureObjectTemplate) getSharedTemplate();
+
+        addProperty(new CommandQueue(this));
+
+        final float scale = Math.max(0.f, sharedTemplate.getScale());
+        scaleFactor.set(scale);
+        setScale(Vector.XYZ111.multiply(scale));
+
+        //Get the attribute values.
+
+        for (int i = 0; i < CreatureAttribute.SIZE; ++i) {
+            attributes.set(i, serverTemplate.getAttributes(ServerObjectTemplate.Attributes.from(i)));
+            maxAttributes.set(i, attributes.get(i));
+            //cachedCurrentAttributeModValues.set(i, 0);
+            //cachedMaxAttributeModValues.set(i, 0);
+            //regeneration[i] = 0;
+        }
+
+        //Store the default regen values in the former faucet attrib slots.
+        attributes.set(CreatureAttribute.CONSTITUTION, 0); //ConfigServerGame::getDefaultHealthRegen()
+        attributes.set(CreatureAttribute.STAMINA, 0); //ConfigServerGame::getDefaultActionRegen()
+        attributes.set(CreatureAttribute.WILLPOWER, 0); //ConfigServerGame::getDefaultMindRegen()
+
+        //TODO: These are server side only states that are used for NPCS: Fear, Interest, Anger, etc...
+
+        //Fix the size of the mental state vectors.
+        //maxMentalStates
+        //mentalStateDecays
+
+        //Get the mental state values.
+        //for (int i = 0; i < 4; ++i) {
+        //final ServerObjectTemplate.MentalStates state = ServerObjectTemplate.MentalStates.from(i);
+
+        //maxMentalStates.set(i, serverTemplate.getMaxMentalStates(state));
+        //initialState.currentValues[i] = 0;
+        //mentalStateDecays.set(i, (float)(serverTemplate.getMentalStatesDecay(state)));
+        //}
+
+        final CollisionProperty collisionProperty = getCollisionProperty();
+
+        if (collisionProperty != null)
+            collisionProperty.setServerSide(true);
+
+        addMembersToPackages();
+
+        //setup source object for callbacks.
     }
 
     private void addMembersToPackages() {
