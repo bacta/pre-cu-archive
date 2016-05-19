@@ -2,6 +2,8 @@ package com.ocdsoft.bacta.swg.server.object.template.shared;
 
 import bacta.iff.Iff;
 import com.google.common.base.Preconditions;
+import com.ocdsoft.bacta.swg.shared.container.ArrangementDescriptor;
+import com.ocdsoft.bacta.swg.shared.container.SlotDescriptor;
 import com.ocdsoft.bacta.swg.shared.foundation.DataResourceList;
 import com.ocdsoft.bacta.swg.shared.foundation.Tag;
 import com.ocdsoft.bacta.swg.shared.localization.StringId;
@@ -57,6 +59,28 @@ public class SharedObjectTemplate extends ObjectTemplate {
 	public int getId() {
 		return TAG_SHAREDOBJECTTEMPLATE;
 	}
+
+	//@TDF-USER-START
+	private ArrangementDescriptor arrangementDescriptor;
+	private SlotDescriptor slotDescriptor;
+
+	public ArrangementDescriptor getArrangementDescriptor() {
+		return arrangementDescriptor;
+	}
+
+	public SlotDescriptor getSlotDescriptor() {
+		return slotDescriptor;
+	}
+
+	public void setArrangementDescriptor(final ArrangementDescriptor arrangementDescriptor) {
+		this.arrangementDescriptor = arrangementDescriptor;
+	}
+
+	public void setSlotDescriptor(final SlotDescriptor slotDescriptor) {
+		this.slotDescriptor = slotDescriptor;
+	}
+
+	//@TDF-USER-END
 
 	public StringId getObjectName() {
 		SharedObjectTemplate base = null;
