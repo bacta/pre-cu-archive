@@ -832,7 +832,7 @@ public class TemplateDefinitionWriter {
             "com.google.common.base.Preconditions",
             "com.ocdsoft.bacta.swg.shared.foundation.Tag",
             "com.ocdsoft.bacta.swg.shared.foundation.DataResourceList",
-            "com.ocdsoft.bacta.swg.localization.StringId",
+            "com.ocdsoft.bacta.swg.shared.localization.StringId",
             "com.ocdsoft.bacta.swg.shared.template.ObjectTemplate",
             "com.ocdsoft.bacta.swg.shared.template.definition.TemplateDefinition",
             "com.ocdsoft.bacta.swg.shared.utility.BoolParam",

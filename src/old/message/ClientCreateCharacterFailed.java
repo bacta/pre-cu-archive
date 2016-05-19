@@ -1,7 +1,7 @@
 package com.ocdsoft.bacta.swg.precu.message;
 
 import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
-import com.ocdsoft.bacta.swg.localization.StringId;
+import com.ocdsoft.bacta.swg.shared.localization.StringId;
 
 import java.nio.ByteBuffer;
 

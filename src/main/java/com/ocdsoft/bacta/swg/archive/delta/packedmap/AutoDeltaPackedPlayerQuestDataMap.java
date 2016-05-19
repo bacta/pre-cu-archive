@@ -1,7 +1,7 @@
 package com.ocdsoft.bacta.swg.archive.delta.packedmap;
 
 import com.ocdsoft.bacta.swg.archive.delta.map.AutoDeltaIntObjectMap;
-import com.ocdsoft.bacta.swg.precu.quest.PlayerQuestData;
+import com.ocdsoft.bacta.swg.server.quest.PlayerQuestData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -1,7 +1,7 @@
 package com.ocdsoft.bacta.swg.shared.template;
 
 import bacta.iff.Iff;
-import com.ocdsoft.bacta.swg.precu.object.template.shared.SharedObjectTemplate;
+import com.ocdsoft.bacta.swg.server.object.template.shared.SharedObjectTemplate;
 import com.ocdsoft.bacta.swg.shared.foundation.DataResource;
 import com.ocdsoft.bacta.swg.shared.foundation.DataResourceList;
 

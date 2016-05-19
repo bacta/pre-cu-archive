@@ -1,7 +1,7 @@
 package com.ocdsoft.bacta.swg.archive.delta.packedmap;
 
 import com.ocdsoft.bacta.swg.archive.delta.map.AutoDeltaIntObjectMap;
-import com.ocdsoft.bacta.swg.precu.object.buff.Buff;
+import com.ocdsoft.bacta.swg.server.object.buff.Buff;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -1,6 +1,6 @@
 package com.ocdsoft.bacta.swg.archive;
 
-import com.ocdsoft.bacta.swg.util.ByteAppender;
+import com.ocdsoft.bacta.engine.buffer.ByteBufferWritable;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
@@ -9,24 +9,16 @@ import java.util.List;
 /**
  * Created by crush on 8/14/2014.
  */
-public class AutoArray<T> implements AutoVariableBase {
-    private List<T> array = new ArrayList<>();
+public class AutoArray<T extends ByteBufferWritable> implements AutoVariableBase {
+    private final List<T> array = new ArrayList<>();
 
     @Override
-    public void pack(ByteBuffer buffer) {
-        try {
-            buffer.putInt(array.size());
-
-            for (T item : array) {
-                ByteAppender.append(item, buffer);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void pack(final ByteBuffer buffer) {
+        throw new UnsupportedOperationException("Not implemented");
     }
 
     @Override
-    public void unpack(ByteBuffer buffer) {
-
+    public void unpack(final ByteBuffer buffer) {
+        throw new UnsupportedOperationException("Not implemented");
     }
 }

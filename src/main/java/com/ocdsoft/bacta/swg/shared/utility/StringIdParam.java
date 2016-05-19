@@ -1,8 +1,8 @@
 package com.ocdsoft.bacta.swg.shared.utility;
 
 import bacta.iff.Iff;
-import com.ocdsoft.bacta.swg.localization.StringId;
 import com.ocdsoft.bacta.swg.shared.foundation.DataResourceList;
+import com.ocdsoft.bacta.swg.shared.localization.StringId;
 import com.ocdsoft.bacta.swg.shared.template.ObjectTemplate;
 
 /**

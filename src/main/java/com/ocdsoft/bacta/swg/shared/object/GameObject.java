@@ -2,7 +2,7 @@ package com.ocdsoft.bacta.swg.shared.object;
 
 import com.google.common.base.Preconditions;
 import com.ocdsoft.bacta.engine.object.NetworkObject;
-import com.ocdsoft.bacta.swg.precu.object.ServerObject;
+import com.ocdsoft.bacta.swg.server.object.ServerObject;
 import com.ocdsoft.bacta.swg.shared.appearance.Appearance;
 import com.ocdsoft.bacta.swg.shared.collision.CollisionProperty;
 import com.ocdsoft.bacta.swg.shared.container.ContainedByProperty;

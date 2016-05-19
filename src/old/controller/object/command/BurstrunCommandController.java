@@ -1,7 +1,7 @@
 package com.ocdsoft.bacta.swg.precu.controller.game.object.command;
 
 import com.google.inject.Inject;
-import com.ocdsoft.bacta.swg.localization.StringId;
+import com.ocdsoft.bacta.swg.shared.localization.StringId;
 import com.ocdsoft.bacta.soe.controller.Command;
 import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
 import com.ocdsoft.bacta.swg.precu.message.SuiCreatePageMessage;

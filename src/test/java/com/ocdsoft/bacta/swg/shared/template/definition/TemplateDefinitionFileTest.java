@@ -1,6 +1,6 @@
 package com.ocdsoft.bacta.swg.shared.template.definition;
 
-import com.ocdsoft.bacta.swg.datatable.DataTableTest;
+import com.ocdsoft.bacta.swg.shared.datatable.DataTableTest;
 import org.junit.Test;
 
 import java.io.File;

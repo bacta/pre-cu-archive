@@ -34,14 +34,4 @@ public class ClientRandomNameRequestController implements GameNetworkMessageCont
 
         client.sendMessage(new ClientRandomNameResponse(fullName, raceString));
     }
-
-    private Race parseRace(String raceString) {
-        String race = raceString.substring(raceString.lastIndexOf("/") + 1, raceString.lastIndexOf("_"));
-        return Race.valueOf(race.toUpperCase());
-    }
-
-    private Gender parseGender(String raceString) {
-        String gender = raceString.substring(raceString.lastIndexOf("_") + 1, raceString.indexOf(".iff"));
-        return Gender.valueOf(gender.toUpperCase());
-    }
 }
