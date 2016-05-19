@@ -74,6 +74,12 @@ public class AutoDeltaIntVector extends AutoDeltaContainer {
         commands.add(command);
         ++baselineCommandCount;
 
+        //Resize v to element + 1
+        if (element >= v.size()) {
+            for (int i = 0, size = v.size(); i < element + 1 - size; ++i)
+                v.add(0);
+        }
+
         final int oldValue = v.get(element);
         v.set(element, value);
         touch();

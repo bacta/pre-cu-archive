@@ -74,6 +74,12 @@ public class AutoDeltaBoolVector extends AutoDeltaContainer {
         commands.add(command);
         ++baselineCommandCount;
 
+        //Resize v to element + 1
+        if (element >= v.size()) {
+            for (int i = 0, size = v.size(); i < element + 1 - size; ++i)
+                v.add((byte) 0);
+        }
+
         final boolean oldValue = v.get(element) != 0;
         v.set(element, value ? (byte) 1 : (byte) 0);
         touch();
