@@ -60,7 +60,7 @@ public class ServerDraftSchematicObjectTemplate extends ServerIntangibleObjectTe
 	public CraftingType getCategory() {
 		ServerDraftSchematicObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerDraftSchematicObjectTemplate)
+		if (baseData instanceof ServerDraftSchematicObjectTemplate)
 			base = (ServerDraftSchematicObjectTemplate) baseData;
 
 		if (!category.isLoaded()) {
@@ -77,7 +77,7 @@ public class ServerDraftSchematicObjectTemplate extends ServerIntangibleObjectTe
 	public ServerObjectTemplate getCraftedObjectTemplate() {
 		ServerDraftSchematicObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerDraftSchematicObjectTemplate)
+		if (baseData instanceof ServerDraftSchematicObjectTemplate)
 			base = (ServerDraftSchematicObjectTemplate) baseData;
 
 		if (!craftedObjectTemplate.isLoaded()) {
@@ -104,7 +104,7 @@ public class ServerDraftSchematicObjectTemplate extends ServerIntangibleObjectTe
 	public ServerFactoryObjectTemplate getCrateObjectTemplate() {
 		ServerDraftSchematicObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerDraftSchematicObjectTemplate)
+		if (baseData instanceof ServerDraftSchematicObjectTemplate)
 			base = (ServerDraftSchematicObjectTemplate) baseData;
 
 		if (!crateObjectTemplate.isLoaded()) {
@@ -131,7 +131,7 @@ public class ServerDraftSchematicObjectTemplate extends ServerIntangibleObjectTe
 	public IngredientSlot getSlots(int index) {
 		ServerDraftSchematicObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerDraftSchematicObjectTemplate)
+		if (baseData instanceof ServerDraftSchematicObjectTemplate)
 			base = (ServerDraftSchematicObjectTemplate) baseData;
 
 		if (!slotsLoaded) {
@@ -169,7 +169,7 @@ public class ServerDraftSchematicObjectTemplate extends ServerIntangibleObjectTe
 	public IngredientSlot getSlotsMin(int index) {
 		ServerDraftSchematicObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerDraftSchematicObjectTemplate)
+		if (baseData instanceof ServerDraftSchematicObjectTemplate)
 			base = (ServerDraftSchematicObjectTemplate) baseData;
 
 		if (!slotsLoaded) {
@@ -207,7 +207,7 @@ public class ServerDraftSchematicObjectTemplate extends ServerIntangibleObjectTe
 	public IngredientSlot getSlotsMax(int index) {
 		ServerDraftSchematicObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerDraftSchematicObjectTemplate)
+		if (baseData instanceof ServerDraftSchematicObjectTemplate)
 			base = (ServerDraftSchematicObjectTemplate) baseData;
 
 		if (!slotsLoaded) {
@@ -264,7 +264,7 @@ public class ServerDraftSchematicObjectTemplate extends ServerIntangibleObjectTe
 	public String getSkillCommands(int index) {
 		ServerDraftSchematicObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerDraftSchematicObjectTemplate)
+		if (baseData instanceof ServerDraftSchematicObjectTemplate)
 			base = (ServerDraftSchematicObjectTemplate) baseData;
 
 		if (!skillCommandsLoaded) {
@@ -309,7 +309,7 @@ public class ServerDraftSchematicObjectTemplate extends ServerIntangibleObjectTe
 	public boolean getDestroyIngredients() {
 		ServerDraftSchematicObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerDraftSchematicObjectTemplate)
+		if (baseData instanceof ServerDraftSchematicObjectTemplate)
 			base = (ServerDraftSchematicObjectTemplate) baseData;
 
 		if (!destroyIngredients.isLoaded()) {
@@ -327,7 +327,7 @@ public class ServerDraftSchematicObjectTemplate extends ServerIntangibleObjectTe
 	public String getManufactureScripts(int index) {
 		ServerDraftSchematicObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerDraftSchematicObjectTemplate)
+		if (baseData instanceof ServerDraftSchematicObjectTemplate)
 			base = (ServerDraftSchematicObjectTemplate) baseData;
 
 		if (!manufactureScriptsLoaded) {
@@ -372,7 +372,7 @@ public class ServerDraftSchematicObjectTemplate extends ServerIntangibleObjectTe
 	public int getItemsPerContainer() {
 		ServerDraftSchematicObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerDraftSchematicObjectTemplate)
+		if (baseData instanceof ServerDraftSchematicObjectTemplate)
 			base = (ServerDraftSchematicObjectTemplate) baseData;
 
 		if (!itemsPerContainer.isLoaded()) {
@@ -409,7 +409,7 @@ public class ServerDraftSchematicObjectTemplate extends ServerIntangibleObjectTe
 	public int getItemsPerContainerMin() {
 		ServerDraftSchematicObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerDraftSchematicObjectTemplate)
+		if (baseData instanceof ServerDraftSchematicObjectTemplate)
 			base = (ServerDraftSchematicObjectTemplate) baseData;
 
 		if (!itemsPerContainer.isLoaded()) {
@@ -446,7 +446,7 @@ public class ServerDraftSchematicObjectTemplate extends ServerIntangibleObjectTe
 	public int getItemsPerContainerMax() {
 		ServerDraftSchematicObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerDraftSchematicObjectTemplate)
+		if (baseData instanceof ServerDraftSchematicObjectTemplate)
 			base = (ServerDraftSchematicObjectTemplate) baseData;
 
 		if (!itemsPerContainer.isLoaded()) {
@@ -483,7 +483,7 @@ public class ServerDraftSchematicObjectTemplate extends ServerIntangibleObjectTe
 	public float getManufactureTime() {
 		ServerDraftSchematicObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerDraftSchematicObjectTemplate)
+		if (baseData instanceof ServerDraftSchematicObjectTemplate)
 			base = (ServerDraftSchematicObjectTemplate) baseData;
 
 		if (!manufactureTime.isLoaded()) {
@@ -520,7 +520,7 @@ public class ServerDraftSchematicObjectTemplate extends ServerIntangibleObjectTe
 	public float getManufactureTimeMin() {
 		ServerDraftSchematicObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerDraftSchematicObjectTemplate)
+		if (baseData instanceof ServerDraftSchematicObjectTemplate)
 			base = (ServerDraftSchematicObjectTemplate) baseData;
 
 		if (!manufactureTime.isLoaded()) {
@@ -557,7 +557,7 @@ public class ServerDraftSchematicObjectTemplate extends ServerIntangibleObjectTe
 	public float getManufactureTimeMax() {
 		ServerDraftSchematicObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerDraftSchematicObjectTemplate)
+		if (baseData instanceof ServerDraftSchematicObjectTemplate)
 			base = (ServerDraftSchematicObjectTemplate) baseData;
 
 		if (!manufactureTime.isLoaded()) {
@@ -594,7 +594,7 @@ public class ServerDraftSchematicObjectTemplate extends ServerIntangibleObjectTe
 	public float getPrototypeTime() {
 		ServerDraftSchematicObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerDraftSchematicObjectTemplate)
+		if (baseData instanceof ServerDraftSchematicObjectTemplate)
 			base = (ServerDraftSchematicObjectTemplate) baseData;
 
 		if (!prototypeTime.isLoaded()) {
@@ -631,7 +631,7 @@ public class ServerDraftSchematicObjectTemplate extends ServerIntangibleObjectTe
 	public float getPrototypeTimeMin() {
 		ServerDraftSchematicObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerDraftSchematicObjectTemplate)
+		if (baseData instanceof ServerDraftSchematicObjectTemplate)
 			base = (ServerDraftSchematicObjectTemplate) baseData;
 
 		if (!prototypeTime.isLoaded()) {
@@ -668,7 +668,7 @@ public class ServerDraftSchematicObjectTemplate extends ServerIntangibleObjectTe
 	public float getPrototypeTimeMax() {
 		ServerDraftSchematicObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerDraftSchematicObjectTemplate)
+		if (baseData instanceof ServerDraftSchematicObjectTemplate)
 			base = (ServerDraftSchematicObjectTemplate) baseData;
 
 		if (!prototypeTime.isLoaded()) {
@@ -833,7 +833,7 @@ public class ServerDraftSchematicObjectTemplate extends ServerIntangibleObjectTe
 		public boolean getOptional() {
 			IngredientSlotObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof IngredientSlotObjectTemplate)
+			if (baseData instanceof IngredientSlotObjectTemplate)
 				base = (IngredientSlotObjectTemplate) baseData;
 
 			if (!optional.isLoaded()) {
@@ -851,7 +851,7 @@ public class ServerDraftSchematicObjectTemplate extends ServerIntangibleObjectTe
 		public StringId getName() {
 			IngredientSlotObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof IngredientSlotObjectTemplate)
+			if (baseData instanceof IngredientSlotObjectTemplate)
 				base = (IngredientSlotObjectTemplate) baseData;
 
 			if (!name.isLoaded()) {
@@ -869,7 +869,7 @@ public class ServerDraftSchematicObjectTemplate extends ServerIntangibleObjectTe
 		public Ingredient getOptions(int index) {
 			IngredientSlotObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof IngredientSlotObjectTemplate)
+			if (baseData instanceof IngredientSlotObjectTemplate)
 				base = (IngredientSlotObjectTemplate) baseData;
 
 			if (!optionsLoaded) {
@@ -905,7 +905,7 @@ public class ServerDraftSchematicObjectTemplate extends ServerIntangibleObjectTe
 		public Ingredient getOptionsMin(int index) {
 			IngredientSlotObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof IngredientSlotObjectTemplate)
+			if (baseData instanceof IngredientSlotObjectTemplate)
 				base = (IngredientSlotObjectTemplate) baseData;
 
 			if (!optionsLoaded) {
@@ -941,7 +941,7 @@ public class ServerDraftSchematicObjectTemplate extends ServerIntangibleObjectTe
 		public Ingredient getOptionsMax(int index) {
 			IngredientSlotObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof IngredientSlotObjectTemplate)
+			if (baseData instanceof IngredientSlotObjectTemplate)
 				base = (IngredientSlotObjectTemplate) baseData;
 
 			if (!optionsLoaded) {
@@ -996,7 +996,7 @@ public class ServerDraftSchematicObjectTemplate extends ServerIntangibleObjectTe
 		public String getOptionalSkillCommand() {
 			IngredientSlotObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof IngredientSlotObjectTemplate)
+			if (baseData instanceof IngredientSlotObjectTemplate)
 				base = (IngredientSlotObjectTemplate) baseData;
 
 			if (!optionalSkillCommand.isLoaded()) {
@@ -1014,7 +1014,7 @@ public class ServerDraftSchematicObjectTemplate extends ServerIntangibleObjectTe
 		public float getComplexity() {
 			IngredientSlotObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof IngredientSlotObjectTemplate)
+			if (baseData instanceof IngredientSlotObjectTemplate)
 				base = (IngredientSlotObjectTemplate) baseData;
 
 			if (!complexity.isLoaded()) {
@@ -1051,7 +1051,7 @@ public class ServerDraftSchematicObjectTemplate extends ServerIntangibleObjectTe
 		public float getComplexityMin() {
 			IngredientSlotObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof IngredientSlotObjectTemplate)
+			if (baseData instanceof IngredientSlotObjectTemplate)
 				base = (IngredientSlotObjectTemplate) baseData;
 
 			if (!complexity.isLoaded()) {
@@ -1088,7 +1088,7 @@ public class ServerDraftSchematicObjectTemplate extends ServerIntangibleObjectTe
 		public float getComplexityMax() {
 			IngredientSlotObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof IngredientSlotObjectTemplate)
+			if (baseData instanceof IngredientSlotObjectTemplate)
 				base = (IngredientSlotObjectTemplate) baseData;
 
 			if (!complexity.isLoaded()) {
@@ -1125,7 +1125,7 @@ public class ServerDraftSchematicObjectTemplate extends ServerIntangibleObjectTe
 		public String getAppearance() {
 			IngredientSlotObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof IngredientSlotObjectTemplate)
+			if (baseData instanceof IngredientSlotObjectTemplate)
 				base = (IngredientSlotObjectTemplate) baseData;
 
 			if (!appearance.isLoaded()) {

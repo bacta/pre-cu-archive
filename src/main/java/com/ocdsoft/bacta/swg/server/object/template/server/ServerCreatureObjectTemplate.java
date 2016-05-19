@@ -91,7 +91,7 @@ public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 	public ServerWeaponObjectTemplate getDefaultWeapon() {
 		ServerCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerCreatureObjectTemplate)
+		if (baseData instanceof ServerCreatureObjectTemplate)
 			base = (ServerCreatureObjectTemplate) baseData;
 
 		if (!defaultWeapon.isLoaded()) {
@@ -118,7 +118,7 @@ public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 	public int getAttributes(Attributes index) {
 		ServerCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerCreatureObjectTemplate)
+		if (baseData instanceof ServerCreatureObjectTemplate)
 			base = (ServerCreatureObjectTemplate) baseData;
 
 		if (!attributes[(int) index.value].isLoaded()) {
@@ -155,7 +155,7 @@ public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 	public int getAttributesMin(Attributes index) {
 		ServerCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerCreatureObjectTemplate)
+		if (baseData instanceof ServerCreatureObjectTemplate)
 			base = (ServerCreatureObjectTemplate) baseData;
 
 		if (!attributes[(int) index.value].isLoaded()) {
@@ -192,7 +192,7 @@ public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 	public int getAttributesMax(Attributes index) {
 		ServerCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerCreatureObjectTemplate)
+		if (baseData instanceof ServerCreatureObjectTemplate)
 			base = (ServerCreatureObjectTemplate) baseData;
 
 		if (!attributes[(int) index.value].isLoaded()) {
@@ -229,7 +229,7 @@ public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 	public int getMinAttributes(Attributes index) {
 		ServerCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerCreatureObjectTemplate)
+		if (baseData instanceof ServerCreatureObjectTemplate)
 			base = (ServerCreatureObjectTemplate) baseData;
 
 		if (!minAttributes[(int) index.value].isLoaded()) {
@@ -266,7 +266,7 @@ public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 	public int getMinAttributesMin(Attributes index) {
 		ServerCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerCreatureObjectTemplate)
+		if (baseData instanceof ServerCreatureObjectTemplate)
 			base = (ServerCreatureObjectTemplate) baseData;
 
 		if (!minAttributes[(int) index.value].isLoaded()) {
@@ -303,7 +303,7 @@ public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 	public int getMinAttributesMax(Attributes index) {
 		ServerCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerCreatureObjectTemplate)
+		if (baseData instanceof ServerCreatureObjectTemplate)
 			base = (ServerCreatureObjectTemplate) baseData;
 
 		if (!minAttributes[(int) index.value].isLoaded()) {
@@ -340,7 +340,7 @@ public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 	public int getMaxAttributes(Attributes index) {
 		ServerCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerCreatureObjectTemplate)
+		if (baseData instanceof ServerCreatureObjectTemplate)
 			base = (ServerCreatureObjectTemplate) baseData;
 
 		if (!maxAttributes[(int) index.value].isLoaded()) {
@@ -377,7 +377,7 @@ public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 	public int getMaxAttributesMin(Attributes index) {
 		ServerCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerCreatureObjectTemplate)
+		if (baseData instanceof ServerCreatureObjectTemplate)
 			base = (ServerCreatureObjectTemplate) baseData;
 
 		if (!maxAttributes[(int) index.value].isLoaded()) {
@@ -414,7 +414,7 @@ public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 	public int getMaxAttributesMax(Attributes index) {
 		ServerCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerCreatureObjectTemplate)
+		if (baseData instanceof ServerCreatureObjectTemplate)
 			base = (ServerCreatureObjectTemplate) baseData;
 
 		if (!maxAttributes[(int) index.value].isLoaded()) {
@@ -451,7 +451,7 @@ public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 	public float getMinDrainModifier() {
 		ServerCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerCreatureObjectTemplate)
+		if (baseData instanceof ServerCreatureObjectTemplate)
 			base = (ServerCreatureObjectTemplate) baseData;
 
 		if (!minDrainModifier.isLoaded()) {
@@ -488,7 +488,7 @@ public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 	public float getMinDrainModifierMin() {
 		ServerCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerCreatureObjectTemplate)
+		if (baseData instanceof ServerCreatureObjectTemplate)
 			base = (ServerCreatureObjectTemplate) baseData;
 
 		if (!minDrainModifier.isLoaded()) {
@@ -525,7 +525,7 @@ public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 	public float getMinDrainModifierMax() {
 		ServerCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerCreatureObjectTemplate)
+		if (baseData instanceof ServerCreatureObjectTemplate)
 			base = (ServerCreatureObjectTemplate) baseData;
 
 		if (!minDrainModifier.isLoaded()) {
@@ -562,7 +562,7 @@ public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 	public float getMaxDrainModifier() {
 		ServerCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerCreatureObjectTemplate)
+		if (baseData instanceof ServerCreatureObjectTemplate)
 			base = (ServerCreatureObjectTemplate) baseData;
 
 		if (!maxDrainModifier.isLoaded()) {
@@ -599,7 +599,7 @@ public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 	public float getMaxDrainModifierMin() {
 		ServerCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerCreatureObjectTemplate)
+		if (baseData instanceof ServerCreatureObjectTemplate)
 			base = (ServerCreatureObjectTemplate) baseData;
 
 		if (!maxDrainModifier.isLoaded()) {
@@ -636,7 +636,7 @@ public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 	public float getMaxDrainModifierMax() {
 		ServerCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerCreatureObjectTemplate)
+		if (baseData instanceof ServerCreatureObjectTemplate)
 			base = (ServerCreatureObjectTemplate) baseData;
 
 		if (!maxDrainModifier.isLoaded()) {
@@ -673,7 +673,7 @@ public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 	public float getMinFaucetModifier() {
 		ServerCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerCreatureObjectTemplate)
+		if (baseData instanceof ServerCreatureObjectTemplate)
 			base = (ServerCreatureObjectTemplate) baseData;
 
 		if (!minFaucetModifier.isLoaded()) {
@@ -710,7 +710,7 @@ public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 	public float getMinFaucetModifierMin() {
 		ServerCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerCreatureObjectTemplate)
+		if (baseData instanceof ServerCreatureObjectTemplate)
 			base = (ServerCreatureObjectTemplate) baseData;
 
 		if (!minFaucetModifier.isLoaded()) {
@@ -747,7 +747,7 @@ public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 	public float getMinFaucetModifierMax() {
 		ServerCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerCreatureObjectTemplate)
+		if (baseData instanceof ServerCreatureObjectTemplate)
 			base = (ServerCreatureObjectTemplate) baseData;
 
 		if (!minFaucetModifier.isLoaded()) {
@@ -784,7 +784,7 @@ public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 	public float getMaxFaucetModifier() {
 		ServerCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerCreatureObjectTemplate)
+		if (baseData instanceof ServerCreatureObjectTemplate)
 			base = (ServerCreatureObjectTemplate) baseData;
 
 		if (!maxFaucetModifier.isLoaded()) {
@@ -821,7 +821,7 @@ public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 	public float getMaxFaucetModifierMin() {
 		ServerCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerCreatureObjectTemplate)
+		if (baseData instanceof ServerCreatureObjectTemplate)
 			base = (ServerCreatureObjectTemplate) baseData;
 
 		if (!maxFaucetModifier.isLoaded()) {
@@ -858,7 +858,7 @@ public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 	public float getMaxFaucetModifierMax() {
 		ServerCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerCreatureObjectTemplate)
+		if (baseData instanceof ServerCreatureObjectTemplate)
 			base = (ServerCreatureObjectTemplate) baseData;
 
 		if (!maxFaucetModifier.isLoaded()) {
@@ -895,7 +895,7 @@ public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 	public AttribMod getAttribMods(int index) {
 		ServerCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerCreatureObjectTemplate)
+		if (baseData instanceof ServerCreatureObjectTemplate)
 			base = (ServerCreatureObjectTemplate) baseData;
 
 		if (!attribModsLoaded) {
@@ -931,7 +931,7 @@ public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 	public AttribMod getAttribModsMin(int index) {
 		ServerCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerCreatureObjectTemplate)
+		if (baseData instanceof ServerCreatureObjectTemplate)
 			base = (ServerCreatureObjectTemplate) baseData;
 
 		if (!attribModsLoaded) {
@@ -967,7 +967,7 @@ public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 	public AttribMod getAttribModsMax(int index) {
 		ServerCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerCreatureObjectTemplate)
+		if (baseData instanceof ServerCreatureObjectTemplate)
 			base = (ServerCreatureObjectTemplate) baseData;
 
 		if (!attribModsLoaded) {
@@ -1022,7 +1022,7 @@ public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 	public int getShockWounds() {
 		ServerCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerCreatureObjectTemplate)
+		if (baseData instanceof ServerCreatureObjectTemplate)
 			base = (ServerCreatureObjectTemplate) baseData;
 
 		if (!shockWounds.isLoaded()) {
@@ -1059,7 +1059,7 @@ public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 	public int getShockWoundsMin() {
 		ServerCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerCreatureObjectTemplate)
+		if (baseData instanceof ServerCreatureObjectTemplate)
 			base = (ServerCreatureObjectTemplate) baseData;
 
 		if (!shockWounds.isLoaded()) {
@@ -1096,7 +1096,7 @@ public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 	public int getShockWoundsMax() {
 		ServerCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerCreatureObjectTemplate)
+		if (baseData instanceof ServerCreatureObjectTemplate)
 			base = (ServerCreatureObjectTemplate) baseData;
 
 		if (!shockWounds.isLoaded()) {
@@ -1133,7 +1133,7 @@ public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 	public boolean getCanCreateAvatar() {
 		ServerCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerCreatureObjectTemplate)
+		if (baseData instanceof ServerCreatureObjectTemplate)
 			base = (ServerCreatureObjectTemplate) baseData;
 
 		if (!canCreateAvatar.isLoaded()) {
@@ -1151,7 +1151,7 @@ public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 	public String getNameGeneratorType() {
 		ServerCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerCreatureObjectTemplate)
+		if (baseData instanceof ServerCreatureObjectTemplate)
 			base = (ServerCreatureObjectTemplate) baseData;
 
 		if (!nameGeneratorType.isLoaded()) {
@@ -1169,7 +1169,7 @@ public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 	public float getApproachTriggerRange() {
 		ServerCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerCreatureObjectTemplate)
+		if (baseData instanceof ServerCreatureObjectTemplate)
 			base = (ServerCreatureObjectTemplate) baseData;
 
 		if (!approachTriggerRange.isLoaded()) {
@@ -1206,7 +1206,7 @@ public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 	public float getApproachTriggerRangeMin() {
 		ServerCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerCreatureObjectTemplate)
+		if (baseData instanceof ServerCreatureObjectTemplate)
 			base = (ServerCreatureObjectTemplate) baseData;
 
 		if (!approachTriggerRange.isLoaded()) {
@@ -1243,7 +1243,7 @@ public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 	public float getApproachTriggerRangeMax() {
 		ServerCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerCreatureObjectTemplate)
+		if (baseData instanceof ServerCreatureObjectTemplate)
 			base = (ServerCreatureObjectTemplate) baseData;
 
 		if (!approachTriggerRange.isLoaded()) {
@@ -1280,7 +1280,7 @@ public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 	public float getMaxMentalStates(MentalStates index) {
 		ServerCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerCreatureObjectTemplate)
+		if (baseData instanceof ServerCreatureObjectTemplate)
 			base = (ServerCreatureObjectTemplate) baseData;
 
 		if (!maxMentalStates[(int) index.value].isLoaded()) {
@@ -1317,7 +1317,7 @@ public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 	public float getMaxMentalStatesMin(MentalStates index) {
 		ServerCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerCreatureObjectTemplate)
+		if (baseData instanceof ServerCreatureObjectTemplate)
 			base = (ServerCreatureObjectTemplate) baseData;
 
 		if (!maxMentalStates[(int) index.value].isLoaded()) {
@@ -1354,7 +1354,7 @@ public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 	public float getMaxMentalStatesMax(MentalStates index) {
 		ServerCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerCreatureObjectTemplate)
+		if (baseData instanceof ServerCreatureObjectTemplate)
 			base = (ServerCreatureObjectTemplate) baseData;
 
 		if (!maxMentalStates[(int) index.value].isLoaded()) {
@@ -1391,7 +1391,7 @@ public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 	public float getMentalStatesDecay(MentalStates index) {
 		ServerCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerCreatureObjectTemplate)
+		if (baseData instanceof ServerCreatureObjectTemplate)
 			base = (ServerCreatureObjectTemplate) baseData;
 
 		if (!mentalStatesDecay[(int) index.value].isLoaded()) {
@@ -1428,7 +1428,7 @@ public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 	public float getMentalStatesDecayMin(MentalStates index) {
 		ServerCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerCreatureObjectTemplate)
+		if (baseData instanceof ServerCreatureObjectTemplate)
 			base = (ServerCreatureObjectTemplate) baseData;
 
 		if (!mentalStatesDecay[(int) index.value].isLoaded()) {
@@ -1465,7 +1465,7 @@ public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 	public float getMentalStatesDecayMax(MentalStates index) {
 		ServerCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerCreatureObjectTemplate)
+		if (baseData instanceof ServerCreatureObjectTemplate)
 			base = (ServerCreatureObjectTemplate) baseData;
 
 		if (!mentalStatesDecay[(int) index.value].isLoaded()) {

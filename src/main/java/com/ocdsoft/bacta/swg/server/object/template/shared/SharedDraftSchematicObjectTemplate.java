@@ -57,7 +57,7 @@ public class SharedDraftSchematicObjectTemplate extends SharedIntangibleObjectTe
 	public IngredientSlot getSlots(int index) {
 		SharedDraftSchematicObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedDraftSchematicObjectTemplate)
+		if (baseData instanceof SharedDraftSchematicObjectTemplate)
 			base = (SharedDraftSchematicObjectTemplate) baseData;
 
 		if (!slotsLoaded) {
@@ -90,7 +90,7 @@ public class SharedDraftSchematicObjectTemplate extends SharedIntangibleObjectTe
 	public IngredientSlot getSlotsMin(int index) {
 		SharedDraftSchematicObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedDraftSchematicObjectTemplate)
+		if (baseData instanceof SharedDraftSchematicObjectTemplate)
 			base = (SharedDraftSchematicObjectTemplate) baseData;
 
 		if (!slotsLoaded) {
@@ -123,7 +123,7 @@ public class SharedDraftSchematicObjectTemplate extends SharedIntangibleObjectTe
 	public IngredientSlot getSlotsMax(int index) {
 		SharedDraftSchematicObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedDraftSchematicObjectTemplate)
+		if (baseData instanceof SharedDraftSchematicObjectTemplate)
 			base = (SharedDraftSchematicObjectTemplate) baseData;
 
 		if (!slotsLoaded) {
@@ -175,7 +175,7 @@ public class SharedDraftSchematicObjectTemplate extends SharedIntangibleObjectTe
 	public SchematicAttribute getAttributes(int index) {
 		SharedDraftSchematicObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedDraftSchematicObjectTemplate)
+		if (baseData instanceof SharedDraftSchematicObjectTemplate)
 			base = (SharedDraftSchematicObjectTemplate) baseData;
 
 		if (!attributesLoaded) {
@@ -209,7 +209,7 @@ public class SharedDraftSchematicObjectTemplate extends SharedIntangibleObjectTe
 	public SchematicAttribute getAttributesMin(int index) {
 		SharedDraftSchematicObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedDraftSchematicObjectTemplate)
+		if (baseData instanceof SharedDraftSchematicObjectTemplate)
 			base = (SharedDraftSchematicObjectTemplate) baseData;
 
 		if (!attributesLoaded) {
@@ -243,7 +243,7 @@ public class SharedDraftSchematicObjectTemplate extends SharedIntangibleObjectTe
 	public SchematicAttribute getAttributesMax(int index) {
 		SharedDraftSchematicObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedDraftSchematicObjectTemplate)
+		if (baseData instanceof SharedDraftSchematicObjectTemplate)
 			base = (SharedDraftSchematicObjectTemplate) baseData;
 
 		if (!attributesLoaded) {
@@ -296,7 +296,7 @@ public class SharedDraftSchematicObjectTemplate extends SharedIntangibleObjectTe
 	public String getCraftedSharedTemplate() {
 		SharedDraftSchematicObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedDraftSchematicObjectTemplate)
+		if (baseData instanceof SharedDraftSchematicObjectTemplate)
 			base = (SharedDraftSchematicObjectTemplate) baseData;
 
 		if (!craftedSharedTemplate.isLoaded()) {
@@ -406,7 +406,7 @@ public class SharedDraftSchematicObjectTemplate extends SharedIntangibleObjectTe
 		DT_blast(0x00000004),
 		DT_stun(0x00000008),
 		DT_restraint(0x00000010),
-		DT_elemental_heat(0x00000020),
+		DT_elemental_heat(0x00000020), 
 		DT_elemental_cold(0x00000040), 
 		DT_elemental_acid(0x00000080), 
 		DT_elemental_electrical(0x00000100), 
@@ -454,7 +454,7 @@ public class SharedDraftSchematicObjectTemplate extends SharedIntangibleObjectTe
 		public StringId getName() {
 			IngredientSlotObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof IngredientSlotObjectTemplate)
+			if (baseData instanceof IngredientSlotObjectTemplate)
 				base = (IngredientSlotObjectTemplate) baseData;
 
 			if (!name.isLoaded()) {
@@ -472,7 +472,7 @@ public class SharedDraftSchematicObjectTemplate extends SharedIntangibleObjectTe
 		public String getHardpoint() {
 			IngredientSlotObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof IngredientSlotObjectTemplate)
+			if (baseData instanceof IngredientSlotObjectTemplate)
 				base = (IngredientSlotObjectTemplate) baseData;
 
 			if (!hardpoint.isLoaded()) {
@@ -541,7 +541,7 @@ public class SharedDraftSchematicObjectTemplate extends SharedIntangibleObjectTe
 		public StringId getName() {
 			SchematicAttributeObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof SchematicAttributeObjectTemplate)
+			if (baseData instanceof SchematicAttributeObjectTemplate)
 				base = (SchematicAttributeObjectTemplate) baseData;
 
 			if (!name.isLoaded()) {
@@ -559,7 +559,7 @@ public class SharedDraftSchematicObjectTemplate extends SharedIntangibleObjectTe
 		public StringId getExperiment() {
 			SchematicAttributeObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof SchematicAttributeObjectTemplate)
+			if (baseData instanceof SchematicAttributeObjectTemplate)
 				base = (SchematicAttributeObjectTemplate) baseData;
 
 			if (!experiment.isLoaded()) {
@@ -577,7 +577,7 @@ public class SharedDraftSchematicObjectTemplate extends SharedIntangibleObjectTe
 		public int getValue() {
 			SchematicAttributeObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof SchematicAttributeObjectTemplate)
+			if (baseData instanceof SchematicAttributeObjectTemplate)
 				base = (SchematicAttributeObjectTemplate) baseData;
 
 			if (!value.isLoaded()) {
@@ -614,7 +614,7 @@ public class SharedDraftSchematicObjectTemplate extends SharedIntangibleObjectTe
 		public int getValueMin() {
 			SchematicAttributeObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof SchematicAttributeObjectTemplate)
+			if (baseData instanceof SchematicAttributeObjectTemplate)
 				base = (SchematicAttributeObjectTemplate) baseData;
 
 			if (!value.isLoaded()) {
@@ -651,7 +651,7 @@ public class SharedDraftSchematicObjectTemplate extends SharedIntangibleObjectTe
 		public int getValueMax() {
 			SchematicAttributeObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof SchematicAttributeObjectTemplate)
+			if (baseData instanceof SchematicAttributeObjectTemplate)
 				base = (SchematicAttributeObjectTemplate) baseData;
 
 			if (!value.isLoaded()) {

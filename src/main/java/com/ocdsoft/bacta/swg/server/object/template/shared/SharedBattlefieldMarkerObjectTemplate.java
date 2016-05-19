@@ -41,7 +41,7 @@ public class SharedBattlefieldMarkerObjectTemplate extends SharedTangibleObjectT
 	public int getNumberOfPoles() {
 		SharedBattlefieldMarkerObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedBattlefieldMarkerObjectTemplate)
+		if (baseData instanceof SharedBattlefieldMarkerObjectTemplate)
 			base = (SharedBattlefieldMarkerObjectTemplate) baseData;
 
 		if (!numberOfPoles.isLoaded()) {
@@ -78,7 +78,7 @@ public class SharedBattlefieldMarkerObjectTemplate extends SharedTangibleObjectT
 	public int getNumberOfPolesMin() {
 		SharedBattlefieldMarkerObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedBattlefieldMarkerObjectTemplate)
+		if (baseData instanceof SharedBattlefieldMarkerObjectTemplate)
 			base = (SharedBattlefieldMarkerObjectTemplate) baseData;
 
 		if (!numberOfPoles.isLoaded()) {
@@ -115,7 +115,7 @@ public class SharedBattlefieldMarkerObjectTemplate extends SharedTangibleObjectT
 	public int getNumberOfPolesMax() {
 		SharedBattlefieldMarkerObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedBattlefieldMarkerObjectTemplate)
+		if (baseData instanceof SharedBattlefieldMarkerObjectTemplate)
 			base = (SharedBattlefieldMarkerObjectTemplate) baseData;
 
 		if (!numberOfPoles.isLoaded()) {
@@ -152,7 +152,7 @@ public class SharedBattlefieldMarkerObjectTemplate extends SharedTangibleObjectT
 	public float getRadius() {
 		SharedBattlefieldMarkerObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedBattlefieldMarkerObjectTemplate)
+		if (baseData instanceof SharedBattlefieldMarkerObjectTemplate)
 			base = (SharedBattlefieldMarkerObjectTemplate) baseData;
 
 		if (!radius.isLoaded()) {
@@ -189,7 +189,7 @@ public class SharedBattlefieldMarkerObjectTemplate extends SharedTangibleObjectT
 	public float getRadiusMin() {
 		SharedBattlefieldMarkerObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedBattlefieldMarkerObjectTemplate)
+		if (baseData instanceof SharedBattlefieldMarkerObjectTemplate)
 			base = (SharedBattlefieldMarkerObjectTemplate) baseData;
 
 		if (!radius.isLoaded()) {
@@ -226,7 +226,7 @@ public class SharedBattlefieldMarkerObjectTemplate extends SharedTangibleObjectT
 	public float getRadiusMax() {
 		SharedBattlefieldMarkerObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedBattlefieldMarkerObjectTemplate)
+		if (baseData instanceof SharedBattlefieldMarkerObjectTemplate)
 			base = (SharedBattlefieldMarkerObjectTemplate) baseData;
 
 		if (!radius.isLoaded()) {

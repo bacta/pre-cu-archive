@@ -2,6 +2,8 @@ package com.ocdsoft.bacta.swg.server.object.template.shared;
 
 import bacta.iff.Iff;
 import com.google.common.base.Preconditions;
+import com.ocdsoft.bacta.swg.shared.container.ArrangementDescriptor;
+import com.ocdsoft.bacta.swg.shared.container.SlotDescriptor;
 import com.ocdsoft.bacta.swg.shared.foundation.DataResourceList;
 import com.ocdsoft.bacta.swg.shared.foundation.Tag;
 import com.ocdsoft.bacta.swg.shared.localization.StringId;
@@ -46,7 +48,7 @@ public class SharedObjectTemplate extends ObjectTemplate {
 	private final IntegerParam surfaceType = new IntegerParam(); 
 	private final FloatParam noBuildRadius = new FloatParam(); // distance to not allow structure placement around this object
 	private final BoolParam onlyVisibleInTools = new BoolParam();
-	private final FloatParam locationReservationRadius = new FloatParam();
+	private final FloatParam locationReservationRadius = new FloatParam(); 
 	private final BoolParam forceNoCollision = new BoolParam(); 
 
 	public SharedObjectTemplate(final String filename, final DataResourceList<ObjectTemplate> objectTemplateList) {
@@ -58,10 +60,32 @@ public class SharedObjectTemplate extends ObjectTemplate {
 		return TAG_SHAREDOBJECTTEMPLATE;
 	}
 
+	//@TDF-USER-START
+	private ArrangementDescriptor arrangementDescriptor;
+	private SlotDescriptor slotDescriptor;
+
+	public ArrangementDescriptor getArrangementDescriptor() {
+		return arrangementDescriptor;
+	}
+
+	public SlotDescriptor getSlotDescriptor() {
+		return slotDescriptor;
+	}
+
+	public void setArrangementDescriptor(final ArrangementDescriptor arrangementDescriptor) {
+		this.arrangementDescriptor = arrangementDescriptor;
+	}
+
+	public void setSlotDescriptor(final SlotDescriptor slotDescriptor) {
+		this.slotDescriptor = slotDescriptor;
+	}
+
+	//@TDF-USER-END
+
 	public StringId getObjectName() {
 		SharedObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedObjectTemplate)
+		if (baseData instanceof SharedObjectTemplate)
 			base = (SharedObjectTemplate) baseData;
 
 		if (!objectName.isLoaded()) {
@@ -79,7 +103,7 @@ public class SharedObjectTemplate extends ObjectTemplate {
 	public StringId getDetailedDescription() {
 		SharedObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedObjectTemplate)
+		if (baseData instanceof SharedObjectTemplate)
 			base = (SharedObjectTemplate) baseData;
 
 		if (!detailedDescription.isLoaded()) {
@@ -97,7 +121,7 @@ public class SharedObjectTemplate extends ObjectTemplate {
 	public StringId getLookAtText() {
 		SharedObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedObjectTemplate)
+		if (baseData instanceof SharedObjectTemplate)
 			base = (SharedObjectTemplate) baseData;
 
 		if (!lookAtText.isLoaded()) {
@@ -115,7 +139,7 @@ public class SharedObjectTemplate extends ObjectTemplate {
 	public boolean getSnapToTerrain() {
 		SharedObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedObjectTemplate)
+		if (baseData instanceof SharedObjectTemplate)
 			base = (SharedObjectTemplate) baseData;
 
 		if (!snapToTerrain.isLoaded()) {
@@ -133,7 +157,7 @@ public class SharedObjectTemplate extends ObjectTemplate {
 	public ContainerType getContainerType() {
 		SharedObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedObjectTemplate)
+		if (baseData instanceof SharedObjectTemplate)
 			base = (SharedObjectTemplate) baseData;
 
 		if (!containerType.isLoaded()) {
@@ -150,7 +174,7 @@ public class SharedObjectTemplate extends ObjectTemplate {
 	public int getContainerVolumeLimit() {
 		SharedObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedObjectTemplate)
+		if (baseData instanceof SharedObjectTemplate)
 			base = (SharedObjectTemplate) baseData;
 
 		if (!containerVolumeLimit.isLoaded()) {
@@ -187,7 +211,7 @@ public class SharedObjectTemplate extends ObjectTemplate {
 	public int getContainerVolumeLimitMin() {
 		SharedObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedObjectTemplate)
+		if (baseData instanceof SharedObjectTemplate)
 			base = (SharedObjectTemplate) baseData;
 
 		if (!containerVolumeLimit.isLoaded()) {
@@ -224,7 +248,7 @@ public class SharedObjectTemplate extends ObjectTemplate {
 	public int getContainerVolumeLimitMax() {
 		SharedObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedObjectTemplate)
+		if (baseData instanceof SharedObjectTemplate)
 			base = (SharedObjectTemplate) baseData;
 
 		if (!containerVolumeLimit.isLoaded()) {
@@ -261,7 +285,7 @@ public class SharedObjectTemplate extends ObjectTemplate {
 	public String getTintPalette() {
 		SharedObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedObjectTemplate)
+		if (baseData instanceof SharedObjectTemplate)
 			base = (SharedObjectTemplate) baseData;
 
 		if (!tintPalette.isLoaded()) {
@@ -279,7 +303,7 @@ public class SharedObjectTemplate extends ObjectTemplate {
 	public String getSlotDescriptorFilename() {
 		SharedObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedObjectTemplate)
+		if (baseData instanceof SharedObjectTemplate)
 			base = (SharedObjectTemplate) baseData;
 
 		if (!slotDescriptorFilename.isLoaded()) {
@@ -297,7 +321,7 @@ public class SharedObjectTemplate extends ObjectTemplate {
 	public String getArrangementDescriptorFilename() {
 		SharedObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedObjectTemplate)
+		if (baseData instanceof SharedObjectTemplate)
 			base = (SharedObjectTemplate) baseData;
 
 		if (!arrangementDescriptorFilename.isLoaded()) {
@@ -315,7 +339,7 @@ public class SharedObjectTemplate extends ObjectTemplate {
 	public String getAppearanceFilename() {
 		SharedObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedObjectTemplate)
+		if (baseData instanceof SharedObjectTemplate)
 			base = (SharedObjectTemplate) baseData;
 
 		if (!appearanceFilename.isLoaded()) {
@@ -333,7 +357,7 @@ public class SharedObjectTemplate extends ObjectTemplate {
 	public String getPortalLayoutFilename() {
 		SharedObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedObjectTemplate)
+		if (baseData instanceof SharedObjectTemplate)
 			base = (SharedObjectTemplate) baseData;
 
 		if (!portalLayoutFilename.isLoaded()) {
@@ -351,7 +375,7 @@ public class SharedObjectTemplate extends ObjectTemplate {
 	public String getClientDataFile() {
 		SharedObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedObjectTemplate)
+		if (baseData instanceof SharedObjectTemplate)
 			base = (SharedObjectTemplate) baseData;
 
 		if (!clientDataFile.isLoaded()) {
@@ -369,7 +393,7 @@ public class SharedObjectTemplate extends ObjectTemplate {
 	public float getScale() {
 		SharedObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedObjectTemplate)
+		if (baseData instanceof SharedObjectTemplate)
 			base = (SharedObjectTemplate) baseData;
 
 		if (!scale.isLoaded()) {
@@ -406,7 +430,7 @@ public class SharedObjectTemplate extends ObjectTemplate {
 	public float getScaleMin() {
 		SharedObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedObjectTemplate)
+		if (baseData instanceof SharedObjectTemplate)
 			base = (SharedObjectTemplate) baseData;
 
 		if (!scale.isLoaded()) {
@@ -443,7 +467,7 @@ public class SharedObjectTemplate extends ObjectTemplate {
 	public float getScaleMax() {
 		SharedObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedObjectTemplate)
+		if (baseData instanceof SharedObjectTemplate)
 			base = (SharedObjectTemplate) baseData;
 
 		if (!scale.isLoaded()) {
@@ -480,7 +504,7 @@ public class SharedObjectTemplate extends ObjectTemplate {
 	public GameObjectType getGameObjectType() {
 		SharedObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedObjectTemplate)
+		if (baseData instanceof SharedObjectTemplate)
 			base = (SharedObjectTemplate) baseData;
 
 		if (!gameObjectType.isLoaded()) {
@@ -497,7 +521,7 @@ public class SharedObjectTemplate extends ObjectTemplate {
 	public boolean getSendToClient() {
 		SharedObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedObjectTemplate)
+		if (baseData instanceof SharedObjectTemplate)
 			base = (SharedObjectTemplate) baseData;
 
 		if (!sendToClient.isLoaded()) {
@@ -515,7 +539,7 @@ public class SharedObjectTemplate extends ObjectTemplate {
 	public float getScaleThresholdBeforeExtentTest() {
 		SharedObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedObjectTemplate)
+		if (baseData instanceof SharedObjectTemplate)
 			base = (SharedObjectTemplate) baseData;
 
 		if (!scaleThresholdBeforeExtentTest.isLoaded()) {
@@ -552,7 +576,7 @@ public class SharedObjectTemplate extends ObjectTemplate {
 	public float getScaleThresholdBeforeExtentTestMin() {
 		SharedObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedObjectTemplate)
+		if (baseData instanceof SharedObjectTemplate)
 			base = (SharedObjectTemplate) baseData;
 
 		if (!scaleThresholdBeforeExtentTest.isLoaded()) {
@@ -589,7 +613,7 @@ public class SharedObjectTemplate extends ObjectTemplate {
 	public float getScaleThresholdBeforeExtentTestMax() {
 		SharedObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedObjectTemplate)
+		if (baseData instanceof SharedObjectTemplate)
 			base = (SharedObjectTemplate) baseData;
 
 		if (!scaleThresholdBeforeExtentTest.isLoaded()) {
@@ -626,7 +650,7 @@ public class SharedObjectTemplate extends ObjectTemplate {
 	public float getClearFloraRadius() {
 		SharedObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedObjectTemplate)
+		if (baseData instanceof SharedObjectTemplate)
 			base = (SharedObjectTemplate) baseData;
 
 		if (!clearFloraRadius.isLoaded()) {
@@ -663,7 +687,7 @@ public class SharedObjectTemplate extends ObjectTemplate {
 	public float getClearFloraRadiusMin() {
 		SharedObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedObjectTemplate)
+		if (baseData instanceof SharedObjectTemplate)
 			base = (SharedObjectTemplate) baseData;
 
 		if (!clearFloraRadius.isLoaded()) {
@@ -700,7 +724,7 @@ public class SharedObjectTemplate extends ObjectTemplate {
 	public float getClearFloraRadiusMax() {
 		SharedObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedObjectTemplate)
+		if (baseData instanceof SharedObjectTemplate)
 			base = (SharedObjectTemplate) baseData;
 
 		if (!clearFloraRadius.isLoaded()) {
@@ -737,7 +761,7 @@ public class SharedObjectTemplate extends ObjectTemplate {
 	public SurfaceType getSurfaceType() {
 		SharedObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedObjectTemplate)
+		if (baseData instanceof SharedObjectTemplate)
 			base = (SharedObjectTemplate) baseData;
 
 		if (!surfaceType.isLoaded()) {
@@ -754,7 +778,7 @@ public class SharedObjectTemplate extends ObjectTemplate {
 	public float getNoBuildRadius() {
 		SharedObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedObjectTemplate)
+		if (baseData instanceof SharedObjectTemplate)
 			base = (SharedObjectTemplate) baseData;
 
 		if (!noBuildRadius.isLoaded()) {
@@ -791,7 +815,7 @@ public class SharedObjectTemplate extends ObjectTemplate {
 	public float getNoBuildRadiusMin() {
 		SharedObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedObjectTemplate)
+		if (baseData instanceof SharedObjectTemplate)
 			base = (SharedObjectTemplate) baseData;
 
 		if (!noBuildRadius.isLoaded()) {
@@ -828,7 +852,7 @@ public class SharedObjectTemplate extends ObjectTemplate {
 	public float getNoBuildRadiusMax() {
 		SharedObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedObjectTemplate)
+		if (baseData instanceof SharedObjectTemplate)
 			base = (SharedObjectTemplate) baseData;
 
 		if (!noBuildRadius.isLoaded()) {
@@ -865,7 +889,7 @@ public class SharedObjectTemplate extends ObjectTemplate {
 	public boolean getOnlyVisibleInTools() {
 		SharedObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedObjectTemplate)
+		if (baseData instanceof SharedObjectTemplate)
 			base = (SharedObjectTemplate) baseData;
 
 		if (!onlyVisibleInTools.isLoaded()) {
@@ -883,7 +907,7 @@ public class SharedObjectTemplate extends ObjectTemplate {
 	public float getLocationReservationRadius() {
 		SharedObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedObjectTemplate)
+		if (baseData instanceof SharedObjectTemplate)
 			base = (SharedObjectTemplate) baseData;
 
 		if (!locationReservationRadius.isLoaded()) {
@@ -920,7 +944,7 @@ public class SharedObjectTemplate extends ObjectTemplate {
 	public float getLocationReservationRadiusMin() {
 		SharedObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedObjectTemplate)
+		if (baseData instanceof SharedObjectTemplate)
 			base = (SharedObjectTemplate) baseData;
 
 		if (!locationReservationRadius.isLoaded()) {
@@ -957,7 +981,7 @@ public class SharedObjectTemplate extends ObjectTemplate {
 	public float getLocationReservationRadiusMax() {
 		SharedObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedObjectTemplate)
+		if (baseData instanceof SharedObjectTemplate)
 			base = (SharedObjectTemplate) baseData;
 
 		if (!locationReservationRadius.isLoaded()) {
@@ -994,7 +1018,7 @@ public class SharedObjectTemplate extends ObjectTemplate {
 	public boolean getForceNoCollision() {
 		SharedObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedObjectTemplate)
+		if (baseData instanceof SharedObjectTemplate)
 			base = (SharedObjectTemplate) baseData;
 
 		if (!forceNoCollision.isLoaded()) {
@@ -1105,7 +1129,7 @@ public class SharedObjectTemplate extends ObjectTemplate {
 		GOT_lair(4),
 		GOT_static(5),
 		GOT_camp(6),
-		GOT_vendor(7),
+		GOT_vendor(7), 
 		GOT_loadbeacon(8), 
 		GOT_armor(0x00000100), //if you add armor types, please add them to the GOT_powerups as well
 		GOT_armor_body(257),
@@ -1151,7 +1175,7 @@ public class SharedObjectTemplate extends ObjectTemplate {
 		GOT_installation_turret(4100),
 		GOT_installation_minefield(4101),
 		GOT_misc(0x00002000),
-		GOT_misc_ammunition(8193),
+		GOT_misc_ammunition(8193), 
 		GOT_misc_chemical(8194), 
 		GOT_misc_clothing_DUMMY(8195), // when you remove this, please recompile all the shared object templates
 		GOT_misc_component_DUMMY(8196), // when you remove this, please recompile all the shared object templates
@@ -1162,12 +1186,12 @@ public class SharedObjectTemplate extends ObjectTemplate {
 		GOT_misc_flora(8201),
 		GOT_misc_food(8202),
 		GOT_misc_furniture(8203),
-		GOT_misc_instrument(8204),
+		GOT_misc_instrument(8204), 
 		GOT_misc_pharmaceutical(8205), 
 		GOT_misc_resource_container_DUMMY(8206), // when you remove this, please recompile all the shared object templates
 		GOT_misc_sign(8207),
 		GOT_misc_counter(8208),
-		GOT_misc_factory_crate(8209),
+		GOT_misc_factory_crate(8209), 
 		GOT_misc_ticket_travel(8210), 
 		GOT_misc_item(8211), // generic 'usable' item
 		GOT_misc_trap(8212),
@@ -1224,7 +1248,7 @@ public class SharedObjectTemplate extends ObjectTemplate {
 		GOT_tool_camp_kit(32772),
 		GOT_tool_ship_component_repair(32773),
 		GOT_vehicle(0x00010000),
-		GOT_vehicle_hover(65537),
+		GOT_vehicle_hover(65537), 
 		GOT_vehicle_hover_ai(65538), 
 		GOT_weapon(0x00020000), //if you add weapon types, please add them to the GOT_powerups as well
 		GOT_weapon_melee_misc(131073),
@@ -1314,7 +1338,7 @@ public class SharedObjectTemplate extends ObjectTemplate {
 		GOT_clothing_shirt(16777230),
 		GOT_clothing_vest(16777231),
 		GOT_clothing_wookiee(16777232),
-		GOT_clothing_misc(16777233),
+		GOT_clothing_misc(16777233), 
 		GOT_clothing_skirt(16777234), 
 		GOT_ship_component(0x40000000), //add space-specific GOTS at the "end" to make merging easier
 		GOT_ship_component_reactor(1073741825),
@@ -1353,7 +1377,7 @@ public class SharedObjectTemplate extends ObjectTemplate {
 		GOT_chronicles_relic(4353),
 		GOT_chronicles_chronicle(4354),
 		GOT_chronicles_quest_holocron(4355),
-		GOT_chronicles_quest_holocron_recipe(4356),
+		GOT_chronicles_quest_holocron_recipe(4356), 
 		GOT_chronicles_relic_fragment(4357); 
 
 		private static final GameObjectType[] values = values();
@@ -1370,7 +1394,7 @@ public class SharedObjectTemplate extends ObjectTemplate {
 	}
 
 	public enum ContainerType {
-		CT_none(0),
+		CT_none(0), 
 		CT_slotted(1), 
 		CT_volume(2), //This kind of container can hold tangible objects
 		CT_volumeIntangible(3), //This kind of container can hold intangible objects
@@ -1397,7 +1421,7 @@ public class SharedObjectTemplate extends ObjectTemplate {
 		ST_wood(3),
 		ST_acid(4),
 		ST_ice(5),
-		ST_molten(6),
+		ST_molten(6), 
 		ST_obsidian(7); 
 
 		private static final SurfaceType[] values = values();

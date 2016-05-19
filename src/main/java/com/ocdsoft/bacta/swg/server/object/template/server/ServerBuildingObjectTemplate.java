@@ -41,7 +41,7 @@ public class ServerBuildingObjectTemplate extends ServerTangibleObjectTemplate {
 	public int getMaintenanceCost() {
 		ServerBuildingObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerBuildingObjectTemplate)
+		if (baseData instanceof ServerBuildingObjectTemplate)
 			base = (ServerBuildingObjectTemplate) baseData;
 
 		if (!maintenanceCost.isLoaded()) {
@@ -78,7 +78,7 @@ public class ServerBuildingObjectTemplate extends ServerTangibleObjectTemplate {
 	public int getMaintenanceCostMin() {
 		ServerBuildingObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerBuildingObjectTemplate)
+		if (baseData instanceof ServerBuildingObjectTemplate)
 			base = (ServerBuildingObjectTemplate) baseData;
 
 		if (!maintenanceCost.isLoaded()) {
@@ -115,7 +115,7 @@ public class ServerBuildingObjectTemplate extends ServerTangibleObjectTemplate {
 	public int getMaintenanceCostMax() {
 		ServerBuildingObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerBuildingObjectTemplate)
+		if (baseData instanceof ServerBuildingObjectTemplate)
 			base = (ServerBuildingObjectTemplate) baseData;
 
 		if (!maintenanceCost.isLoaded()) {
@@ -152,7 +152,7 @@ public class ServerBuildingObjectTemplate extends ServerTangibleObjectTemplate {
 	public boolean getIsPublic() {
 		ServerBuildingObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerBuildingObjectTemplate)
+		if (baseData instanceof ServerBuildingObjectTemplate)
 			base = (ServerBuildingObjectTemplate) baseData;
 
 		if (!isPublic.isLoaded()) {

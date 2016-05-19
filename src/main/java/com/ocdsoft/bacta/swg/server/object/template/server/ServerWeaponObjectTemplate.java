@@ -54,7 +54,7 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 	public WeaponType getWeaponType() {
 		ServerWeaponObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerWeaponObjectTemplate)
+		if (baseData instanceof ServerWeaponObjectTemplate)
 			base = (ServerWeaponObjectTemplate) baseData;
 
 		if (!weaponType.isLoaded()) {
@@ -71,7 +71,7 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 	public AttackType getAttackType() {
 		ServerWeaponObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerWeaponObjectTemplate)
+		if (baseData instanceof ServerWeaponObjectTemplate)
 			base = (ServerWeaponObjectTemplate) baseData;
 
 		if (!attackType.isLoaded()) {
@@ -88,7 +88,7 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 	public DamageType getDamageType() {
 		ServerWeaponObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerWeaponObjectTemplate)
+		if (baseData instanceof ServerWeaponObjectTemplate)
 			base = (ServerWeaponObjectTemplate) baseData;
 
 		if (!damageType.isLoaded()) {
@@ -105,7 +105,7 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 	public DamageType getElementalType() {
 		ServerWeaponObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerWeaponObjectTemplate)
+		if (baseData instanceof ServerWeaponObjectTemplate)
 			base = (ServerWeaponObjectTemplate) baseData;
 
 		if (!elementalType.isLoaded()) {
@@ -122,7 +122,7 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 	public int getElementalValue() {
 		ServerWeaponObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerWeaponObjectTemplate)
+		if (baseData instanceof ServerWeaponObjectTemplate)
 			base = (ServerWeaponObjectTemplate) baseData;
 
 		if (!elementalValue.isLoaded()) {
@@ -159,7 +159,7 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 	public int getElementalValueMin() {
 		ServerWeaponObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerWeaponObjectTemplate)
+		if (baseData instanceof ServerWeaponObjectTemplate)
 			base = (ServerWeaponObjectTemplate) baseData;
 
 		if (!elementalValue.isLoaded()) {
@@ -196,7 +196,7 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 	public int getElementalValueMax() {
 		ServerWeaponObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerWeaponObjectTemplate)
+		if (baseData instanceof ServerWeaponObjectTemplate)
 			base = (ServerWeaponObjectTemplate) baseData;
 
 		if (!elementalValue.isLoaded()) {
@@ -233,7 +233,7 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 	public int getMinDamageAmount() {
 		ServerWeaponObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerWeaponObjectTemplate)
+		if (baseData instanceof ServerWeaponObjectTemplate)
 			base = (ServerWeaponObjectTemplate) baseData;
 
 		if (!minDamageAmount.isLoaded()) {
@@ -270,7 +270,7 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 	public int getMinDamageAmountMin() {
 		ServerWeaponObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerWeaponObjectTemplate)
+		if (baseData instanceof ServerWeaponObjectTemplate)
 			base = (ServerWeaponObjectTemplate) baseData;
 
 		if (!minDamageAmount.isLoaded()) {
@@ -307,7 +307,7 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 	public int getMinDamageAmountMax() {
 		ServerWeaponObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerWeaponObjectTemplate)
+		if (baseData instanceof ServerWeaponObjectTemplate)
 			base = (ServerWeaponObjectTemplate) baseData;
 
 		if (!minDamageAmount.isLoaded()) {
@@ -344,7 +344,7 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 	public int getMaxDamageAmount() {
 		ServerWeaponObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerWeaponObjectTemplate)
+		if (baseData instanceof ServerWeaponObjectTemplate)
 			base = (ServerWeaponObjectTemplate) baseData;
 
 		if (!maxDamageAmount.isLoaded()) {
@@ -381,7 +381,7 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 	public int getMaxDamageAmountMin() {
 		ServerWeaponObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerWeaponObjectTemplate)
+		if (baseData instanceof ServerWeaponObjectTemplate)
 			base = (ServerWeaponObjectTemplate) baseData;
 
 		if (!maxDamageAmount.isLoaded()) {
@@ -418,7 +418,7 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 	public int getMaxDamageAmountMax() {
 		ServerWeaponObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerWeaponObjectTemplate)
+		if (baseData instanceof ServerWeaponObjectTemplate)
 			base = (ServerWeaponObjectTemplate) baseData;
 
 		if (!maxDamageAmount.isLoaded()) {
@@ -455,7 +455,7 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 	public float getAttackSpeed() {
 		ServerWeaponObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerWeaponObjectTemplate)
+		if (baseData instanceof ServerWeaponObjectTemplate)
 			base = (ServerWeaponObjectTemplate) baseData;
 
 		if (!attackSpeed.isLoaded()) {
@@ -492,7 +492,7 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 	public float getAttackSpeedMin() {
 		ServerWeaponObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerWeaponObjectTemplate)
+		if (baseData instanceof ServerWeaponObjectTemplate)
 			base = (ServerWeaponObjectTemplate) baseData;
 
 		if (!attackSpeed.isLoaded()) {
@@ -529,7 +529,7 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 	public float getAttackSpeedMax() {
 		ServerWeaponObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerWeaponObjectTemplate)
+		if (baseData instanceof ServerWeaponObjectTemplate)
 			base = (ServerWeaponObjectTemplate) baseData;
 
 		if (!attackSpeed.isLoaded()) {
@@ -566,7 +566,7 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 	public float getAudibleRange() {
 		ServerWeaponObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerWeaponObjectTemplate)
+		if (baseData instanceof ServerWeaponObjectTemplate)
 			base = (ServerWeaponObjectTemplate) baseData;
 
 		if (!audibleRange.isLoaded()) {
@@ -603,7 +603,7 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 	public float getAudibleRangeMin() {
 		ServerWeaponObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerWeaponObjectTemplate)
+		if (baseData instanceof ServerWeaponObjectTemplate)
 			base = (ServerWeaponObjectTemplate) baseData;
 
 		if (!audibleRange.isLoaded()) {
@@ -640,7 +640,7 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 	public float getAudibleRangeMax() {
 		ServerWeaponObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerWeaponObjectTemplate)
+		if (baseData instanceof ServerWeaponObjectTemplate)
 			base = (ServerWeaponObjectTemplate) baseData;
 
 		if (!audibleRange.isLoaded()) {
@@ -677,7 +677,7 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 	public float getMinRange() {
 		ServerWeaponObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerWeaponObjectTemplate)
+		if (baseData instanceof ServerWeaponObjectTemplate)
 			base = (ServerWeaponObjectTemplate) baseData;
 
 		if (!minRange.isLoaded()) {
@@ -714,7 +714,7 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 	public float getMinRangeMin() {
 		ServerWeaponObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerWeaponObjectTemplate)
+		if (baseData instanceof ServerWeaponObjectTemplate)
 			base = (ServerWeaponObjectTemplate) baseData;
 
 		if (!minRange.isLoaded()) {
@@ -751,7 +751,7 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 	public float getMinRangeMax() {
 		ServerWeaponObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerWeaponObjectTemplate)
+		if (baseData instanceof ServerWeaponObjectTemplate)
 			base = (ServerWeaponObjectTemplate) baseData;
 
 		if (!minRange.isLoaded()) {
@@ -788,7 +788,7 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 	public float getMaxRange() {
 		ServerWeaponObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerWeaponObjectTemplate)
+		if (baseData instanceof ServerWeaponObjectTemplate)
 			base = (ServerWeaponObjectTemplate) baseData;
 
 		if (!maxRange.isLoaded()) {
@@ -825,7 +825,7 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 	public float getMaxRangeMin() {
 		ServerWeaponObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerWeaponObjectTemplate)
+		if (baseData instanceof ServerWeaponObjectTemplate)
 			base = (ServerWeaponObjectTemplate) baseData;
 
 		if (!maxRange.isLoaded()) {
@@ -862,7 +862,7 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 	public float getMaxRangeMax() {
 		ServerWeaponObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerWeaponObjectTemplate)
+		if (baseData instanceof ServerWeaponObjectTemplate)
 			base = (ServerWeaponObjectTemplate) baseData;
 
 		if (!maxRange.isLoaded()) {
@@ -899,7 +899,7 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 	public float getDamageRadius() {
 		ServerWeaponObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerWeaponObjectTemplate)
+		if (baseData instanceof ServerWeaponObjectTemplate)
 			base = (ServerWeaponObjectTemplate) baseData;
 
 		if (!damageRadius.isLoaded()) {
@@ -936,7 +936,7 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 	public float getDamageRadiusMin() {
 		ServerWeaponObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerWeaponObjectTemplate)
+		if (baseData instanceof ServerWeaponObjectTemplate)
 			base = (ServerWeaponObjectTemplate) baseData;
 
 		if (!damageRadius.isLoaded()) {
@@ -973,7 +973,7 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 	public float getDamageRadiusMax() {
 		ServerWeaponObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerWeaponObjectTemplate)
+		if (baseData instanceof ServerWeaponObjectTemplate)
 			base = (ServerWeaponObjectTemplate) baseData;
 
 		if (!damageRadius.isLoaded()) {
@@ -1010,7 +1010,7 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 	public float getWoundChance() {
 		ServerWeaponObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerWeaponObjectTemplate)
+		if (baseData instanceof ServerWeaponObjectTemplate)
 			base = (ServerWeaponObjectTemplate) baseData;
 
 		if (!woundChance.isLoaded()) {
@@ -1047,7 +1047,7 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 	public float getWoundChanceMin() {
 		ServerWeaponObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerWeaponObjectTemplate)
+		if (baseData instanceof ServerWeaponObjectTemplate)
 			base = (ServerWeaponObjectTemplate) baseData;
 
 		if (!woundChance.isLoaded()) {
@@ -1084,7 +1084,7 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 	public float getWoundChanceMax() {
 		ServerWeaponObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerWeaponObjectTemplate)
+		if (baseData instanceof ServerWeaponObjectTemplate)
 			base = (ServerWeaponObjectTemplate) baseData;
 
 		if (!woundChance.isLoaded()) {
@@ -1121,7 +1121,7 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 	public int getAttackCost() {
 		ServerWeaponObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerWeaponObjectTemplate)
+		if (baseData instanceof ServerWeaponObjectTemplate)
 			base = (ServerWeaponObjectTemplate) baseData;
 
 		if (!attackCost.isLoaded()) {
@@ -1158,7 +1158,7 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 	public int getAttackCostMin() {
 		ServerWeaponObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerWeaponObjectTemplate)
+		if (baseData instanceof ServerWeaponObjectTemplate)
 			base = (ServerWeaponObjectTemplate) baseData;
 
 		if (!attackCost.isLoaded()) {
@@ -1195,7 +1195,7 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 	public int getAttackCostMax() {
 		ServerWeaponObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerWeaponObjectTemplate)
+		if (baseData instanceof ServerWeaponObjectTemplate)
 			base = (ServerWeaponObjectTemplate) baseData;
 
 		if (!attackCost.isLoaded()) {
@@ -1232,7 +1232,7 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 	public int getAccuracy() {
 		ServerWeaponObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerWeaponObjectTemplate)
+		if (baseData instanceof ServerWeaponObjectTemplate)
 			base = (ServerWeaponObjectTemplate) baseData;
 
 		if (!accuracy.isLoaded()) {
@@ -1269,7 +1269,7 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 	public int getAccuracyMin() {
 		ServerWeaponObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerWeaponObjectTemplate)
+		if (baseData instanceof ServerWeaponObjectTemplate)
 			base = (ServerWeaponObjectTemplate) baseData;
 
 		if (!accuracy.isLoaded()) {
@@ -1306,7 +1306,7 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 	public int getAccuracyMax() {
 		ServerWeaponObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerWeaponObjectTemplate)
+		if (baseData instanceof ServerWeaponObjectTemplate)
 			base = (ServerWeaponObjectTemplate) baseData;
 
 		if (!accuracy.isLoaded()) {
@@ -1425,7 +1425,7 @@ public class ServerWeaponObjectTemplate extends ServerTangibleObjectTemplate {
 		WT_heavyWeapon(3),
 		WT_1handMelee(4),
 		WT_2handMelee(5),
-		WT_unarmed(6),
+		WT_unarmed(6), 
 		WT_polearm(7), 
 		WT_thrown(8), 
 		WT_1handLightsaber(9), 

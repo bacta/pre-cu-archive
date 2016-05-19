@@ -56,7 +56,7 @@ public class ServerManufactureSchematicObjectTemplate extends ServerIntangibleOb
 	public String getDraftSchematic() {
 		ServerManufactureSchematicObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerManufactureSchematicObjectTemplate)
+		if (baseData instanceof ServerManufactureSchematicObjectTemplate)
 			base = (ServerManufactureSchematicObjectTemplate) baseData;
 
 		if (!draftSchematic.isLoaded()) {
@@ -74,7 +74,7 @@ public class ServerManufactureSchematicObjectTemplate extends ServerIntangibleOb
 	public String getCreator() {
 		ServerManufactureSchematicObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerManufactureSchematicObjectTemplate)
+		if (baseData instanceof ServerManufactureSchematicObjectTemplate)
 			base = (ServerManufactureSchematicObjectTemplate) baseData;
 
 		if (!creator.isLoaded()) {
@@ -92,7 +92,7 @@ public class ServerManufactureSchematicObjectTemplate extends ServerIntangibleOb
 	public IngredientSlot getIngredients(int index) {
 		ServerManufactureSchematicObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerManufactureSchematicObjectTemplate)
+		if (baseData instanceof ServerManufactureSchematicObjectTemplate)
 			base = (ServerManufactureSchematicObjectTemplate) baseData;
 
 		if (!ingredientsLoaded) {
@@ -125,7 +125,7 @@ public class ServerManufactureSchematicObjectTemplate extends ServerIntangibleOb
 	public IngredientSlot getIngredientsMin(int index) {
 		ServerManufactureSchematicObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerManufactureSchematicObjectTemplate)
+		if (baseData instanceof ServerManufactureSchematicObjectTemplate)
 			base = (ServerManufactureSchematicObjectTemplate) baseData;
 
 		if (!ingredientsLoaded) {
@@ -158,7 +158,7 @@ public class ServerManufactureSchematicObjectTemplate extends ServerIntangibleOb
 	public IngredientSlot getIngredientsMax(int index) {
 		ServerManufactureSchematicObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerManufactureSchematicObjectTemplate)
+		if (baseData instanceof ServerManufactureSchematicObjectTemplate)
 			base = (ServerManufactureSchematicObjectTemplate) baseData;
 
 		if (!ingredientsLoaded) {
@@ -210,7 +210,7 @@ public class ServerManufactureSchematicObjectTemplate extends ServerIntangibleOb
 	public int getItemCount() {
 		ServerManufactureSchematicObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerManufactureSchematicObjectTemplate)
+		if (baseData instanceof ServerManufactureSchematicObjectTemplate)
 			base = (ServerManufactureSchematicObjectTemplate) baseData;
 
 		if (!itemCount.isLoaded()) {
@@ -247,7 +247,7 @@ public class ServerManufactureSchematicObjectTemplate extends ServerIntangibleOb
 	public int getItemCountMin() {
 		ServerManufactureSchematicObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerManufactureSchematicObjectTemplate)
+		if (baseData instanceof ServerManufactureSchematicObjectTemplate)
 			base = (ServerManufactureSchematicObjectTemplate) baseData;
 
 		if (!itemCount.isLoaded()) {
@@ -284,7 +284,7 @@ public class ServerManufactureSchematicObjectTemplate extends ServerIntangibleOb
 	public int getItemCountMax() {
 		ServerManufactureSchematicObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerManufactureSchematicObjectTemplate)
+		if (baseData instanceof ServerManufactureSchematicObjectTemplate)
 			base = (ServerManufactureSchematicObjectTemplate) baseData;
 
 		if (!itemCount.isLoaded()) {
@@ -321,7 +321,7 @@ public class ServerManufactureSchematicObjectTemplate extends ServerIntangibleOb
 	public SchematicAttribute getAttributes(int index) {
 		ServerManufactureSchematicObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerManufactureSchematicObjectTemplate)
+		if (baseData instanceof ServerManufactureSchematicObjectTemplate)
 			base = (ServerManufactureSchematicObjectTemplate) baseData;
 
 		if (!attributesLoaded) {
@@ -354,7 +354,7 @@ public class ServerManufactureSchematicObjectTemplate extends ServerIntangibleOb
 	public SchematicAttribute getAttributesMin(int index) {
 		ServerManufactureSchematicObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerManufactureSchematicObjectTemplate)
+		if (baseData instanceof ServerManufactureSchematicObjectTemplate)
 			base = (ServerManufactureSchematicObjectTemplate) baseData;
 
 		if (!attributesLoaded) {
@@ -387,7 +387,7 @@ public class ServerManufactureSchematicObjectTemplate extends ServerIntangibleOb
 	public SchematicAttribute getAttributesMax(int index) {
 		ServerManufactureSchematicObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerManufactureSchematicObjectTemplate)
+		if (baseData instanceof ServerManufactureSchematicObjectTemplate)
 			base = (ServerManufactureSchematicObjectTemplate) baseData;
 
 		if (!attributesLoaded) {
@@ -536,7 +536,7 @@ public class ServerManufactureSchematicObjectTemplate extends ServerIntangibleOb
 		public StringId getName() {
 			IngredientSlotObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof IngredientSlotObjectTemplate)
+			if (baseData instanceof IngredientSlotObjectTemplate)
 				base = (IngredientSlotObjectTemplate) baseData;
 
 			if (!name.isLoaded()) {
@@ -554,7 +554,7 @@ public class ServerManufactureSchematicObjectTemplate extends ServerIntangibleOb
 		public Ingredient getIngredient() {
 			IngredientSlotObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof IngredientSlotObjectTemplate)
+			if (baseData instanceof IngredientSlotObjectTemplate)
 				base = (IngredientSlotObjectTemplate) baseData;
 
 			if (!ingredient.isLoaded()) {
@@ -582,7 +582,7 @@ public class ServerManufactureSchematicObjectTemplate extends ServerIntangibleOb
 		public Ingredient getIngredientMin() {
 			IngredientSlotObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof IngredientSlotObjectTemplate)
+			if (baseData instanceof IngredientSlotObjectTemplate)
 				base = (IngredientSlotObjectTemplate) baseData;
 
 			if (!ingredient.isLoaded()) {
@@ -610,7 +610,7 @@ public class ServerManufactureSchematicObjectTemplate extends ServerIntangibleOb
 		public Ingredient getIngredientMax() {
 			IngredientSlotObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof IngredientSlotObjectTemplate)
+			if (baseData instanceof IngredientSlotObjectTemplate)
 				base = (IngredientSlotObjectTemplate) baseData;
 
 			if (!ingredient.isLoaded()) {

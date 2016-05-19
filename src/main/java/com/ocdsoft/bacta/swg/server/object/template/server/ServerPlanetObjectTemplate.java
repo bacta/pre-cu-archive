@@ -39,7 +39,7 @@ public class ServerPlanetObjectTemplate extends ServerUniverseObjectTemplate {
 	public String getPlanetName() {
 		ServerPlanetObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerPlanetObjectTemplate)
+		if (baseData instanceof ServerPlanetObjectTemplate)
 			base = (ServerPlanetObjectTemplate) baseData;
 
 		if (!planetName.isLoaded()) {

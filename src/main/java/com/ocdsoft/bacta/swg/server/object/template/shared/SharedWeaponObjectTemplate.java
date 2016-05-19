@@ -42,7 +42,7 @@ public class SharedWeaponObjectTemplate extends SharedTangibleObjectTemplate {
 	public String getWeaponEffect() {
 		SharedWeaponObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedWeaponObjectTemplate)
+		if (baseData instanceof SharedWeaponObjectTemplate)
 			base = (SharedWeaponObjectTemplate) baseData;
 
 		if (!weaponEffect.isLoaded()) {
@@ -60,7 +60,7 @@ public class SharedWeaponObjectTemplate extends SharedTangibleObjectTemplate {
 	public int getWeaponEffectIndex() {
 		SharedWeaponObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedWeaponObjectTemplate)
+		if (baseData instanceof SharedWeaponObjectTemplate)
 			base = (SharedWeaponObjectTemplate) baseData;
 
 		if (!weaponEffectIndex.isLoaded()) {
@@ -97,7 +97,7 @@ public class SharedWeaponObjectTemplate extends SharedTangibleObjectTemplate {
 	public int getWeaponEffectIndexMin() {
 		SharedWeaponObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedWeaponObjectTemplate)
+		if (baseData instanceof SharedWeaponObjectTemplate)
 			base = (SharedWeaponObjectTemplate) baseData;
 
 		if (!weaponEffectIndex.isLoaded()) {
@@ -134,7 +134,7 @@ public class SharedWeaponObjectTemplate extends SharedTangibleObjectTemplate {
 	public int getWeaponEffectIndexMax() {
 		SharedWeaponObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedWeaponObjectTemplate)
+		if (baseData instanceof SharedWeaponObjectTemplate)
 			base = (SharedWeaponObjectTemplate) baseData;
 
 		if (!weaponEffectIndex.isLoaded()) {
@@ -171,7 +171,7 @@ public class SharedWeaponObjectTemplate extends SharedTangibleObjectTemplate {
 	public AttackType getAttackType() {
 		SharedWeaponObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedWeaponObjectTemplate)
+		if (baseData instanceof SharedWeaponObjectTemplate)
 			base = (SharedWeaponObjectTemplate) baseData;
 
 		if (!attackType.isLoaded()) {

@@ -41,7 +41,7 @@ public class SharedTerrainSurfaceObjectTemplate extends ObjectTemplate {
 	public float getCover() {
 		SharedTerrainSurfaceObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedTerrainSurfaceObjectTemplate)
+		if (baseData instanceof SharedTerrainSurfaceObjectTemplate)
 			base = (SharedTerrainSurfaceObjectTemplate) baseData;
 
 		if (!cover.isLoaded()) {
@@ -78,7 +78,7 @@ public class SharedTerrainSurfaceObjectTemplate extends ObjectTemplate {
 	public float getCoverMin() {
 		SharedTerrainSurfaceObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedTerrainSurfaceObjectTemplate)
+		if (baseData instanceof SharedTerrainSurfaceObjectTemplate)
 			base = (SharedTerrainSurfaceObjectTemplate) baseData;
 
 		if (!cover.isLoaded()) {
@@ -115,7 +115,7 @@ public class SharedTerrainSurfaceObjectTemplate extends ObjectTemplate {
 	public float getCoverMax() {
 		SharedTerrainSurfaceObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedTerrainSurfaceObjectTemplate)
+		if (baseData instanceof SharedTerrainSurfaceObjectTemplate)
 			base = (SharedTerrainSurfaceObjectTemplate) baseData;
 
 		if (!cover.isLoaded()) {
@@ -152,7 +152,7 @@ public class SharedTerrainSurfaceObjectTemplate extends ObjectTemplate {
 	public String getSurfaceType() {
 		SharedTerrainSurfaceObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedTerrainSurfaceObjectTemplate)
+		if (baseData instanceof SharedTerrainSurfaceObjectTemplate)
 			base = (SharedTerrainSurfaceObjectTemplate) baseData;
 
 		if (!surfaceType.isLoaded()) {

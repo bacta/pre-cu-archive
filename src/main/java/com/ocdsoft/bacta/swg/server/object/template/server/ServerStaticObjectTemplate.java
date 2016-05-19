@@ -39,7 +39,7 @@ public class ServerStaticObjectTemplate extends ServerObjectTemplate {
 	public boolean getClientOnlyBuildout() {
 		ServerStaticObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerStaticObjectTemplate)
+		if (baseData instanceof ServerStaticObjectTemplate)
 			base = (ServerStaticObjectTemplate) baseData;
 
 		if (!clientOnlyBuildout.isLoaded()) {

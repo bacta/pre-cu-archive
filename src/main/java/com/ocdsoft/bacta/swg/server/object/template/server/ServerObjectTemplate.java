@@ -81,7 +81,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 	public String getSharedTemplate() {
 		ServerObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerObjectTemplate)
+		if (baseData instanceof ServerObjectTemplate)
 			base = (ServerObjectTemplate) baseData;
 
 		if (!sharedTemplate.isLoaded()) {
@@ -99,7 +99,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 	public String getScripts(int index) {
 		ServerObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerObjectTemplate)
+		if (baseData instanceof ServerObjectTemplate)
 			base = (ServerObjectTemplate) baseData;
 
 		if (!scriptsLoaded) {
@@ -144,7 +144,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 	public int getVolume() {
 		ServerObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerObjectTemplate)
+		if (baseData instanceof ServerObjectTemplate)
 			base = (ServerObjectTemplate) baseData;
 
 		if (!volume.isLoaded()) {
@@ -181,7 +181,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 	public int getVolumeMin() {
 		ServerObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerObjectTemplate)
+		if (baseData instanceof ServerObjectTemplate)
 			base = (ServerObjectTemplate) baseData;
 
 		if (!volume.isLoaded()) {
@@ -218,7 +218,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 	public int getVolumeMax() {
 		ServerObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerObjectTemplate)
+		if (baseData instanceof ServerObjectTemplate)
 			base = (ServerObjectTemplate) baseData;
 
 		if (!volume.isLoaded()) {
@@ -255,7 +255,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 	public VisibleFlags getVisibleFlags(int index) {
 		ServerObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerObjectTemplate)
+		if (baseData instanceof ServerObjectTemplate)
 			base = (ServerObjectTemplate) baseData;
 
 		if (!visibleFlagsLoaded) {
@@ -299,7 +299,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 	public DeleteFlags getDeleteFlags(int index) {
 		ServerObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerObjectTemplate)
+		if (baseData instanceof ServerObjectTemplate)
 			base = (ServerObjectTemplate) baseData;
 
 		if (!deleteFlagsLoaded) {
@@ -343,7 +343,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 	public MoveFlags getMoveFlags(int index) {
 		ServerObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerObjectTemplate)
+		if (baseData instanceof ServerObjectTemplate)
 			base = (ServerObjectTemplate) baseData;
 
 		if (!moveFlagsLoaded) {
@@ -387,7 +387,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 	public boolean getInvulnerable() {
 		ServerObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerObjectTemplate)
+		if (baseData instanceof ServerObjectTemplate)
 			base = (ServerObjectTemplate) baseData;
 
 		if (!invulnerable.isLoaded()) {
@@ -405,7 +405,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 	public float getComplexity() {
 		ServerObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerObjectTemplate)
+		if (baseData instanceof ServerObjectTemplate)
 			base = (ServerObjectTemplate) baseData;
 
 		if (!complexity.isLoaded()) {
@@ -442,7 +442,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 	public float getComplexityMin() {
 		ServerObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerObjectTemplate)
+		if (baseData instanceof ServerObjectTemplate)
 			base = (ServerObjectTemplate) baseData;
 
 		if (!complexity.isLoaded()) {
@@ -479,7 +479,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 	public float getComplexityMax() {
 		ServerObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerObjectTemplate)
+		if (baseData instanceof ServerObjectTemplate)
 			base = (ServerObjectTemplate) baseData;
 
 		if (!complexity.isLoaded()) {
@@ -516,7 +516,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 	public int getTintIndex() {
 		ServerObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerObjectTemplate)
+		if (baseData instanceof ServerObjectTemplate)
 			base = (ServerObjectTemplate) baseData;
 
 		if (!tintIndex.isLoaded()) {
@@ -553,7 +553,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 	public int getTintIndexMin() {
 		ServerObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerObjectTemplate)
+		if (baseData instanceof ServerObjectTemplate)
 			base = (ServerObjectTemplate) baseData;
 
 		if (!tintIndex.isLoaded()) {
@@ -590,7 +590,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 	public int getTintIndexMax() {
 		ServerObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerObjectTemplate)
+		if (baseData instanceof ServerObjectTemplate)
 			base = (ServerObjectTemplate) baseData;
 
 		if (!tintIndex.isLoaded()) {
@@ -627,7 +627,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 	public float getUpdateRanges(UpdateRanges index) {
 		ServerObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerObjectTemplate)
+		if (baseData instanceof ServerObjectTemplate)
 			base = (ServerObjectTemplate) baseData;
 
 		if (!updateRanges[(int) index.value].isLoaded()) {
@@ -664,7 +664,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 	public float getUpdateRangesMin(UpdateRanges index) {
 		ServerObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerObjectTemplate)
+		if (baseData instanceof ServerObjectTemplate)
 			base = (ServerObjectTemplate) baseData;
 
 		if (!updateRanges[(int) index.value].isLoaded()) {
@@ -701,7 +701,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 	public float getUpdateRangesMax(UpdateRanges index) {
 		ServerObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerObjectTemplate)
+		if (baseData instanceof ServerObjectTemplate)
 			base = (ServerObjectTemplate) baseData;
 
 		if (!updateRanges[(int) index.value].isLoaded()) {
@@ -738,7 +738,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 	public Contents getContents(int index) {
 		ServerObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerObjectTemplate)
+		if (baseData instanceof ServerObjectTemplate)
 			base = (ServerObjectTemplate) baseData;
 
 		if (!contentsLoaded) {
@@ -772,7 +772,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 	public Contents getContentsMin(int index) {
 		ServerObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerObjectTemplate)
+		if (baseData instanceof ServerObjectTemplate)
 			base = (ServerObjectTemplate) baseData;
 
 		if (!contentsLoaded) {
@@ -806,7 +806,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 	public Contents getContentsMax(int index) {
 		ServerObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerObjectTemplate)
+		if (baseData instanceof ServerObjectTemplate)
 			base = (ServerObjectTemplate) baseData;
 
 		if (!contentsLoaded) {
@@ -859,7 +859,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 	public Xp getXpPoints(int index) {
 		ServerObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerObjectTemplate)
+		if (baseData instanceof ServerObjectTemplate)
 			base = (ServerObjectTemplate) baseData;
 
 		if (!xpPointsLoaded) {
@@ -893,7 +893,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 	public Xp getXpPointsMin(int index) {
 		ServerObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerObjectTemplate)
+		if (baseData instanceof ServerObjectTemplate)
 			base = (ServerObjectTemplate) baseData;
 
 		if (!xpPointsLoaded) {
@@ -927,7 +927,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 	public Xp getXpPointsMax(int index) {
 		ServerObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerObjectTemplate)
+		if (baseData instanceof ServerObjectTemplate)
 			base = (ServerObjectTemplate) baseData;
 
 		if (!xpPointsLoaded) {
@@ -980,7 +980,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 	public boolean getPersistByDefault() {
 		ServerObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerObjectTemplate)
+		if (baseData instanceof ServerObjectTemplate)
 			base = (ServerObjectTemplate) baseData;
 
 		if (!persistByDefault.isLoaded()) {
@@ -998,7 +998,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 	public boolean getPersistContents() {
 		ServerObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerObjectTemplate)
+		if (baseData instanceof ServerObjectTemplate)
 			base = (ServerObjectTemplate) baseData;
 
 		if (!persistContents.isLoaded()) {
@@ -1214,7 +1214,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		CT_installationMission(0x80000400),
 		CT_lightsaberMission(0x80000800),
 		CT_genericItemMission(0x80001000),
-		CT_geneticsMission(0x80002000),
+		CT_geneticsMission(0x80002000), 
 		CT_mandalorianTailorMission(0x80004000), 
 		CT_mandalorianArmorsmithMission(0x80008000), 
 		CT_mandalorianDroidEngineerMission(0x80010000), 
@@ -1367,7 +1367,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		XP_craftingWeaponsMunition(50),
 		XP_industrialist(51),
 		XP_craftingScout(52),
-		XP_craftingCreature(53),
+		XP_craftingCreature(53), 
 		XP_craftingTissue(54), 
 		XP_craftingCamp(55), 
 		XP_craftingTrapping(56), 
@@ -1430,7 +1430,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		DT_blast(0x00000004),
 		DT_stun(0x00000008),
 		DT_restraint(0x00000010),
-		DT_elemental_heat(0x00000020),
+		DT_elemental_heat(0x00000020), 
 		DT_elemental_cold(0x00000040), 
 		DT_elemental_acid(0x00000080), 
 		DT_elemental_electrical(0x00000100), 
@@ -1505,7 +1505,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		public Attributes getTarget() {
 			AttribModObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof AttribModObjectTemplate)
+			if (baseData instanceof AttribModObjectTemplate)
 				base = (AttribModObjectTemplate) baseData;
 
 			if (!target.isLoaded()) {
@@ -1522,7 +1522,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		public int getValue() {
 			AttribModObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof AttribModObjectTemplate)
+			if (baseData instanceof AttribModObjectTemplate)
 				base = (AttribModObjectTemplate) baseData;
 
 			if (!value.isLoaded()) {
@@ -1559,7 +1559,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		public int getValueMin() {
 			AttribModObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof AttribModObjectTemplate)
+			if (baseData instanceof AttribModObjectTemplate)
 				base = (AttribModObjectTemplate) baseData;
 
 			if (!value.isLoaded()) {
@@ -1596,7 +1596,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		public int getValueMax() {
 			AttribModObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof AttribModObjectTemplate)
+			if (baseData instanceof AttribModObjectTemplate)
 				base = (AttribModObjectTemplate) baseData;
 
 			if (!value.isLoaded()) {
@@ -1633,7 +1633,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		public float getTime() {
 			AttribModObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof AttribModObjectTemplate)
+			if (baseData instanceof AttribModObjectTemplate)
 				base = (AttribModObjectTemplate) baseData;
 
 			if (!time.isLoaded()) {
@@ -1670,7 +1670,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		public float getTimeMin() {
 			AttribModObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof AttribModObjectTemplate)
+			if (baseData instanceof AttribModObjectTemplate)
 				base = (AttribModObjectTemplate) baseData;
 
 			if (!time.isLoaded()) {
@@ -1707,7 +1707,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		public float getTimeMax() {
 			AttribModObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof AttribModObjectTemplate)
+			if (baseData instanceof AttribModObjectTemplate)
 				base = (AttribModObjectTemplate) baseData;
 
 			if (!time.isLoaded()) {
@@ -1744,7 +1744,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		public float getTimeAtValue() {
 			AttribModObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof AttribModObjectTemplate)
+			if (baseData instanceof AttribModObjectTemplate)
 				base = (AttribModObjectTemplate) baseData;
 
 			if (!timeAtValue.isLoaded()) {
@@ -1781,7 +1781,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		public float getTimeAtValueMin() {
 			AttribModObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof AttribModObjectTemplate)
+			if (baseData instanceof AttribModObjectTemplate)
 				base = (AttribModObjectTemplate) baseData;
 
 			if (!timeAtValue.isLoaded()) {
@@ -1818,7 +1818,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		public float getTimeAtValueMax() {
 			AttribModObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof AttribModObjectTemplate)
+			if (baseData instanceof AttribModObjectTemplate)
 				base = (AttribModObjectTemplate) baseData;
 
 			if (!timeAtValue.isLoaded()) {
@@ -1855,7 +1855,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		public float getDecay() {
 			AttribModObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof AttribModObjectTemplate)
+			if (baseData instanceof AttribModObjectTemplate)
 				base = (AttribModObjectTemplate) baseData;
 
 			if (!decay.isLoaded()) {
@@ -1892,7 +1892,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		public float getDecayMin() {
 			AttribModObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof AttribModObjectTemplate)
+			if (baseData instanceof AttribModObjectTemplate)
 				base = (AttribModObjectTemplate) baseData;
 
 			if (!decay.isLoaded()) {
@@ -1929,7 +1929,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		public float getDecayMax() {
 			AttribModObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof AttribModObjectTemplate)
+			if (baseData instanceof AttribModObjectTemplate)
 				base = (AttribModObjectTemplate) baseData;
 
 			if (!decay.isLoaded()) {
@@ -2029,7 +2029,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		public MentalStates getTarget() {
 			MentalStateModObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof MentalStateModObjectTemplate)
+			if (baseData instanceof MentalStateModObjectTemplate)
 				base = (MentalStateModObjectTemplate) baseData;
 
 			if (!target.isLoaded()) {
@@ -2046,7 +2046,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		public float getValue() {
 			MentalStateModObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof MentalStateModObjectTemplate)
+			if (baseData instanceof MentalStateModObjectTemplate)
 				base = (MentalStateModObjectTemplate) baseData;
 
 			if (!value.isLoaded()) {
@@ -2083,7 +2083,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		public float getValueMin() {
 			MentalStateModObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof MentalStateModObjectTemplate)
+			if (baseData instanceof MentalStateModObjectTemplate)
 				base = (MentalStateModObjectTemplate) baseData;
 
 			if (!value.isLoaded()) {
@@ -2120,7 +2120,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		public float getValueMax() {
 			MentalStateModObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof MentalStateModObjectTemplate)
+			if (baseData instanceof MentalStateModObjectTemplate)
 				base = (MentalStateModObjectTemplate) baseData;
 
 			if (!value.isLoaded()) {
@@ -2157,7 +2157,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		public float getTime() {
 			MentalStateModObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof MentalStateModObjectTemplate)
+			if (baseData instanceof MentalStateModObjectTemplate)
 				base = (MentalStateModObjectTemplate) baseData;
 
 			if (!time.isLoaded()) {
@@ -2194,7 +2194,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		public float getTimeMin() {
 			MentalStateModObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof MentalStateModObjectTemplate)
+			if (baseData instanceof MentalStateModObjectTemplate)
 				base = (MentalStateModObjectTemplate) baseData;
 
 			if (!time.isLoaded()) {
@@ -2231,7 +2231,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		public float getTimeMax() {
 			MentalStateModObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof MentalStateModObjectTemplate)
+			if (baseData instanceof MentalStateModObjectTemplate)
 				base = (MentalStateModObjectTemplate) baseData;
 
 			if (!time.isLoaded()) {
@@ -2268,7 +2268,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		public float getTimeAtValue() {
 			MentalStateModObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof MentalStateModObjectTemplate)
+			if (baseData instanceof MentalStateModObjectTemplate)
 				base = (MentalStateModObjectTemplate) baseData;
 
 			if (!timeAtValue.isLoaded()) {
@@ -2305,7 +2305,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		public float getTimeAtValueMin() {
 			MentalStateModObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof MentalStateModObjectTemplate)
+			if (baseData instanceof MentalStateModObjectTemplate)
 				base = (MentalStateModObjectTemplate) baseData;
 
 			if (!timeAtValue.isLoaded()) {
@@ -2342,7 +2342,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		public float getTimeAtValueMax() {
 			MentalStateModObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof MentalStateModObjectTemplate)
+			if (baseData instanceof MentalStateModObjectTemplate)
 				base = (MentalStateModObjectTemplate) baseData;
 
 			if (!timeAtValue.isLoaded()) {
@@ -2379,7 +2379,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		public float getDecay() {
 			MentalStateModObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof MentalStateModObjectTemplate)
+			if (baseData instanceof MentalStateModObjectTemplate)
 				base = (MentalStateModObjectTemplate) baseData;
 
 			if (!decay.isLoaded()) {
@@ -2416,7 +2416,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		public float getDecayMin() {
 			MentalStateModObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof MentalStateModObjectTemplate)
+			if (baseData instanceof MentalStateModObjectTemplate)
 				base = (MentalStateModObjectTemplate) baseData;
 
 			if (!decay.isLoaded()) {
@@ -2453,7 +2453,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		public float getDecayMax() {
 			MentalStateModObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof MentalStateModObjectTemplate)
+			if (baseData instanceof MentalStateModObjectTemplate)
 				base = (MentalStateModObjectTemplate) baseData;
 
 			if (!decay.isLoaded()) {
@@ -2547,7 +2547,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		public String getSlotName() {
 			ContentsObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof ContentsObjectTemplate)
+			if (baseData instanceof ContentsObjectTemplate)
 				base = (ContentsObjectTemplate) baseData;
 
 			if (!slotName.isLoaded()) {
@@ -2565,7 +2565,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		public boolean getEquipObject() {
 			ContentsObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof ContentsObjectTemplate)
+			if (baseData instanceof ContentsObjectTemplate)
 				base = (ContentsObjectTemplate) baseData;
 
 			if (!equipObject.isLoaded()) {
@@ -2583,7 +2583,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		public ServerObjectTemplate getContent() {
 			ContentsObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof ContentsObjectTemplate)
+			if (baseData instanceof ContentsObjectTemplate)
 				base = (ContentsObjectTemplate) baseData;
 
 			if (!content.isLoaded()) {
@@ -2663,7 +2663,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		public XpTypes getType() {
 			XpObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof XpObjectTemplate)
+			if (baseData instanceof XpObjectTemplate)
 				base = (XpObjectTemplate) baseData;
 
 			if (!type.isLoaded()) {
@@ -2680,7 +2680,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		public int getLevel() {
 			XpObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof XpObjectTemplate)
+			if (baseData instanceof XpObjectTemplate)
 				base = (XpObjectTemplate) baseData;
 
 			if (!level.isLoaded()) {
@@ -2717,7 +2717,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		public int getLevelMin() {
 			XpObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof XpObjectTemplate)
+			if (baseData instanceof XpObjectTemplate)
 				base = (XpObjectTemplate) baseData;
 
 			if (!level.isLoaded()) {
@@ -2754,7 +2754,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		public int getLevelMax() {
 			XpObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof XpObjectTemplate)
+			if (baseData instanceof XpObjectTemplate)
 				base = (XpObjectTemplate) baseData;
 
 			if (!level.isLoaded()) {
@@ -2791,7 +2791,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		public int getValue() {
 			XpObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof XpObjectTemplate)
+			if (baseData instanceof XpObjectTemplate)
 				base = (XpObjectTemplate) baseData;
 
 			if (!value.isLoaded()) {
@@ -2828,7 +2828,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		public int getValueMin() {
 			XpObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof XpObjectTemplate)
+			if (baseData instanceof XpObjectTemplate)
 				base = (XpObjectTemplate) baseData;
 
 			if (!value.isLoaded()) {
@@ -2865,7 +2865,7 @@ public class ServerObjectTemplate extends ObjectTemplate {
 		public int getValueMax() {
 			XpObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof XpObjectTemplate)
+			if (baseData instanceof XpObjectTemplate)
 				base = (XpObjectTemplate) baseData;
 
 			if (!value.isLoaded()) {

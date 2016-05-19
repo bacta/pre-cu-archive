@@ -88,7 +88,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 	public Gender getGender() {
 		SharedCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedCreatureObjectTemplate)
+		if (baseData instanceof SharedCreatureObjectTemplate)
 			base = (SharedCreatureObjectTemplate) baseData;
 
 		if (!gender.isLoaded()) {
@@ -105,7 +105,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 	public Niche getNiche() {
 		SharedCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedCreatureObjectTemplate)
+		if (baseData instanceof SharedCreatureObjectTemplate)
 			base = (SharedCreatureObjectTemplate) baseData;
 
 		if (!niche.isLoaded()) {
@@ -122,7 +122,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 	public Species getSpecies() {
 		SharedCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedCreatureObjectTemplate)
+		if (baseData instanceof SharedCreatureObjectTemplate)
 			base = (SharedCreatureObjectTemplate) baseData;
 
 		if (!species.isLoaded()) {
@@ -139,7 +139,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 	public Race getRace() {
 		SharedCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedCreatureObjectTemplate)
+		if (baseData instanceof SharedCreatureObjectTemplate)
 			base = (SharedCreatureObjectTemplate) baseData;
 
 		if (!race.isLoaded()) {
@@ -156,7 +156,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getAcceleration(MovementTypes index) {
 		SharedCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedCreatureObjectTemplate)
+		if (baseData instanceof SharedCreatureObjectTemplate)
 			base = (SharedCreatureObjectTemplate) baseData;
 
 		if (!acceleration[(int) index.value].isLoaded()) {
@@ -193,7 +193,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getAccelerationMin(MovementTypes index) {
 		SharedCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedCreatureObjectTemplate)
+		if (baseData instanceof SharedCreatureObjectTemplate)
 			base = (SharedCreatureObjectTemplate) baseData;
 
 		if (!acceleration[(int) index.value].isLoaded()) {
@@ -230,7 +230,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getAccelerationMax(MovementTypes index) {
 		SharedCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedCreatureObjectTemplate)
+		if (baseData instanceof SharedCreatureObjectTemplate)
 			base = (SharedCreatureObjectTemplate) baseData;
 
 		if (!acceleration[(int) index.value].isLoaded()) {
@@ -267,7 +267,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getSpeed(MovementTypes index) {
 		SharedCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedCreatureObjectTemplate)
+		if (baseData instanceof SharedCreatureObjectTemplate)
 			base = (SharedCreatureObjectTemplate) baseData;
 
 		if (!speed[(int) index.value].isLoaded()) {
@@ -304,7 +304,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getSpeedMin(MovementTypes index) {
 		SharedCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedCreatureObjectTemplate)
+		if (baseData instanceof SharedCreatureObjectTemplate)
 			base = (SharedCreatureObjectTemplate) baseData;
 
 		if (!speed[(int) index.value].isLoaded()) {
@@ -341,7 +341,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getSpeedMax(MovementTypes index) {
 		SharedCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedCreatureObjectTemplate)
+		if (baseData instanceof SharedCreatureObjectTemplate)
 			base = (SharedCreatureObjectTemplate) baseData;
 
 		if (!speed[(int) index.value].isLoaded()) {
@@ -378,7 +378,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getTurnRate(MovementTypes index) {
 		SharedCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedCreatureObjectTemplate)
+		if (baseData instanceof SharedCreatureObjectTemplate)
 			base = (SharedCreatureObjectTemplate) baseData;
 
 		if (!turnRate[(int) index.value].isLoaded()) {
@@ -415,7 +415,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getTurnRateMin(MovementTypes index) {
 		SharedCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedCreatureObjectTemplate)
+		if (baseData instanceof SharedCreatureObjectTemplate)
 			base = (SharedCreatureObjectTemplate) baseData;
 
 		if (!turnRate[(int) index.value].isLoaded()) {
@@ -452,7 +452,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getTurnRateMax(MovementTypes index) {
 		SharedCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedCreatureObjectTemplate)
+		if (baseData instanceof SharedCreatureObjectTemplate)
 			base = (SharedCreatureObjectTemplate) baseData;
 
 		if (!turnRate[(int) index.value].isLoaded()) {
@@ -489,7 +489,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 	public String getAnimationMapFilename() {
 		SharedCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedCreatureObjectTemplate)
+		if (baseData instanceof SharedCreatureObjectTemplate)
 			base = (SharedCreatureObjectTemplate) baseData;
 
 		if (!animationMapFilename.isLoaded()) {
@@ -507,7 +507,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getSlopeModAngle() {
 		SharedCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedCreatureObjectTemplate)
+		if (baseData instanceof SharedCreatureObjectTemplate)
 			base = (SharedCreatureObjectTemplate) baseData;
 
 		if (!slopeModAngle.isLoaded()) {
@@ -544,7 +544,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getSlopeModAngleMin() {
 		SharedCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedCreatureObjectTemplate)
+		if (baseData instanceof SharedCreatureObjectTemplate)
 			base = (SharedCreatureObjectTemplate) baseData;
 
 		if (!slopeModAngle.isLoaded()) {
@@ -581,7 +581,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getSlopeModAngleMax() {
 		SharedCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedCreatureObjectTemplate)
+		if (baseData instanceof SharedCreatureObjectTemplate)
 			base = (SharedCreatureObjectTemplate) baseData;
 
 		if (!slopeModAngle.isLoaded()) {
@@ -618,7 +618,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getSlopeModPercent() {
 		SharedCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedCreatureObjectTemplate)
+		if (baseData instanceof SharedCreatureObjectTemplate)
 			base = (SharedCreatureObjectTemplate) baseData;
 
 		if (!slopeModPercent.isLoaded()) {
@@ -655,7 +655,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getSlopeModPercentMin() {
 		SharedCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedCreatureObjectTemplate)
+		if (baseData instanceof SharedCreatureObjectTemplate)
 			base = (SharedCreatureObjectTemplate) baseData;
 
 		if (!slopeModPercent.isLoaded()) {
@@ -692,7 +692,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getSlopeModPercentMax() {
 		SharedCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedCreatureObjectTemplate)
+		if (baseData instanceof SharedCreatureObjectTemplate)
 			base = (SharedCreatureObjectTemplate) baseData;
 
 		if (!slopeModPercent.isLoaded()) {
@@ -729,7 +729,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getWaterModPercent() {
 		SharedCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedCreatureObjectTemplate)
+		if (baseData instanceof SharedCreatureObjectTemplate)
 			base = (SharedCreatureObjectTemplate) baseData;
 
 		if (!waterModPercent.isLoaded()) {
@@ -766,7 +766,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getWaterModPercentMin() {
 		SharedCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedCreatureObjectTemplate)
+		if (baseData instanceof SharedCreatureObjectTemplate)
 			base = (SharedCreatureObjectTemplate) baseData;
 
 		if (!waterModPercent.isLoaded()) {
@@ -803,7 +803,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getWaterModPercentMax() {
 		SharedCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedCreatureObjectTemplate)
+		if (baseData instanceof SharedCreatureObjectTemplate)
 			base = (SharedCreatureObjectTemplate) baseData;
 
 		if (!waterModPercent.isLoaded()) {
@@ -840,7 +840,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getStepHeight() {
 		SharedCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedCreatureObjectTemplate)
+		if (baseData instanceof SharedCreatureObjectTemplate)
 			base = (SharedCreatureObjectTemplate) baseData;
 
 		if (!stepHeight.isLoaded()) {
@@ -877,7 +877,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getStepHeightMin() {
 		SharedCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedCreatureObjectTemplate)
+		if (baseData instanceof SharedCreatureObjectTemplate)
 			base = (SharedCreatureObjectTemplate) baseData;
 
 		if (!stepHeight.isLoaded()) {
@@ -914,7 +914,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getStepHeightMax() {
 		SharedCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedCreatureObjectTemplate)
+		if (baseData instanceof SharedCreatureObjectTemplate)
 			base = (SharedCreatureObjectTemplate) baseData;
 
 		if (!stepHeight.isLoaded()) {
@@ -951,7 +951,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getCollisionHeight() {
 		SharedCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedCreatureObjectTemplate)
+		if (baseData instanceof SharedCreatureObjectTemplate)
 			base = (SharedCreatureObjectTemplate) baseData;
 
 		if (!collisionHeight.isLoaded()) {
@@ -988,7 +988,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getCollisionHeightMin() {
 		SharedCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedCreatureObjectTemplate)
+		if (baseData instanceof SharedCreatureObjectTemplate)
 			base = (SharedCreatureObjectTemplate) baseData;
 
 		if (!collisionHeight.isLoaded()) {
@@ -1025,7 +1025,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getCollisionHeightMax() {
 		SharedCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedCreatureObjectTemplate)
+		if (baseData instanceof SharedCreatureObjectTemplate)
 			base = (SharedCreatureObjectTemplate) baseData;
 
 		if (!collisionHeight.isLoaded()) {
@@ -1062,7 +1062,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getCollisionRadius() {
 		SharedCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedCreatureObjectTemplate)
+		if (baseData instanceof SharedCreatureObjectTemplate)
 			base = (SharedCreatureObjectTemplate) baseData;
 
 		if (!collisionRadius.isLoaded()) {
@@ -1099,7 +1099,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getCollisionRadiusMin() {
 		SharedCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedCreatureObjectTemplate)
+		if (baseData instanceof SharedCreatureObjectTemplate)
 			base = (SharedCreatureObjectTemplate) baseData;
 
 		if (!collisionRadius.isLoaded()) {
@@ -1136,7 +1136,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getCollisionRadiusMax() {
 		SharedCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedCreatureObjectTemplate)
+		if (baseData instanceof SharedCreatureObjectTemplate)
 			base = (SharedCreatureObjectTemplate) baseData;
 
 		if (!collisionRadius.isLoaded()) {
@@ -1173,7 +1173,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 	public String getMovementDatatable() {
 		SharedCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedCreatureObjectTemplate)
+		if (baseData instanceof SharedCreatureObjectTemplate)
 			base = (SharedCreatureObjectTemplate) baseData;
 
 		if (!movementDatatable.isLoaded()) {
@@ -1191,7 +1191,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 	public boolean getPostureAlignToTerrain(Postures index) {
 		SharedCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedCreatureObjectTemplate)
+		if (baseData instanceof SharedCreatureObjectTemplate)
 			base = (SharedCreatureObjectTemplate) baseData;
 
 		if (!postureAlignToTerrain[(int) index.value].isLoaded()) {
@@ -1209,7 +1209,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getSwimHeight() {
 		SharedCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedCreatureObjectTemplate)
+		if (baseData instanceof SharedCreatureObjectTemplate)
 			base = (SharedCreatureObjectTemplate) baseData;
 
 		if (!swimHeight.isLoaded()) {
@@ -1246,7 +1246,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getSwimHeightMin() {
 		SharedCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedCreatureObjectTemplate)
+		if (baseData instanceof SharedCreatureObjectTemplate)
 			base = (SharedCreatureObjectTemplate) baseData;
 
 		if (!swimHeight.isLoaded()) {
@@ -1283,7 +1283,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getSwimHeightMax() {
 		SharedCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedCreatureObjectTemplate)
+		if (baseData instanceof SharedCreatureObjectTemplate)
 			base = (SharedCreatureObjectTemplate) baseData;
 
 		if (!swimHeight.isLoaded()) {
@@ -1320,7 +1320,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getWarpTolerance() {
 		SharedCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedCreatureObjectTemplate)
+		if (baseData instanceof SharedCreatureObjectTemplate)
 			base = (SharedCreatureObjectTemplate) baseData;
 
 		if (!warpTolerance.isLoaded()) {
@@ -1357,7 +1357,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getWarpToleranceMin() {
 		SharedCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedCreatureObjectTemplate)
+		if (baseData instanceof SharedCreatureObjectTemplate)
 			base = (SharedCreatureObjectTemplate) baseData;
 
 		if (!warpTolerance.isLoaded()) {
@@ -1394,7 +1394,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getWarpToleranceMax() {
 		SharedCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedCreatureObjectTemplate)
+		if (baseData instanceof SharedCreatureObjectTemplate)
 			base = (SharedCreatureObjectTemplate) baseData;
 
 		if (!warpTolerance.isLoaded()) {
@@ -1431,7 +1431,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getCollisionOffsetX() {
 		SharedCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedCreatureObjectTemplate)
+		if (baseData instanceof SharedCreatureObjectTemplate)
 			base = (SharedCreatureObjectTemplate) baseData;
 
 		if (!collisionOffsetX.isLoaded()) {
@@ -1468,7 +1468,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getCollisionOffsetXMin() {
 		SharedCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedCreatureObjectTemplate)
+		if (baseData instanceof SharedCreatureObjectTemplate)
 			base = (SharedCreatureObjectTemplate) baseData;
 
 		if (!collisionOffsetX.isLoaded()) {
@@ -1505,7 +1505,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getCollisionOffsetXMax() {
 		SharedCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedCreatureObjectTemplate)
+		if (baseData instanceof SharedCreatureObjectTemplate)
 			base = (SharedCreatureObjectTemplate) baseData;
 
 		if (!collisionOffsetX.isLoaded()) {
@@ -1542,7 +1542,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getCollisionOffsetZ() {
 		SharedCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedCreatureObjectTemplate)
+		if (baseData instanceof SharedCreatureObjectTemplate)
 			base = (SharedCreatureObjectTemplate) baseData;
 
 		if (!collisionOffsetZ.isLoaded()) {
@@ -1579,7 +1579,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getCollisionOffsetZMin() {
 		SharedCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedCreatureObjectTemplate)
+		if (baseData instanceof SharedCreatureObjectTemplate)
 			base = (SharedCreatureObjectTemplate) baseData;
 
 		if (!collisionOffsetZ.isLoaded()) {
@@ -1616,7 +1616,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getCollisionOffsetZMax() {
 		SharedCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedCreatureObjectTemplate)
+		if (baseData instanceof SharedCreatureObjectTemplate)
 			base = (SharedCreatureObjectTemplate) baseData;
 
 		if (!collisionOffsetZ.isLoaded()) {
@@ -1653,7 +1653,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getCollisionLength() {
 		SharedCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedCreatureObjectTemplate)
+		if (baseData instanceof SharedCreatureObjectTemplate)
 			base = (SharedCreatureObjectTemplate) baseData;
 
 		if (!collisionLength.isLoaded()) {
@@ -1690,7 +1690,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getCollisionLengthMin() {
 		SharedCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedCreatureObjectTemplate)
+		if (baseData instanceof SharedCreatureObjectTemplate)
 			base = (SharedCreatureObjectTemplate) baseData;
 
 		if (!collisionLength.isLoaded()) {
@@ -1727,7 +1727,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getCollisionLengthMax() {
 		SharedCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedCreatureObjectTemplate)
+		if (baseData instanceof SharedCreatureObjectTemplate)
 			base = (SharedCreatureObjectTemplate) baseData;
 
 		if (!collisionLength.isLoaded()) {
@@ -1764,7 +1764,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getCameraHeight() {
 		SharedCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedCreatureObjectTemplate)
+		if (baseData instanceof SharedCreatureObjectTemplate)
 			base = (SharedCreatureObjectTemplate) baseData;
 
 		if (!cameraHeight.isLoaded()) {
@@ -1801,7 +1801,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getCameraHeightMin() {
 		SharedCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedCreatureObjectTemplate)
+		if (baseData instanceof SharedCreatureObjectTemplate)
 			base = (SharedCreatureObjectTemplate) baseData;
 
 		if (!cameraHeight.isLoaded()) {
@@ -1838,7 +1838,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 	public float getCameraHeightMax() {
 		SharedCreatureObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedCreatureObjectTemplate)
+		if (baseData instanceof SharedCreatureObjectTemplate)
 			base = (SharedCreatureObjectTemplate) baseData;
 
 		if (!cameraHeight.isLoaded()) {
@@ -2000,7 +2000,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 		Blocking(4),
 		Climbing(5),
 		Flying(6),
-		LyingDown(7),
+		LyingDown(7), 
 		Sitting(8), 
 		SkillAnimating(9), 
 		DrivingVehicle(10), 
@@ -2060,7 +2060,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 		NI_none(0),
 		NI_pc(1),
 		NI_ai(2),
-		NI_droid(3),
+		NI_droid(3), 
 		NI_vehicle(4), 
 		NI_npc(5), 
 		NI_monster(6), 
@@ -2322,7 +2322,7 @@ public class SharedCreatureObjectTemplate extends SharedTangibleObjectTemplate {
 		SP_spiderDroid(219),
 		SP_surgicalDroid(220),
 		SP_tattletaleDroid(221),
-		SP_trackerDroid(222),
+		SP_trackerDroid(222), 
 		SP_treadwell(223), 
 		SP_ev9d9(224), 
 		SP_maulProbeDroid(225), 

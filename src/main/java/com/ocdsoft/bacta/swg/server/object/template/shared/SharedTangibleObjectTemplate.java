@@ -71,7 +71,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 	public PaletteColorCustomizationVariable getPaletteColorCustomizationVariables(int index) {
 		SharedTangibleObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedTangibleObjectTemplate)
+		if (baseData instanceof SharedTangibleObjectTemplate)
 			base = (SharedTangibleObjectTemplate) baseData;
 
 		if (!paletteColorCustomizationVariablesLoaded) {
@@ -105,7 +105,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 	public PaletteColorCustomizationVariable getPaletteColorCustomizationVariablesMin(int index) {
 		SharedTangibleObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedTangibleObjectTemplate)
+		if (baseData instanceof SharedTangibleObjectTemplate)
 			base = (SharedTangibleObjectTemplate) baseData;
 
 		if (!paletteColorCustomizationVariablesLoaded) {
@@ -139,7 +139,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 	public PaletteColorCustomizationVariable getPaletteColorCustomizationVariablesMax(int index) {
 		SharedTangibleObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedTangibleObjectTemplate)
+		if (baseData instanceof SharedTangibleObjectTemplate)
 			base = (SharedTangibleObjectTemplate) baseData;
 
 		if (!paletteColorCustomizationVariablesLoaded) {
@@ -192,7 +192,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 	public RangedIntCustomizationVariable getRangedIntCustomizationVariables(int index) {
 		SharedTangibleObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedTangibleObjectTemplate)
+		if (baseData instanceof SharedTangibleObjectTemplate)
 			base = (SharedTangibleObjectTemplate) baseData;
 
 		if (!rangedIntCustomizationVariablesLoaded) {
@@ -227,7 +227,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 	public RangedIntCustomizationVariable getRangedIntCustomizationVariablesMin(int index) {
 		SharedTangibleObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedTangibleObjectTemplate)
+		if (baseData instanceof SharedTangibleObjectTemplate)
 			base = (SharedTangibleObjectTemplate) baseData;
 
 		if (!rangedIntCustomizationVariablesLoaded) {
@@ -262,7 +262,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 	public RangedIntCustomizationVariable getRangedIntCustomizationVariablesMax(int index) {
 		SharedTangibleObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedTangibleObjectTemplate)
+		if (baseData instanceof SharedTangibleObjectTemplate)
 			base = (SharedTangibleObjectTemplate) baseData;
 
 		if (!rangedIntCustomizationVariablesLoaded) {
@@ -316,7 +316,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 	public ConstStringCustomizationVariable getConstStringCustomizationVariables(int index) {
 		SharedTangibleObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedTangibleObjectTemplate)
+		if (baseData instanceof SharedTangibleObjectTemplate)
 			base = (SharedTangibleObjectTemplate) baseData;
 
 		if (!constStringCustomizationVariablesLoaded) {
@@ -349,7 +349,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 	public ConstStringCustomizationVariable getConstStringCustomizationVariablesMin(int index) {
 		SharedTangibleObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedTangibleObjectTemplate)
+		if (baseData instanceof SharedTangibleObjectTemplate)
 			base = (SharedTangibleObjectTemplate) baseData;
 
 		if (!constStringCustomizationVariablesLoaded) {
@@ -382,7 +382,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 	public ConstStringCustomizationVariable getConstStringCustomizationVariablesMax(int index) {
 		SharedTangibleObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedTangibleObjectTemplate)
+		if (baseData instanceof SharedTangibleObjectTemplate)
 			base = (SharedTangibleObjectTemplate) baseData;
 
 		if (!constStringCustomizationVariablesLoaded) {
@@ -434,7 +434,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 	public GameObjectType getSocketDestinations(int index) {
 		SharedTangibleObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedTangibleObjectTemplate)
+		if (baseData instanceof SharedTangibleObjectTemplate)
 			base = (SharedTangibleObjectTemplate) baseData;
 
 		if (!socketDestinationsLoaded) {
@@ -478,7 +478,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 	public String getStructureFootprintFileName() {
 		SharedTangibleObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedTangibleObjectTemplate)
+		if (baseData instanceof SharedTangibleObjectTemplate)
 			base = (SharedTangibleObjectTemplate) baseData;
 
 		if (!structureFootprintFileName.isLoaded()) {
@@ -496,7 +496,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 	public boolean getUseStructureFootprintOutline() {
 		SharedTangibleObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedTangibleObjectTemplate)
+		if (baseData instanceof SharedTangibleObjectTemplate)
 			base = (SharedTangibleObjectTemplate) baseData;
 
 		if (!useStructureFootprintOutline.isLoaded()) {
@@ -514,7 +514,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 	public boolean getTargetable() {
 		SharedTangibleObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedTangibleObjectTemplate)
+		if (baseData instanceof SharedTangibleObjectTemplate)
 			base = (SharedTangibleObjectTemplate) baseData;
 
 		if (!targetable.isLoaded()) {
@@ -532,7 +532,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 	public String getCertificationsRequired(int index) {
 		SharedTangibleObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedTangibleObjectTemplate)
+		if (baseData instanceof SharedTangibleObjectTemplate)
 			base = (SharedTangibleObjectTemplate) baseData;
 
 		if (!certificationsRequiredLoaded) {
@@ -577,7 +577,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 	public CustomizationVariableMapping getCustomizationVariableMapping(int index) {
 		SharedTangibleObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedTangibleObjectTemplate)
+		if (baseData instanceof SharedTangibleObjectTemplate)
 			base = (SharedTangibleObjectTemplate) baseData;
 
 		if (!customizationVariableMappingLoaded) {
@@ -610,7 +610,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 	public CustomizationVariableMapping getCustomizationVariableMappingMin(int index) {
 		SharedTangibleObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedTangibleObjectTemplate)
+		if (baseData instanceof SharedTangibleObjectTemplate)
 			base = (SharedTangibleObjectTemplate) baseData;
 
 		if (!customizationVariableMappingLoaded) {
@@ -643,7 +643,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 	public CustomizationVariableMapping getCustomizationVariableMappingMax(int index) {
 		SharedTangibleObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedTangibleObjectTemplate)
+		if (baseData instanceof SharedTangibleObjectTemplate)
 			base = (SharedTangibleObjectTemplate) baseData;
 
 		if (!customizationVariableMappingLoaded) {
@@ -695,7 +695,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 	public ClientVisabilityFlags getClientVisabilityFlag() {
 		SharedTangibleObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof SharedTangibleObjectTemplate)
+		if (baseData instanceof SharedTangibleObjectTemplate)
 			base = (SharedTangibleObjectTemplate) baseData;
 
 		if (!clientVisabilityFlag.isLoaded()) {
@@ -874,7 +874,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 		public String getVariableName() {
 			RangedIntCustomizationVariableObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof RangedIntCustomizationVariableObjectTemplate)
+			if (baseData instanceof RangedIntCustomizationVariableObjectTemplate)
 				base = (RangedIntCustomizationVariableObjectTemplate) baseData;
 
 			if (!variableName.isLoaded()) {
@@ -892,7 +892,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 		public int getMinValueInclusive() {
 			RangedIntCustomizationVariableObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof RangedIntCustomizationVariableObjectTemplate)
+			if (baseData instanceof RangedIntCustomizationVariableObjectTemplate)
 				base = (RangedIntCustomizationVariableObjectTemplate) baseData;
 
 			if (!minValueInclusive.isLoaded()) {
@@ -929,7 +929,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 		public int getMinValueInclusiveMin() {
 			RangedIntCustomizationVariableObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof RangedIntCustomizationVariableObjectTemplate)
+			if (baseData instanceof RangedIntCustomizationVariableObjectTemplate)
 				base = (RangedIntCustomizationVariableObjectTemplate) baseData;
 
 			if (!minValueInclusive.isLoaded()) {
@@ -966,7 +966,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 		public int getMinValueInclusiveMax() {
 			RangedIntCustomizationVariableObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof RangedIntCustomizationVariableObjectTemplate)
+			if (baseData instanceof RangedIntCustomizationVariableObjectTemplate)
 				base = (RangedIntCustomizationVariableObjectTemplate) baseData;
 
 			if (!minValueInclusive.isLoaded()) {
@@ -1003,7 +1003,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 		public int getDefaultValue() {
 			RangedIntCustomizationVariableObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof RangedIntCustomizationVariableObjectTemplate)
+			if (baseData instanceof RangedIntCustomizationVariableObjectTemplate)
 				base = (RangedIntCustomizationVariableObjectTemplate) baseData;
 
 			if (!defaultValue.isLoaded()) {
@@ -1040,7 +1040,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 		public int getDefaultValueMin() {
 			RangedIntCustomizationVariableObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof RangedIntCustomizationVariableObjectTemplate)
+			if (baseData instanceof RangedIntCustomizationVariableObjectTemplate)
 				base = (RangedIntCustomizationVariableObjectTemplate) baseData;
 
 			if (!defaultValue.isLoaded()) {
@@ -1077,7 +1077,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 		public int getDefaultValueMax() {
 			RangedIntCustomizationVariableObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof RangedIntCustomizationVariableObjectTemplate)
+			if (baseData instanceof RangedIntCustomizationVariableObjectTemplate)
 				base = (RangedIntCustomizationVariableObjectTemplate) baseData;
 
 			if (!defaultValue.isLoaded()) {
@@ -1114,7 +1114,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 		public int getMaxValueExclusive() {
 			RangedIntCustomizationVariableObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof RangedIntCustomizationVariableObjectTemplate)
+			if (baseData instanceof RangedIntCustomizationVariableObjectTemplate)
 				base = (RangedIntCustomizationVariableObjectTemplate) baseData;
 
 			if (!maxValueExclusive.isLoaded()) {
@@ -1151,7 +1151,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 		public int getMaxValueExclusiveMin() {
 			RangedIntCustomizationVariableObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof RangedIntCustomizationVariableObjectTemplate)
+			if (baseData instanceof RangedIntCustomizationVariableObjectTemplate)
 				base = (RangedIntCustomizationVariableObjectTemplate) baseData;
 
 			if (!maxValueExclusive.isLoaded()) {
@@ -1188,7 +1188,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 		public int getMaxValueExclusiveMax() {
 			RangedIntCustomizationVariableObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof RangedIntCustomizationVariableObjectTemplate)
+			if (baseData instanceof RangedIntCustomizationVariableObjectTemplate)
 				base = (RangedIntCustomizationVariableObjectTemplate) baseData;
 
 			if (!maxValueExclusive.isLoaded()) {
@@ -1280,7 +1280,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 		public String getVariableName() {
 			PaletteColorCustomizationVariableObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof PaletteColorCustomizationVariableObjectTemplate)
+			if (baseData instanceof PaletteColorCustomizationVariableObjectTemplate)
 				base = (PaletteColorCustomizationVariableObjectTemplate) baseData;
 
 			if (!variableName.isLoaded()) {
@@ -1298,7 +1298,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 		public String getPalettePathName() {
 			PaletteColorCustomizationVariableObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof PaletteColorCustomizationVariableObjectTemplate)
+			if (baseData instanceof PaletteColorCustomizationVariableObjectTemplate)
 				base = (PaletteColorCustomizationVariableObjectTemplate) baseData;
 
 			if (!palettePathName.isLoaded()) {
@@ -1316,7 +1316,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 		public int getDefaultPaletteIndex() {
 			PaletteColorCustomizationVariableObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof PaletteColorCustomizationVariableObjectTemplate)
+			if (baseData instanceof PaletteColorCustomizationVariableObjectTemplate)
 				base = (PaletteColorCustomizationVariableObjectTemplate) baseData;
 
 			if (!defaultPaletteIndex.isLoaded()) {
@@ -1353,7 +1353,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 		public int getDefaultPaletteIndexMin() {
 			PaletteColorCustomizationVariableObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof PaletteColorCustomizationVariableObjectTemplate)
+			if (baseData instanceof PaletteColorCustomizationVariableObjectTemplate)
 				base = (PaletteColorCustomizationVariableObjectTemplate) baseData;
 
 			if (!defaultPaletteIndex.isLoaded()) {
@@ -1390,7 +1390,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 		public int getDefaultPaletteIndexMax() {
 			PaletteColorCustomizationVariableObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof PaletteColorCustomizationVariableObjectTemplate)
+			if (baseData instanceof PaletteColorCustomizationVariableObjectTemplate)
 				base = (PaletteColorCustomizationVariableObjectTemplate) baseData;
 
 			if (!defaultPaletteIndex.isLoaded()) {
@@ -1477,7 +1477,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 		public String getVariableName() {
 			ConstStringCustomizationVariableObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof ConstStringCustomizationVariableObjectTemplate)
+			if (baseData instanceof ConstStringCustomizationVariableObjectTemplate)
 				base = (ConstStringCustomizationVariableObjectTemplate) baseData;
 
 			if (!variableName.isLoaded()) {
@@ -1495,7 +1495,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 		public String getConstValue() {
 			ConstStringCustomizationVariableObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof ConstStringCustomizationVariableObjectTemplate)
+			if (baseData instanceof ConstStringCustomizationVariableObjectTemplate)
 				base = (ConstStringCustomizationVariableObjectTemplate) baseData;
 
 			if (!constValue.isLoaded()) {
@@ -1561,7 +1561,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 		public String getSourceVariable() {
 			CustomizationVariableMappingObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof CustomizationVariableMappingObjectTemplate)
+			if (baseData instanceof CustomizationVariableMappingObjectTemplate)
 				base = (CustomizationVariableMappingObjectTemplate) baseData;
 
 			if (!sourceVariable.isLoaded()) {
@@ -1579,7 +1579,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 		public String getDependentVariable() {
 			CustomizationVariableMappingObjectTemplate base = null;
 
-			if (baseData != null && baseData instanceof CustomizationVariableMappingObjectTemplate)
+			if (baseData instanceof CustomizationVariableMappingObjectTemplate)
 				base = (CustomizationVariableMappingObjectTemplate) baseData;
 
 			if (!dependentVariable.isLoaded()) {

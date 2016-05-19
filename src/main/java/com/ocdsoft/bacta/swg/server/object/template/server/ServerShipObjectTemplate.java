@@ -39,7 +39,7 @@ public class ServerShipObjectTemplate extends ServerTangibleObjectTemplate {
 	public String getShipType() {
 		ServerShipObjectTemplate base = null;
 
-		if (baseData != null && baseData instanceof ServerShipObjectTemplate)
+		if (baseData instanceof ServerShipObjectTemplate)
 			base = (ServerShipObjectTemplate) baseData;
 
 		if (!shipType.isLoaded()) {
