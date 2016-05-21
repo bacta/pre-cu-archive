@@ -2,17 +2,16 @@ package com.ocdsoft.bacta.swg.server.controller.game.client;
 
 import com.google.inject.Inject;
 import com.ocdsoft.bacta.engine.conf.BactaConfiguration;
-import com.ocdsoft.bacta.swg.server.message.game.client.ConnectPlayerResponseMessage;
-import com.ocdsoft.bacta.swg.shared.network.messages.chat.ChatAvatarId;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.ocdsoft.bacta.soe.controller.MessageHandled;
-import com.ocdsoft.bacta.soe.controller.GameNetworkMessageController;
-import com.ocdsoft.bacta.soe.controller.ConnectionRolesAllowed;
 import com.ocdsoft.bacta.soe.connection.ConnectionRole;
 import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
+import com.ocdsoft.bacta.soe.controller.ConnectionRolesAllowed;
+import com.ocdsoft.bacta.soe.controller.GameNetworkMessageController;
+import com.ocdsoft.bacta.soe.controller.MessageHandled;
 import com.ocdsoft.bacta.swg.server.message.game.client.ConnectPlayerMessage;
+import com.ocdsoft.bacta.swg.server.message.game.client.ConnectPlayerResponseMessage;
+import com.ocdsoft.bacta.swg.shared.chat.messages.ChatAvatarId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @MessageHandled(handles = ConnectPlayerMessage.class)
 @ConnectionRolesAllowed({ConnectionRole.AUTHENTICATED})

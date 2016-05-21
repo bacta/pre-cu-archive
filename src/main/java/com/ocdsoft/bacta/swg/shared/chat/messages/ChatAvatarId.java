@@ -1,4 +1,9 @@
-package com.ocdsoft.bacta.swg.shared.network.messages.chat;
+package com.ocdsoft.bacta.swg.shared.chat.messages;
+
+import com.ocdsoft.bacta.engine.buffer.ByteBufferWritable;
+import com.ocdsoft.bacta.engine.utils.BufferUtil;
+
+import java.nio.ByteBuffer;
 
 /**
  * Created by crush on 12/30/2014.
@@ -9,7 +14,7 @@ package com.ocdsoft.bacta.swg.shared.network.messages.chat;
  * and it resides on the "bacta" galaxy of the game "swg", then it should be assumed that the prefixes
  * "swg.bacta.crush" shall be appended before it is passed along to the associated chat server.
  */
-public final class ChatAvatarId {
+public final class ChatAvatarId implements ByteBufferWritable {
     private final String gameCode;
     private final String cluster;
     private final String name;
@@ -58,6 +63,12 @@ public final class ChatAvatarId {
             this.cluster = "";
             this.gameCode = "";
         }
+    }
+
+    public ChatAvatarId(final ByteBuffer buffer) {
+        this.gameCode = BufferUtil.getAscii(buffer);
+        this.cluster = BufferUtil.getAscii(buffer);
+        this.name = BufferUtil.getAscii(buffer);
     }
 
     public final String getGameCode() {
@@ -117,5 +128,12 @@ public final class ChatAvatarId {
         stringBuilder.append(name);
 
         return stringBuilder.toString();
+    }
+
+    @Override
+    public void writeToBuffer(final ByteBuffer buffer) {
+        BufferUtil.putAscii(buffer, gameCode);
+        BufferUtil.putAscii(buffer, cluster);
+        BufferUtil.putAscii(buffer, name);
     }
 }
