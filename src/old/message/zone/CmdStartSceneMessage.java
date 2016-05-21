@@ -22,7 +22,7 @@ public class CmdStartSceneMessage extends GameNetworkMessage {
 		
 		writeAscii(player.getObjectTemplate().getName());
 		
-		writeLong(galacticTime);
+		writeLong(GalacticTime.now());
 		
 	}
 

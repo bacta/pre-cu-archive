@@ -1,17 +1,16 @@
 package com.ocdsoft.bacta.swg.precu.controller.game.object.command;
 
 import com.google.inject.Inject;
-import com.ocdsoft.bacta.swg.localization.StringId;
+import com.ocdsoft.bacta.swg.shared.localization.StringId;
 import com.ocdsoft.bacta.soe.controller.Command;
 import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
 import com.ocdsoft.bacta.swg.precu.message.SuiCreatePageMessage;
-import com.ocdsoft.bacta.swg.precu.message.outofband.OutOfBandPackager;
-import com.ocdsoft.bacta.swg.precu.message.outofband.ProsePackage;
-import com.ocdsoft.bacta.swg.precu.message.outofband.ProsePackageParticipant;
+import com.ocdsoft.bacta.swg.precu.message.game.outofband.OutOfBandPackager;
+import com.ocdsoft.bacta.swg.precu.message.game.outofband.ProsePackage;
+import com.ocdsoft.bacta.swg.precu.message.game.outofband.ProsePackageParticipant;
 import com.ocdsoft.bacta.swg.precu.object.intangible.player.PlayerObject;
 import com.ocdsoft.bacta.swg.precu.object.sui.SuiPageData;
 import com.ocdsoft.bacta.swg.precu.object.tangible.TangibleObject;
-import com.ocdsoft.bacta.swg.precu.service.container.ContainerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

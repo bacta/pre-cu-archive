@@ -1,4 +1,4 @@
-package com.ocdsoft.bacta.swg.precu.message.object;
+package com.ocdsoft.bacta.swg.precu.message.game.object;
 
 public class SpatialChat extends ObjControllerMessage {
 	public SpatialChat(long receiverId, long senderId, String message, long targetId, int moodid, int mood2, byte lang) {

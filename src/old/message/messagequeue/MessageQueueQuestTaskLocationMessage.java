@@ -1,4 +1,4 @@
-package com.ocdsoft.bacta.swg.precu.message.messagequeue;
+package com.ocdsoft.bacta.swg.precu.message.game.messagequeue;
 
 /**
  * Created by crush on 8/13/2014.
@@ -6,5 +6,5 @@ package com.ocdsoft.bacta.swg.precu.message.messagequeue;
 public class MessageQueueQuestTaskLocationMessage {
     //string questName
     //int taskId
-    //Location location
+    //Vector location
 }
