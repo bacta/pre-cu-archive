@@ -9,6 +9,8 @@ public class AutoDeltaUnicodeString extends AutoDeltaVariableBase {
     private transient String lastValue;
 
     public AutoDeltaUnicodeString() {
+        currentValue = "";
+        lastValue = "";
     }
 
     public AutoDeltaUnicodeString(String value) {
@@ -23,7 +25,7 @@ public class AutoDeltaUnicodeString extends AutoDeltaVariableBase {
     }
 
     public void set(String value) {
-        if (this.currentValue != value) {
+        if (!this.currentValue.equals(value)) {
             this.currentValue = value;
             touch();
         }
@@ -34,7 +36,7 @@ public class AutoDeltaUnicodeString extends AutoDeltaVariableBase {
     }
 
     public boolean isDirty() {
-        return this.currentValue != this.lastValue;
+        return !this.currentValue.equals(this.lastValue);
     }
 
     @Override

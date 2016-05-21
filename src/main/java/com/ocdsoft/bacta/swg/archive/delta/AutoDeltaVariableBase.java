@@ -9,7 +9,7 @@ import java.nio.ByteBuffer;
 /**
  * Created by crush on 8/14/2014.
  */
-public abstract class AutoDeltaVariableBase implements AutoVariableBase {
+public abstract class AutoDeltaVariableBase implements AutoVariableBase, Comparable<AutoDeltaVariableBase> {
     @Getter
     @Setter
     private AutoDeltaByteStream owner;
@@ -25,5 +25,10 @@ public abstract class AutoDeltaVariableBase implements AutoVariableBase {
     public final void touch() {
         if (owner != null)
             owner.addToDirtyList(this);
+    }
+
+    @Override
+    public int compareTo(AutoDeltaVariableBase o) {
+        return this.hashCode() - o.hashCode();
     }
 }

@@ -14,10 +14,10 @@ import com.ocdsoft.bacta.swg.server.message.game.object.ObjControllerMessage;
 @MessageHandled(handles = ObjControllerMessage.class, type = ServerType.GAME)
 public final class ObjectControllerController implements GameNetworkMessageController<ObjControllerMessage> {
 
-    private final ObjectDispatcher<ObjControllerMessage> objectDispatcher;
+    private final ObjectDispatcher objectDispatcher;
 
     @Inject
-    public ObjectControllerController(final ObjectDispatcher<ObjControllerMessage> objectDispatcher) {
+    public ObjectControllerController(final ObjectDispatcher objectDispatcher) {
         this.objectDispatcher = objectDispatcher;
     }
 

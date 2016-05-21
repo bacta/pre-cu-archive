@@ -65,8 +65,9 @@ public abstract class ServerObject extends GameObject implements Subject<Observa
                         final SlotIdManager slotIdManager,
                         final ServerObjectTemplate template,
                         final boolean hyperspaceOnCreate) {
+        super(template);
 
-        assert DEFAULT_SHARED_TEMPLATE != null : "The default shared template for ServerObject has not been setup.";
+        //assert DEFAULT_SHARED_TEMPLATE != null : "The default shared template for ServerObject has not been setup.";
 
         bankBalance = new AutoDeltaInt(0);
         cashBalance = new AutoDeltaInt(0);
@@ -205,7 +206,6 @@ public abstract class ServerObject extends GameObject implements Subject<Observa
     @Getter
     private transient boolean initialized = false;
 
-    @Getter
     @Setter
     private long containedBy = 0;
 
@@ -214,7 +214,6 @@ public abstract class ServerObject extends GameObject implements Subject<Observa
 
     protected transient Container container;
 
-    @Getter
     @Setter
     protected int currentArrangement = -1;
 
@@ -359,37 +358,38 @@ public abstract class ServerObject extends GameObject implements Subject<Observa
             return;
 
         final SceneCreateObjectByCrc msg = new SceneCreateObjectByCrc(this);
+
         final UpdateContainmentMessage ucm = new UpdateContainmentMessage(this);
 
-        final BaselinesMessage sharedBaselines = new BaselinesMessage(this, sharedPackage, BaselinesMessage.BASELINES_SHARED);
-        final BaselinesMessage sharedNpBaselines = new BaselinesMessage(this, sharedPackageNp, BaselinesMessage.BASELINES_SHARED_NP);
-        final BaselinesMessage authClientServerBaselines = new BaselinesMessage(this, authClientServerPackage, BaselinesMessage.BASELINES_CLIENT_SERVER);
-        final BaselinesMessage authClientServerNpBaselines = new BaselinesMessage(this, authClientServerPackageNp, BaselinesMessage.BASELINES_CLIENT_SERVER_NP);
-        final BaselinesMessage firstParentAuthClientServerBaselines = new BaselinesMessage(this, firstParentAuthClientServerPackage, BaselinesMessage.BASELINES_FIRST_PARENT_CLIENT_SERVER);
-        final BaselinesMessage firstParentAuthClientServerNpBaselines = new BaselinesMessage(this, firstParentAuthClientServerPackageNp, BaselinesMessage.BASELINES_FIRST_PARENT_CLIENT_SERVER_NP);
+//        final BaselinesMessage sharedBaselines = new BaselinesMessage(this, sharedPackage, BaselinesMessage.BASELINES_SHARED);
+//        final BaselinesMessage sharedNpBaselines = new BaselinesMessage(this, sharedPackageNp, BaselinesMessage.BASELINES_SHARED_NP);
+//        final BaselinesMessage authClientServerBaselines = new BaselinesMessage(this, authClientServerPackage, BaselinesMessage.BASELINES_CLIENT_SERVER);
+//        final BaselinesMessage authClientServerNpBaselines = new BaselinesMessage(this, authClientServerPackageNp, BaselinesMessage.BASELINES_CLIENT_SERVER_NP);
+//        final BaselinesMessage firstParentAuthClientServerBaselines = new BaselinesMessage(this, firstParentAuthClientServerPackage, BaselinesMessage.BASELINES_FIRST_PARENT_CLIENT_SERVER);
+//        final BaselinesMessage firstParentAuthClientServerNpBaselines = new BaselinesMessage(this, firstParentAuthClientServerPackageNp, BaselinesMessage.BASELINES_FIRST_PARENT_CLIENT_SERVER_NP);
 
         for (final SoeUdpConnection client : clients) {
             client.sendMessage(msg);
             client.sendMessage(ucm);
 
-            client.sendMessage(sharedBaselines);
-            client.sendMessage(sharedNpBaselines);
+//            client.sendMessage(sharedBaselines);
+//            client.sendMessage(sharedNpBaselines);
         }
 
         //These only get sent to this client.
         final SoeUdpConnection authClient = getConnection();
 
-        if (authClient != null) {
-            authClient.sendMessage(authClientServerBaselines);
-            authClient.sendMessage(authClientServerNpBaselines);
-        }
-
-        final SoeUdpConnection firstParentClient = getParentPlayerClient(this);
-
-        if (firstParentClient != null) {
-            firstParentClient.sendMessage(firstParentAuthClientServerBaselines);
-            firstParentClient.sendMessage(firstParentAuthClientServerNpBaselines);
-        }
+//        if (authClient != null) {
+//            authClient.sendMessage(authClientServerBaselines);
+//            authClient.sendMessage(authClientServerNpBaselines);
+//        }
+//
+//        final SoeUdpConnection firstParentClient = getParentPlayerClient(this);
+//
+//        if (firstParentClient != null) {
+//            firstParentClient.sendMessage(firstParentAuthClientServerBaselines);
+//            firstParentClient.sendMessage(firstParentAuthClientServerNpBaselines);
+//        }
 
         //Send create messages for contents
         final Container container = getContainerProperty();
@@ -656,6 +656,29 @@ public abstract class ServerObject extends GameObject implements Subject<Observa
             ((ServerObject) test).isContainedBy(container, true);
 
         return false;
+    }
+
+    public long getContainedBy() {
+        final ContainedByProperty containedByProperty = getContainedByProperty();
+
+        if (containedByProperty != null) {
+
+            final GameObject containedBy = containedByProperty.getContainedBy();
+
+            if(containedBy != null) {
+                return containedBy.getNetworkId();
+            }
+        }
+        return 0;
+    }
+
+    public int getCurrentArrangement() {
+        final SlottedContainmentProperty slottedContainmentProperty = getProperty(SlottedContainmentProperty.getClassPropertyId());
+        if(slottedContainmentProperty != null) {
+            return slottedContainmentProperty.getCurrentArrangement();
+        }
+
+        return -1;
     }
 
     public boolean canDropInWorld() {

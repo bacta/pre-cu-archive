@@ -114,7 +114,8 @@ public class GameObject extends NetworkObject {
         this.useAlterScheduler = true;
         this.shouldBakeIntoMesh = true;
 
-        objectTemplate.addReference();
+        if(objectTemplate != null)
+            objectTemplate.addReference();
         //NetworkIdManager::addObject(this);
     }
 

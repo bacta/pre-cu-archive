@@ -10,8 +10,8 @@ import com.ocdsoft.bacta.soe.controller.GameNetworkMessageController;
 import com.ocdsoft.bacta.soe.controller.MessageHandled;
 import com.ocdsoft.bacta.soe.object.account.SoeAccount;
 import com.ocdsoft.bacta.swg.server.message.ErrorMessage;
-import com.ocdsoft.bacta.swg.server.message.game.ClientIdMsg;
-import com.ocdsoft.bacta.swg.server.message.game.ClientPermissionsMessage;
+import com.ocdsoft.bacta.swg.server.message.game.client.ClientIdMsg;
+import com.ocdsoft.bacta.swg.server.message.game.client.ClientPermissionsMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

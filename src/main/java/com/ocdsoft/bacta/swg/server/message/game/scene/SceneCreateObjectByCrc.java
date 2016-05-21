@@ -23,7 +23,7 @@ public final class SceneCreateObjectByCrc extends GameNetworkMessage {
 
         networkId = scno.getNetworkId();
         transform = scno.getTransform();
-        crc = scno.getObjectTemplate().getCrcName().getCrc();
+        crc = scno.getSharedTemplate().getCrcName().getCrc();
         hyperspace = 0;
     }
 

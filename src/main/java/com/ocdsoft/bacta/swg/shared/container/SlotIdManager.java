@@ -83,7 +83,7 @@ public class SlotIdManager {
         for (int i = 0; i < slots.size(); ++i) {
             final Slot slot = slots.get(i);
 
-            if (slot.slotName == slotName)
+            if (slot.slotName.equals(slotName))
                 return i;
         }
 

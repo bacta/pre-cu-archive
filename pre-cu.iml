@@ -11,9 +11,11 @@
       <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/resources" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/groovy" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/target/generated-test-sources/groovy-stubs" isTestSource="true" generated="true" />
       <excludeFolder url="file://$MODULE_DIR$/target/classes" />
       <excludeFolder url="file://$MODULE_DIR$/target/maven-archiver" />
       <excludeFolder url="file://$MODULE_DIR$/target/maven-status" />
+      <excludeFolder url="file://$MODULE_DIR$/target/surefire-reports" />
       <excludeFolder url="file://$MODULE_DIR$/target/test-classes" />
     </content>
     <orderEntry type="inheritedJdk" />
@@ -39,6 +41,9 @@
     <orderEntry type="library" name="Maven: commons-beanutils:commons-beanutils:1.6" level="project" />
     <orderEntry type="library" name="Maven: xml-apis:xml-apis:1.0.b2" level="project" />
     <orderEntry type="library" name="Maven: commons-logging:commons-logging-api:1.0.4" level="project" />
+    <orderEntry type="library" name="Maven: co.paralleluniverse:quasar-core:0.7.5" level="project" />
+    <orderEntry type="library" name="Maven: co.paralleluniverse:quasar-actors:0.7.5" level="project" />
+    <orderEntry type="library" name="Maven: net.bytebuddy:byte-buddy:1.3.19" level="project" />
     <orderEntry type="module" module-name="iff" />
     <orderEntry type="library" name="Maven: steerio:steerio:1.0.0" level="project" />
     <orderEntry type="module" module-name="couchbase-connector" />
@@ -57,9 +62,9 @@
     <orderEntry type="library" name="Maven: org.igniterealtime.smack:smack-tcp:4.0.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.velocity:velocity:1.7" level="project" />
     <orderEntry type="library" name="Maven: commons-collections:commons-collections:3.2.1" level="project" />
-    <orderEntry type="library" name="Maven: co.paralleluniverse:quasar-core:jdk8:0.7.4" level="project" />
+    <orderEntry type="library" name="Maven: co.paralleluniverse:quasar-core:jdk8:0.7.5" level="project" />
+    <orderEntry type="library" name="Maven: org.latencyutils:LatencyUtils:2.0.3" level="project" />
     <orderEntry type="library" name="Maven: org.hdrhistogram:HdrHistogram:2.1.8" level="project" />
-    <orderEntry type="library" name="Maven: org.latencyutils:LatencyUtils:2.0.2" level="project" />
     <orderEntry type="library" name="Maven: com.google.guava:guava:19.0" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.21" level="project" />
     <orderEntry type="library" name="Maven: ch.qos.logback:logback-core:1.1.7" level="project" />

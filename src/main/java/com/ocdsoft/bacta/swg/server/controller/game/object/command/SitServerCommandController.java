@@ -9,7 +9,7 @@ import com.ocdsoft.bacta.swg.server.object.tangible.creature.CreaturePosture;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@MessageHandled(command = "sitserver")
+//@MessageHandled(command = "sitserver")
 public class SitServerCommandController implements CommandController<TangibleObject> {
 
 	private Logger logger = LoggerFactory.getLogger(getClass().getSimpleName());

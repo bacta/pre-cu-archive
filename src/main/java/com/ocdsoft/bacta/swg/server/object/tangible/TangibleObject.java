@@ -99,7 +99,6 @@ public class TangibleObject extends ServerObject implements SteerSubject<Vec3> {
         super(objectTemplateList, slotIdManager, template, false);
 
         assert template instanceof ServerTangibleObjectTemplate;
-
         final ServerTangibleObjectTemplate objectTemplate = (ServerTangibleObjectTemplate) template;
 
         //hateList.setOwner(this);
@@ -223,6 +222,7 @@ public class TangibleObject extends ServerObject implements SteerSubject<Vec3> {
     }
 
     public void updateZone() {
+
         final ImmutableSet<TangibleObject> newNearObjects = getUpdatedNearObjects();
 
         final Set<TangibleObject> newObjects = Sets.difference(newNearObjects, nearObjects);

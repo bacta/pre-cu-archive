@@ -12,6 +12,8 @@ import com.ocdsoft.bacta.soe.dispatch.ControllerData;
 import com.ocdsoft.bacta.soe.serialize.GameNetworkMessageSerializer;
 import com.ocdsoft.bacta.soe.util.CommandNames;
 import com.ocdsoft.bacta.soe.util.GameNetworkMessageTemplateWriter;
+import com.ocdsoft.bacta.soe.util.SoeMessageUtil;
+import com.ocdsoft.bacta.swg.server.message.game.object.ObjControllerMessage;
 import com.ocdsoft.bacta.swg.server.message.game.object.command.CommandMessage;
 import com.ocdsoft.bacta.swg.server.object.ServerObject;
 import com.ocdsoft.bacta.swg.server.object.tangible.TangibleObject;
@@ -20,6 +22,8 @@ import groovy.lang.Binding;
 import org.apache.velocity.app.VelocityEngine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.nio.ByteBuffer;
 
 /**
  * This class is a controller and a dispatch
@@ -37,27 +41,16 @@ public class PreCuCommandDispatcher implements CommandDispatcher<CommandMessage,
     private static final Logger LOGGER = LoggerFactory.getLogger(PreCuCommandDispatcher.class);
 
     private final TIntObjectMap<ControllerData> controllers;
-
-    private final GameNetworkMessageTemplateWriter templateWriter;
-
-    private final GameNetworkMessageSerializer gameNetworkMessageSerializer;
-
     private final ObjectService<ServerObject> objectService;
-
     private final ScriptEngine scriptEngine;
-
     private final Binding binding;
 
     @Inject
-    public PreCuCommandDispatcher(final ClasspathControllerLoader<CommandController> controllerLoader,
-                                  final GameNetworkMessageSerializer gameNetworkMessageSerializer,
-                                  final GameNetworkMessageTemplateWriter templateWriter,
+    public PreCuCommandDispatcher(final ClasspathControllerLoader controllerLoader,
                                   final ObjectService<ServerObject> objectService,
                                   final ScriptEngine scriptEngine) {
 
-        this.gameNetworkMessageSerializer = gameNetworkMessageSerializer;
         this.objectService = objectService;
-        this.templateWriter = templateWriter;
         this.scriptEngine = scriptEngine;
 
         this.binding = new Binding();
@@ -66,42 +59,26 @@ public class PreCuCommandDispatcher implements CommandDispatcher<CommandMessage,
     }
 
     @Override
-    public void dispatchCommand(SoeUdpConnection connection, CommandMessage message, TangibleObject invoker) {
+    public void dispatchCommand(final SoeUdpConnection connection, final CommandMessage message, final TangibleObject invoker) {
 
-        ControllerData<CommandController> controllerData = controllers.get(message.getCommandHash());
-
+        final ControllerData<CommandController> controllerData = controllers.get(message.getCommandHash());
         if (controllerData != null) {
 
-            CommandController controller = controllerData.getController();
+            final CommandController controller = controllerData.getController();
 
             try {
+                long targetId = message.getTargetId();
+                TangibleObject target = null;
 
-                try {
-                    long targetId = message.getTargetId();
-                    TangibleObject target = null;
-
-                    if (targetId != 0) {
-                        target = objectService.get(targetId);
-                    }
-
-                    controller.handleCommand(connection, invoker, target, message.getParams());
-
-                } catch (Exception e) {
-                    LOGGER.error("SOE Routing", e);
+                if (targetId != 0) {
+                    target = objectService.get(targetId);
                 }
 
+                controller.handleCommand(connection, invoker, target, message.getParams());
+
             } catch (Exception e) {
-                LOGGER.error("SOE Routing {}", message.getMessageType(), e);
+                LOGGER.error("SOE Routing", e);
             }
-
-        } else {
-
-//            templateWriter.createCommandFiles(message.getCommandHash(), message.getBuffer());
-
-            LOGGER.error("Unhandled Command: '" + CommandNames.get(message.getCommandHash()));
-//            LOGGER.error(SoeMessageUtil.bytesToHex(message.getBuffer()));
         }
     }
-
-
 }

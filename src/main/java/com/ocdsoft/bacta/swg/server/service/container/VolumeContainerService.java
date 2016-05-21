@@ -20,7 +20,7 @@ public class VolumeContainerService {
     private static final Logger LOGGER = LoggerFactory.getLogger(VolumeContainerService.class);
 
     private static final Field currentVolumeField = ReflectionUtil.getFieldOrNull(VolumeContainer.class, "currentVolume");
-    private static final Field totalVolumeField = ReflectionUtil.getFieldOrNull(VolumeContainer.class, "totalVolumeField");
+    private static final Field totalVolumeField = ReflectionUtil.getFieldOrNull(VolumeContainer.class, "totalVolume");
 
     private final ContainerService containerService;
 

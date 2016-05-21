@@ -9,7 +9,9 @@ import com.ocdsoft.bacta.engine.service.objectfactory.NetworkObjectFactory;
 import com.ocdsoft.bacta.swg.archive.OnDirtyCallbackBase;
 import com.ocdsoft.bacta.swg.server.object.ServerObject;
 import com.ocdsoft.bacta.swg.server.object.template.server.ServerObjectTemplate;
+import com.ocdsoft.bacta.swg.server.service.container.ContainerTransferService;
 import com.ocdsoft.bacta.swg.server.service.data.ObjectTemplateService;
+import com.ocdsoft.bacta.swg.shared.container.ContainerResult;
 import gnu.trove.map.TLongObjectMap;
 import gnu.trove.map.hash.TLongObjectHashMap;
 import org.slf4j.Logger;
@@ -35,19 +37,22 @@ public final class ServerObjectService implements ObjectService<ServerObject> {
     private final DeltaNetworkDispatcher deltaDispatcher;
     private final GameDatabaseConnector databaseConnector;
     private final ObjectTemplateService objectTemplateService;
+    private final ContainerTransferService containerTransferService;
     private final int deltaUpdateInterval;
 
     @Inject
     public ServerObjectService(final BactaConfiguration configuration,
                                final NetworkObjectFactory networkObjectFactory,
                                final GameDatabaseConnector databaseConnector,
-                               final ObjectTemplateService objectTemplateService) {
+                               final ObjectTemplateService objectTemplateService,
+                               final ContainerTransferService containerTransferService) {
 
         this.networkObjectFactory = networkObjectFactory;
         this.deltaUpdateInterval = configuration.getIntWithDefault("Bacta/GameServer", "DeltaUpdateInterval", 50);
         this.databaseConnector = databaseConnector;
         this.objectTemplateService = objectTemplateService;
         this.deltaDispatcher = new DeltaNetworkDispatcher();
+        this.containerTransferService = containerTransferService;
 
         new Thread(deltaDispatcher).start();
     }
@@ -58,15 +63,24 @@ public final class ServerObjectService implements ObjectService<ServerObject> {
     }
 
     @Override
-    public <T extends ServerObject> T createObject(final String templatePath, final ServerObject creator) {
+    public <T extends ServerObject> T createObject(final String templatePath, final ServerObject parent) {
+
         final ServerObjectTemplate template = objectTemplateService.getObjectTemplate(templatePath);
         final Class<T> objectClass = objectTemplateService.getClassForTemplate(template);
-        final T newObject = networkObjectFactory.createNetworkObject(objectClass);
+        final T newObject = (T) networkObjectFactory.createNetworkObject(objectClass, template);
 
         newObject.setOnDirtyCallback(new ServerObjectServiceOnDirtyCallback(newObject));
 
         internalMap.put(newObject.getNetworkId(), newObject);
-        databaseConnector.createNetworkObject(newObject);
+       // databaseConnector.createNetworkObject(newObject);
+
+        if(parent != null) {
+            ContainerResult containerResult = new ContainerResult();
+            containerTransferService.transferItemToGeneralContainer(parent, newObject, null, containerResult);
+            if (containerResult.getError() != null) {
+
+            }
+        }
 
         return newObject;
     }

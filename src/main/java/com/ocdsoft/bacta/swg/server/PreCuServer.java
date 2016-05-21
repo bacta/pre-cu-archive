@@ -3,6 +3,7 @@ package com.ocdsoft.bacta.swg.server;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.ocdsoft.bacta.soe.io.udp.chat.ChatServer;
 import com.ocdsoft.bacta.soe.io.udp.game.GameServer;
 import com.ocdsoft.bacta.soe.io.udp.login.LoginServer;
 import org.slf4j.Logger;
@@ -28,7 +29,7 @@ public final class PreCuServer {
         System.setProperty("bacta.serverPath", "pre-cu" + System.getProperty("file.separator"));
 
         if(argSet.contains("login")) {
-            LOGGER.info("Starting Pre-CU LoginServer");
+            LOGGER.info("Starting LoginServer");
             Injector injector = Guice.createInjector(new PreCuModule(), new LoginModule());
             LoginServer loginServer = injector.getInstance(LoginServer.class);
             Thread loginThread = new Thread(loginServer);
@@ -39,11 +40,19 @@ public final class PreCuServer {
         //injector.getInstance(ChatServer.class);
 
         if(argSet.contains("game")) {
-            LOGGER.info("Starting Pre-CU GameServer");
-            Injector injector = Guice.createInjector(new GameModule(), new PreCuModule(), new PingModule());
+            LOGGER.info("Starting GameServer");
+            Injector injector = Guice.createInjector(new PreCuModule(), new GameModule(), new PingModule());
             GameServer gameServer = injector.getInstance(GameServer.class);
             Thread gameThread = new Thread(gameServer);
             gameThread.start();
+        }
+
+        if(argSet.contains("chat")) {
+            LOGGER.info("Starting ChatServer");
+            Injector injector = Guice.createInjector(new PreCuModule(), new ChatModule());
+            ChatServer chatServer = injector.getInstance(ChatServer.class);
+            Thread chatThread = new Thread(chatServer);
+            chatThread.start();
         }
 
     }

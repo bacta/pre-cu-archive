@@ -8,7 +8,8 @@ import com.ocdsoft.bacta.engine.object.NetworkIdGenerator;
 import com.ocdsoft.bacta.engine.serialize.NetworkSerializer;
 import com.ocdsoft.bacta.engine.service.object.ObjectService;
 import com.ocdsoft.bacta.engine.service.objectfactory.NetworkObjectFactory;
-import com.ocdsoft.bacta.engine.service.objectfactory.impl.GuiceNetworkObjectFactory;
+import com.ocdsoft.bacta.soe.dispatch.ClasspathControllerLoader;
+import com.ocdsoft.bacta.swg.server.object.tangible.factory.GuiceNetworkObjectFactory;
 import com.ocdsoft.bacta.soe.ServerState;
 import com.ocdsoft.bacta.soe.connection.ConnectionServerAgent;
 import com.ocdsoft.bacta.soe.data.couchbase.CouchbaseGameDatabaseConnector;
@@ -60,10 +61,12 @@ public class GameModule extends AbstractModule implements Module {
         bind(new TypeLiteral<ObjectService<ServerObject>>() {}).to(ServerObjectService.class);
         bind(ObjectService.class).to(ServerObjectService.class);
         bind(NetworkObjectFactory.class).to(GuiceNetworkObjectFactory.class);
-        bind(new TypeLiteral<ObjectDispatcher<ObjControllerMessage>>(){}).to(PreCuObjectDispatcher.class);
         //bind(new TypeLiteral<ContainerService<ServerObject>>(){}).to(PreCuContainerService.class);
-        bind(new TypeLiteral<CommandDispatcher<CommandMessage, TangibleObject>>(){}).to(PreCuCommandDispatcher.class);
         bind(new TypeLiteral<ObjectDispatcher<ObjControllerMessage>>(){}).to(PreCuObjectDispatcher.class);
+        bind(ObjectDispatcher.class).to(PreCuObjectDispatcher.class);
+        bind(new TypeLiteral<CommandDispatcher<CommandMessage, TangibleObject>>(){}).to(PreCuCommandDispatcher.class);
+
+
         bind(ConnectionServerAgent.class).to(PreCuConnectionServerAgent.class);
         bind(NameService.class).to(DefaultNameService.class);
         bind(ZoneMap.class).to(PlanetMap.class);
