@@ -1609,7 +1609,7 @@ public class ServerCreatureObjectTemplate extends ServerTangibleObjectTemplate {
 					dummy.loadFromIff(objectTemplateList, iff);
 				}
 			} else {
-				LOGGER.error("Unexpected parameter {}", parameterName);
+				LOGGER.trace("Unexpected parameter {}", parameterName);
 			}
 
 			iff.exitChunk();

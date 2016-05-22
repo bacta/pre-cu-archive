@@ -499,7 +499,7 @@ public class ServerManufactureSchematicObjectTemplate extends ServerIntangibleOb
 				}
 				attributesLoaded = true;
 			} else {
-				LOGGER.error("Unexpected parameter {}", parameterName);
+				LOGGER.trace("Unexpected parameter {}", parameterName);
 			}
 
 			iff.exitChunk();
@@ -650,7 +650,7 @@ public class ServerManufactureSchematicObjectTemplate extends ServerIntangibleOb
 				} else if ("ingredient".equalsIgnoreCase(parameterName)) {
 					ingredient.loadFromIff(objectTemplateList, iff);
 				} else {
-					LOGGER.error("Unexpected parameter {}", parameterName);
+					LOGGER.trace("Unexpected parameter {}", parameterName);
 				}
 
 				iff.exitChunk();

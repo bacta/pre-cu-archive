@@ -266,7 +266,7 @@ public class SlotIdManager {
 
         @Override
         public int compareTo(final Slot o) {
-            return slotName.toString().compareTo(o.slotName.getString());
+            return slotName.getString().compareTo(o.slotName.getString());
         }
     }
 }

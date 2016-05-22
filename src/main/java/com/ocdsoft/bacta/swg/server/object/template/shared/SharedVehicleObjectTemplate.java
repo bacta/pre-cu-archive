@@ -883,7 +883,7 @@ public class SharedVehicleObjectTemplate extends SharedTangibleObjectTemplate {
 			} else if ("braking".equalsIgnoreCase(parameterName)) {
 				braking.loadFromIff(objectTemplateList, iff);
 			} else {
-				LOGGER.error("Unexpected parameter {}", parameterName);
+				LOGGER.trace("Unexpected parameter {}", parameterName);
 			}
 
 			iff.exitChunk();
@@ -897,9 +897,9 @@ public class SharedVehicleObjectTemplate extends SharedTangibleObjectTemplate {
 	public enum MovementTypes {
 		MT_hover(0), 
 		MT_underwater(1), 
-		MT_ground(2), 
+		MT_ground(2),
 		MT_swim(3),
-		MT_walker(4),
+		MT_walker(4), 
 		MovementTypes_Last(MT_walker.value);
 
 		private static final MovementTypes[] values = values();

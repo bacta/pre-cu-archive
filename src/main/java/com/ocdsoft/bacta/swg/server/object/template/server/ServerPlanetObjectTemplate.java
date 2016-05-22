@@ -93,7 +93,7 @@ public class ServerPlanetObjectTemplate extends ServerUniverseObjectTemplate {
 			if ("planetName".equalsIgnoreCase(parameterName)) {
 				planetName.loadFromIff(objectTemplateList, iff);
 			} else {
-				LOGGER.error("Unexpected parameter {}", parameterName);
+				LOGGER.trace("Unexpected parameter {}", parameterName);
 			}
 
 			iff.exitChunk();

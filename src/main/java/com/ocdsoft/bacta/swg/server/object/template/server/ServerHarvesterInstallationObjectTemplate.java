@@ -436,7 +436,7 @@ public class ServerHarvesterInstallationObjectTemplate extends ServerInstallatio
 			} else if ("masterClassName".equalsIgnoreCase(parameterName)) {
 				masterClassName.loadFromIff(objectTemplateList, iff);
 			} else {
-				LOGGER.error("Unexpected parameter {}", parameterName);
+				LOGGER.trace("Unexpected parameter {}", parameterName);
 			}
 
 			iff.exitChunk();

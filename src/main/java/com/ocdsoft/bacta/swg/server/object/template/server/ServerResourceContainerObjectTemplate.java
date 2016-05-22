@@ -186,7 +186,7 @@ public class ServerResourceContainerObjectTemplate extends ServerTangibleObjectT
 			if ("maxResources".equalsIgnoreCase(parameterName)) {
 				maxResources.loadFromIff(objectTemplateList, iff);
 			} else {
-				LOGGER.error("Unexpected parameter {}", parameterName);
+				LOGGER.trace("Unexpected parameter {}", parameterName);
 			}
 
 			iff.exitChunk();

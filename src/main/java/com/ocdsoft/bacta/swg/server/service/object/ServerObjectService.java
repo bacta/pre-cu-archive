@@ -74,11 +74,10 @@ public final class ServerObjectService implements ObjectService<ServerObject> {
         internalMap.put(newObject.getNetworkId(), newObject);
        // databaseConnector.createNetworkObject(newObject);
 
-        if(parent != null) {
-            ContainerResult containerResult = new ContainerResult();
-            containerTransferService.transferItemToGeneralContainer(parent, newObject, null, containerResult);
-            if (containerResult.getError() != null) {
-
+        if (parent != null) {
+            final ContainerResult containerResult = new ContainerResult();
+            if (!containerTransferService.transferItemToGeneralContainer(parent, newObject, null, containerResult)) {
+                LOGGER.warn("Failed to transfer item to parent container.");
             }
         }
 

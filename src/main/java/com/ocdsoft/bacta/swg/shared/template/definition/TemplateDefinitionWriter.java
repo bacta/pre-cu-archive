@@ -591,7 +591,7 @@ public class TemplateDefinitionWriter {
                     .forEach(parameter -> printParameterLoad(printStream, tabs, parameter));
 
             printStream.printf(" {\n");
-            printStream.printf("%s\t\t\t\tLOGGER.error(\"Unexpected parameter {}\", parameterName);\n", tabs);
+            printStream.printf("%s\t\t\t\tLOGGER.trace(\"Unexpected parameter {}\", parameterName);\n", tabs);
             printStream.printf("%s\t\t\t}\n", tabs);
             printStream.println();
             printStream.printf("%s\t\t\tiff.exitChunk();\n", tabs);

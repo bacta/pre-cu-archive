@@ -665,7 +665,7 @@ public class ServerTangibleObjectTemplate extends ServerObjectTemplate {
 			} else if ("wantSawAttackTriggers".equalsIgnoreCase(parameterName)) {
 				wantSawAttackTriggers.loadFromIff(objectTemplateList, iff);
 			} else {
-				LOGGER.error("Unexpected parameter {}", parameterName);
+				LOGGER.trace("Unexpected parameter {}", parameterName);
 			}
 
 			iff.exitChunk();
@@ -697,7 +697,7 @@ public class ServerTangibleObjectTemplate extends ServerObjectTemplate {
 	public enum Conditions {
 		C_onOff(0x00000001),
 		C_vendor(0x00000002),
-		C_insured(0x00000004),
+		C_insured(0x00000004), 
 		C_conversable(0x00000008), 
 		C_hibernating(0x00000010), 
 		C_magicItem(0x00000020), 
@@ -721,9 +721,9 @@ public class ServerTangibleObjectTemplate extends ServerObjectTemplate {
 		C_inflightTutorial(0x00800000), 
 		C_spaceCombatMusic(0x01000000), //Set programmatically by the AI system.  Do not set this in the template.
 		C_encounterLocked(0x02000000), 
-		C_spawnedCreature(0x04000000), 
+		C_spawnedCreature(0x04000000),
 		C_holidayInteresting(0x08000000),
-		C_locked(0x10000000),
+		C_locked(0x10000000), 
 		Conditions_Last(C_locked.value);
 
 		private static final Conditions[] values = values();

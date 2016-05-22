@@ -436,7 +436,7 @@ public class ServerVehicleObjectTemplate extends ServerTangibleObjectTemplate {
 			} else if ("consumpsion".equalsIgnoreCase(parameterName)) {
 				consumpsion.loadFromIff(objectTemplateList, iff);
 			} else {
-				LOGGER.error("Unexpected parameter {}", parameterName);
+				LOGGER.trace("Unexpected parameter {}", parameterName);
 			}
 
 			iff.exitChunk();

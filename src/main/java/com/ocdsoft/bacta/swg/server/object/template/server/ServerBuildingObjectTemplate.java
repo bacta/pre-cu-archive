@@ -208,7 +208,7 @@ public class ServerBuildingObjectTemplate extends ServerTangibleObjectTemplate {
 			} else if ("isPublic".equalsIgnoreCase(parameterName)) {
 				isPublic.loadFromIff(objectTemplateList, iff);
 			} else {
-				LOGGER.error("Unexpected parameter {}", parameterName);
+				LOGGER.trace("Unexpected parameter {}", parameterName);
 			}
 
 			iff.exitChunk();

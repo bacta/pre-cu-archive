@@ -54,20 +54,4 @@ public class PersistentCrcString extends CrcString {
         //TODO: normalize?
         //TODO: Check system filename max length?
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        PersistentCrcString that = (PersistentCrcString) o;
-
-        return string != null ? string.equals(that.string) : that.string == null;
-
-    }
-
-    @Override
-    public int hashCode() {
-        return string != null ? string.hashCode() : 0;
-    }
 }

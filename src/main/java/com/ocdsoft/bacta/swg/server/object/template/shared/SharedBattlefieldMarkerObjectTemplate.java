@@ -301,7 +301,7 @@ public class SharedBattlefieldMarkerObjectTemplate extends SharedTangibleObjectT
 			} else if ("radius".equalsIgnoreCase(parameterName)) {
 				radius.loadFromIff(objectTemplateList, iff);
 			} else {
-				LOGGER.error("Unexpected parameter {}", parameterName);
+				LOGGER.trace("Unexpected parameter {}", parameterName);
 			}
 
 			iff.exitChunk();

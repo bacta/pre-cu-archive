@@ -247,7 +247,7 @@ public class ContainerService {
         final List<GameObject> contents = ReflectionUtil.getFieldValue(contentsField, container);
         contents.add(item);
 
-        return contents.size();
+        return contents.size() - 1;
     }
 
     protected int find(final Container container, final GameObject item, final ContainerResult containerResult) {

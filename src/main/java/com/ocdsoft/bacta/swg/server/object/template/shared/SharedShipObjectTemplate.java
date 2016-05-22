@@ -157,7 +157,7 @@ public class SharedShipObjectTemplate extends SharedTangibleObjectTemplate {
 			} else if ("interiorLayoutFileName".equalsIgnoreCase(parameterName)) {
 				interiorLayoutFileName.loadFromIff(objectTemplateList, iff);
 			} else {
-				LOGGER.error("Unexpected parameter {}", parameterName);
+				LOGGER.trace("Unexpected parameter {}", parameterName);
 			}
 
 			iff.exitChunk();

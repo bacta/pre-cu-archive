@@ -75,4 +75,22 @@ public abstract class CrcString implements Comparable<CrcString> {
     public int compareTo(final CrcString o) {
         return Integer.compare(crc, o.crc);
     }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null) return false;
+
+        final CrcString crcString = (CrcString) o;
+
+        if (getCrc() != crcString.getCrc()) return false;
+        return getString() != null ? getString().equals(crcString.getString()) : crcString.getString() == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getCrc();
+        result = 31 * result + (getString() != null ? getString().hashCode() : 0);
+        return result;
+    }
 }

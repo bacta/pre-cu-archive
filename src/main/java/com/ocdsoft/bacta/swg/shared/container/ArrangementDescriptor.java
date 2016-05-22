@@ -67,11 +67,12 @@ public class ArrangementDescriptor {
         iff.enterForm(Tag.TAG_0000);
         {
             final CrcLowerString slotName = new CrcLowerString("");
-            final TIntList arrangement = new TIntArrayList();
 
             while (!iff.isAtEndOfForm()) {
                 iff.enterChunk(TAG_ARG);
                 {
+                    final TIntArrayList arrangement = new TIntArrayList();
+
                     while (iff.getChunkLengthLeft() > 0) {
                         final String slotNameString = iff.readString();
                         slotName.setString(slotNameString);
@@ -85,12 +86,11 @@ public class ArrangementDescriptor {
                             arrangement.add(slotId);
                         }
                     }
+
+                    arrangement.trimToSize();
+                    arrangements.add(arrangement);
                 }
                 iff.exitChunk(TAG_ARG);
-
-                arrangements.add(arrangement);
-
-                arrangement.clear();
             }
         }
         iff.exitForm(Tag.TAG_0000);

@@ -11,5 +11,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public final class ContainerResult {
-    private ContainerErrorCode error;
+    private ContainerErrorCode error = ContainerErrorCode.SUCCESS;
 }

@@ -783,7 +783,7 @@ public class ServerDraftSchematicObjectTemplate extends ServerIntangibleObjectTe
 			} else if ("prototypeTime".equalsIgnoreCase(parameterName)) {
 				prototypeTime.loadFromIff(objectTemplateList, iff);
 			} else {
-				LOGGER.error("Unexpected parameter {}", parameterName);
+				LOGGER.trace("Unexpected parameter {}", parameterName);
 			}
 
 			iff.exitChunk();
@@ -1171,7 +1171,7 @@ public class ServerDraftSchematicObjectTemplate extends ServerIntangibleObjectTe
 				} else if ("appearance".equalsIgnoreCase(parameterName)) {
 					appearance.loadFromIff(objectTemplateList, iff);
 				} else {
-					LOGGER.error("Unexpected parameter {}", parameterName);
+					LOGGER.trace("Unexpected parameter {}", parameterName);
 				}
 
 				iff.exitChunk();

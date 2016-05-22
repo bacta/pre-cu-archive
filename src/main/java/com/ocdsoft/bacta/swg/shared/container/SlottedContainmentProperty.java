@@ -36,7 +36,7 @@ public class SlottedContainmentProperty extends Property {
         final List<String> anythingSlots = slotIdManager.getSlotsThatHoldAnything();
 
         for (final String anythingSlot : anythingSlots) {
-            final TIntList slotArrangement = new TIntArrayList();
+            final TIntList slotArrangement = new TIntArrayList(1);
             final CrcLowerString anythingSlotCrc = new CrcLowerString(anythingSlot);
             final int slotId = slotIdManager.findSlotId(anythingSlotCrc);
             slotArrangement.add(slotId);

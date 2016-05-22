@@ -93,7 +93,7 @@ public class ServerShipObjectTemplate extends ServerTangibleObjectTemplate {
 			if ("shipType".equalsIgnoreCase(parameterName)) {
 				shipType.loadFromIff(objectTemplateList, iff);
 			} else {
-				LOGGER.error("Unexpected parameter {}", parameterName);
+				LOGGER.trace("Unexpected parameter {}", parameterName);
 			}
 
 			iff.exitChunk();

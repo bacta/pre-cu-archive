@@ -228,7 +228,7 @@ public class SharedWeaponObjectTemplate extends SharedTangibleObjectTemplate {
 			} else if ("attackType".equalsIgnoreCase(parameterName)) {
 				attackType.loadFromIff(objectTemplateList, iff);
 			} else {
-				LOGGER.error("Unexpected parameter {}", parameterName);
+				LOGGER.trace("Unexpected parameter {}", parameterName);
 			}
 
 			iff.exitChunk();
@@ -241,9 +241,9 @@ public class SharedWeaponObjectTemplate extends SharedTangibleObjectTemplate {
 
 	public enum AttackType {
 		AT_melee(0), 
-		AT_ranged(1), 
+		AT_ranged(1),
 		AT_thrown(2),
-		AT_ammo(3),
+		AT_ammo(3), 
 		AttackType_Last(AT_ammo.value);
 
 		private static final AttackType[] values = values();

@@ -814,7 +814,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 			} else if ("clientVisabilityFlag".equalsIgnoreCase(parameterName)) {
 				clientVisabilityFlag.loadFromIff(objectTemplateList, iff);
 			} else {
-				LOGGER.error("Unexpected parameter {}", parameterName);
+				LOGGER.trace("Unexpected parameter {}", parameterName);
 			}
 
 			iff.exitChunk();
@@ -827,7 +827,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 
 	public enum ClientVisabilityFlags {
 		CVF_always(0),
-		CVF_gm_only(1),
+		CVF_gm_only(1), 
 		ClientVisabilityFlags_Last(CVF_gm_only.value);
 
 		private static final ClientVisabilityFlags[] values = values();
@@ -1242,7 +1242,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 				} else if ("maxValueExclusive".equalsIgnoreCase(parameterName)) {
 					maxValueExclusive.loadFromIff(objectTemplateList, iff);
 				} else {
-					LOGGER.error("Unexpected parameter {}", parameterName);
+					LOGGER.trace("Unexpected parameter {}", parameterName);
 				}
 
 				iff.exitChunk();
@@ -1442,7 +1442,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 				} else if ("defaultPaletteIndex".equalsIgnoreCase(parameterName)) {
 					defaultPaletteIndex.loadFromIff(objectTemplateList, iff);
 				} else {
-					LOGGER.error("Unexpected parameter {}", parameterName);
+					LOGGER.trace("Unexpected parameter {}", parameterName);
 				}
 
 				iff.exitChunk();
@@ -1526,7 +1526,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 				} else if ("constValue".equalsIgnoreCase(parameterName)) {
 					constValue.loadFromIff(objectTemplateList, iff);
 				} else {
-					LOGGER.error("Unexpected parameter {}", parameterName);
+					LOGGER.trace("Unexpected parameter {}", parameterName);
 				}
 
 				iff.exitChunk();
@@ -1610,7 +1610,7 @@ public class SharedTangibleObjectTemplate extends SharedObjectTemplate {
 				} else if ("dependentVariable".equalsIgnoreCase(parameterName)) {
 					dependentVariable.loadFromIff(objectTemplateList, iff);
 				} else {
-					LOGGER.error("Unexpected parameter {}", parameterName);
+					LOGGER.trace("Unexpected parameter {}", parameterName);
 				}
 
 				iff.exitChunk();

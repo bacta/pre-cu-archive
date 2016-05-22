@@ -207,7 +207,7 @@ public class SharedTerrainSurfaceObjectTemplate extends ObjectTemplate {
 			} else if ("surfaceType".equalsIgnoreCase(parameterName)) {
 				surfaceType.loadFromIff(objectTemplateList, iff);
 			} else {
-				LOGGER.error("Unexpected parameter {}", parameterName);
+				LOGGER.trace("Unexpected parameter {}", parameterName);
 			}
 
 			iff.exitChunk();

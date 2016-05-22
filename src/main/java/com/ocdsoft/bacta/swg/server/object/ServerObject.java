@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import com.ocdsoft.bacta.engine.lang.ObservableEventRegistry;
 import com.ocdsoft.bacta.engine.lang.Observer;
 import com.ocdsoft.bacta.engine.lang.Subject;
+import com.ocdsoft.bacta.engine.object.NetworkObject;
 import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
 import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
 import com.ocdsoft.bacta.soe.util.SoeMessageUtil;
@@ -349,8 +350,8 @@ public abstract class ServerObject extends GameObject implements Subject<Observa
             return;
 
         final SceneCreateObjectByCrc msg = new SceneCreateObjectByCrc(this);
-
         final UpdateContainmentMessage ucm = new UpdateContainmentMessage(this);
+        final boolean sendUpdateContainment = (ucm.getContainerId() != NetworkObject.INVALID || ucm.getSlotArrangement() != -1);
 
 //        final BaselinesMessage sharedBaselines = new BaselinesMessage(this, sharedPackage, BaselinesMessage.BASELINES_SHARED);
 //        final BaselinesMessage sharedNpBaselines = new BaselinesMessage(this, sharedPackageNp, BaselinesMessage.BASELINES_SHARED_NP);
@@ -361,7 +362,9 @@ public abstract class ServerObject extends GameObject implements Subject<Observa
 
         for (final SoeUdpConnection client : clients) {
             client.sendMessage(msg);
-            client.sendMessage(ucm);
+
+            if (sendUpdateContainment)
+                client.sendMessage(ucm);
 
 //            client.sendMessage(sharedBaselines);
 //            client.sendMessage(sharedNpBaselines);
@@ -660,10 +663,9 @@ public abstract class ServerObject extends GameObject implements Subject<Observa
 
     public int getCurrentArrangement() {
         final SlottedContainmentProperty slottedContainmentProperty = getProperty(SlottedContainmentProperty.getClassPropertyId());
-        if(slottedContainmentProperty != null) {
-            return slottedContainmentProperty.getCurrentArrangement();
-        }
 
+        if (slottedContainmentProperty != null)
+            return slottedContainmentProperty.getCurrentArrangement();
         return -1;
     }
 

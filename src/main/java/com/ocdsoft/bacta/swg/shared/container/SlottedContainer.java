@@ -24,6 +24,6 @@ public class SlottedContainer extends Container {
 
         //Initialize the slot map with "empty" values.
         for (int i = 0, size = validSlots.size(); i < size; ++i)
-            slotMap.put(i, -1);
+            slotMap.put(validSlots.get(i), -1);
     }
 }

@@ -3,9 +3,11 @@ package com.ocdsoft.bacta.swg.server.message.game.scene;
 import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
 import com.ocdsoft.bacta.soe.message.Priority;
 import com.ocdsoft.bacta.swg.server.object.ServerObject;
+import lombok.Getter;
 
 import java.nio.ByteBuffer;
 
+@Getter
 @Priority(0x4)
 public final class UpdateContainmentMessage extends GameNetworkMessage {
 

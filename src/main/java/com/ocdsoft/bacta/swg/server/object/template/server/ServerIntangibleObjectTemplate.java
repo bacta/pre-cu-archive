@@ -198,7 +198,7 @@ public class ServerIntangibleObjectTemplate extends ServerObjectTemplate {
 			if ("count".equalsIgnoreCase(parameterName)) {
 				count.loadFromIff(objectTemplateList, iff);
 			} else {
-				LOGGER.error("Unexpected parameter {}", parameterName);
+				LOGGER.trace("Unexpected parameter {}", parameterName);
 			}
 
 			iff.exitChunk();
@@ -423,7 +423,7 @@ public class ServerIntangibleObjectTemplate extends ServerObjectTemplate {
 				} else if ("count".equalsIgnoreCase(parameterName)) {
 					count.loadFromIff(objectTemplateList, iff);
 				} else {
-					LOGGER.error("Unexpected parameter {}", parameterName);
+					LOGGER.trace("Unexpected parameter {}", parameterName);
 				}
 
 				iff.exitChunk();
@@ -757,7 +757,7 @@ public class ServerIntangibleObjectTemplate extends ServerObjectTemplate {
 				} else if ("skillCommand".equalsIgnoreCase(parameterName)) {
 					skillCommand.loadFromIff(objectTemplateList, iff);
 				} else {
-					LOGGER.error("Unexpected parameter {}", parameterName);
+					LOGGER.trace("Unexpected parameter {}", parameterName);
 				}
 
 				iff.exitChunk();
@@ -934,7 +934,7 @@ public class ServerIntangibleObjectTemplate extends ServerObjectTemplate {
 				} else if ("value".equalsIgnoreCase(parameterName)) {
 					value.loadFromIff(objectTemplateList, iff);
 				} else {
-					LOGGER.error("Unexpected parameter {}", parameterName);
+					LOGGER.trace("Unexpected parameter {}", parameterName);
 				}
 
 				iff.exitChunk();
