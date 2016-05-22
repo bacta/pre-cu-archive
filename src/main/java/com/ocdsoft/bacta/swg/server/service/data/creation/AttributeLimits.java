@@ -17,7 +17,7 @@ import java.util.Map;
  */
 @Singleton
 public final class AttributeLimits implements SharedFileLoader {
-    private static final String dataTableName = "datatables/player/attribute_limits.iff";
+    private static final String dataTableName = "datatables/creation/attribute_limits.iff";
     private static final Logger logger = LoggerFactory.getLogger(AttributeLimits.class);
 
     private final Map<String, AttributeLimitInfo> attributeLimits = new HashMap<>();

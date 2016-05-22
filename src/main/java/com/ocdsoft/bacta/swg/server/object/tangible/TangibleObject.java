@@ -206,7 +206,7 @@ public class TangibleObject extends ServerObject implements SteerSubject<Vec3> {
     }
 
     public final void setPosition(final Transform transform, boolean updateZone) {
-        super.setTransform(transform);
+        super.setPositionInWorld(transform.getPositionInParent());
 
         if (updateZone) {
             updateZone();
@@ -251,7 +251,7 @@ public class TangibleObject extends ServerObject implements SteerSubject<Vec3> {
         }
 
         final UpdateTransformCallback updateTransformCallback = new UpdateTransformCallback(this);
-        zone.contains(transform.getPositionInParent(), 160.f, Integer.MAX_VALUE, 1, updateTransformCallback);
+        zone.contains(getPositionInParent(), 160.f, Integer.MAX_VALUE, 1, updateTransformCallback);
 
         return updateTransformCallback.getNearObjects();
     }

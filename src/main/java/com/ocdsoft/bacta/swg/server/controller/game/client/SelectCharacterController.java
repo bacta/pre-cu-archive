@@ -2,22 +2,20 @@ package com.ocdsoft.bacta.swg.server.controller.game.client;
 
 import com.google.inject.Inject;
 import com.ocdsoft.bacta.engine.service.object.ObjectService;
+import com.ocdsoft.bacta.soe.connection.ConnectionRole;
+import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
+import com.ocdsoft.bacta.soe.controller.ConnectionRolesAllowed;
+import com.ocdsoft.bacta.soe.controller.GameNetworkMessageController;
+import com.ocdsoft.bacta.soe.controller.MessageHandled;
 import com.ocdsoft.bacta.soe.io.udp.game.GameServerState;
 import com.ocdsoft.bacta.swg.server.message.game.client.*;
 import com.ocdsoft.bacta.swg.server.message.game.scene.CmdStartScene;
-import com.ocdsoft.bacta.swg.server.message.game.scene.UpdatePvpStatusMessage;
 import com.ocdsoft.bacta.swg.server.object.ServerObject;
 import com.ocdsoft.bacta.swg.server.object.tangible.creature.CreatureObject;
 import com.ocdsoft.bacta.swg.server.zone.Zone;
 import com.ocdsoft.bacta.swg.server.zone.ZoneMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.ocdsoft.bacta.soe.controller.MessageHandled;
-import com.ocdsoft.bacta.soe.controller.GameNetworkMessageController;
-import com.ocdsoft.bacta.soe.controller.ConnectionRolesAllowed;
-import com.ocdsoft.bacta.soe.connection.ConnectionRole;
-import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -62,12 +60,13 @@ public class SelectCharacterController implements GameNetworkMessageController<S
                     false,
                     character.getNetworkId(),
                     zone.getTerrainFile(),
-                    character.getTransform().getPositionInParent(),
-                    0.f,//character.getObjectFrameKInWorld().theta(),
+                    character.getTransformObjectToWorld().getPositionInParent(),
+                    character.getObjectFrameKInWorld().theta(),
                     character.getSharedTemplate().getResourceName(),
                     0,
                     0
             );
+
             connection.sendMessage(start);
 
             ServerTimeMessage serverTimeMessage = new ServerTimeMessage(0);

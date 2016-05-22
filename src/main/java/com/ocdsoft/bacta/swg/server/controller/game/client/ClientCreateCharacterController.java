@@ -159,7 +159,8 @@ public class ClientCreateCharacterController implements GameNetworkMessageContro
         final Transform transform = new Transform();
         if(createMessage.isUseNewbieTutorial()) {
             newbieTutorialService.setupCharacterForTutorial(newCharacterObject);
-            transform.setPositionInParentSpace(newbieTutorialService.getTutorialLocation());
+            final Vector newbieTutorialLocation = newbieTutorialService.getTutorialLocation();
+            transform.setPositionInParentSpace(newbieTutorialLocation);
         } else {
             newbieTutorialService.setupCharacterToSkipTutorial(newCharacterObject);
 
@@ -173,7 +174,7 @@ public class ClientCreateCharacterController implements GameNetworkMessageContro
             transform.yaw(startingLocationInfo.getHeading());
         }
 
-        newCharacterObject.setTransform(transform);
+        newCharacterObject.setTransformObjectToParent(transform);
 
         final CollisionProperty collision = newCharacterObject.getCollisionProperty();
         if(collision != null) {

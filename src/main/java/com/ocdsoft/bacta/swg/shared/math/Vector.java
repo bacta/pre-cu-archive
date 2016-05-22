@@ -454,6 +454,10 @@ public final class Vector implements ByteBufferWritable, IffWritable {
         return cp1.dot(cp2) >= 0.0f;
     }
 
+    public String getDebugString() {
+        return String.format("{x:%f, y:%f, z:%f}", x, y, z);
+    }
+
     @AllArgsConstructor
     public static final class ClosestPointResult {
         public final Vector point;

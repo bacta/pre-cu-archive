@@ -35,14 +35,16 @@ public final class BadgeMap implements SharedFileLoader {
     private void load() {
         logger.trace("Loading badges.");
 
-        final DataTable badgeMap = dataTableManager.getTable(dataTableName, true);
+        //BadgeMap does not exist in the NGE.
 
-        for (int row = 0; row < badgeMap.getNumRows(); ++row) {
-            final BadgeInfo badge = new BadgeInfo(badgeMap, row);
-            badges.put(badge.getIndex(), badge);
-        }
-
-        dataTableManager.close(dataTableName);
+//        final DataTable badgeMap = dataTableManager.getTable(dataTableName, true);
+//
+//        for (int row = 0; row < badgeMap.getNumRows(); ++row) {
+//            final BadgeInfo badge = new BadgeInfo(badgeMap, row);
+//            badges.put(badge.getIndex(), badge);
+//        }
+//
+//        dataTableManager.close(dataTableName);
 
         logger.debug(String.format("Loaded %d badges.", badges.size()));
     }

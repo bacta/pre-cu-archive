@@ -53,7 +53,7 @@ public class Planet implements Zone {
         }
 
         obj.setZone(this);
-        obj.setPosition(obj.getTransform(), false);
+        obj.setPosition(obj.getTransformObjectToParent(), false);
         obj.setInert(false);
 
         spatialDatabase.add(obj);

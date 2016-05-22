@@ -272,7 +272,7 @@ public class GameObject extends NetworkObject {
         final boolean noCell = (detachFlags == DetachFlags.NONE);
 
         final CellProperty cellProperty = noCell ? null : (toParentCell ? getParentCell() : CellProperty.getWorldCellProperty());
-        final boolean shouldAttach = (!toParentCell || noCell) ? false : attachedToObject != cellProperty.getOwner();
+        final boolean shouldAttach = !(!toParentCell || noCell) && attachedToObject != cellProperty.getOwner();
         objectToParent = shouldAttach ? getTransformObjectToCell() : getTransformObjectToWorld();
         objectToWorld = null;
         setObjectToWorldDirty(true);
@@ -416,8 +416,39 @@ public class GameObject extends NetworkObject {
         return child;
     }
 
+    /**
+     * Get the object to world transformation for this object.
+     *
+     * @return The object-to-world transformation for this object.
+     */
     public Transform getTransformObjectToWorld() {
-        return objectToWorld;
+        if (attachedToObject != null) {
+            if (objectToWorldDirty) {
+                objectToWorld.multiply(attachedToObject.getTransformObjectToWorld(), objectToParent);
+                setObjectToWorldDirty(false);
+            }
+            return objectToWorld;
+        }
+
+        return objectToParent;
+    }
+
+    public void setTransformObjectToWorld(final Transform newOjectToWorld) {
+        final CellProperty cell = getParentCell();
+
+        if (cell == CellProperty.getWorldCellProperty()) {
+            setTransformObjectToParent(newOjectToWorld);
+            return;
+        }
+
+        final Transform cellToWorld = cell.getOwner().getTransformObjectToWorld();
+        final Transform worldToCell = new Transform();
+        worldToCell.invert(cellToWorld);
+
+        final Transform objectToCell = new Transform();
+        objectToCell.multiply(worldToCell, newOjectToWorld);
+
+        setTransformObjectToParent(objectToCell);
     }
 
     public Transform getTransformObjectToParent() {

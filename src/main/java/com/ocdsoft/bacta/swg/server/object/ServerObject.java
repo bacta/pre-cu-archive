@@ -13,7 +13,10 @@ import com.ocdsoft.bacta.swg.server.container.IntangibleVolumeContainer;
 import com.ocdsoft.bacta.swg.server.container.TangibleVolumeContainer;
 import com.ocdsoft.bacta.swg.server.event.ObservableGameEvent;
 import com.ocdsoft.bacta.swg.server.message.game.object.ObjControllerMessage;
-import com.ocdsoft.bacta.swg.server.message.game.scene.*;
+import com.ocdsoft.bacta.swg.server.message.game.scene.SceneCreateObjectByCrc;
+import com.ocdsoft.bacta.swg.server.message.game.scene.SceneDestroyObject;
+import com.ocdsoft.bacta.swg.server.message.game.scene.SceneEndBaselines;
+import com.ocdsoft.bacta.swg.server.message.game.scene.UpdateContainmentMessage;
 import com.ocdsoft.bacta.swg.server.object.cell.CellObject;
 import com.ocdsoft.bacta.swg.server.object.template.server.ServerObjectTemplate;
 import com.ocdsoft.bacta.swg.server.object.template.shared.SharedObjectTemplate;
@@ -21,7 +24,6 @@ import com.ocdsoft.bacta.swg.server.service.container.ContainerTransferService;
 import com.ocdsoft.bacta.swg.server.synchronizedui.ServerSynchronizedUi;
 import com.ocdsoft.bacta.swg.shared.container.*;
 import com.ocdsoft.bacta.swg.shared.localization.StringId;
-import com.ocdsoft.bacta.swg.shared.math.Transform;
 import com.ocdsoft.bacta.swg.shared.object.GameObject;
 import com.ocdsoft.bacta.swg.shared.portal.PortalProperty;
 import com.ocdsoft.bacta.swg.shared.template.ObjectTemplateList;
@@ -59,6 +61,29 @@ public abstract class ServerObject extends GameObject implements Subject<Observa
     @Getter
     @Setter
     private boolean playerControlled;
+
+    @Getter
+    private transient boolean initialized = false;
+
+    @Getter
+    @Setter
+    protected transient SoeUdpConnection connection;
+
+    protected transient final Set<SoeUdpConnection> listeners;
+
+    private transient int localFlags;
+
+    protected transient final AutoDeltaByteStream authClientServerPackage = new AutoDeltaByteStream();
+    protected transient final AutoDeltaByteStream authClientServerPackageNp = new AutoDeltaByteStream();
+    protected transient final AutoDeltaByteStream firstParentAuthClientServerPackage = new AutoDeltaByteStream();
+    protected transient final AutoDeltaByteStream firstParentAuthClientServerPackageNp = new AutoDeltaByteStream();
+    protected transient final AutoDeltaByteStream sharedPackage = new AutoDeltaByteStream();
+    protected transient final AutoDeltaByteStream sharedPackageNp = new AutoDeltaByteStream();
+    protected transient final AutoDeltaByteStream uiPackage = new AutoDeltaByteStream();
+
+    int gameObjectType;
+
+    SharedObjectTemplate sharedTemplate;
 
     @Inject
     public ServerObject(final ObjectTemplateList objectTemplateList,
@@ -202,40 +227,6 @@ public abstract class ServerObject extends GameObject implements Subject<Observa
 
         sharedPackageNp.addVariable(authServerProcessId);
     }
-
-    @Getter
-    private transient boolean initialized = false;
-
-    @Setter
-    private long containedBy = 0;
-
-    @Getter
-    protected Transform transform = new Transform();
-
-    protected transient Container container;
-
-    @Setter
-    protected int currentArrangement = -1;
-
-    @Getter
-    @Setter
-    protected transient SoeUdpConnection connection;
-
-    protected transient final Set<SoeUdpConnection> listeners;
-
-    private transient int localFlags;
-
-    protected transient final AutoDeltaByteStream authClientServerPackage = new AutoDeltaByteStream();
-    protected transient final AutoDeltaByteStream authClientServerPackageNp = new AutoDeltaByteStream();
-    protected transient final AutoDeltaByteStream firstParentAuthClientServerPackage = new AutoDeltaByteStream();
-    protected transient final AutoDeltaByteStream firstParentAuthClientServerPackageNp = new AutoDeltaByteStream();
-    protected transient final AutoDeltaByteStream sharedPackage = new AutoDeltaByteStream();
-    protected transient final AutoDeltaByteStream sharedPackageNp = new AutoDeltaByteStream();
-    protected transient final AutoDeltaByteStream uiPackage = new AutoDeltaByteStream();
-
-    int gameObjectType;
-
-    SharedObjectTemplate sharedTemplate;
 
 
     public final boolean getLocalFlag(final int flag) {
@@ -468,11 +459,6 @@ public abstract class ServerObject extends GameObject implements Subject<Observa
 //        uiPackage.clearDeltas();
 //        firstParentAuthClientServerPackage.clearDeltas();
 //        firstParentAuthClientServerPackageNp.clearDeltas();
-    }
-
-    public void setTransform(final Transform transform) {
-        this.transform = transform;
-        dirty = true;
     }
 
     public void setOnDirtyCallback(final OnDirtyCallbackBase onDirtyCallback) {
