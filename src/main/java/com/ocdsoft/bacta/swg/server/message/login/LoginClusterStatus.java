@@ -52,27 +52,6 @@ public class LoginClusterStatus extends GameNetworkMessage {
         }
     }
 
-    /**
-     *
-     * // NGE Struct
-     struct LoginClusterStatus_ClusterData
-     {
-     unsigned int m_clusterId;
-     std::string m_connectionServerAddress;
-     unsigned __int16 m_connectionServerPort;
-     unsigned __int16 m_connectionServerPingPort;
-     int m_populationOnline;
-     LoginClusterStatus_ClusterData::PopulationStatus m_populationOnlineStatus;
-     int m_maxCharactersPerAccount;
-     int m_timeZone;
-     LoginClusterStatus_ClusterData::Status m_status;
-     bool m_dontRecommend;
-     unsigned int m_onlinePlayerLimit;
-     unsigned int m_onlineFreeTrialLimit;
-     }
-     *
-     */
-
     @Singleton
     @Getter
     public static class ClusterData implements ByteBufferWritable, Comparable<ClusterData> {
