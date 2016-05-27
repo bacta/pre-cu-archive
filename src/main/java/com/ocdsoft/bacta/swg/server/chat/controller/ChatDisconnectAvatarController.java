@@ -1,4 +1,4 @@
-package com.ocdsoft.bacta.swg.server.controller.chat;
+package com.ocdsoft.bacta.swg.server.chat.controller;
 
 import com.ocdsoft.bacta.soe.ServerType;
 import com.ocdsoft.bacta.soe.connection.ConnectionRole;

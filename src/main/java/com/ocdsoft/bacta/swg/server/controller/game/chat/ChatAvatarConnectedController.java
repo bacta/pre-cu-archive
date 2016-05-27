@@ -6,7 +6,7 @@ import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
 import com.ocdsoft.bacta.soe.controller.ConnectionRolesAllowed;
 import com.ocdsoft.bacta.soe.controller.GameNetworkMessageController;
 import com.ocdsoft.bacta.soe.controller.MessageHandled;
-import com.ocdsoft.bacta.swg.server.message.chat.ChatAvatarConnected;
+import com.ocdsoft.bacta.swg.server.chat.message.ChatAvatarConnected;
 import com.ocdsoft.bacta.swg.server.message.game.client.ChatOnConnectAvatar;
 import com.ocdsoft.bacta.swg.server.object.ServerObject;
 import com.ocdsoft.bacta.swg.server.service.object.ServerObjectService;

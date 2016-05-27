@@ -1,4 +1,4 @@
-package com.ocdsoft.bacta.swg.server.controller.chat;
+package com.ocdsoft.bacta.swg.server.chat.controller;
 
 import com.google.inject.Inject;
 import com.ocdsoft.bacta.soe.ServerType;

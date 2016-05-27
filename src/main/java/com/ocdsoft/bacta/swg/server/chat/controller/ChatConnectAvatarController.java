@@ -1,4 +1,4 @@
-package com.ocdsoft.bacta.swg.server.controller.chat;
+package com.ocdsoft.bacta.swg.server.chat.controller;
 
 import com.ocdsoft.bacta.soe.ServerType;
 import com.ocdsoft.bacta.soe.connection.ConnectionRole;
@@ -6,7 +6,7 @@ import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
 import com.ocdsoft.bacta.soe.controller.ConnectionRolesAllowed;
 import com.ocdsoft.bacta.soe.controller.GameNetworkMessageController;
 import com.ocdsoft.bacta.soe.controller.MessageHandled;
-import com.ocdsoft.bacta.swg.server.message.chat.ChatAvatarConnected;
+import com.ocdsoft.bacta.swg.server.chat.message.ChatAvatarConnected;
 import com.ocdsoft.bacta.swg.server.message.game.chat.ChatConnectAvatar;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
