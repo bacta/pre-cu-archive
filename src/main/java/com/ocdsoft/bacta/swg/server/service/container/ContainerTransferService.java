@@ -4,7 +4,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
 import com.ocdsoft.bacta.swg.server.object.ServerObject;
-import com.ocdsoft.bacta.swg.server.service.chat.ChatService;
+import com.ocdsoft.bacta.swg.server.service.chat.GameChatService;
 import com.ocdsoft.bacta.swg.server.service.rewards.VeteranRewardService;
 import com.ocdsoft.bacta.swg.shared.container.*;
 import com.ocdsoft.bacta.swg.shared.localization.StringId;
@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
 public final class ContainerTransferService {
     private static final Logger LOGGER = LoggerFactory.getLogger(ContainerTransferService.class);
 
-    private final ChatService chatService;
+    private final GameChatService gameChatService;
     private final SlotIdManager slotIdManager;
     private final ContainerService containerService;
     private final VolumeContainerService volumeContainerService;
@@ -33,8 +33,8 @@ public final class ContainerTransferService {
     private final VeteranRewardService veteranRewardService;
 
     @Inject
-    public ContainerTransferService(ChatService chatService, SlotIdManager slotIdManager, ContainerService containerService, VolumeContainerService volumeContainerService, SlottedContainerService slottedContainerService, VeteranRewardService veteranRewardService) {
-        this.chatService = chatService;
+    public ContainerTransferService(GameChatService gameChatService, SlotIdManager slotIdManager, ContainerService containerService, VolumeContainerService volumeContainerService, SlottedContainerService slottedContainerService, VeteranRewardService veteranRewardService) {
+        this.gameChatService = gameChatService;
         this.slotIdManager = slotIdManager;
         this.containerService = containerService;
         this.volumeContainerService = volumeContainerService;
@@ -392,7 +392,7 @@ public final class ContainerTransferService {
 
             final StringId code = new StringId("container_error_message", message);
 
-            chatService.sendSystemMessageSimple(player, code, target);
+            gameChatService.sendSystemMessageSimple(player, code, target);
         }
     }
 

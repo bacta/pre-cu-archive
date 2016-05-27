@@ -15,10 +15,10 @@ import java.nio.ByteBuffer;
 @Priority(0x05)
 @AllArgsConstructor
 public final class ChatOnEnteredRoom extends GameNetworkMessage {
-    private final ChatAvatarId characterName;
+    private final int sequence;
     private final int result;
     private final int roomId;
-    private final int sequence;
+    private final ChatAvatarId characterName;
 
     public ChatOnEnteredRoom(final ByteBuffer buffer) {
         this.characterName = new ChatAvatarId(buffer);

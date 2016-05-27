@@ -15,12 +15,12 @@ import java.nio.ByteBuffer;
 @Priority(0x05)
 @AllArgsConstructor
 public final class ChatCreateRoom extends GameNetworkMessage {
-    private final boolean publicRoom;
-    private final boolean moderatedRoom;
+    private final int sequence;
     private final String ownerName;
     private final String roomName;
+    private final boolean moderatedRoom;
+    private final boolean publicRoom;
     private final String roomTitle;
-    private final int sequence;
 
     public ChatCreateRoom(final ByteBuffer buffer) {
         publicRoom = BufferUtil.getBoolean(buffer);

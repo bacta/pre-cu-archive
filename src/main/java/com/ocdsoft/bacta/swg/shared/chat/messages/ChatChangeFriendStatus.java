@@ -15,9 +15,9 @@ import java.nio.ByteBuffer;
 @Priority(0x05)
 @AllArgsConstructor
 public final class ChatChangeFriendStatus extends GameNetworkMessage {
+    private final int sequence;
     private final ChatAvatarId characterId;
     private final ChatAvatarId friendId;
-    private final int sequence;
     private final boolean add;
 
     public ChatChangeFriendStatus(final ByteBuffer buffer) {

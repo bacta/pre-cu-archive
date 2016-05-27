@@ -19,6 +19,8 @@ import com.ocdsoft.bacta.swg.server.message.game.scene.SceneDestroyObject;
 import com.ocdsoft.bacta.swg.server.message.game.scene.SceneEndBaselines;
 import com.ocdsoft.bacta.swg.server.message.game.scene.UpdateContainmentMessage;
 import com.ocdsoft.bacta.swg.server.object.cell.CellObject;
+import com.ocdsoft.bacta.swg.server.object.tangible.TangibleObject;
+import com.ocdsoft.bacta.swg.server.object.tangible.creature.CreatureObject;
 import com.ocdsoft.bacta.swg.server.object.template.server.ServerObjectTemplate;
 import com.ocdsoft.bacta.swg.server.object.template.shared.SharedObjectTemplate;
 import com.ocdsoft.bacta.swg.server.service.container.ContainerTransferService;
@@ -304,6 +306,30 @@ public abstract class ServerObject extends GameObject implements Subject<Observa
 
     public final String getAssignedObjectName() {
         return objectName.get();
+    }
+
+    public final String getAssignedObjectFirstName() {
+        final String name = objectName.get();
+
+        final int spacePos = name.indexOf(' ');
+
+        if (spacePos > -1)
+            return name.substring(0, spacePos);
+
+        return name;
+    }
+
+    /**
+     * This function is used to obtain a client-displayable name regardless of whether
+     * the object has an assigned name or string id.
+     */
+    public final String getEncodedObjectName() {
+        final String objName = objectName.get();
+
+        if (!objName.isEmpty())
+            return objName;
+        else
+            return "@" + nameStringId.get().getCanonicalRepresentation();
     }
 
     public final void setAssignedObjectName(final String value) {
@@ -710,6 +736,14 @@ public abstract class ServerObject extends GameObject implements Subject<Observa
 
     public void setOwnerId(final long id) {
 
+    }
+
+    public TangibleObject asTangibleObject() {
+        return this instanceof TangibleObject ? (TangibleObject) this : null;
+    }
+
+    public CreatureObject asCreatureObject() {
+        return this instanceof CreatureObject ? (CreatureObject) this : null;
     }
 
     public static final SoeUdpConnection getParentPlayerClient(ServerObject obj) {

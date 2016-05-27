@@ -15,10 +15,10 @@ import java.nio.ByteBuffer;
 @Priority(0x05)
 @AllArgsConstructor
 public final class ChatChangeIgnoreStatus extends GameNetworkMessage {
+    private final int sequence;
     private final ChatAvatarId characterId;
     private final ChatAvatarId friendId;
     private final boolean ignore;
-    private final int sequence;
 
     public ChatChangeIgnoreStatus(final ByteBuffer buffer) {
         characterId = new ChatAvatarId(buffer);

@@ -15,6 +15,8 @@ import java.nio.ByteBuffer;
  * "swg.bacta.crush" shall be appended before it is passed along to the associated chat server.
  */
 public final class ChatAvatarId implements ByteBufferWritable {
+    public static final ChatAvatarId EMPTY = new ChatAvatarId("", "", "");
+
     private final String gameCode;
     private final String cluster;
     private final String name;

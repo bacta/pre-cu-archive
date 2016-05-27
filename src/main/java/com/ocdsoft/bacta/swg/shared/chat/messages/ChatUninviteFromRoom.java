@@ -16,8 +16,8 @@ import java.nio.ByteBuffer;
 @AllArgsConstructor
 public final class ChatUninviteFromRoom extends GameNetworkMessage {
     private final int sequence;
-    private final String roomName;
     private final ChatAvatarId avatarId;
+    private final String roomName;
 
     public ChatUninviteFromRoom(final ByteBuffer buffer) {
         avatarId = new ChatAvatarId(buffer);
