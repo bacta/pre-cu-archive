@@ -4,16 +4,23 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.ocdsoft.bacta.engine.conf.BactaConfiguration;
 import com.ocdsoft.bacta.engine.network.client.ServerStatus;
+import com.ocdsoft.bacta.engine.network.io.tcp.TcpServer;
 import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
 import com.ocdsoft.bacta.soe.io.udp.SoeTransceiver;
 import com.ocdsoft.bacta.soe.service.OutgoingConnectionService;
 import com.ocdsoft.bacta.swg.server.game.message.GameServerOnline;
+import io.netty.channel.ChannelInitializer;
+import io.netty.channel.socket.SocketChannel;
+import io.netty.handler.timeout.IdleStateHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.function.BiFunction;
@@ -22,7 +29,7 @@ import java.util.function.Consumer;
 /**
  * GameServer is the main class which starts the services running
  */
-public final class GameServer implements Runnable {
+public final class GameServer implements Runnable, Observer {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GameServer.class);
 
@@ -96,8 +103,29 @@ public final class GameServer implements Runnable {
     }
 
     private void startTCPServer() {
-        GameTcpServer gameTcpServer = new GameTcpServer(configuration.getInt("Bacta/GameServer", "TCPPort"));
+        TcpServer gameTcpServer = new TcpServer(
+                new ChannelInitializer<SocketChannel>() { // (4)
+                    @Override
+                    public void initChannel(SocketChannel ch) throws Exception {
+                        ch.pipeline().addFirst(new IdleStateHandler(0, 25, 0));
+                        ch.pipeline().addLast(new GameTcpServerHandler());
+                    }
+                },
+                configuration.getInt("Bacta/GameServer", "TCPPort")
+        );
+        gameTcpServer.addObserver(this);
+
         gameTcpServer.start();
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        TcpServer.Status status = (TcpServer.Status) arg;
+        if(status == TcpServer.Status.CONNECTED) {
+
+        } else if ( status == TcpServer.Status.DISCONNECTED) {
+
+        }
     }
 
     private void startLoginUpdate() throws IOException {
@@ -105,15 +133,25 @@ public final class GameServer implements Runnable {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                updateLoginServer();
+                try {
+                    updateLoginServer();
+                } catch (UnknownHostException e) {
+                    LOGGER.error("Unknown Host", e);
+                }
             }
         }, 100, 30000);
 
     }
 
-    private void updateLoginServer() {
+    private void updateLoginServer() throws UnknownHostException {
 
-        final String address = configuration.getString("Bacta/LoginServer", "BindIp");
+        final String addressString = configuration.getString("Bacta/LoginServer", "BindIp");
+        final InetAddress address;
+        if(addressString.equalsIgnoreCase("localhost")) {
+            address = InetAddress.getLocalHost();
+        } else {
+            address = InetAddress.getByName(addressString);
+        }
         final int port = configuration.getInt("Bacta/LoginServer", "Port");
 
         InetSocketAddress remoteAddress = new InetSocketAddress(address, port);
@@ -130,6 +168,7 @@ public final class GameServer implements Runnable {
     public void stop() {
         transceiver.stop();
     }
+
 
     /**
      * GameOutgoingConnectionService uses a function reference to the {@link SoeTransceiver#createOutgoingConnection(InetSocketAddress, Consumer)}

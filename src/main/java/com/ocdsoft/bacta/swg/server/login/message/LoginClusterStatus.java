@@ -5,6 +5,7 @@ import com.ocdsoft.bacta.engine.buffer.ByteBufferWritable;
 import com.ocdsoft.bacta.engine.conf.BactaConfiguration;
 import com.ocdsoft.bacta.engine.network.client.ServerStatus;
 import com.ocdsoft.bacta.engine.utils.BufferUtil;
+import com.ocdsoft.bacta.engine.utils.UnsignedUtil;
 import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
 import com.ocdsoft.bacta.soe.message.Priority;
 import com.ocdsoft.bacta.soe.util.SoeMessageUtil;
@@ -80,8 +81,8 @@ public class LoginClusterStatus extends GameNetworkMessage {
 
         private int id;
         private String connectionServerAddress;
-        private short connectionServerPort;
-        private short connectionServerPingPort;
+        private int connectionServerPort;
+        private int connectionServerPingPort;
         @Setter
         private int populationOnline;
         @Setter
@@ -99,8 +100,8 @@ public class LoginClusterStatus extends GameNetworkMessage {
         public ClusterData(final ByteBuffer buffer) {
             id = buffer.getInt();
             connectionServerAddress = BufferUtil.getAscii(buffer);
-            connectionServerPort = buffer.getShort();
-            connectionServerPingPort = buffer.getShort();
+            connectionServerPort = UnsignedUtil.getUnsignedShort(buffer);
+            connectionServerPingPort = UnsignedUtil.getUnsignedShort(buffer);
             populationOnline = buffer.getInt();
             populationOnlineStatus = PopulationStatus.values()[buffer.getInt()];
             maxCharactersPerAccount = buffer.getInt();
@@ -114,8 +115,8 @@ public class LoginClusterStatus extends GameNetworkMessage {
         public ClusterData(final BactaConfiguration configuration) {
             id = configuration.getInt("Bacta/GameServer", "ServerID");
             connectionServerAddress = configuration.getString("Bacta/GameServer", "PublicAddress");
-            connectionServerPort = (short) configuration.getInt("Bacta/GameServer", "Port");
-            connectionServerPingPort = (short) configuration.getInt("Bacta/GameServer", "Ping");
+            connectionServerPort = configuration.getInt("Bacta/GameServer", "Port");
+            connectionServerPingPort = configuration.getInt("Bacta/GameServer", "Ping");
             populationOnline = 0;
             populationOnlineStatus = PopulationStatus.PS_very_light;
             maxCharactersPerAccount = configuration.getInt("Bacta/GameServer", "MaxCharsPerAccount");
@@ -145,8 +146,8 @@ public class LoginClusterStatus extends GameNetworkMessage {
         public void writeToBuffer(ByteBuffer buffer) {
             buffer.putInt(id);
             BufferUtil.putAscii(buffer, connectionServerAddress);
-            buffer.putShort(connectionServerPort);
-            buffer.putShort(connectionServerPingPort);
+            buffer.putShort((short)connectionServerPort);
+            buffer.putShort((short)connectionServerPingPort);
             buffer.putInt(populationOnline);
             populationOnlineStatus.writeToBuffer(buffer);
             buffer.putInt(maxCharactersPerAccount);

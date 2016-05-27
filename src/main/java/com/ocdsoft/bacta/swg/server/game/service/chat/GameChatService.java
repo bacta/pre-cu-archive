@@ -52,7 +52,7 @@ public final class GameChatService {
 
         this.chatServerConnection = outgoingConnectionService.createOutgoingConnection(
                 new InetSocketAddress(
-                        bactaConfiguration.getStringWithDefault("Bacta/GameServer", "chatServerAddress", "127.0.0.1"),
+                        bactaConfiguration.getStringWithDefault("Bacta/GameServer", "chatServerAddress", "localhost"),
                         bactaConfiguration.getIntWithDefault("Bacta/GameServer", "chatServerPort", 44491)),
                 this::onConnectionEstablished);
 

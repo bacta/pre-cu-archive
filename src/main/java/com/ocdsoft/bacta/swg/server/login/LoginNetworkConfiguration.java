@@ -18,10 +18,6 @@ public final class LoginNetworkConfiguration extends BaseNetworkConfiguration im
 
     @Inject
     public LoginNetworkConfiguration(final BactaConfiguration configuration) throws UnknownHostException {
-        super(configuration);
-
-        bindIp = InetAddress.getByName(configuration.getString("Bacta/LoginServer", "BindIp"));
-        port = configuration.getInt("Bacta/LoginServer", "Port");
-        trustedClients = configuration.getStringCollection("Bacta/LoginServer", "TrustedClient");
+        super(configuration, "Bacta/LoginServer");
     }
 }

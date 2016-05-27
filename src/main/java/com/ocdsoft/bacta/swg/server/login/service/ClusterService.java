@@ -5,8 +5,13 @@ import com.google.inject.Singleton;
 import com.ocdsoft.bacta.engine.conf.BactaConfiguration;
 import com.ocdsoft.bacta.engine.data.ConnectionDatabaseConnector;
 import com.ocdsoft.bacta.engine.network.client.ServerStatus;
-import com.ocdsoft.bacta.swg.server.login.GameTcpClient;
+import com.ocdsoft.bacta.engine.network.client.TcpClient;
+import com.ocdsoft.bacta.engine.network.io.tcp.TcpServer;
+import com.ocdsoft.bacta.swg.server.login.GameClientTcpHandler;
 import com.ocdsoft.bacta.swg.server.login.object.ClusterServer;
+import io.netty.channel.ChannelInitializer;
+import io.netty.channel.socket.SocketChannel;
+import io.netty.handler.timeout.IdleStateHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,7 +30,7 @@ public class ClusterService implements Observer {
 
     private transient final ConnectionDatabaseConnector dbConnector;
     private transient final Set<ClusterServer> clusterServerSet;
-    private transient final Map<GameTcpClient, ClusterServer> clusterConnectionMap;
+    private transient final Map<InetSocketAddress, ClusterServer> clusterTcpConnectionMap;
     private transient final Constructor<ClusterServer> clusterEntryConstructor;
 
     private final boolean allowDynamicRegistration;
@@ -35,7 +40,7 @@ public class ClusterService implements Observer {
                           final BactaConfiguration bactaConfiguration) throws Exception {
 
         this.clusterServerSet = new TreeSet<>();
-        this.clusterConnectionMap = new HashMap<>();
+        this.clusterTcpConnectionMap = new HashMap<>();
         this.dbConnector = dbConnector;
         this.allowDynamicRegistration = bactaConfiguration.getBooleanWithDefault("Bacta/LoginServer", "AllowDynamicRegistration", false);
         this.clusterEntryConstructor = ClusterServer.class.getConstructor(Map.class);
@@ -62,13 +67,20 @@ public class ClusterService implements Observer {
 
     public void notifyGameServerOnline(final ClusterServer clusterServer) {
 
-        final InetSocketAddress tcpAddress = new InetSocketAddress(clusterServer.getRemoteAddress().getHostString(), clusterServer.getTcpPort());
-        if (!clusterConnectionMap.containsKey(tcpAddress)) {
+        final InetSocketAddress tcpAddress = new InetSocketAddress(clusterServer.getRemoteAddress().getAddress(), clusterServer.getTcpPort());
+        if (!clusterTcpConnectionMap.containsKey(tcpAddress)) {
 
-            final GameTcpClient tcpClient = new GameTcpClient(tcpAddress);
+            final TcpClient tcpClient = new TcpClient(tcpAddress, new ChannelInitializer< SocketChannel >() { // (4)
+                @Override
+                public void initChannel(SocketChannel ch) throws Exception {
+                    ch.pipeline().addFirst(new IdleStateHandler(0, 25, 0));
+                    ch.pipeline().addLast(new GameClientTcpHandler());
+                }
+            });
+
             tcpClient.addObserver(this);
 
-            clusterConnectionMap.put(tcpClient, clusterServer);
+            clusterTcpConnectionMap.put(tcpAddress, clusterServer);
             tcpClient.start();
         }
 
@@ -78,9 +90,16 @@ public class ClusterService implements Observer {
 
     @Override
     public void update(final Observable o, final Object arg) {
-        GameTcpClient tcpClient = (GameTcpClient) o;
-        final ClusterServer clusterServer = clusterConnectionMap.get(tcpClient);
-        clusterServer.getStatusClusterData().setStatus(ServerStatus.DOWN);
+
+        TcpServer.Status status = (TcpServer.Status) arg;
+        if(status == TcpServer.Status.CONNECTED) {
+
+        } else if ( status == TcpServer.Status.DISCONNECTED) {
+            TcpClient tcpClient = (TcpClient) o;
+            final ClusterServer clusterServer = clusterTcpConnectionMap.remove(tcpClient.getRemoteAddress());
+            clusterServer.getStatusClusterData().setStatus(ServerStatus.DOWN);
+
+        }
     }
 
     public Collection<ClusterServer> getClusterEntries() {

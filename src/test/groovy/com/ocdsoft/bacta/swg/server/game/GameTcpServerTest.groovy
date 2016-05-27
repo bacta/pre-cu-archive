@@ -1,7 +1,12 @@
 package com.ocdsoft.bacta.swg.server.game
 
+import com.ocdsoft.bacta.engine.network.client.TcpClient
+import com.ocdsoft.bacta.engine.network.io.tcp.TcpServer
+import com.ocdsoft.bacta.swg.server.login.GameClientTcpHandler
 import com.ocdsoft.bacta.swg.server.login.GameServerDisconnectedException
-import com.ocdsoft.bacta.swg.server.login.GameTcpClient
+import io.netty.channel.ChannelInitializer
+import io.netty.channel.socket.SocketChannel
+import io.netty.handler.timeout.IdleStateHandler
 import spock.lang.Specification
 
 /**
@@ -12,12 +17,28 @@ class GameTcpServerTest extends Specification {
     def "TestServerCommunicate"() {
 
         setup:
-        def gameTcpServer = new GameTcpServer(9000)
-        def gameTcpClient = new GameTcpClient("localhost", 9000)
+        def gameTcpServer = new TcpServer(
+                new ChannelInitializer<SocketChannel>() { // (4)
+                    @Override
+                    public void initChannel(SocketChannel ch) throws Exception {
+                        ch.pipeline().addFirst(new IdleStateHandler(0, 25, 0));
+                        ch.pipeline().addLast(new GameTcpServerHandler());
+                    }
+                },
+                9000
+        );
+
+        final InetSocketAddress tcpAddress = new InetSocketAddress("localhost", 9000);
+        def gameTcpClient = new TcpClient(tcpAddress, new ChannelInitializer< SocketChannel >() { // (4)
+            @Override
+            public void initChannel(SocketChannel ch) throws Exception {
+                ch.pipeline().addFirst(new IdleStateHandler(0, 25, 0));
+                ch.pipeline().addLast(new GameClientTcpHandler());
+            }
+        });
 
         when:
-        def serverThread = new Thread(gameTcpServer)
-        serverThread.start();
+        gameTcpServer.start();
 
         def timer = new Timer();
         timer.schedule(new TimerTask() {
@@ -27,58 +48,19 @@ class GameTcpServerTest extends Specification {
             }
         }, 2000);
 
-        gameTcpClient.call()
+        gameTcpClient.start()
+
+        while (gameTcpClient.isConnected()) {
+            Thread.sleep(1000);
+        }
+
 
         then:
-        thrown(GameServerDisconnectedException)
+        noExceptionThrown()
+        !gameTcpClient.isConnected()
+        !gameTcpServer.isConnected()
+
     }
 
-    def "TestGameServerShutdownGracefully"() {
-
-        setup:
-        def gameTcpServer = new GameTcpServer(9000)
-        def gameTcpClient = new GameTcpClient("localhost", 9000)
-
-        when:
-        def serverThread = new Thread(gameTcpServer)
-        serverThread.start();
-
-        def timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            void run() {
-                gameTcpServer.stop()
-            }
-        }, 2000);
-
-        gameTcpClient.call()
-
-        then:
-        thrown(GameServerDisconnectedException)
-    }
-
-    def "TestGameServerDisappear"() {
-
-        setup:
-        def gameTcpServer = new GameTcpServer(9000)
-        def gameTcpClient = new GameTcpClient("localhost", 9000)
-
-        when:
-        def serverThread = new Thread(gameTcpServer)
-        serverThread.start();
-
-        def timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            void run() {
-                gameTcpServer.stop()
-            }
-        }, 2000);
-
-        gameTcpClient.call()
-
-        then:
-        thrown(GameServerDisconnectedException)
-    }
 
 }

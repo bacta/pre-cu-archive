@@ -8,6 +8,9 @@ import com.ocdsoft.bacta.engine.serialize.KryoSerializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.net.InetSocketAddress;
+import java.util.ArrayList;
+
 /**
  * Created by Kyle on 8/14/2014.
  */
@@ -23,6 +26,6 @@ public final class LoginObjectSerializer extends KryoSerializer {
 
     @Override
     public void registerTypes(Kryo kryo, Injector injector) {
-
+        kryo.register(InetSocketAddress.class);
     }
 }

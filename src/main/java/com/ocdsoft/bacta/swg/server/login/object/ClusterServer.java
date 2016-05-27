@@ -49,9 +49,9 @@ public class ClusterServer implements ByteBufferWritable, Comparable<ClusterServ
         id = ((Double)clusterInfo.get("id")).intValue();
         remoteAddress = new InetSocketAddress(
                 (String) clusterInfo.get("PublicAddress"),
-                (Integer) clusterInfo.get("Port")
+                ((Double)clusterInfo.get("Port")).intValue()
         );
-        tcpPort = (Integer) clusterInfo.get("TCPPort");
+        tcpPort = ((Double)clusterInfo.get("TCPPort")).intValue();
         serverKey = (String) clusterInfo.get("secret");
         name = (String) clusterInfo.get("name");
 
