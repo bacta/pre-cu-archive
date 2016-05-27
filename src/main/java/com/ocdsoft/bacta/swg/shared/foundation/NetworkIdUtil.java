@@ -21,7 +21,13 @@ public final class NetworkIdUtil {
      */
     private static final long CLUSTER_ID_MASK = 0x3FC0000000000000L;
 
-
+    /**
+     * Gets a NetworkId with the given ClusterId appended to it in the reserved range.
+     *
+     * @param clusterId The ClusterId to append to the NetworkId
+     * @param networkId The NetworkId to which to append the ClusterId.
+     * @return The new NetworkId with the ClusterId appended in the bits 53-62.
+     */
     public static long getNetworkIdWithClusterId(final byte clusterId, final long networkId) {
         if (clusterId == 0 || networkId == 0)
             return networkId;
@@ -29,6 +35,13 @@ public final class NetworkIdUtil {
         return ((long) clusterId << 54) | networkId;
     }
 
+    /**
+     * Gets a NetworkId without the ClusterId appended to it. If no ClusterId information is encoded
+     * then it will just return the NetworkId.
+     *
+     * @param networkId The NetworkId from which to remove the ClusterId.
+     * @return The NetworkId without the ClusterId encoded in it.
+     */
     public static long getNetworkIdWithoutClusterId(final long networkId) {
         if (networkId <= MAX_NETWORK_ID_WITHOUT_CLUSTER_ID)
             return networkId; //It doesn't have cluster id encoded.
@@ -36,6 +49,11 @@ public final class NetworkIdUtil {
         return NETWORK_ID_WITHOUT_CLUSTER_ID_MASK & networkId;
     }
 
+    /**
+     * Gets the ClusterId out of a NetworkId that has been encoded with the ClusterId.
+     * @param networkId The NetworkId that has been encoded with the ClusterId.
+     * @return The ClusterId.
+     */
     public static byte getClusterId(final long networkId) {
         if (networkId <= MAX_NETWORK_ID_WITHOUT_CLUSTER_ID)
             return 0; //It doesn't have cluster id encoded.
