@@ -2,7 +2,7 @@ package $packageName;
 
 import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
 import com.ocdsoft.bacta.soe.controller.MessageHandled;
-import com.ocdsoft.bacta.swg.server.object.tangible.TangibleObject;
+import com.ocdsoft.bacta.swg.server.game.object.tangible.TangibleObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.ocdsoft.bacta.soe.controller.CommandController;

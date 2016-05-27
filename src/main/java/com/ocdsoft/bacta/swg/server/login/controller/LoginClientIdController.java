@@ -12,7 +12,7 @@ import com.ocdsoft.bacta.soe.io.udp.MessageSubscriptionService;
 import com.ocdsoft.bacta.swg.server.login.object.SoeAccount;
 import com.ocdsoft.bacta.swg.server.login.message.*;
 import com.ocdsoft.bacta.swg.server.login.service.ClusterService;
-import com.ocdsoft.bacta.swg.server.message.ErrorMessage;
+import com.ocdsoft.bacta.swg.server.game.message.ErrorMessage;
 import org.joda.time.DateTimeZone;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

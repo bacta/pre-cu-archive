@@ -24,10 +24,17 @@ public final class GameTcpClient extends Observable {
 
     /**
      * This constructor uses the basic handler that just keeps connected indefinitely
+     * Uses the default ChannelInitializer
      * @param remoteAddress host to connect to
      */
     public GameTcpClient(final InetSocketAddress remoteAddress) {
-        this(remoteAddress, new GameServerHandler());
+        this(remoteAddress, new ChannelInitializer<SocketChannel>() {
+            @Override
+            public void initChannel(SocketChannel ch) throws Exception {
+                ch.pipeline().addFirst(new ReadTimeoutHandler(15));
+                ch.pipeline().addLast(new GameServerHandler());
+            }
+        });
     }
 
     /**
@@ -55,18 +62,10 @@ public final class GameTcpClient extends Observable {
                     b.group(workerGroup); // (2)
                     b.channel(NioSocketChannel.class); // (3)
                     b.option(ChannelOption.SO_KEEPALIVE, true); // (4)
-                    b.handler(new ChannelInitializer<SocketChannel>() {
-                        @Override
-                        public void initChannel(SocketChannel ch) throws Exception {
-                            ch.pipeline().addFirst(new ReadTimeoutHandler(15));
-                            ch.pipeline().addLast(handler);
-                        }
-                    });
+                    b.handler(handler);
 
                     // Start the client.
                     ChannelFuture f = b.connect(remoteAddress); // (5)
-
-                    LOGGER.info("Connected to {}", remoteAddress);
 
                     // Wait until the connection is closed.
                     f.channel().closeFuture().sync();
@@ -87,17 +86,17 @@ public final class GameTcpClient extends Observable {
 
         @Override
         public void channelRead(ChannelHandlerContext ctx, Object msg) {
-            LOGGER.info("Heartbeat received");
+            LOGGER.trace("Heartbeat received");
         }
 
         @Override
         public void channelActive(final ChannelHandlerContext ctx) {
-            LOGGER.info("Channel Active");
+            LOGGER.trace("Channel Active");
         }
 
         @Override
         public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-            LOGGER.info("Channel Inactive");
+            LOGGER.trace("Channel Inactive");
         }
 
         @Override

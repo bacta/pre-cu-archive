@@ -1,7 +1,7 @@
 package com.ocdsoft.bacta.swg.shared.collision;
 
-import com.ocdsoft.bacta.swg.server.object.template.shared.SharedCreatureObjectTemplate;
-import com.ocdsoft.bacta.swg.server.object.template.shared.SharedObjectTemplate;
+import com.ocdsoft.bacta.swg.server.game.object.template.shared.SharedCreatureObjectTemplate;
+import com.ocdsoft.bacta.swg.server.game.object.template.shared.SharedObjectTemplate;
 import com.ocdsoft.bacta.swg.shared.collision.extent.BaseExtent;
 import com.ocdsoft.bacta.swg.shared.math.Sphere;
 import com.ocdsoft.bacta.swg.shared.math.Transform;

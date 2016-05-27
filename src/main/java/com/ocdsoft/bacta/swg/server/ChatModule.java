@@ -10,7 +10,7 @@ import com.ocdsoft.bacta.soe.io.udp.chat.ChatServer;
 import com.ocdsoft.bacta.soe.io.udp.chat.ChatServerState;
 import com.ocdsoft.bacta.soe.service.OutgoingConnectionService;
 import com.ocdsoft.bacta.swg.server.chat.SwgChatServer;
-import com.ocdsoft.bacta.swg.server.data.ChatObjectSerializer;
+import com.ocdsoft.bacta.swg.server.game.data.ChatObjectSerializer;
 
 public class ChatModule extends AbstractModule implements Module {
 

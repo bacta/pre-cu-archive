@@ -33,19 +33,19 @@ public final class GameTcpServer extends TcpServer {
 
         @Override
         public void channelActive(final ChannelHandlerContext ctx) {
-            LOGGER.info("Channel Active");
+            LOGGER.trace("Channel Active");
         }
 
         @Override
         public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-            LOGGER.info("Channel Inactive");
+            LOGGER.trace("Channel Inactive");
         }
 
         @Override
         public void channelRead(ChannelHandlerContext ctx, Object msg) { // (2)
             // Discard the received data silently.
             ((ByteBuf) msg).release(); // (3)
-            LOGGER.info("Someone sent me a message, why?");
+            LOGGER.trace("Someone sent me a message, why?");
         }
 
         @Override

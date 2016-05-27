@@ -7,7 +7,7 @@ import com.ocdsoft.bacta.engine.network.client.ServerStatus;
 import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
 import com.ocdsoft.bacta.soe.io.udp.SoeTransceiver;
 import com.ocdsoft.bacta.soe.service.OutgoingConnectionService;
-import com.ocdsoft.bacta.swg.server.message.game.GameServerOnline;
+import com.ocdsoft.bacta.swg.server.game.message.game.GameServerOnline;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

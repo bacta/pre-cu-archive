@@ -1,6 +1,6 @@
 package com.ocdsoft.bacta.swg.shared.container;
 
-import com.ocdsoft.bacta.swg.server.object.ServerObject;
+import com.ocdsoft.bacta.swg.server.game.object.ServerObject;
 import com.ocdsoft.bacta.swg.shared.object.GameObject;
 import com.ocdsoft.bacta.swg.shared.property.Property;
 import org.slf4j.Logger;
