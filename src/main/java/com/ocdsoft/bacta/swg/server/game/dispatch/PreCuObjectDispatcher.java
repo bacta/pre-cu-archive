@@ -8,7 +8,7 @@ import com.ocdsoft.bacta.soe.controller.ObjController;
 import com.ocdsoft.bacta.soe.dispatch.ClasspathControllerLoader;
 import com.ocdsoft.bacta.soe.dispatch.ControllerData;
 import com.ocdsoft.bacta.soe.dispatch.ObjectDispatcher;
-import com.ocdsoft.bacta.swg.server.game.message.game.object.ObjControllerMessage;
+import com.ocdsoft.bacta.swg.server.game.message.object.ObjControllerMessage;
 import com.ocdsoft.bacta.swg.server.game.object.ServerObject;
 import com.ocdsoft.bacta.swg.server.game.object.tangible.TangibleObject;
 import gnu.trove.map.TIntObjectMap;

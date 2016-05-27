@@ -9,7 +9,7 @@ import com.ocdsoft.bacta.soe.controller.CommandController;
 import com.ocdsoft.bacta.soe.dispatch.ClasspathControllerLoader;
 import com.ocdsoft.bacta.soe.dispatch.CommandDispatcher;
 import com.ocdsoft.bacta.soe.dispatch.ControllerData;
-import com.ocdsoft.bacta.swg.server.game.message.game.object.command.CommandMessage;
+import com.ocdsoft.bacta.swg.server.game.message.object.command.CommandMessage;
 import com.ocdsoft.bacta.swg.server.game.object.ServerObject;
 import com.ocdsoft.bacta.swg.server.game.object.tangible.TangibleObject;
 import gnu.trove.map.TIntObjectMap;

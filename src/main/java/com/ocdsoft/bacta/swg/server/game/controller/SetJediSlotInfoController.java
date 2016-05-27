@@ -5,7 +5,7 @@ import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
 import com.ocdsoft.bacta.soe.controller.ConnectionRolesAllowed;
 import com.ocdsoft.bacta.soe.controller.GameNetworkMessageController;
 import com.ocdsoft.bacta.soe.controller.MessageHandled;
-import com.ocdsoft.bacta.swg.server.game.message.game.SetJediSlotInfo;
+import com.ocdsoft.bacta.swg.server.game.message.SetJediSlotInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

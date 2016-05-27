@@ -1,6 +1,6 @@
 package com.ocdsoft.bacta.swg.server.game.component;
 
-import com.ocdsoft.bacta.swg.server.game.message.game.messagequeue.MessageQueueObjectMenuRequest;
+import com.ocdsoft.bacta.swg.server.game.message.messagequeue.MessageQueueObjectMenuRequest;
 import com.ocdsoft.bacta.swg.server.game.object.ServerObject;
 
 /**

@@ -1,6 +1,6 @@
 package com.ocdsoft.bacta.swg.server.game.zone;
 
-import com.ocdsoft.bacta.swg.server.game.message.game.scene.SceneDestroyObject;
+import com.ocdsoft.bacta.swg.server.game.message.scene.SceneDestroyObject;
 import com.ocdsoft.bacta.swg.server.game.object.tangible.TangibleObject;
 import com.ocdsoft.bacta.swg.shared.math.Vector;
 import lombok.Getter;

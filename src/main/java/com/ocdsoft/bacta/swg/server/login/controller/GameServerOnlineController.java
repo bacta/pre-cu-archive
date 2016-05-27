@@ -8,7 +8,7 @@ import com.ocdsoft.bacta.soe.controller.ConnectionRolesAllowed;
 import com.ocdsoft.bacta.soe.controller.MessageHandled;
 import com.ocdsoft.bacta.soe.controller.SubscriptionHandlerController;
 import com.ocdsoft.bacta.swg.server.login.service.ClusterService;
-import com.ocdsoft.bacta.swg.server.game.message.game.GameServerOnline;
+import com.ocdsoft.bacta.swg.server.game.message.GameServerOnline;
 
 import java.util.Set;
 
