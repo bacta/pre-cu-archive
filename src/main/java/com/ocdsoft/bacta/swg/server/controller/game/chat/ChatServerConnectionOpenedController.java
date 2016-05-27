@@ -5,7 +5,7 @@ import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
 import com.ocdsoft.bacta.soe.controller.ConnectionRolesAllowed;
 import com.ocdsoft.bacta.soe.controller.GameNetworkMessageController;
 import com.ocdsoft.bacta.soe.controller.MessageHandled;
-import com.ocdsoft.bacta.swg.server.message.chat.ChatServerConnectionOpened;
+import com.ocdsoft.bacta.swg.server.chat.message.ChatServerConnectionOpened;
 
 /**
  * Created by crush on 5/21/2016.

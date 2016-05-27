@@ -1,4 +1,4 @@
-package com.ocdsoft.bacta.swg.server.message.chat;
+package com.ocdsoft.bacta.swg.server.chat.message;
 
 import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
 import com.ocdsoft.bacta.soe.message.Priority;
