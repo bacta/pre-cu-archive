@@ -1,4 +1,4 @@
-package com.ocdsoft.bacta.swg.server.object.login;
+package com.ocdsoft.bacta.swg.server.login.object;
 
 import com.ocdsoft.bacta.engine.buffer.ByteBufferWritable;
 import lombok.Getter;

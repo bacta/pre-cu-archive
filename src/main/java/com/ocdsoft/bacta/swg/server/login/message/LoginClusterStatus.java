@@ -1,4 +1,4 @@
-package com.ocdsoft.bacta.swg.server.message.login;
+package com.ocdsoft.bacta.swg.server.login.message;
 
 import com.google.inject.Singleton;
 import com.ocdsoft.bacta.engine.buffer.ByteBufferWritable;
@@ -8,12 +8,13 @@ import com.ocdsoft.bacta.engine.utils.BufferUtil;
 import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
 import com.ocdsoft.bacta.soe.message.Priority;
 import com.ocdsoft.bacta.soe.util.SoeMessageUtil;
-import com.ocdsoft.bacta.swg.server.object.login.ClusterEntry;
-import com.ocdsoft.bacta.swg.server.object.login.PopulationStatus;
+import com.ocdsoft.bacta.swg.server.login.object.ClusterServer;
+import com.ocdsoft.bacta.swg.server.login.object.PopulationStatus;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.nio.ByteBuffer;
+import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
@@ -28,9 +29,9 @@ public class LoginClusterStatus extends GameNetworkMessage {
         clusterDataSet = new TreeSet<>();
     }
 
-	public LoginClusterStatus(Set<ClusterEntry> clusterEntrySet) {
+	public LoginClusterStatus(Collection<ClusterServer> clusterServerSet) {
         this();
-        clusterDataSet.addAll(clusterEntrySet.stream().map(ClusterEntry::getStatusClusterData).collect(Collectors.toList()));
+        clusterDataSet.addAll(clusterServerSet.stream().map(ClusterServer::getStatusClusterData).collect(Collectors.toList()));
 	}
 
     public LoginClusterStatus(ByteBuffer buffer) {
@@ -51,6 +52,27 @@ public class LoginClusterStatus extends GameNetworkMessage {
             clusterData.writeToBuffer(buffer);
         }
     }
+
+    /**
+     *
+     * // NGE Struct
+     struct LoginClusterStatus_ClusterData
+     {
+     unsigned int m_clusterId;
+     std::string m_connectionServerAddress;
+     unsigned __int16 m_connectionServerPort;
+     unsigned __int16 m_connectionServerPingPort;
+     int m_populationOnline;
+     LoginClusterStatus_ClusterData::PopulationStatus m_populationOnlineStatus;
+     int m_maxCharactersPerAccount;
+     int m_timeZone;
+     LoginClusterStatus_ClusterData::Status m_status;
+     bool m_dontRecommend;
+     unsigned int m_onlinePlayerLimit;
+     unsigned int m_onlineFreeTrialLimit;
+     }
+     *
+     */
 
     @Singleton
     @Getter

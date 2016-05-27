@@ -8,20 +8,19 @@ import com.ocdsoft.bacta.engine.object.NetworkIdGenerator;
 import com.ocdsoft.bacta.engine.serialize.NetworkSerializer;
 import com.ocdsoft.bacta.engine.service.object.ObjectService;
 import com.ocdsoft.bacta.engine.service.objectfactory.NetworkObjectFactory;
-import com.ocdsoft.bacta.soe.dispatch.ClasspathControllerLoader;
+import com.ocdsoft.bacta.soe.io.udp.GameNetworkConfiguration;
+import com.ocdsoft.bacta.soe.io.udp.MessageSubscriptionService;
+import com.ocdsoft.bacta.swg.server.game.GameServer;
+import com.ocdsoft.bacta.swg.server.game.GameServerState;
+import com.ocdsoft.bacta.swg.server.login.object.ClusterServer;
 import com.ocdsoft.bacta.swg.server.object.tangible.factory.GuiceNetworkObjectFactory;
 import com.ocdsoft.bacta.soe.ServerState;
-import com.ocdsoft.bacta.soe.connection.ConnectionServerAgent;
 import com.ocdsoft.bacta.soe.data.couchbase.CouchbaseGameDatabaseConnector;
 import com.ocdsoft.bacta.soe.data.couchbase.CouchbaseNetworkIdGenerator;
 import com.ocdsoft.bacta.soe.dispatch.CommandDispatcher;
 import com.ocdsoft.bacta.soe.dispatch.ObjectDispatcher;
 import com.ocdsoft.bacta.soe.io.udp.NetworkConfiguration;
-import com.ocdsoft.bacta.soe.io.udp.game.GameNetworkConfiguration;
-import com.ocdsoft.bacta.soe.io.udp.game.GameServer;
-import com.ocdsoft.bacta.soe.io.udp.game.GameServerState;
 import com.ocdsoft.bacta.soe.service.OutgoingConnectionService;
-import com.ocdsoft.bacta.swg.server.connection.PreCuConnectionServerAgent;
 import com.ocdsoft.bacta.swg.server.data.GameObjectSerializer;
 import com.ocdsoft.bacta.swg.server.dispatch.PreCuCommandDispatcher;
 import com.ocdsoft.bacta.swg.server.dispatch.PreCuObjectDispatcher;
@@ -31,8 +30,8 @@ import com.ocdsoft.bacta.swg.server.name.DefaultNameService;
 import com.ocdsoft.bacta.swg.server.name.NameService;
 import com.ocdsoft.bacta.swg.server.object.PreCuObjectTemplateList;
 import com.ocdsoft.bacta.swg.server.object.ServerObject;
-import com.ocdsoft.bacta.swg.server.object.login.ClusterEntry;
 import com.ocdsoft.bacta.swg.server.object.tangible.TangibleObject;
+import com.ocdsoft.bacta.swg.server.service.GameMessageSubscriptionService;
 import com.ocdsoft.bacta.swg.server.service.data.SetupSharedFile;
 import com.ocdsoft.bacta.swg.server.service.data.SharedFileService;
 import com.ocdsoft.bacta.swg.server.service.object.ServerObjectService;
@@ -52,7 +51,6 @@ public class GameModule extends AbstractModule implements Module {
 
         bind(NetworkConfiguration.class).to(GameNetworkConfiguration.class);
         bind(OutgoingConnectionService.class).to(GameServer.GameOutgoingConnectionService.class);
-        bind(new TypeLiteral<GameServerState<ClusterEntry>>(){}).to(PreCuGameServerState.class);
         bind(GameServerState.class).to(PreCuGameServerState.class);
         bind(NetworkSerializer.class).to(GameObjectSerializer.class);
         bind(new TypeLiteral<ObjectService<ServerObject>>() {}).to(ServerObjectService.class);
@@ -67,13 +65,12 @@ public class GameModule extends AbstractModule implements Module {
         bind(new TypeLiteral<CommandDispatcher<CommandMessage, TangibleObject>>(){}).to(PreCuCommandDispatcher.class);
 
 
-        bind(ConnectionServerAgent.class).to(PreCuConnectionServerAgent.class);
         bind(NameService.class).to(DefaultNameService.class);
         bind(ZoneMap.class).to(PlanetMap.class);
-        bind(new TypeLiteral<GameServerState<ClusterEntry>>(){}).to(PreCuGameServerState.class);
         bind(GameServerState.class).to(PreCuGameServerState.class);
         bind(ServerState.class).to(PreCuGameServerState.class);
         bind(NameService.class).to(DefaultNameService.class);
+        bind(MessageSubscriptionService.class).to(GameMessageSubscriptionService.class);
 
         bind(ObjectTemplateList.class).to(PreCuObjectTemplateList.class);
     }

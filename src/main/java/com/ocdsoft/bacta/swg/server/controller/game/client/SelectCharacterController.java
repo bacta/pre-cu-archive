@@ -7,7 +7,7 @@ import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
 import com.ocdsoft.bacta.soe.controller.ConnectionRolesAllowed;
 import com.ocdsoft.bacta.soe.controller.GameNetworkMessageController;
 import com.ocdsoft.bacta.soe.controller.MessageHandled;
-import com.ocdsoft.bacta.soe.io.udp.game.GameServerState;
+import com.ocdsoft.bacta.swg.server.game.GameServerState;
 import com.ocdsoft.bacta.swg.server.message.game.client.*;
 import com.ocdsoft.bacta.swg.server.message.game.scene.CmdStartScene;
 import com.ocdsoft.bacta.swg.server.object.ServerObject;

@@ -15,8 +15,6 @@ import org.slf4j.LoggerFactory;
 @ConnectionRolesAllowed({ConnectionRole.AUTHENTICATED})
 public class LagRequestController implements GameNetworkMessageController<LagRequest> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(LagRequestController.class);
-
     @Override
     public void handleIncoming(SoeUdpConnection connection, LagRequest message) {
         connection.sendMessage(new ConnectionServerLagResponse());

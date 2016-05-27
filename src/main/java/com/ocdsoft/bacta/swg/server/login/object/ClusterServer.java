@@ -1,46 +1,42 @@
-package com.ocdsoft.bacta.swg.server.object.login;
+package com.ocdsoft.bacta.swg.server.login.object;
 
 import com.google.inject.Inject;
 import com.ocdsoft.bacta.engine.buffer.ByteBufferWritable;
 import com.ocdsoft.bacta.engine.conf.BactaConfiguration;
 import com.ocdsoft.bacta.engine.utils.BufferUtil;
-import com.ocdsoft.bacta.soe.object.ClusterEntryItem;
 import com.ocdsoft.bacta.soe.util.SoeMessageUtil;
-import com.ocdsoft.bacta.swg.server.message.login.LoginClusterStatus;
-import com.ocdsoft.bacta.swg.server.message.login.LoginEnumCluster;
-import lombok.AllArgsConstructor;
+import com.ocdsoft.bacta.swg.server.login.message.LoginClusterStatus;
+import com.ocdsoft.bacta.swg.server.login.message.LoginEnumCluster;
 import lombok.Getter;
 
+import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.util.Map;
 
 @Getter
-@AllArgsConstructor
-public class ClusterEntry implements ClusterEntryItem, ByteBufferWritable, Comparable<ClusterEntry> {
+public class ClusterServer implements ByteBufferWritable, Comparable<ClusterServer> {
 
     private final int id;
-    private final String secret;
+    private final InetSocketAddress remoteAddress;
+    private final int tcpPort;
+    private final String serverKey;
     private final String name;
     private final LoginClusterStatus.ClusterData statusClusterData;
     private final LoginEnumCluster.ClusterData clusterData;
 
     @Inject
-    public ClusterEntry(BactaConfiguration configuration) {
+    public ClusterServer(final BactaConfiguration configuration) {
         id = configuration.getInt("Bacta/GameServer", "ServerID");
-        secret = configuration.getString("Bacta/GameServer", "Secret");
-        name = configuration.getString("Bacta/GameServer", "Name");
+        remoteAddress = new InetSocketAddress(
+                configuration.getString("Bacta/GameServer", "PublicAddress"),
+                configuration.getInt("Bacta/GameServer", "Port")
+                );
+        tcpPort = configuration.getInt("Bacta/GameServer", "TCPPort");
+        serverKey = configuration.getString("Bacta/GameServer", "ServerKey");
+        name = configuration.getString("Bacta/GameServer", "ServerName");
 
         statusClusterData = new LoginClusterStatus.ClusterData(configuration);
         clusterData = new LoginEnumCluster.ClusterData(id, name);
-    }
-
-    public ClusterEntry(ByteBuffer buffer) {
-        id = buffer.getInt();
-        secret = BufferUtil.getAscii(buffer);
-        name = BufferUtil.getAscii(buffer);
-
-        statusClusterData = new LoginClusterStatus.ClusterData(buffer);
-        clusterData = new LoginEnumCluster.ClusterData(buffer);
     }
 
     /**
@@ -48,10 +44,15 @@ public class ClusterEntry implements ClusterEntryItem, ByteBufferWritable, Compa
      * deserialized from the database
      * @param clusterInfo Map of values
      */
-    public ClusterEntry(Map<String, Object> clusterInfo) {
+    public ClusterServer(Map<String, Object> clusterInfo) {
 
         id = ((Double)clusterInfo.get("id")).intValue();
-        secret = (String) clusterInfo.get("secret");
+        remoteAddress = new InetSocketAddress(
+                (String) clusterInfo.get("PublicAddress"),
+                (Integer) clusterInfo.get("Port")
+        );
+        tcpPort = (Integer) clusterInfo.get("TCPPort");
+        serverKey = (String) clusterInfo.get("secret");
         name = (String) clusterInfo.get("name");
 
         Map<String, Object> status = (Map<String, Object>) clusterInfo.get("statusClusterData");
@@ -61,8 +62,23 @@ public class ClusterEntry implements ClusterEntryItem, ByteBufferWritable, Compa
         clusterData = new LoginEnumCluster.ClusterData(id, name);
     }
 
+    public ClusterServer(ByteBuffer buffer) {
+        id = buffer.getInt();
+        remoteAddress = new InetSocketAddress(
+                BufferUtil.getAscii(buffer),
+                buffer.getInt()
+        );
+        tcpPort = buffer.getInt();
+        serverKey = BufferUtil.getAscii(buffer);
+        name = BufferUtil.getAscii(buffer);
+
+        statusClusterData = new LoginClusterStatus.ClusterData(buffer);
+        clusterData = new LoginEnumCluster.ClusterData(buffer);
+    }
+
+
     @Override
-    public int compareTo(ClusterEntry o) {
+    public int compareTo(ClusterServer o) {
         return o.getName().compareTo(getName());
     }
 
@@ -70,7 +86,10 @@ public class ClusterEntry implements ClusterEntryItem, ByteBufferWritable, Compa
     @Override
     public void writeToBuffer(ByteBuffer buffer) {
         buffer.putInt(id);
-        BufferUtil.putAscii(buffer, secret);
+        BufferUtil.putAscii(buffer, remoteAddress.getHostString());
+        buffer.putInt(remoteAddress.getPort());
+        buffer.putInt(tcpPort);
+        BufferUtil.putAscii(buffer, serverKey);
         BufferUtil.putAscii(buffer, name);
 
         statusClusterData.writeToBuffer(buffer);
@@ -82,16 +101,16 @@ public class ClusterEntry implements ClusterEntryItem, ByteBufferWritable, Compa
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
 
-        ClusterEntry that = (ClusterEntry) o;
+        ClusterServer that = (ClusterServer) o;
 
         return id == that.id &&
-                secret.equals(that.secret);
+                serverKey.equals(that.serverKey);
     }
 
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + (secret != null ? secret.hashCode() : 0);
+        result = 31 * result + (serverKey != null ? serverKey.hashCode() : 0);
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (clusterData != null ? clusterData.hashCode() : 0);
         result = 31 * result + (clusterData != null ? clusterData.hashCode() : 0);

@@ -3,7 +3,7 @@ package com.ocdsoft.bacta.swg.server.name.generator;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.ocdsoft.bacta.engine.data.ConnectionDatabaseConnector;
-import com.ocdsoft.bacta.soe.io.udp.game.GameServerState;
+import com.ocdsoft.bacta.swg.server.game.GameServerState;
 import com.ocdsoft.bacta.swg.server.name.NameService;
 import com.ocdsoft.bacta.swg.server.util.Gender;
 import com.ocdsoft.bacta.swg.server.util.Race;

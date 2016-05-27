@@ -4,8 +4,8 @@ package com.ocdsoft.bacta.swg.server;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.ocdsoft.bacta.soe.io.udp.chat.ChatServer;
-import com.ocdsoft.bacta.soe.io.udp.game.GameServer;
-import com.ocdsoft.bacta.soe.io.udp.login.LoginServer;
+import com.ocdsoft.bacta.swg.server.game.GameServer;
+import com.ocdsoft.bacta.swg.server.login.LoginServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,13 +47,13 @@ public final class PreCuServer {
             gameThread.start();
         }
 
-        if(argSet.contains("chat")) {
-            LOGGER.info("Starting ChatServer");
-            Injector injector = Guice.createInjector(new PreCuModule(), new ChatModule());
-            ChatServer chatServer = injector.getInstance(ChatServer.class);
-            Thread chatThread = new Thread(chatServer);
-            chatThread.start();
-        }
+//        if(argSet.contains("chat")) {
+//            LOGGER.info("Starting ChatServer");
+//            Injector injector = Guice.createInjector(new PreCuModule(), new ChatModule());
+//            ChatServer chatServer = injector.getInstance(ChatServer.class);
+//            Thread chatThread = new Thread(chatServer);
+//            chatThread.start();
+//        }
 
     }
 }

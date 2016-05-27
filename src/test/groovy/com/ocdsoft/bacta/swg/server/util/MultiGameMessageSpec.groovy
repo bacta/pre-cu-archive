@@ -2,16 +2,16 @@ package com.ocdsoft.bacta.swg.precu.util
 
 import com.ocdsoft.bacta.engine.conf.ini.IniBactaConfiguration
 import com.ocdsoft.bacta.soe.connection.ReliableUdpMessageBuilder
-import com.ocdsoft.bacta.soe.io.udp.game.GameNetworkConfiguration
-import com.ocdsoft.bacta.soe.object.account.SoeAccount
+import com.ocdsoft.bacta.soe.io.udp.GameNetworkConfiguration
 import com.ocdsoft.bacta.soe.serialize.GameNetworkMessageSerializerImpl
 import com.ocdsoft.bacta.soe.util.SOECRC32
 import com.ocdsoft.bacta.soe.util.SoeMessageUtil
-import com.ocdsoft.bacta.swg.server.message.login.EnumerateCharacterId
-import com.ocdsoft.bacta.swg.server.message.login.LoginClientToken
-import com.ocdsoft.bacta.swg.server.message.login.LoginClusterStatus
-import com.ocdsoft.bacta.swg.server.message.login.LoginEnumCluster
-import com.ocdsoft.bacta.swg.server.object.login.ClusterEntry
+import com.ocdsoft.bacta.swg.server.login.message.EnumerateCharacterId
+import com.ocdsoft.bacta.swg.server.login.message.LoginClientToken
+import com.ocdsoft.bacta.swg.server.login.message.LoginClusterStatus
+import com.ocdsoft.bacta.swg.server.login.message.LoginEnumCluster
+import com.ocdsoft.bacta.swg.server.login.object.ClusterServer
+import com.ocdsoft.bacta.swg.server.login.object.SoeAccount
 import spock.lang.Specification
 
 /**
@@ -23,9 +23,9 @@ class MultiGameMessageSpec extends Specification {
         
         setup:
         def bactaConfig = new IniBactaConfiguration()
-        def clusterEntry = new ClusterEntry(bactaConfig)
+        def clusterEntry = new ClusterServer(bactaConfig)
         def loginClientToken = new LoginClientToken("Test", 0, "kyle")
-        Set<ClusterEntry> clusterEntries = new HashSet<>()
+        Set<ClusterServer> clusterEntries = new HashSet<>()
         clusterEntries.add(clusterEntry)
         def loginEnumCluster = new LoginEnumCluster(clusterEntries, 2)
         def loginClusterStatus = new LoginClusterStatus(clusterEntries)

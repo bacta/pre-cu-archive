@@ -5,8 +5,9 @@ import com.google.inject.Singleton;
 import com.ocdsoft.bacta.engine.conf.BactaConfiguration;
 import com.ocdsoft.bacta.engine.object.NetworkObject;
 import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
-import com.ocdsoft.bacta.soe.io.udp.game.GameServer;
 import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
+import com.ocdsoft.bacta.soe.service.OutgoingConnectionService;
+import com.ocdsoft.bacta.swg.server.game.GameServer;
 import com.ocdsoft.bacta.swg.server.message.game.outofband.OutOfBandPackager;
 import com.ocdsoft.bacta.swg.server.message.game.outofband.ProsePackage;
 import com.ocdsoft.bacta.swg.server.message.game.outofband.ProsePackageParticipant;
@@ -48,7 +49,7 @@ public final class GameChatService {
 
     @Inject
     public GameChatService(final BactaConfiguration bactaConfiguration,
-                           final GameServer.GameOutgoingConnectionService outgoingConnectionService) {
+                           final OutgoingConnectionService outgoingConnectionService) {
 
         this.chatServerConnection = outgoingConnectionService.createOutgoingConnection(
                 new InetSocketAddress(
