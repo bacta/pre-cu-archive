@@ -23,12 +23,12 @@ public final class LoginMessageSubscriptionService implements MessageSubscriptio
 
     @Override
     public void onConnect(final SoeUdpConnection connection) {
-
+        clusterService.addConnection(connection);
     }
 
     @Override
     public void onDisconnect(final SoeUdpConnection connection) {
-
+        clusterService.removeConnection(connection);
     }
 
     @Override

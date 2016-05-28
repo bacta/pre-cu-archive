@@ -7,7 +7,10 @@ import com.ocdsoft.bacta.engine.data.ConnectionDatabaseConnector;
 import com.ocdsoft.bacta.engine.network.client.ServerStatus;
 import com.ocdsoft.bacta.engine.network.client.TcpClient;
 import com.ocdsoft.bacta.engine.network.io.tcp.TcpServer;
+import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
 import com.ocdsoft.bacta.swg.server.login.GameClientTcpHandler;
+import com.ocdsoft.bacta.swg.server.login.message.LoginClusterStatus;
+import com.ocdsoft.bacta.swg.server.login.message.LoginEnumCluster;
 import com.ocdsoft.bacta.swg.server.login.object.ClusterServer;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.socket.SocketChannel;
@@ -30,8 +33,9 @@ public class ClusterService implements Observer {
 
     private transient final ConnectionDatabaseConnector dbConnector;
     private transient final Set<ClusterServer> clusterServerSet;
-    private transient final Map<InetSocketAddress, ClusterServer> clusterTcpConnectionMap;
+    private transient final Set<TcpClient> tcpClientSet;
     private transient final Constructor<ClusterServer> clusterEntryConstructor;
+    private transient final Set<SoeUdpConnection> connectedClients;
 
     private final boolean allowDynamicRegistration;
 
@@ -40,10 +44,11 @@ public class ClusterService implements Observer {
                           final BactaConfiguration bactaConfiguration) throws Exception {
 
         this.clusterServerSet = new TreeSet<>();
-        this.clusterTcpConnectionMap = new HashMap<>();
+        this.tcpClientSet = new HashSet<>();
         this.dbConnector = dbConnector;
         this.allowDynamicRegistration = bactaConfiguration.getBooleanWithDefault("Bacta/LoginServer", "AllowDynamicRegistration", false);
         this.clusterEntryConstructor = ClusterServer.class.getConstructor(Map.class);
+        this.connectedClients = new HashSet<>();
 
         loadData();
     }
@@ -68,7 +73,11 @@ public class ClusterService implements Observer {
     public void notifyGameServerOnline(final ClusterServer clusterServer) {
 
         final InetSocketAddress tcpAddress = new InetSocketAddress(clusterServer.getRemoteAddress().getAddress(), clusterServer.getTcpPort());
-        if (!clusterTcpConnectionMap.containsKey(tcpAddress)) {
+
+        clusterServerSet.remove(clusterServer);
+        clusterServerSet.add(clusterServer);
+
+        if (!isTcpConnected(tcpAddress)) {
 
             final TcpClient tcpClient = new TcpClient(tcpAddress, new ChannelInitializer< SocketChannel >() { // (4)
                 @Override
@@ -80,12 +89,18 @@ public class ClusterService implements Observer {
 
             tcpClient.addObserver(this);
 
-            clusterTcpConnectionMap.put(tcpAddress, clusterServer);
+            tcpClientSet.add(tcpClient);
             tcpClient.start();
         }
+    }
 
-        clusterServerSet.add(clusterServer);
-        //update();
+    private boolean isTcpConnected(final InetSocketAddress tcpAddress) {
+        for(final TcpClient tcpClient : tcpClientSet) {
+            if(tcpClient.getRemoteAddress().equals(tcpAddress)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
@@ -94,11 +109,23 @@ public class ClusterService implements Observer {
         TcpServer.Status status = (TcpServer.Status) arg;
         if(status == TcpServer.Status.CONNECTED) {
 
+            for(final SoeUdpConnection connection : connectedClients) {
+                connection.sendMessage(new LoginClusterStatus(clusterServerSet));
+            }
+
         } else if ( status == TcpServer.Status.DISCONNECTED) {
             TcpClient tcpClient = (TcpClient) o;
-            final ClusterServer clusterServer = clusterTcpConnectionMap.remove(tcpClient.getRemoteAddress());
-            clusterServer.getStatusClusterData().setStatus(ServerStatus.DOWN);
+            tcpClientSet.remove(tcpClient);
+            for(final ClusterServer clusterServer : clusterServerSet) {
+                if(clusterServer.getRemoteAddress().getAddress().equals(tcpClient.getRemoteAddress().getAddress())) {
+                    clusterServer.getStatusClusterData().setStatus(ServerStatus.DOWN);
+                    break;
+                }
+            }
 
+            for(final SoeUdpConnection connection : connectedClients) {
+                connection.sendMessage(new LoginClusterStatus(clusterServerSet));
+            }
         }
     }
 
@@ -111,4 +138,11 @@ public class ClusterService implements Observer {
     }
 
 
+    public void addConnection(final SoeUdpConnection connection) {
+        connectedClients.add(connection);
+    }
+
+    public void removeConnection(final SoeUdpConnection connection) {
+        connectedClients.remove(connection);
+    }
 }
