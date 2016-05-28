@@ -20,7 +20,7 @@ import java.nio.ByteBuffer;
  * Created by crush on 5/27/2016.
  */
 @MessageHandled(handles = GameClientMessage.class, type = ServerType.CHAT)
-@ConnectionRolesAllowed(value = ConnectionRole.AUTHENTICATED)
+@ConnectionRolesAllowed(value = ConnectionRole.WHITELISTED)
 public final class ChatGameClientMessageController implements GameNetworkMessageController<GameClientMessage> {
     private static final Logger LOGGER = LoggerFactory.getLogger(ChatGameClientMessageController.class);
 

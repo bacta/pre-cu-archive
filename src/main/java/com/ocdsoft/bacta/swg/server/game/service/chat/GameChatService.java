@@ -20,7 +20,6 @@ import gnu.trove.list.TLongList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.net.InetSocketAddress;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -41,21 +40,16 @@ public final class GameChatService {
     private static final AtomicInteger sequenceId = new AtomicInteger(1);
 
     private final ChatAvatarId serverAvatar;
-    private final SoeUdpConnection chatServerConnection;
 
     private final String systemRoomPath;
     private final String imperialRoomPath;
     private final String rebelRoomPath;
 
+    private SoeUdpConnection chatServerConnection;
+
     @Inject
     public GameChatService(final BactaConfiguration bactaConfiguration,
                            final OutgoingConnectionService outgoingConnectionService) {
-
-        this.chatServerConnection = outgoingConnectionService.createOutgoingConnection(
-                new InetSocketAddress(
-                        bactaConfiguration.getStringWithDefault("Bacta/GameServer", "chatServerAddress", "localhost"),
-                        bactaConfiguration.getIntWithDefault("Bacta/GameServer", "chatServerPort", 44491)),
-                this::onConnectionEstablished);
 
         //Create the server chat avatar based off of configuration values.
         this.serverAvatar = new ChatAvatarId(
@@ -114,12 +108,12 @@ public final class GameChatService {
      * @return True if a connection to a chat server exists; otherwise, false.
      */
     public boolean isConnectedToChatServer() {
-        //TODO: This should monitor TCP streams to know when ChatServers have connected and disconnected.
         return chatServerConnection != null;
     }
 
-    private void onConnectionEstablished(final SoeUdpConnection chatServerConnection) {
-        LOGGER.info("Connection to chat server was successful.");
+    public void setChatServerConnection(final SoeUdpConnection connection) {
+        LOGGER.debug("Setting connection.");
+        chatServerConnection = connection;
     }
 
     public void emptyMail(final long sourceNetworkId, final long targetNetworkId) {

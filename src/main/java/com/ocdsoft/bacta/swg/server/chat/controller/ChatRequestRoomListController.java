@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * Created by crush on 5/23/2016.
  */
 @MessageHandled(handles = ChatRequestRoomList.class, type = ServerType.CHAT)
-@ConnectionRolesAllowed(value = ConnectionRole.AUTHENTICATED)
+@ConnectionRolesAllowed(value = ConnectionRole.WHITELISTED)
 public class ChatRequestRoomListController implements GameNetworkMessageController<ChatRequestRoomList> {
     private static final Logger LOGGER = LoggerFactory.getLogger(ChatRequestRoomListController.class);
 

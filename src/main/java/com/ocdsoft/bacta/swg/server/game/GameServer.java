@@ -145,7 +145,7 @@ public final class GameServer implements Runnable, Observer {
     }
 
     private void updateChatServer() throws UnknownHostException {
-        final String addressString = configuration.getString("Bacta/ChatServer", "BindIp");
+        final String addressString = configuration.getString("Bacta/ChatServer", "BindAddress");
         final InetAddress address;
 
         if ("localhost".equalsIgnoreCase(addressString)) {
@@ -154,7 +154,7 @@ public final class GameServer implements Runnable, Observer {
             address = InetAddress.getByName(addressString);
         }
 
-        final int port = configuration.getInt("Bacta/ChatServer", "Port");
+        final int port = configuration.getInt("Bacta/ChatServer", "UdpPort");
 
         final InetSocketAddress remoteAddress = new InetSocketAddress(address, port);
 
@@ -163,16 +163,16 @@ public final class GameServer implements Runnable, Observer {
     }
 
     private void updateLoginServer() throws UnknownHostException {
-        final String addressString = configuration.getString("Bacta/LoginServer", "BindIp");
+        final String addressString = configuration.getString("Bacta/LoginServer", "BindAddress");
         final InetAddress address;
 
-        if (addressString.equalsIgnoreCase("localhost")) {
+        if ("localhost".equalsIgnoreCase(addressString)) {
             address = InetAddress.getLocalHost();
         } else {
             address = InetAddress.getByName(addressString);
         }
 
-        final int port = configuration.getInt("Bacta/LoginServer", "Port");
+        final int port = configuration.getInt("Bacta/LoginServer", "UdpPort");
 
         final InetSocketAddress remoteAddress = new InetSocketAddress(address, port);
 

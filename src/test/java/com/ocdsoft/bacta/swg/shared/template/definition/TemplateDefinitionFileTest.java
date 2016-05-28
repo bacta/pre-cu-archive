@@ -1,5 +1,6 @@
 package com.ocdsoft.bacta.swg.shared.template.definition;
 
+import com.ocdsoft.bacta.soe.util.SOECRC32;
 import com.ocdsoft.bacta.swg.shared.datatable.DataTableTest;
 import org.junit.Test;
 
@@ -17,5 +18,12 @@ public class TemplateDefinitionFileTest {
         final File templateFile = new File(resourcesPath, filename + ".tdf");
         final TemplateDefinitionFile objectTemplateTdf = new TemplateDefinitionFile();
         objectTemplateTdf.parse(templateFile);
+    }
+
+
+    @Test
+    public void shouldWriteSingle() {
+        final String s = "SetLfgInterests";
+        System.out.println(String.format("0x%x : %s", SOECRC32.hashCode(s), s));
     }
 }
