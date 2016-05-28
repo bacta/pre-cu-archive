@@ -117,7 +117,7 @@ public class LoginClusterStatus extends GameNetworkMessage {
             id = configuration.getInt("Bacta/GameServer", "ServerID");
             connectionServerAddress = networkConfiguration.getPublicAddress().getHostAddress();
             connectionServerPort = networkConfiguration.getUdpPort();
-            connectionServerPingPort = configuration.getInt("Bacta/GameServer", "Ping");
+            connectionServerPingPort = configuration.getInt("Bacta/GameServer", "PingPort");
             populationOnline = 0;
             populationOnlineStatus = PopulationStatus.PS_very_light;
             maxCharactersPerAccount = configuration.getInt("Bacta/GameServer", "MaxCharsPerAccount");

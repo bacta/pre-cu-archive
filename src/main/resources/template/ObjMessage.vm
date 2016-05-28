@@ -1,7 +1,9 @@
 package $packageName;
 
 import java.nio.ByteBuffer;
+import com.ocdsoft.bacta.soe.message.ObjControllerMessage;
 
+@MessageId(0x${controllerid})
 public class $messageName extends ObjControllerMessage {
 
     public $messageName(final ByteBuffer buffer) {
