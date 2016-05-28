@@ -6,6 +6,8 @@ import com.ocdsoft.bacta.engine.conf.BactaConfiguration;
 import com.ocdsoft.bacta.engine.network.client.ServerStatus;
 import com.ocdsoft.bacta.engine.network.io.tcp.TcpServer;
 import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
+import com.ocdsoft.bacta.soe.io.udp.GameNetworkConfiguration;
+import com.ocdsoft.bacta.soe.io.udp.NetworkConfiguration;
 import com.ocdsoft.bacta.soe.io.udp.SoeTransceiver;
 import com.ocdsoft.bacta.soe.service.OutgoingConnectionService;
 import com.ocdsoft.bacta.swg.server.game.message.GameServerOnline;
@@ -52,8 +54,7 @@ public final class GameServer implements Runnable, Observer {
      * Ping server helps the client gauge its latency
      */
     private final PingServer pingServer;
-
-    private final BactaConfiguration configuration;
+    private final GameNetworkConfiguration networkConfiguration;
 
     private final Timer timer;
 
@@ -62,13 +63,13 @@ public final class GameServer implements Runnable, Observer {
                       final SoeTransceiver transceiver,
                       final PingServer pingServer,
                       final OutgoingConnectionService outgoingConnectionService,
-                      final BactaConfiguration configuration) throws UnknownHostException {
+                      final GameNetworkConfiguration networkConfiguration) throws UnknownHostException {
 
         this.serverState = serverState;
         this.transceiver = transceiver;
         this.pingServer = pingServer;
         this.outgoingConnectionService = outgoingConnectionService;
-        this.configuration = configuration;
+        this.networkConfiguration = networkConfiguration;
         timer = new Timer();
 
         // One might consider this a hack, but it allows us to use scope in referencing the method desired without making it public
@@ -111,7 +112,7 @@ public final class GameServer implements Runnable, Observer {
                         ch.pipeline().addLast(new GameTcpServerHandler());
                     }
                 },
-                configuration.getInt("Bacta/GameServer", "TcpPort")
+                networkConfiguration.getTcpPort()
         );
         gameTcpServer.addObserver(this);
 
@@ -145,43 +146,29 @@ public final class GameServer implements Runnable, Observer {
     }
 
     private void updateChatServer() throws UnknownHostException {
-        final String addressString = configuration.getString("Bacta/ChatServer", "BindAddress");
-        final InetAddress address;
 
-        if ("localhost".equalsIgnoreCase(addressString)) {
-            address = InetAddress.getLocalHost();
-        } else {
-            address = InetAddress.getByName(addressString);
-        }
-
-        final int port = configuration.getInt("Bacta/ChatServer", "UdpPort");
-
-        final InetSocketAddress remoteAddress = new InetSocketAddress(address, port);
+        final InetSocketAddress remoteAddress = new InetSocketAddress(
+                networkConfiguration.getChatAddress(),
+                networkConfiguration.getChatPort()
+        );
 
         final SoeUdpConnection connection = outgoingConnectionService.createOutgoingConnection(remoteAddress, this::onConnect);
         connection.connect();
     }
 
     private void updateLoginServer() throws UnknownHostException {
-        final String addressString = configuration.getString("Bacta/LoginServer", "BindAddress");
-        final InetAddress address;
 
-        if ("localhost".equalsIgnoreCase(addressString)) {
-            address = InetAddress.getLocalHost();
-        } else {
-            address = InetAddress.getByName(addressString);
-        }
-
-        final int port = configuration.getInt("Bacta/LoginServer", "UdpPort");
-
-        final InetSocketAddress remoteAddress = new InetSocketAddress(address, port);
+        final InetSocketAddress remoteAddress = new InetSocketAddress(
+                networkConfiguration.getLoginAddress(),
+                networkConfiguration.getLoginPort()
+        );
 
         final SoeUdpConnection connection = outgoingConnectionService.createOutgoingConnection(remoteAddress, this::onConnect);
         connection.connect();
     }
 
     private void onConnect(final SoeUdpConnection connection) {
-        LOGGER.info("Sending server cluster information to {}:{}", connection.getRemoteAddress().getHostString(), connection.getRemoteAddress().getPort());
+        LOGGER.info("Sending server cluster information to {}:{}", connection.getRemoteAddress().getAddress().getHostAddress(), connection.getRemoteAddress().getPort());
         final GameServerOnline gameServerOnline = new GameServerOnline(serverState.getClusterServer());
         connection.sendMessage(gameServerOnline);
     }

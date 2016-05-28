@@ -101,7 +101,7 @@ public class SwgChatServer implements Observer {
      */
     public void connectPlayer(final SoeUdpConnection connection, final int bactaId, final String characterName, final long networkId, final boolean isSecure, final boolean isSubscribed) {
         LOGGER.info("Player connecting to chat server from {}:{} with name {}.",
-                connection.getRemoteAddress().getHostName(),
+                connection.getRemoteAddress().getAddress().getHostAddress(),
                 connection.getRemoteAddress().getPort(),
                 characterName);
 

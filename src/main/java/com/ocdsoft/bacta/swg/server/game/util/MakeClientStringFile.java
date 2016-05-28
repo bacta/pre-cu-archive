@@ -15,14 +15,14 @@ public class MakeClientStringFile {
 
     public static void main(String[] arg) throws IOException {
 
-        Path path = Paths.get(System.getProperty("user.dir"), "clientstrings.properties");
+        Path path = Paths.get(System.getProperty("user.dir"), "clientstrings2.properties");
 
         Files.deleteIfExists(path);
         Files.createFile(path);
         Map<Integer, String> stringList = new HashMap<>();
         final AtomicInteger count = new AtomicInteger();
 
-         Files.readAllLines(Paths.get("C:\\dev\\pre-cu-master\\ProjectSWG\\string.txt")).forEach(line -> {
+         Files.readAllLines(Paths.get("C:\\dev\\pre-cu-master\\pre-cu\\src\\main\\resources\\newmessagenames.properties")).forEach(line -> {
              int value = count.getAndIncrement();
              int hashCode = SOECRC32.hashCode(line);
              if(!stringList.containsKey(hashCode)) {
