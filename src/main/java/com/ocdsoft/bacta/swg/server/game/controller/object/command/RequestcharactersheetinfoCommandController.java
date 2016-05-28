@@ -8,7 +8,7 @@ import com.ocdsoft.bacta.swg.server.game.object.tangible.TangibleObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@MessageHandled(command = "Requestcharactersheetinfo", handles = Requestcharactersheetinfo.class)
+@MessageHandled(handles = Requestcharactersheetinfo.class)
 public class RequestcharactersheetinfoCommandController implements CommandController<TangibleObject> {
 
     private static Logger LOGGER = LoggerFactory.getLogger(RequestcharactersheetinfoCommandController.class);

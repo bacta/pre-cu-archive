@@ -13,7 +13,7 @@ import com.ocdsoft.bacta.swg.archive.delta.*;
 import com.ocdsoft.bacta.swg.server.game.container.IntangibleVolumeContainer;
 import com.ocdsoft.bacta.swg.server.game.container.TangibleVolumeContainer;
 import com.ocdsoft.bacta.swg.server.game.event.ObservableGameEvent;
-import com.ocdsoft.bacta.swg.server.game.message.object.ObjControllerMessage;
+import com.ocdsoft.bacta.soe.message.ObjControllerMessage;
 import com.ocdsoft.bacta.swg.server.game.message.scene.SceneCreateObjectByCrc;
 import com.ocdsoft.bacta.swg.server.game.message.scene.SceneDestroyObject;
 import com.ocdsoft.bacta.swg.server.game.message.scene.SceneEndBaselines;

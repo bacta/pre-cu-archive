@@ -8,7 +8,7 @@ import com.ocdsoft.bacta.swg.server.game.object.tangible.TangibleObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@MessageHandled(id = 0x71, handles = DataTransform.class)
+@MessageHandled(handles = DataTransform.class)
 public class DataTransformObjController implements ObjController<DataTransform, TangibleObject> {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(DataTransformObjController.class);

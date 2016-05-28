@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 import com.ocdsoft.bacta.soe.controller.CommandController;
 import com.ocdsoft.bacta.swg.server.game.message.object.command.Getfriendlist;
 
-@MessageHandled(command = "Getfriendlist", handles = Getfriendlist.class)
+@MessageHandled(handles = Getfriendlist.class)
 public class GetfriendlistCommandController implements CommandController<TangibleObject> {
 
 	private static Logger LOGGER = LoggerFactory.getLogger(GetfriendlistCommandController.class);

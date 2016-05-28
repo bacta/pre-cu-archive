@@ -8,7 +8,7 @@ import com.ocdsoft.bacta.soe.controller.ConnectionRolesAllowed;
 import com.ocdsoft.bacta.soe.controller.GameNetworkMessageController;
 import com.ocdsoft.bacta.soe.controller.MessageHandled;
 import com.ocdsoft.bacta.soe.dispatch.ObjectDispatcher;
-import com.ocdsoft.bacta.swg.server.game.message.object.ObjControllerMessage;
+import com.ocdsoft.bacta.soe.message.ObjControllerMessage;
 
 @ConnectionRolesAllowed({ConnectionRole.AUTHENTICATED})
 @MessageHandled(handles = ObjControllerMessage.class, type = ServerType.GAME)

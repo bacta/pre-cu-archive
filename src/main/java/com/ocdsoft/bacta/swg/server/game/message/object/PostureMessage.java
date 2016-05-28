@@ -1,5 +1,7 @@
 package com.ocdsoft.bacta.swg.server.game.message.object;
 
+import com.ocdsoft.bacta.soe.dispatch.MessageId;
+import com.ocdsoft.bacta.soe.message.ObjControllerMessage;
 import com.ocdsoft.bacta.swg.server.game.object.ServerObject;
 
 import java.nio.ByteBuffer;
@@ -7,6 +9,7 @@ import java.nio.ByteBuffer;
 /**
  * Created by Kyle on 3/24/14.
  */
+@MessageId(0x131)
 public final class PostureMessage extends ObjControllerMessage {
 
     private byte postureId;

@@ -1,5 +1,7 @@
 package com.ocdsoft.bacta.swg.server.game.message.object.command;
 
+import com.ocdsoft.bacta.soe.message.CommandMessage;
+
 import java.nio.ByteBuffer;
 
 public class Handleclientlogin extends CommandMessage {

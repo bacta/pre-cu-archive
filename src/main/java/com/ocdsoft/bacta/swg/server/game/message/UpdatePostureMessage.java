@@ -1,4 +1,4 @@
-package com.ocdsoft.bacta.swg.server.game.controller;
+package com.ocdsoft.bacta.swg.server.game.message;
 
 import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
 import com.ocdsoft.bacta.soe.message.Priority;

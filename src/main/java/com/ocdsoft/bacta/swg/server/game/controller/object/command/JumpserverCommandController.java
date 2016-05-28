@@ -8,7 +8,7 @@ import com.ocdsoft.bacta.swg.server.game.object.tangible.TangibleObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@MessageHandled(command = "Jumpserver", handles = Jumpserver.class)
+@MessageHandled(handles = Jumpserver.class)
 public class JumpserverCommandController implements CommandController<TangibleObject> {
 
     private static Logger LOGGER = LoggerFactory.getLogger(JumpserverCommandController.class);

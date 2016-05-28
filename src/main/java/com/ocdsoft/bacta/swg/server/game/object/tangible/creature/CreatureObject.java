@@ -13,7 +13,7 @@ import com.ocdsoft.bacta.swg.archive.delta.vector.AutoDeltaFloatVector;
 import com.ocdsoft.bacta.swg.archive.delta.vector.AutoDeltaIntVector;
 import com.ocdsoft.bacta.swg.archive.delta.vector.AutoDeltaObjectVector;
 import com.ocdsoft.bacta.swg.server.game.command.CommandQueue;
-import com.ocdsoft.bacta.swg.server.game.controller.UpdatePostureMessage;
+import com.ocdsoft.bacta.swg.server.game.message.UpdatePostureMessage;
 import com.ocdsoft.bacta.swg.server.game.event.ObservableGameEvent;
 import com.ocdsoft.bacta.swg.server.game.message.object.PostureMessage;
 import com.ocdsoft.bacta.swg.server.game.object.buff.Buff;

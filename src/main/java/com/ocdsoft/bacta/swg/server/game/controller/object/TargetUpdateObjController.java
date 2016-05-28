@@ -8,7 +8,7 @@ import com.ocdsoft.bacta.swg.server.game.object.tangible.TangibleObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@MessageHandled(id = 0x294, handles = TargetUpdate.class)
+@MessageHandled(handles = TargetUpdate.class)
 public class TargetUpdateObjController implements ObjController<TargetUpdate, TangibleObject> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TargetUpdateObjController.class);

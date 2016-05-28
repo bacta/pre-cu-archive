@@ -1,7 +1,11 @@
 package com.ocdsoft.bacta.swg.server.game.message.object;
 
+import com.ocdsoft.bacta.soe.dispatch.MessageId;
+import com.ocdsoft.bacta.soe.message.ObjControllerMessage;
+
 import java.nio.ByteBuffer;
 
+@MessageId(0x126)
 public class TargetUpdate extends ObjControllerMessage {
 
     public TargetUpdate(final ByteBuffer buffer) {

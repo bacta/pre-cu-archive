@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 import com.ocdsoft.bacta.soe.controller.CommandController;
 import com.ocdsoft.bacta.swg.server.game.message.object.command.Getignorelist;
 
-@MessageHandled(command = "Getignorelist", handles = Getignorelist.class)
+@MessageHandled(handles = Getignorelist.class)
 public class GetignorelistCommandController implements CommandController<TangibleObject> {
 
 	private static Logger LOGGER = LoggerFactory.getLogger(GetignorelistCommandController.class);

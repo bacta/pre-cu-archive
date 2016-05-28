@@ -10,7 +10,7 @@ import com.ocdsoft.bacta.swg.server.game.message.GameServerLagResponse;
 import com.ocdsoft.bacta.swg.server.game.message.LagRequest;
 
 @MessageHandled(handles = LagRequest.class)
-@ConnectionRolesAllowed({ConnectionRole.AUTHENTICATED})
+@ConnectionRolesAllowed({})
 public class LagRequestController implements GameNetworkMessageController<LagRequest> {
 
     @Override

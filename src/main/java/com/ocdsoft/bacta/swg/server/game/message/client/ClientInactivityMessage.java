@@ -1,7 +1,7 @@
 package com.ocdsoft.bacta.swg.server.game.message.client;
 
 import com.ocdsoft.bacta.engine.utils.BufferUtil;
-import com.ocdsoft.bacta.soe.dispatch.MessageCRC;
+import com.ocdsoft.bacta.soe.dispatch.MessageId;
 import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
 import com.ocdsoft.bacta.soe.message.Priority;
 import lombok.AllArgsConstructor;
@@ -15,7 +15,7 @@ import java.nio.ByteBuffer;
   */
 @Getter
 @Priority(0x2)
-@MessageCRC(0x173b91c2)
+@MessageId(0x173b91c2)
 @AllArgsConstructor
 public final class ClientInactivityMessage extends GameNetworkMessage {
 

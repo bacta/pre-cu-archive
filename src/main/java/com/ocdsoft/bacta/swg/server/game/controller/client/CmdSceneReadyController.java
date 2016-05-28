@@ -1,5 +1,6 @@
 package com.ocdsoft.bacta.swg.server.game.controller.client;
 
+import com.ocdsoft.bacta.swg.server.game.message.scene.CmdStartScene;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,7 +19,8 @@ public class CmdSceneReadyController implements GameNetworkMessageController<Cmd
 
     @Override
     public void handleIncoming(SoeUdpConnection connection, CmdSceneReady message) {
-        LOGGER.warn("This controller is not implemented");
+        CmdSceneReady startScene = new CmdSceneReady();
+        connection.sendMessage(startScene);
     }
 }
 

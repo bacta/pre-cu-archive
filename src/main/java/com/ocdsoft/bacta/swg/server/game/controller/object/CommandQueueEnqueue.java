@@ -5,8 +5,8 @@ import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
 import com.ocdsoft.bacta.soe.controller.MessageHandled;
 import com.ocdsoft.bacta.soe.controller.ObjController;
 import com.ocdsoft.bacta.soe.dispatch.CommandDispatcher;
-import com.ocdsoft.bacta.swg.server.game.message.object.ObjControllerMessage;
-import com.ocdsoft.bacta.swg.server.game.message.object.command.CommandMessage;
+import com.ocdsoft.bacta.soe.message.ObjControllerMessage;
+import com.ocdsoft.bacta.soe.message.CommandMessage;
 import com.ocdsoft.bacta.swg.server.game.object.tangible.TangibleObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
  * @author kyle
  */
 
-@MessageHandled(id = 0x116, handles = ObjControllerMessage.class)
+@MessageHandled(handles = ObjControllerMessage.class)
 public class CommandQueueEnqueue implements ObjController<CommandMessage, TangibleObject> {
     private static final Logger LOGGER = LoggerFactory.getLogger(CommandQueueEnqueue.class);
 
