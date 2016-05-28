@@ -1,6 +1,7 @@
 package $packageName;
 
 import java.nio.ByteBuffer;
+import com.ocdsoft.bacta.soe.message.CommandMessage;
 
 public class $messageName extends CommandMessage {
 
