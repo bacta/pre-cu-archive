@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.ocdsoft.bacta.engine.conf.BactaConfiguration;
 import com.ocdsoft.bacta.engine.network.io.udp.BasicUdpTransceiver;
+import com.ocdsoft.bacta.soe.io.udp.GameNetworkConfiguration;
 import io.netty.channel.socket.DatagramPacket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,13 +19,13 @@ public final class PingTransceiver extends BasicUdpTransceiver {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(PingTransceiver.class);
 
-    private final BactaConfiguration configuration;
+    private final GameNetworkConfiguration configuration;
 
     @Inject
-    public PingTransceiver(final BactaConfiguration configuration) throws UnknownHostException {
+    public PingTransceiver(final GameNetworkConfiguration configuration) throws UnknownHostException {
         super(
-                InetAddress.getByName(configuration.getString("Bacta/GameServer", "BindIp")),
-                configuration.getIntWithDefault("Bacta/GameServer", "Ping", 44462)
+                configuration.getBindAddress(),
+                configuration.getPingPort()
         );
 
         this.configuration = configuration;
@@ -55,8 +56,8 @@ public final class PingTransceiver extends BasicUdpTransceiver {
     @Override
     public void run() {
         LOGGER.info("PING Transceiver started on /{}:{}",
-                configuration.getString("Bacta/GameServer", "BindIp"),
-                configuration.getIntWithDefault("Bacta/GameServer", "Ping", 44462));
+                configuration.getBindAddress().getHostAddress(),
+                configuration.getPingPort());
         super.run();
     }
 

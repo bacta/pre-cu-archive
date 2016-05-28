@@ -89,7 +89,7 @@ public final class GameServer implements Runnable, Observer {
             serverState.setServerStatus(ServerStatus.UP);
 
             startTCPServer();
-            startLoginUpdate();
+            broadcastOnline();
 
             LOGGER.info("Game Server is running");
             // Blocks until stopped
@@ -111,7 +111,7 @@ public final class GameServer implements Runnable, Observer {
                         ch.pipeline().addLast(new GameTcpServerHandler());
                     }
                 },
-                configuration.getInt("Bacta/GameServer", "TCPPort")
+                configuration.getInt("Bacta/GameServer", "TcpPort")
         );
         gameTcpServer.addObserver(this);
 
@@ -128,7 +128,7 @@ public final class GameServer implements Runnable, Observer {
         }
     }
 
-    private void startLoginUpdate() throws IOException {
+    private void broadcastOnline() throws IOException {
 
         timer.schedule(new TimerTask() {
             @Override
@@ -140,7 +140,7 @@ public final class GameServer implements Runnable, Observer {
                     LOGGER.error("Unknown Host", e);
                 }
             }
-        }, 100, 30000);
+        }, 1000, 30000);
 
     }
 

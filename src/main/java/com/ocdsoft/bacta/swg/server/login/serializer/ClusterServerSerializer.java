@@ -22,15 +22,15 @@ public class ClusterServerSerializer implements JsonSerializer<InetSocketAddress
         final JsonObject obj = (JsonObject) json;
 
         final JsonElement address = obj.get("address");
-        final JsonElement port = obj.get("port");
+        final JsonElement port = obj.get("udpPort");
         if (address == null || port == null) {
-            throw new JsonParseException("address/port missing");
+            throw new JsonParseException("address/udpPort missing");
         }
         if (!address.isJsonPrimitive() || !((JsonPrimitive) address).isString()) {
             throw new JsonParseException("address is not a string");
         }
         if (!port.isJsonPrimitive() || !((JsonPrimitive) port).isNumber()) {
-            throw new JsonParseException("port is not a number");
+            throw new JsonParseException("udpPort is not a number");
         }
         final InetSocketAddress isa = new InetSocketAddress(address.getAsString(), port.getAsInt());
         return isa;
@@ -41,7 +41,7 @@ public class ClusterServerSerializer implements JsonSerializer<InetSocketAddress
                                  final JsonSerializationContext context) {
         final JsonObject obj = new JsonObject();
         obj.addProperty("address", src.getAddress().getHostAddress());
-        obj.addProperty("port", src.getPort());
+        obj.addProperty("udpPort", src.getPort());
         return obj;
     }
 

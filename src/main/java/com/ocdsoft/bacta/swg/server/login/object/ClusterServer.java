@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import com.ocdsoft.bacta.engine.buffer.ByteBufferWritable;
 import com.ocdsoft.bacta.engine.conf.BactaConfiguration;
 import com.ocdsoft.bacta.engine.utils.BufferUtil;
+import com.ocdsoft.bacta.soe.io.udp.NetworkConfiguration;
 import com.ocdsoft.bacta.soe.util.SoeMessageUtil;
 import com.ocdsoft.bacta.swg.server.login.message.LoginClusterStatus;
 import com.ocdsoft.bacta.swg.server.login.message.LoginEnumCluster;
@@ -25,17 +26,17 @@ public class ClusterServer implements ByteBufferWritable, Comparable<ClusterServ
     private final LoginEnumCluster.ClusterData clusterData;
 
     @Inject
-    public ClusterServer(final BactaConfiguration configuration) {
+    public ClusterServer(final BactaConfiguration configuration, final NetworkConfiguration networkConfiguration) {
         id = configuration.getInt("Bacta/GameServer", "ServerID");
         remoteAddress = new InetSocketAddress(
-                configuration.getString("Bacta/GameServer", "PublicAddress"),
-                configuration.getInt("Bacta/GameServer", "Port")
+                networkConfiguration.getPublicAddress(),
+                networkConfiguration.getUdpPort()
                 );
-        tcpPort = configuration.getInt("Bacta/GameServer", "TCPPort");
+        tcpPort = configuration.getInt("Bacta/GameServer", "TcpPort");
         serverKey = configuration.getString("Bacta/GameServer", "ServerKey");
         name = configuration.getString("Bacta/GameServer", "ServerName");
 
-        statusClusterData = new LoginClusterStatus.ClusterData(configuration);
+        statusClusterData = new LoginClusterStatus.ClusterData(configuration, networkConfiguration);
         clusterData = new LoginEnumCluster.ClusterData(id, name);
     }
 
@@ -49,9 +50,9 @@ public class ClusterServer implements ByteBufferWritable, Comparable<ClusterServ
         id = ((Double)clusterInfo.get("id")).intValue();
         remoteAddress = new InetSocketAddress(
                 (String) clusterInfo.get("PublicAddress"),
-                ((Double)clusterInfo.get("Port")).intValue()
+                ((Double)clusterInfo.get("UdpPort")).intValue()
         );
-        tcpPort = ((Double)clusterInfo.get("TCPPort")).intValue();
+        tcpPort = ((Double)clusterInfo.get("TcpPort")).intValue();
         serverKey = (String) clusterInfo.get("secret");
         name = (String) clusterInfo.get("name");
 

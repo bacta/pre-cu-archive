@@ -6,6 +6,7 @@ import com.ocdsoft.bacta.engine.conf.BactaConfiguration;
 import com.ocdsoft.bacta.engine.network.client.ServerStatus;
 import com.ocdsoft.bacta.engine.utils.BufferUtil;
 import com.ocdsoft.bacta.engine.utils.UnsignedUtil;
+import com.ocdsoft.bacta.soe.io.udp.NetworkConfiguration;
 import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
 import com.ocdsoft.bacta.soe.message.Priority;
 import com.ocdsoft.bacta.soe.util.SoeMessageUtil;
@@ -112,10 +113,10 @@ public class LoginClusterStatus extends GameNetworkMessage {
             onlineFreeTrialLimit = buffer.getInt();
         }
 
-        public ClusterData(final BactaConfiguration configuration) {
+        public ClusterData(final BactaConfiguration configuration, final NetworkConfiguration networkConfiguration) {
             id = configuration.getInt("Bacta/GameServer", "ServerID");
-            connectionServerAddress = configuration.getString("Bacta/GameServer", "PublicAddress");
-            connectionServerPort = configuration.getInt("Bacta/GameServer", "Port");
+            connectionServerAddress = networkConfiguration.getPublicAddress().getHostAddress();
+            connectionServerPort = networkConfiguration.getUdpPort();
             connectionServerPingPort = configuration.getInt("Bacta/GameServer", "Ping");
             populationOnline = 0;
             populationOnlineStatus = PopulationStatus.PS_very_light;
