@@ -27,6 +27,6 @@ public final class ClientInactivityMessage extends GameNetworkMessage {
 
     @Override
     public void writeToBuffer(ByteBuffer buffer) {
-        BufferUtil.putBoolean(buffer, inactive);
+        BufferUtil.put(buffer, inactive);
     }
 }

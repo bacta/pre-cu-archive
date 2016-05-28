@@ -30,6 +30,6 @@ public final class SceneDestroyObject extends GameNetworkMessage {
 	@Override
 	public void writeToBuffer(final ByteBuffer buffer) {
         buffer.putLong(objectId);  // ObjectID
-        BufferUtil.putBoolean(buffer, hyperspace);
+		BufferUtil.put(buffer, hyperspace);
 	}
 }

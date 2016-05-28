@@ -36,7 +36,7 @@ public class CmdStartScene extends GameNetworkMessage {
 
     @Override
     public void writeToBuffer(ByteBuffer buffer) {
-        BufferUtil.putBoolean(buffer, ignoreLayoutFiles);
+        BufferUtil.put(buffer, ignoreLayoutFiles);
         buffer.putLong(characterId);
         BufferUtil.putAscii(buffer, terrain);
         vector.writeToBuffer(buffer);

@@ -89,10 +89,10 @@ public final class ClientCreateCharacter extends GameNetworkMessage {
         BufferUtil.putAscii(buffer, hairTemplateName);
         BufferUtil.putAscii(buffer, hairAppearanceData);
         BufferUtil.putAscii(buffer, profession);
-        BufferUtil.putBoolean(buffer, jedi);
-        buffer.putFloat(scaleFactor);
+        BufferUtil.put(buffer, jedi);
+        BufferUtil.put(buffer, scaleFactor);
         BufferUtil.putUnicode(buffer, biography);
-        BufferUtil.putBoolean(buffer, useNewbieTutorial);
+        BufferUtil.put(buffer, useNewbieTutorial);
         BufferUtil.putAscii(buffer, skillTemplate);
         BufferUtil.putAscii(buffer, workingSkill);
     }

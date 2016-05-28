@@ -47,7 +47,7 @@ public class ChatPersistentMessageToClientData implements ByteBufferWritable {
         BufferUtil.putAscii(buffer, fromGameCode);
         BufferUtil.putAscii(buffer, fromServerCode);
         BufferUtil.put(buffer, id);
-        BufferUtil.putBoolean(buffer, header);
+        BufferUtil.put(buffer, header);
         BufferUtil.putUnicode(buffer, message);
         BufferUtil.putUnicode(buffer, subject);
         BufferUtil.putUnicode(buffer, outOfBand);

@@ -1,15 +1,13 @@
 package com.ocdsoft.bacta.swg.server.game.controller.client;
 
-import com.ocdsoft.bacta.swg.server.game.message.scene.CmdStartScene;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.ocdsoft.bacta.soe.controller.MessageHandled;
-import com.ocdsoft.bacta.soe.controller.GameNetworkMessageController;
-import com.ocdsoft.bacta.soe.controller.ConnectionRolesAllowed;
 import com.ocdsoft.bacta.soe.connection.ConnectionRole;
 import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
+import com.ocdsoft.bacta.soe.controller.ConnectionRolesAllowed;
+import com.ocdsoft.bacta.soe.controller.GameNetworkMessageController;
+import com.ocdsoft.bacta.soe.controller.MessageHandled;
 import com.ocdsoft.bacta.swg.server.game.message.client.CmdSceneReady;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @MessageHandled(handles = CmdSceneReady.class)
 @ConnectionRolesAllowed({ConnectionRole.AUTHENTICATED})
@@ -19,7 +17,7 @@ public class CmdSceneReadyController implements GameNetworkMessageController<Cmd
 
     @Override
     public void handleIncoming(SoeUdpConnection connection, CmdSceneReady message) {
-        CmdSceneReady startScene = new CmdSceneReady();
+        final CmdSceneReady startScene = new CmdSceneReady();
         connection.sendMessage(startScene);
     }
 }

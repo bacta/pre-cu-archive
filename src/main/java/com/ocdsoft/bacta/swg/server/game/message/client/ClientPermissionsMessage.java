@@ -36,9 +36,9 @@ public final class ClientPermissionsMessage extends GameNetworkMessage {
 
     @Override
     public void writeToBuffer(final ByteBuffer buffer) {
-        BufferUtil.putBoolean(buffer, canLogin);
-        BufferUtil.putBoolean(buffer, canCreateRegularCharacter);
-        BufferUtil.putBoolean(buffer, canCreateJediCharacter);
-        BufferUtil.putBoolean(buffer, canSkipTutorial);
+        BufferUtil.put(buffer, canLogin);
+        BufferUtil.put(buffer, canCreateRegularCharacter);
+        BufferUtil.put(buffer, canCreateJediCharacter);
+        BufferUtil.put(buffer, canSkipTutorial);
     }
 }

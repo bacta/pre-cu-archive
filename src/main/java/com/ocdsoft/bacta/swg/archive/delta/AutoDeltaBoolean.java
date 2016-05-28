@@ -51,7 +51,7 @@ public class AutoDeltaBoolean extends AutoDeltaVariableBase {
 
     @Override
     public void pack(ByteBuffer buffer) {
-        BufferUtil.putBoolean(buffer, this.currentValue);
+        BufferUtil.put(buffer, this.currentValue);
     }
 
     @Override

@@ -1,16 +1,15 @@
 package com.ocdsoft.bacta.swg.server.game.message.client;
 
 import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
-import lombok.Getter;
 import com.ocdsoft.bacta.soe.message.Priority;
+import lombok.Getter;
 
 import java.nio.ByteBuffer;
 
 /**
-      
-
-  SOECRC32.hashCode(CmdSceneReady.class.getSimpleName()); // 0x43fd1c22
-  */
+ * Has no body. Gets sent from the client->server, then the server turns around and sends the same message
+ * back to the client.
+ */
 @Getter
 @Priority(0x1)
 public final class CmdSceneReady extends GameNetworkMessage {

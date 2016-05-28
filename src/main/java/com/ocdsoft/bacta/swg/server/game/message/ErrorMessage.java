@@ -25,6 +25,6 @@ public final class ErrorMessage extends GameNetworkMessage {
     public void writeToBuffer(final ByteBuffer buffer) {
         BufferUtil.putAscii(buffer, errorName);
         BufferUtil.putAscii(buffer, description);
-        BufferUtil.putBoolean(buffer, fatal);
+        BufferUtil.put(buffer, fatal);
     }
 }

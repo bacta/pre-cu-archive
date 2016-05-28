@@ -89,12 +89,12 @@ public class ProsePackage implements ByteBufferWritable {
 
     @Override
     public void writeToBuffer(final ByteBuffer buffer) {
-        stringId.writeToBuffer(buffer);
-        actor.writeToBuffer(buffer);
-        target.writeToBuffer(buffer);
-        other.writeToBuffer(buffer);
-        buffer.putInt(digitInteger);
-        buffer.putFloat(digitFloat);
-        BufferUtil.putBoolean(buffer, complexGrammar);
+        BufferUtil.put(buffer, stringId);
+        BufferUtil.put(buffer, actor);
+        BufferUtil.put(buffer, target);
+        BufferUtil.put(buffer, other);
+        BufferUtil.put(buffer, digitInteger);
+        BufferUtil.put(buffer, digitFloat);
+        BufferUtil.put(buffer, complexGrammar);
     }
 }

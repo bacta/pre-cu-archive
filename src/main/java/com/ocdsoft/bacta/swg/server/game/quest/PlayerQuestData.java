@@ -61,8 +61,8 @@ public class PlayerQuestData implements ByteBufferWritable {
         buffer.putLong(questGiver);
         buffer.putShort(activeTasks);
         buffer.putShort(completedTasks);
-        BufferUtil.putBoolean(buffer, completed);
+        BufferUtil.put(buffer, completed);
         buffer.putInt(relativeAgeIndex);
-        BufferUtil.putBoolean(buffer, hasReceivedReward);
+        BufferUtil.put(buffer, hasReceivedReward);
     }
 }

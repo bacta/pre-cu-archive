@@ -1,12 +1,17 @@
 package com.ocdsoft.bacta.swg.shared.math;
 
+import com.ocdsoft.bacta.engine.buffer.ByteBufferWritable;
+import com.ocdsoft.bacta.engine.utils.BufferUtil;
+
+import java.nio.ByteBuffer;
+
 /**
  * Created by crush on 4/23/2016.
  *
  * This class is immutable. Therefore, it won't have any set operations. In order to mutate this class, a new instance
  * must be returned with the mutated state.
  */
-public final class Vector2d {
+public final class Vector2d implements ByteBufferWritable {
     public static final Vector2d ZERO = new Vector2d(0.f, 0.f);
 
     public final float x;
@@ -15,6 +20,11 @@ public final class Vector2d {
     public Vector2d(final float x, final float y) {
         this.x = x;
         this.y = y;
+    }
+
+    public Vector2d(final ByteBuffer buffer) {
+        this.x = buffer.getFloat();
+        this.y = buffer.getFloat();
     }
 
     public boolean isZero() {
@@ -180,5 +190,11 @@ public final class Vector2d {
             return v.normalize();
 
         return v;
+    }
+
+    @Override
+    public void writeToBuffer(final ByteBuffer buffer) {
+        BufferUtil.put(buffer, x);
+        BufferUtil.put(buffer, y);
     }
 }

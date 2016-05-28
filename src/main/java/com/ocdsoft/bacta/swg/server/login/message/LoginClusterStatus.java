@@ -154,7 +154,7 @@ public class LoginClusterStatus extends GameNetworkMessage {
             buffer.putInt(maxCharactersPerAccount);
             buffer.putInt(timeZone);
             status.writeToBuffer(buffer);
-            BufferUtil.putBoolean(buffer, dontRecommend);
+            BufferUtil.put(buffer, dontRecommend);
             buffer.putInt(onlinePlayerLimit);
             buffer.putInt(onlineFreeTrialLimit);
         }

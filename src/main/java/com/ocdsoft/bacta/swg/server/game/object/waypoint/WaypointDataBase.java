@@ -40,7 +40,7 @@ public class WaypointDataBase implements ByteBufferWritable {
         BufferUtil.putUnicode(buffer, name);
         buffer.putLong(NetworkObject.INVALID); //preserve format of old persisted bytestreams
         buffer.put(color);
-        BufferUtil.putBoolean(buffer, active);
+        BufferUtil.put(buffer, active);
     }
 
     public void setName(final String name) {
