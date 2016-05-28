@@ -314,6 +314,14 @@ public class CreatureObject extends TangibleObject {
         setDirty(true);
     }
 
+    public final int getGuildId() {
+        return guildId.get();
+    }
+
+    public final boolean isInGuild() {
+        return getGuildId() != 0;
+    }
+
     public final long getLookAtTarget() {
         return lookAtTarget.get();
     }

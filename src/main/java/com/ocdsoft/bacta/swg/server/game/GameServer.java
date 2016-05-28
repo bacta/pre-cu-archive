@@ -72,7 +72,7 @@ public final class GameServer implements Runnable, Observer {
         timer = new Timer();
 
         // One might consider this a hack, but it allows us to use scope in referencing the method desired without making it public
-        ((GameOutgoingConnectionService)outgoingConnectionService).createConnection = transceiver::createOutgoingConnection;
+        ((GameOutgoingConnectionService) outgoingConnectionService).createConnection = transceiver::createOutgoingConnection;
     }
 
     /**
@@ -121,9 +121,9 @@ public final class GameServer implements Runnable, Observer {
     @Override
     public void update(Observable o, Object arg) {
         TcpServer.Status status = (TcpServer.Status) arg;
-        if(status == TcpServer.Status.CONNECTED) {
+        if (status == TcpServer.Status.CONNECTED) {
 
-        } else if ( status == TcpServer.Status.DISCONNECTED) {
+        } else if (status == TcpServer.Status.DISCONNECTED) {
 
         }
     }
@@ -135,6 +135,7 @@ public final class GameServer implements Runnable, Observer {
             public void run() {
                 try {
                     updateLoginServer();
+                    updateChatServer();
                 } catch (UnknownHostException e) {
                     LOGGER.error("Unknown Host", e);
                 }
@@ -143,25 +144,45 @@ public final class GameServer implements Runnable, Observer {
 
     }
 
-    private void updateLoginServer() throws UnknownHostException {
-
-        final String addressString = configuration.getString("Bacta/LoginServer", "BindIp");
+    private void updateChatServer() throws UnknownHostException {
+        final String addressString = configuration.getString("Bacta/ChatServer", "BindIp");
         final InetAddress address;
-        if(addressString.equalsIgnoreCase("localhost")) {
+
+        if ("localhost".equalsIgnoreCase(addressString)) {
             address = InetAddress.getLocalHost();
         } else {
             address = InetAddress.getByName(addressString);
         }
-        final int port = configuration.getInt("Bacta/LoginServer", "Port");
 
-        InetSocketAddress remoteAddress = new InetSocketAddress(address, port);
+        final int port = configuration.getInt("Bacta/ChatServer", "Port");
+
+        final InetSocketAddress remoteAddress = new InetSocketAddress(address, port);
 
         final SoeUdpConnection connection = outgoingConnectionService.createOutgoingConnection(remoteAddress, this::onConnect);
         connection.connect();
     }
 
-    private void onConnect(SoeUdpConnection connection) {
-        GameServerOnline gameServerOnline = new GameServerOnline(serverState.getClusterServer());
+    private void updateLoginServer() throws UnknownHostException {
+        final String addressString = configuration.getString("Bacta/LoginServer", "BindIp");
+        final InetAddress address;
+
+        if (addressString.equalsIgnoreCase("localhost")) {
+            address = InetAddress.getLocalHost();
+        } else {
+            address = InetAddress.getByName(addressString);
+        }
+
+        final int port = configuration.getInt("Bacta/LoginServer", "Port");
+
+        final InetSocketAddress remoteAddress = new InetSocketAddress(address, port);
+
+        final SoeUdpConnection connection = outgoingConnectionService.createOutgoingConnection(remoteAddress, this::onConnect);
+        connection.connect();
+    }
+
+    private void onConnect(final SoeUdpConnection connection) {
+        LOGGER.info("Sending server cluster information to {}:{}", connection.getRemoteAddress().getHostString(), connection.getRemoteAddress().getPort());
+        final GameServerOnline gameServerOnline = new GameServerOnline(serverState.getClusterServer());
         connection.sendMessage(gameServerOnline);
     }
 
@@ -181,8 +202,8 @@ public final class GameServer implements Runnable, Observer {
 
         @Override
         public SoeUdpConnection createOutgoingConnection(final InetSocketAddress address, final Consumer<SoeUdpConnection> connectCallback) {
-            if(createConnection == null) return null;
-            
+            if (createConnection == null) return null;
+
             return createConnection.apply(address, connectCallback);
         }
     }

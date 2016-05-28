@@ -8,6 +8,10 @@ package com.ocdsoft.bacta.swg.shared.foundation;
  */
 public final class NetworkIdUtil {
     /**
+     * Represents an invalid NetworkId.
+     */
+    public static final long INVALID = 0;
+    /**
      * The max NetworkId without a ClusterId that may be generated. If this number is ever exceeded, either there
      * is a serious problem, or the sun has already exploded.
      */

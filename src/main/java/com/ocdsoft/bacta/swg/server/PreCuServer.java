@@ -47,13 +47,13 @@ public final class PreCuServer {
             gameThread.start();
         }
 
-//        if(argSet.contains("chat")) {
-//            LOGGER.info("Starting ChatServer");
-//            Injector injector = Guice.createInjector(new PreCuModule(), new ChatModule());
-//            ChatServer chatServer = injector.getInstance(ChatServer.class);
-//            Thread chatThread = new Thread(chatServer);
-//            chatThread.start();
-//        }
+        if (argSet.contains("chat")) {
+            LOGGER.info("Starting ChatServer");
+            Injector injector = Guice.createInjector(new PreCuModule(), new ChatModule());
+            ChatServer chatServer = injector.getInstance(ChatServer.class);
+            Thread chatThread = new Thread(chatServer);
+            chatThread.start();
+        }
 
     }
 }

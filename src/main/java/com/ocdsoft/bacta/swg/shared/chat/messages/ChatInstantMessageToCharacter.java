@@ -30,8 +30,8 @@ public final class ChatInstantMessageToCharacter extends GameNetworkMessage {
     @Override
     public void writeToBuffer(final ByteBuffer buffer) {
         BufferUtil.put(buffer, characterName);
-        BufferUtil.put(buffer, message);
-        BufferUtil.put(buffer, outOfBand);
+        BufferUtil.putUnicode(buffer, message);
+        BufferUtil.putUnicode(buffer, outOfBand);
         BufferUtil.put(buffer, sequence);
     }
 }

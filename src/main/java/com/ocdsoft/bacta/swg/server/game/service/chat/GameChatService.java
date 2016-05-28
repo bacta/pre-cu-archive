@@ -7,6 +7,7 @@ import com.ocdsoft.bacta.engine.object.NetworkObject;
 import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
 import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
 import com.ocdsoft.bacta.soe.service.OutgoingConnectionService;
+import com.ocdsoft.bacta.swg.server.game.message.chat.ChatConnectAvatar;
 import com.ocdsoft.bacta.swg.server.game.message.outofband.OutOfBandPackager;
 import com.ocdsoft.bacta.swg.server.game.message.outofband.ProsePackage;
 import com.ocdsoft.bacta.swg.server.game.message.outofband.ProsePackageParticipant;
@@ -76,6 +77,45 @@ public final class GameChatService {
                 serverAvatar.getGameCode(),
                 serverAvatar.getCluster(),
                 ChatRoomTypes.REBEL);
+    }
+
+    public void connectAvatar(final CreatureObject character) {
+        final SoeUdpConnection client = character.getConnection();
+
+        if (client != null) {
+            if (isConnectedToChatServer()) {
+                final ChatServerStatus flag = new ChatServerStatus(true);
+                client.sendMessage(flag);
+
+                final boolean subscribed = false;
+                //final boolean subscribed = client.getSubscriptionFeatures() & ClientSubscriptionFeature::Base != 0;
+
+                final ChatConnectAvatar connectAvatar = new ChatConnectAvatar(
+                        client.getCurrentNetworkId(),
+                        client.getCurrentCharName(),
+                        client.getAccountId(),
+                        client.isGod(),
+                        subscribed);
+
+                sendToChatServer(connectAvatar);
+
+            } else {
+                final ChatServerStatus flag = new ChatServerStatus(false);
+                client.sendMessage(flag);
+            }
+        } else {
+            LOGGER.error("Could not connect avatar because character client was non-existent.");
+        }
+    }
+
+    /**
+     * Checks if the chat service has a connection to any chat servers.
+     *
+     * @return True if a connection to a chat server exists; otherwise, false.
+     */
+    public boolean isConnectedToChatServer() {
+        //TODO: This should monitor TCP streams to know when ChatServers have connected and disconnected.
+        return chatServerConnection != null;
     }
 
     private void onConnectionEstablished(final SoeUdpConnection chatServerConnection) {
