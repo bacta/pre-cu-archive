@@ -34,15 +34,15 @@ public final class CharacterInfo implements ByteBufferWritable, Comparable<Chara
 
 	private final String name; //UnicodeString
     private final int objectTemplateId;
-    private final long networkId; //NetworkId
+    private final long characterId; //NetworkId
     private final int clusterId;
     private final Type characterType;
-    private final boolean disabled;
+    private boolean disabled;
 
-    public CharacterInfo(final String name, final int objectTemplateId, final long networkId, final int clusterId, final Type characterType, final boolean disabled) {
+    public CharacterInfo(final String name, final int objectTemplateId, final long characterId, final int clusterId, final Type characterType, final boolean disabled) {
         this.name = name;
         this.objectTemplateId = objectTemplateId;
-        this.networkId = networkId;
+        this.characterId = characterId;
         this.clusterId = clusterId;
         this.characterType = characterType;
         this.disabled = disabled;
@@ -51,7 +51,7 @@ public final class CharacterInfo implements ByteBufferWritable, Comparable<Chara
     public CharacterInfo(ByteBuffer buffer) {
         name = BufferUtil.getUnicode(buffer);
         objectTemplateId = buffer.getInt();
-        networkId = buffer.getLong();
+        characterId = buffer.getLong();
         clusterId = buffer.getInt();
         characterType = Type.values()[buffer.getInt()];
         disabled = BufferUtil.getBoolean(buffer);
@@ -61,7 +61,7 @@ public final class CharacterInfo implements ByteBufferWritable, Comparable<Chara
     public void writeToBuffer(ByteBuffer buffer) {
         BufferUtil.putUnicode(buffer, name);
         buffer.putInt(objectTemplateId);
-        buffer.putLong(networkId);
+        buffer.putLong(characterId);
         buffer.putInt(clusterId);
         buffer.putInt(characterType.ordinal());
     }

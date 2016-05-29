@@ -16,15 +16,16 @@ import lombok.Getter;
 @Singleton
 @Getter
 public final class PreCuGameServerState implements GameServerState {
-    private int id;
-    private ServerType serverType;
+    private final int id;
+    private final ServerType serverType;
     private ServerStatus serverStatus;
-    private ClusterServer clusterServer;
+    private final ClusterServer clusterServer;
 
     @Inject
     public PreCuGameServerState(final BactaConfiguration configuration, final GameNetworkConfiguration networkConfiguration) {
         this.serverStatus = ServerStatus.LOADING;
         this.serverType = ServerType.GAME;
+        this.id = networkConfiguration.getClusterId();
         clusterServer = new ClusterServer(configuration, networkConfiguration);
     }
 

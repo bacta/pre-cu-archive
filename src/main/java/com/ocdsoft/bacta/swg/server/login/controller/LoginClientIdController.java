@@ -1,8 +1,9 @@
 package com.ocdsoft.bacta.swg.server.login.controller;
 
 import com.google.inject.Inject;
-import com.ocdsoft.bacta.engine.security.authenticator.AccountService;
+import com.ocdsoft.bacta.engine.service.AccountService;
 import com.ocdsoft.bacta.soe.ServerType;
+import com.ocdsoft.bacta.soe.connection.ConnectionRole;
 import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
 import com.ocdsoft.bacta.soe.controller.ConnectionRolesAllowed;
 import com.ocdsoft.bacta.soe.controller.GameNetworkMessageController;
@@ -87,7 +88,7 @@ public class LoginClientIdController implements GameNetworkMessageController<Log
         }
 
         accountService.createAuthToken(connection.getRemoteAddress().getAddress(), account);
-        connection.setAccountId(account.getId());
+        connection.setBactaId(account.getId());
         connection.setAccountUsername(account.getUsername());
 
         LoginClientToken token = new LoginClientToken(account.getAuthToken(), account.getId(), account.getUsername());
@@ -103,6 +104,7 @@ public class LoginClientIdController implements GameNetworkMessageController<Log
         connection.sendMessage(characters);
 
         subscriptionService.onConnect(connection);
+        connection.addRole(ConnectionRole.AUTHENTICATED);
     }
 
     private boolean isRequiredVersion(String clientVersion) {

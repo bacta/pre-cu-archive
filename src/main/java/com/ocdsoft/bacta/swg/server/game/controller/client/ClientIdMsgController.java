@@ -1,7 +1,7 @@
 package com.ocdsoft.bacta.swg.server.game.controller.client;
 
 import com.google.inject.Inject;
-import com.ocdsoft.bacta.engine.security.authenticator.AccountService;
+import com.ocdsoft.bacta.engine.service.AccountService;
 import com.ocdsoft.bacta.soe.connection.ConnectionRole;
 import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
 import com.ocdsoft.bacta.soe.controller.ConnectionRolesAllowed;
@@ -16,9 +16,6 @@ import com.ocdsoft.bacta.swg.server.game.message.client.ClientIdMsg;
 import com.ocdsoft.bacta.swg.server.game.message.client.ClientPermissionsMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Observable;
-import java.util.Observer;
 
 @MessageHandled(handles = ClientIdMsg.class)
 @ConnectionRolesAllowed({})
@@ -61,7 +58,7 @@ public class ClientIdMsgController implements GameNetworkMessageController<Clien
             return;
         }
 
-        connection.setAccountId(account.getId());
+        connection.setBactaId(account.getId());
         connection.setAccountUsername(account.getUsername());
         connection.addRole(ConnectionRole.AUTHENTICATED);
 

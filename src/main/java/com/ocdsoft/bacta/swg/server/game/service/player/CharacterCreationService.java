@@ -3,7 +3,9 @@ package com.ocdsoft.bacta.swg.server.game.service.player;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.ocdsoft.bacta.engine.conf.BactaConfiguration;
+import com.ocdsoft.bacta.engine.service.AccountService;
 import com.ocdsoft.bacta.swg.server.game.object.tangible.creature.CreatureObject;
+import com.ocdsoft.bacta.swg.server.login.object.SoeAccount;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -14,11 +16,15 @@ import java.util.Set;
 @Singleton
 public final class CharacterCreationService {
 
+    private final AccountService<SoeAccount> accountService;
     private final String defaultProfession;
     private final Set<String> disabledProfessions;
 
     @Inject
-    public CharacterCreationService(final BactaConfiguration bactaConfiguration) {
+    public CharacterCreationService(final AccountService<SoeAccount> accountService,
+                                    final BactaConfiguration bactaConfiguration) {
+
+        this.accountService = accountService;
         this.disabledProfessions = new HashSet<>(bactaConfiguration.getStringCollection(
                 "Bacta/GameServer/CharacterCreation",
                 "DisabledProfession"));
@@ -54,13 +60,7 @@ public final class CharacterCreationService {
             return;
         }
 
-
-
-
-
         character.setCondition(ServerTangibleObjectTemplate.Conditions.C_onOff);
-
-
 
 //        character.setAppearanceData(appearanceData); //TODO: appearance data validation soon.
 
@@ -144,16 +144,7 @@ public final class CharacterCreationService {
         ClientCreateCharacterSuccess success = new ClientCreateCharacterSuccess(character.getNetworkId());
         connection.sendMessage(success);
 
-        //Post character setup.
-        CharacterInfo info = new CharacterInfo(
-                message.getCharacterName(),
-                SOECRC32.hashCode(message.getTemplateName()),
-                character.getNetworkId(),
-                serverState.getId(),
-                CharacterInfo.Type.NORMAL,
-                false
-        );
-
+        /*
         //Create a new chat avatar id, then register it with the chat server.
         ChatAvatarId chatAvatarId = new ChatAvatarId(
                 bactaConfiguration.getStringWithDefault("Bacta/GameServer", "Game", "SWG"),

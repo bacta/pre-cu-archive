@@ -2,13 +2,16 @@ package com.ocdsoft.bacta.swg.server.game.controller.client;
 
 import com.google.inject.Inject;
 import com.ocdsoft.bacta.engine.conf.BactaConfiguration;
-import com.ocdsoft.bacta.engine.security.authenticator.AccountService;
+import com.ocdsoft.bacta.engine.service.AccountService;
 import com.ocdsoft.bacta.engine.service.object.ObjectService;
 import com.ocdsoft.bacta.soe.connection.ConnectionRole;
 import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
 import com.ocdsoft.bacta.soe.controller.ConnectionRolesAllowed;
 import com.ocdsoft.bacta.soe.controller.GameNetworkMessageController;
 import com.ocdsoft.bacta.soe.controller.MessageHandled;
+import com.ocdsoft.bacta.soe.util.SOECRC32;
+import com.ocdsoft.bacta.swg.server.game.GameServerState;
+import com.ocdsoft.bacta.swg.server.login.object.CharacterInfo;
 import com.ocdsoft.bacta.swg.server.login.object.SoeAccount;
 import com.ocdsoft.bacta.swg.server.game.message.ErrorMessage;
 import com.ocdsoft.bacta.swg.server.game.message.creation.ClientCreateCharacter;
@@ -54,6 +57,7 @@ public class ClientCreateCharacterController implements GameNetworkMessageContro
     private final ObjectTemplateService templateService;
     private final NameService nameService;
     private final StartingLocations startingLocations;
+    private final GameServerState serverState;
     private final int minutesBetweenCreation;
 
     @Inject
@@ -68,7 +72,8 @@ public class ClientCreateCharacterController implements GameNetworkMessageContro
             final AccountService<SoeAccount> accountService,
             final StartingLocations startingLocations,
             final BactaConfiguration bactaConfiguration,
-            final NameService nameService) {
+            final NameService nameService,
+            final GameServerState serverState) {
 
         this.characterCreationService = characterCreationService;
         this.newbieTutorialService = newbieTutorialService;
@@ -80,6 +85,7 @@ public class ClientCreateCharacterController implements GameNetworkMessageContro
         this.templateService = templateService;
         this.nameService = nameService;
         this.startingLocations = startingLocations;
+        this.serverState = serverState;
 
         this.minutesBetweenCreation = bactaConfiguration.getIntWithDefault(
                 "Bacta/GameServer/CharacterCreation",
@@ -248,6 +254,19 @@ public class ClientCreateCharacterController implements GameNetworkMessageContro
         newCharacterObject.setSceneIdOnThisAndContents(startingLocationInfo.getPlanet());
 
         // Persist object (Done in Object Manager)
+
+        //Post character setup.
+        CharacterInfo info = new CharacterInfo(
+                newCharacterObject.getAssignedObjectName(),
+                SOECRC32.hashCode(newCharacterObject.getObjectTemplateName()),
+                newCharacterObject.getNetworkId(),
+                serverState.getId(),
+                CharacterInfo.Type.NORMAL,
+                false
+        );
+        account.addCharacter(info);
+        account.setLastCharacterCreationTime(System.currentTimeMillis());
+        accountService.updateAccount(account);
 
         nameService.addPlayerName(firstName);
         connection.sendMessage(new ClientCreateCharacterSuccess(newCharacterObject.getNetworkId()));

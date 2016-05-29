@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import com.ocdsoft.bacta.engine.buffer.ByteBufferWritable;
 import com.ocdsoft.bacta.engine.conf.BactaConfiguration;
 import com.ocdsoft.bacta.engine.utils.BufferUtil;
+import com.ocdsoft.bacta.soe.io.udp.GameNetworkConfiguration;
 import com.ocdsoft.bacta.soe.io.udp.NetworkConfiguration;
 import com.ocdsoft.bacta.soe.util.SoeMessageUtil;
 import com.ocdsoft.bacta.swg.server.login.message.LoginClusterStatus;
@@ -26,8 +27,8 @@ public class ClusterServer implements ByteBufferWritable, Comparable<ClusterServ
     private final LoginEnumCluster.ClusterData clusterData;
 
     @Inject
-    public ClusterServer(final BactaConfiguration configuration, final NetworkConfiguration networkConfiguration) {
-        id = configuration.getInt("Bacta/GameServer", "ServerID");
+    public ClusterServer(final BactaConfiguration configuration, final GameNetworkConfiguration networkConfiguration) {
+        id = networkConfiguration.getClusterId();
         remoteAddress = new InetSocketAddress(
                 networkConfiguration.getPublicAddress(),
                 networkConfiguration.getUdpPort()

@@ -93,7 +93,7 @@ public final class GameChatService {
                 final ChatConnectAvatar connectAvatar = new ChatConnectAvatar(
                         client.getCurrentNetworkId(),
                         client.getCurrentCharName(),
-                        client.getAccountId(),
+                        client.getBactaId(),
                         client.isGod(),
                         subscribed);
 

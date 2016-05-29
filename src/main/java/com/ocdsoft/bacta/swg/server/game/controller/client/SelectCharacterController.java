@@ -16,6 +16,7 @@ import com.ocdsoft.bacta.swg.server.game.message.client.ServerTimeMessage;
 import com.ocdsoft.bacta.swg.server.game.message.scene.CmdStartScene;
 import com.ocdsoft.bacta.swg.server.game.object.ServerObject;
 import com.ocdsoft.bacta.swg.server.game.object.tangible.creature.CreatureObject;
+import com.ocdsoft.bacta.swg.server.game.service.AccountSecurityService;
 import com.ocdsoft.bacta.swg.server.game.zone.Zone;
 import com.ocdsoft.bacta.swg.server.game.zone.ZoneMap;
 import org.slf4j.Logger;
@@ -30,6 +31,7 @@ public class SelectCharacterController implements GameNetworkMessageController<S
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SelectCharacterController.class);
 
+    private final AccountSecurityService accountSecurityService;
     private final ObjectService<ServerObject> objectService;
     private final GuildService guildService;
     private final GameServerState serverState;
@@ -37,12 +39,14 @@ public class SelectCharacterController implements GameNetworkMessageController<S
     private final ZoneMap zoneMap;
 
     @Inject
-    public SelectCharacterController(final ObjectService<ServerObject> objectService,
+    public SelectCharacterController(final AccountSecurityService accountSecurityService,
+                                     final ObjectService<ServerObject> objectService,
                                      final GuildService guildService,
                                      final GameServerState serverState,
                                      final GameChatService chatService,
                                      final ZoneMap zoneMap) {
 
+        this.accountSecurityService = accountSecurityService;
         this.objectService = objectService;
         this.guildService = guildService;
         this.chatService = chatService;
@@ -51,51 +55,54 @@ public class SelectCharacterController implements GameNetworkMessageController<S
     }
 
     @Override
-    public void handleIncoming(SoeUdpConnection connection, SelectCharacter message) {
+    public void handleIncoming(final SoeUdpConnection connection, final SelectCharacter message) {
 
-        CreatureObject character = objectService.get(message.getCharacterId());
-        if (character != null) {
+        if(accountSecurityService.verifyCharacterOwnership(connection, message.getCharacterId())) {
 
-            connection.setCurrentNetworkId(character.getNetworkId());
-            connection.setCurrentCharName(character.getAssignedObjectName());
+            CreatureObject character = objectService.get(message.getCharacterId());
+            if (character != null) {
 
-            character.setConnection(connection);
+                connection.setCurrentNetworkId(character.getNetworkId());
+                connection.setCurrentCharName(character.getAssignedObjectName());
 
-            //Tell the ChatService to start connecting this character.
-            chatService.connectAvatar(character);
+                character.setConnection(connection);
 
-            final Zone zone = zoneMap.get("tatooine");
+                //Tell the ChatService to start connecting this character.
+                chatService.connectAvatar(character);
 
-            final CmdStartScene start = new CmdStartScene(
-                    false,
-                    character.getNetworkId(),
-                    zone.getTerrainFile(),
-                    character.getTransformObjectToWorld().getPositionInParent(),
-                    character.getObjectFrameKInWorld().theta(),
-                    character.getSharedTemplate().getResourceName(),
-                    0,
-                    0);
+                final Zone zone = zoneMap.get("tatooine");
 
-            connection.sendMessage(start);
+                final CmdStartScene start = new CmdStartScene(
+                        false,
+                        character.getNetworkId(),
+                        zone.getTerrainFile(),
+                        character.getTransformObjectToWorld().getPositionInParent(),
+                        character.getObjectFrameKInWorld().theta(),
+                        character.getSharedTemplate().getResourceName(),
+                        0,
+                        0);
 
-            final ServerTimeMessage serverTimeMessage = new ServerTimeMessage(0);
-            connection.sendMessage(serverTimeMessage);
+                connection.sendMessage(start);
 
-            //TODO: Weather update interval
-            final ParametersMessage parametersMessage = new ParametersMessage(0x00000384);
-            connection.sendMessage(parametersMessage);
+                final ServerTimeMessage serverTimeMessage = new ServerTimeMessage(0);
+                connection.sendMessage(serverTimeMessage);
 
-            //Send guild object to character.
-            guildService.sendTo(character);
+                //TODO: Weather update interval
+                final ParametersMessage parametersMessage = new ParametersMessage(0x00000384);
+                connection.sendMessage(parametersMessage);
 
-            final Set<SoeUdpConnection> user = new HashSet<>();
-            user.add(connection);
+                //Send guild object to character.
+                guildService.sendTo(character);
 
-            character.sendCreateAndBaselinesTo(user);
-            zone.add(character);
+                final Set<SoeUdpConnection> user = new HashSet<>();
+                user.add(connection);
 
-        } else {
-            LOGGER.error("Unable to lookup character {} ", message.getCharacterId());
+                character.sendCreateAndBaselinesTo(user);
+                zone.add(character);
+
+            } else {
+                LOGGER.error("Unable to lookup character {} ", message.getCharacterId());
+            }
         }
     }
 }
