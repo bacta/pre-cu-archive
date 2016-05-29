@@ -3,9 +3,12 @@ package com.ocdsoft.bacta.swg.server.chat;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.ocdsoft.bacta.engine.conf.BactaConfiguration;
+import com.ocdsoft.bacta.swg.shared.chat.messages.ChatAvatarId;
 import lombok.Getter;
 
-import java.util.Collection;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.UnknownHostException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,36 +20,36 @@ import java.util.Set;
 public class ChatServerConfiguration {
     private static final String SECTION = "Bacta/ChatServer";
 
-    private final Set<String> createRooms;
-    /**
-     * The name of the cluster for the ChatServer. Defaults to chat.
-     */
-    private final String clusterName;
-    /**
-     * The name of the game. Defaults to SWG.
-     */
-    private final String gameCode;
-
-    /**
-     * The name of the system avatar. Defaults to SYSTEM.
-     */
-    private final String systemAvatarName;
+    private final BactaConfiguration configuration;
 
     @Inject
     public ChatServerConfiguration(final BactaConfiguration configuration) {
-        //Get all the rooms that should be created.
-        final Collection<String> createRoomEntries = configuration.getStringCollection(SECTION, "CreateRoom");
+        this.configuration = configuration;
+    }
 
-        if (createRoomEntries != null) {
-            createRooms = new HashSet<>(createRoomEntries.size());
-            createRooms.addAll(createRoomEntries);
-        } else {
-            createRooms = new HashSet<>(0);
-        }
+    public InetSocketAddress getBindAddress() throws UnknownHostException {
+        final String bindAddress = configuration.getStringWithDefault(SECTION, "BindAddress", "localhost");
+        return new InetSocketAddress(
+                "localhost".equalsIgnoreCase(bindAddress) ? InetAddress.getLocalHost() : InetAddress.getByName(bindAddress),
+                configuration.getIntWithDefault(SECTION, "UdpPort", 44491));
+    }
 
-        clusterName = configuration.getStringWithDefault(SECTION, "clusterName", "chat");
-        gameCode = configuration.getStringWithDefault(SECTION, "SystemAvatar.Game", "SWG");
-        systemAvatarName = configuration.getStringWithDefault(SECTION, "SystemAvatar.Name", "SYSTEM");
+    public Set<String> getRoomsToCreate() {
+        return new HashSet<>(configuration.getStringCollection(SECTION, "CreateRoom"));
+    }
+
+    public ChatAvatarId getSystemAvatarId() {
+        return new ChatAvatarId(
+                configuration.getStringWithDefault(SECTION, "SystemAvatar.Game", "swg").toLowerCase(),
+                configuration.getStringWithDefault(SECTION, "SystemAvatar.Cluster", "chat").toLowerCase(),
+                configuration.getStringWithDefault(SECTION, "SystemAvatar.Name", "system").toLowerCase());
+    }
+
+    public InetSocketAddress getGameServerAddress() throws UnknownHostException {
+        final String bindAddress = configuration.getStringWithDefault(SECTION, "GameServer.BindAddress", "localhost");
+        return new InetSocketAddress(
+                "localhost".equalsIgnoreCase(bindAddress) ? InetAddress.getLocalHost() : InetAddress.getByName(bindAddress),
+                configuration.getIntWithDefault(SECTION, "GameServer.UdpPort", 44463));
     }
 
 

@@ -1,4 +1,4 @@
-package com.ocdsoft.bacta.swg.server.game.service.chat;
+package com.ocdsoft.bacta.swg.server.game.chat;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -7,6 +7,7 @@ import com.ocdsoft.bacta.engine.object.NetworkObject;
 import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
 import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
 import com.ocdsoft.bacta.soe.service.OutgoingConnectionService;
+import com.ocdsoft.bacta.swg.server.game.GameServerState;
 import com.ocdsoft.bacta.swg.server.game.message.chat.ChatConnectAvatar;
 import com.ocdsoft.bacta.swg.server.game.message.outofband.OutOfBandPackager;
 import com.ocdsoft.bacta.swg.server.game.message.outofband.ProsePackage;
@@ -39,6 +40,8 @@ public final class GameChatService {
     private static final String SYSTEM_AVATAR_NAME = "SYSTEM";
     private static final AtomicInteger sequenceId = new AtomicInteger(1);
 
+    private final GameServerState serverState;
+
     private final ChatAvatarId serverAvatar;
 
     private final String systemRoomPath;
@@ -49,12 +52,15 @@ public final class GameChatService {
 
     @Inject
     public GameChatService(final BactaConfiguration bactaConfiguration,
+                           final GameServerState serverState,
                            final OutgoingConnectionService outgoingConnectionService) {
+
+        this.serverState = serverState;
 
         //Create the server chat avatar based off of configuration values.
         this.serverAvatar = new ChatAvatarId(
-                bactaConfiguration.getStringWithDefault("ChatServer", "gameCode", "SWG"),
-                bactaConfiguration.getString("ChatServer", "cluster"),
+                bactaConfiguration.getStringWithDefault("Bacta/ChatServer", "gameCode", "SWG"),
+                serverState.getClusterServer().getName(),
                 SYSTEM_AVATAR_NAME);
 
         this.systemRoomPath = String.format("%s.%s.%s",
@@ -366,14 +372,14 @@ public final class GameChatService {
         final String avatarName = serverAvatar.getFullName();
         final String gamePrefix = serverAvatar.getGameCode() + ".";
 
-        //TODO: Should these be universe wide chat rooms be created at the game server level? Probably not.
+        //TODO: Should these universe wide chat rooms be created at the game server level? Probably not.
         createRoom(avatarName, true, gamePrefix + ChatRoomTypes.UNIVERSE, "public chat for all galaxies, cannot create rooms here");
         createRoom(avatarName, true, gamePrefix + ChatRoomTypes.SYSTEM, "system messages for all galaxies");
         createRoom(avatarName, true, gamePrefix + ChatRoomTypes.CHAT, "public chat for all galaxies, can create rooms here");
 
         final String galaxyRoom = gamePrefix + galaxyName + ".";
 
-        //TODO: Should we move the system chat rooms to a configuration file instead?
+        //TODO: Should we move the system chat rooms to a configuration file?
 
         createRoom(avatarName, true, galaxyRoom + ChatRoomTypes.GALAXY, "public chat for the whole galaxy, cannot create rooms here");
         createRoom(avatarName, true, galaxyRoom + ChatRoomTypes.SYSTEM, "system messages for this galaxy");
@@ -407,6 +413,8 @@ public final class GameChatService {
     }
 
     public void createRoom(final String ownerName, final boolean isPublic, final String roomPath, final String roomTitle) {
+        LOGGER.trace("Creating {} room {} at {} for {}.", isPublic ? "public" : "private", roomTitle, roomPath, ownerName);
+
         if (!SYSTEM_AVATAR_NAME.equalsIgnoreCase(ownerName)) {
             if (!isAppropriateText(roomPath)) {
                 sendSystemMessage(ownerName, new StringId("ui_chatroom", "create_err_profane_name"), "");
@@ -448,7 +456,6 @@ public final class GameChatService {
     }
 
     private boolean isAppropriateText(final String text) {
-        LOGGER.warn("Not implemented");
         return true;
     }
 }

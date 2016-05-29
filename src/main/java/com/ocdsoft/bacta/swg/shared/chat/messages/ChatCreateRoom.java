@@ -35,9 +35,9 @@ public final class ChatCreateRoom extends GameNetworkMessage {
     public void writeToBuffer(final ByteBuffer buffer) {
         BufferUtil.put(buffer, publicRoom);
         BufferUtil.put(buffer, moderatedRoom);
-        BufferUtil.put(buffer, ownerName);
-        BufferUtil.put(buffer, roomName);
-        BufferUtil.put(buffer, roomTitle);
-        BufferUtil.put(buffer, publicRoom);
+        BufferUtil.putAscii(buffer, ownerName);
+        BufferUtil.putAscii(buffer, roomName);
+        BufferUtil.putAscii(buffer, roomTitle);
+        BufferUtil.put(buffer, sequence);
     }
 }

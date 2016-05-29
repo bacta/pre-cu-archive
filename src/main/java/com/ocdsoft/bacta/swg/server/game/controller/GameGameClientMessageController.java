@@ -10,7 +10,6 @@ import com.ocdsoft.bacta.soe.dispatch.GameClientMessageDispatcher;
 import com.ocdsoft.bacta.soe.message.GameClientMessage;
 import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
 import com.ocdsoft.bacta.soe.serialize.GameNetworkMessageSerializer;
-import com.ocdsoft.bacta.swg.server.chat.controller.ChatGameClientMessageController;
 import com.ocdsoft.bacta.swg.server.game.object.ServerObject;
 import com.ocdsoft.bacta.swg.server.game.service.object.ServerObjectService;
 import org.slf4j.Logger;
@@ -20,11 +19,15 @@ import java.nio.ByteBuffer;
 
 /**
  * Created by crush on 5/27/2016.
+ *
+ * Handles incoming GameClientMessages. If a controller exists for the message, then it will handle it there.
+ *
+ * It will always forward the message directly to the client regardless.
  */
 @MessageHandled(handles = GameClientMessage.class)
 @ConnectionRolesAllowed(value = ConnectionRole.WHITELISTED)
-public class GameGameClientMessageController implements GameNetworkMessageController<GameClientMessage> {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ChatGameClientMessageController.class);
+public final class GameGameClientMessageController implements GameNetworkMessageController<GameClientMessage> {
+    private static final Logger LOGGER = LoggerFactory.getLogger(GameGameClientMessageController.class);
 
     private final GameNetworkMessageSerializer serializer;
     private final GameClientMessageDispatcher dispatcher;
@@ -51,18 +54,28 @@ public class GameGameClientMessageController implements GameNetworkMessageContro
 
         final GameNetworkMessage gnm = serializer.readFromBuffer(messageType, internalMessage);
 
+        LOGGER.debug("Received message type {} for networkId {}",
+                gnm.getClass().getSimpleName(),
+                distributionList[0]);
+
         //We want to forward every GameClientMessage back to the client.
         //This was only observed in ConnectionServer/ChatServerConnection and might not be true if others
         //are also sending GameClientMessages to ConnectionServer (aka GameServer).
         for (int i = 0; i < distributionList.length; ++i) {
             final long networkId = distributionList[i];
-            final ServerObject serverObject = serverObjectService.get(i);
+            final ServerObject serverObject = serverObjectService.get(networkId);
 
             if (serverObject != null) {
                 final SoeUdpConnection client = serverObject.getConnection();
 
-                if (client != null)
+                if (client != null) {
+                    LOGGER.debug("Sending message type {} to client {}:{}",
+                            gnm.getClass().getSimpleName(),
+                            client.getRemoteAddress().getHostName(),
+                            client.getRemoteAddress().getPort());
+
                     client.sendMessage(gnm);
+                }
             }
         }
 

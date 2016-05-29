@@ -30,12 +30,16 @@ public class ChatConnectAvatarController implements GameNetworkMessageController
 
     @Override
     public void handleIncoming(final SoeUdpConnection connection, final ChatConnectAvatar message) throws Exception {
-        LOGGER.info("Received chat connect avatar request for {}", message.getCharacterName());
+        LOGGER.trace("Received chat connect avatar request for {}", message.getCharacterName());
+
+        final int spaceIndex = message.getCharacterName().indexOf(' ');
+        final String fullName = message.getCharacterName();
+        final String firstName = spaceIndex != -1 ? fullName.substring(0, spaceIndex) : fullName;
 
         chatServer.connectPlayer(
                 connection,
                 message.getStationId(),
-                message.getCharacterName(),
+                firstName,
                 message.getCharacterId(),
                 message.isSecure(),
                 message.isSubscribed());
