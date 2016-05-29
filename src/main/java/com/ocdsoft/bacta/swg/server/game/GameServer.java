@@ -2,12 +2,10 @@ package com.ocdsoft.bacta.swg.server.game;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.ocdsoft.bacta.engine.conf.BactaConfiguration;
 import com.ocdsoft.bacta.engine.network.client.ServerStatus;
 import com.ocdsoft.bacta.engine.network.io.tcp.TcpServer;
 import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
 import com.ocdsoft.bacta.soe.io.udp.GameNetworkConfiguration;
-import com.ocdsoft.bacta.soe.io.udp.NetworkConfiguration;
 import com.ocdsoft.bacta.soe.io.udp.SoeTransceiver;
 import com.ocdsoft.bacta.soe.service.OutgoingConnectionService;
 import com.ocdsoft.bacta.swg.server.game.message.GameServerOnline;
@@ -18,7 +16,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
 import java.util.Observable;
@@ -130,27 +127,31 @@ public final class GameServer implements Runnable, Observer {
     }
 
     private void broadcastOnline() throws IOException {
-
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
                 try {
                     updateLoginServer();
-                    updateChatServer();
                 } catch (UnknownHostException e) {
                     LOGGER.error("Unknown Host", e);
                 }
             }
         }, 1000, 30000);
 
+        //After 1 second, tell chat server that it is online.
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                updateChatServer();
+            }
+        }, 1000);
     }
 
-    private void updateChatServer() throws UnknownHostException {
+    private void updateChatServer() {
 
         final InetSocketAddress remoteAddress = new InetSocketAddress(
                 networkConfiguration.getChatAddress(),
-                networkConfiguration.getChatPort()
-        );
+                networkConfiguration.getChatPort());
 
         final SoeUdpConnection connection = outgoingConnectionService.createOutgoingConnection(remoteAddress, this::onConnect);
         connection.connect();

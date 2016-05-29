@@ -3,7 +3,7 @@ package com.ocdsoft.bacta.swg.server;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import com.ocdsoft.bacta.soe.io.udp.chat.ChatServer;
+import com.ocdsoft.bacta.swg.server.chat.ChatServer;
 import com.ocdsoft.bacta.swg.server.game.GameServer;
 import com.ocdsoft.bacta.swg.server.login.LoginServer;
 import org.slf4j.Logger;

@@ -20,6 +20,9 @@ public class CityService {
 
     }
 
+    public void notifyChatRoomCreated(final String roomPath) {
+    }
+
     public TIntList getCitizensCities(final long citizenId) {
         LOGGER.warn("Not implemented");
         return new TIntArrayList();

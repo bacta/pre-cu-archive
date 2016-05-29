@@ -3,6 +3,7 @@ package com.ocdsoft.bacta.swg.shared.chat.messages;
 import com.ocdsoft.bacta.engine.utils.BufferUtil;
 import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
 import com.ocdsoft.bacta.soe.message.Priority;
+import com.ocdsoft.bacta.swg.shared.chat.ChatRoomData;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

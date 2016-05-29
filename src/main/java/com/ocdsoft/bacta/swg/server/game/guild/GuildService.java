@@ -20,6 +20,9 @@ public class GuildService {
 
     }
 
+    public void notifyChatRoomCreated(final String roomPath) {
+    }
+
     public void enterGuildChatRoom(final CreatureObject creatureObject) {
         LOGGER.debug("Creature {} entering guild chat rooms.", creatureObject.getNetworkId());
         LOGGER.warn("Not implemented");

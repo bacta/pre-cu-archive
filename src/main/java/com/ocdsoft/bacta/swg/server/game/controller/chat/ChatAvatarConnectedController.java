@@ -19,8 +19,9 @@ import org.slf4j.LoggerFactory;
 /**
  * Created by crush on 5/21/2016.
  * <p>
+ * ChatServer->GameServer.
  * An avatar has connected. Notice that this does not send ChatOnAvatarConnected. That is sent from the ChatServer
- * as a GameClientMessage which will get handled by the ChatOnAvatarConnectedController.
+ * as a GameClientMessage.
  */
 @MessageHandled(handles = ChatAvatarConnected.class)
 @ConnectionRolesAllowed({ConnectionRole.WHITELISTED})

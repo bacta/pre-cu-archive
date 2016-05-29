@@ -8,7 +8,6 @@ import com.ocdsoft.bacta.soe.controller.ConnectionRolesAllowed;
 import com.ocdsoft.bacta.soe.controller.GameNetworkMessageController;
 import com.ocdsoft.bacta.soe.controller.MessageHandled;
 import com.ocdsoft.bacta.swg.server.chat.SwgChatServer;
-import com.ocdsoft.bacta.swg.server.chat.message.ChatServerConnectionOpened;
 import com.ocdsoft.bacta.swg.server.game.message.GameServerOnline;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,8 +30,6 @@ public class GameServerOnlineController implements GameNetworkMessageController<
     @Override
     public void handleIncoming(final SoeUdpConnection connection, final GameServerOnline message) throws Exception {
         LOGGER.info("Chat server notified that cluster {} is online.", message.getClusterServer().getName());
-
         chatServer.notifyGameServerOnline(connection);
-        connection.sendMessage(new ChatServerConnectionOpened());
     }
 }
