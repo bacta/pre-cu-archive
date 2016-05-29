@@ -21,5 +21,6 @@ logger("com.couchbase",  WARN)
 //logger("com.ocdsoft.bacta.soe.controller.MultiController", TRACE)
 //logger("com.ocdsoft.bacta.soe.controller.GroupMessageController", TRACE)
 //logger("com.ocdsoft.bacta.soe.io.udp.SoeTransceiver", TRACE)
-//logger("com.ocdsoft.bacta.soe.dispatch.SoeDevMessageDispatcher", TRACE)
+//logger("com.ocdsoft.bacta.soe.io.udp.AccountCache", TRACE)
+
 root(INFO, ["STDOUT"])

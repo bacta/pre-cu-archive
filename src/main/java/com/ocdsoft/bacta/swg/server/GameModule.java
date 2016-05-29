@@ -9,7 +9,7 @@ import com.ocdsoft.bacta.engine.serialize.NetworkSerializer;
 import com.ocdsoft.bacta.engine.service.object.ObjectService;
 import com.ocdsoft.bacta.engine.service.objectfactory.NetworkObjectFactory;
 import com.ocdsoft.bacta.soe.io.udp.GameNetworkConfiguration;
-import com.ocdsoft.bacta.soe.io.udp.MessageSubscriptionService;
+import com.ocdsoft.bacta.soe.io.udp.SubscriptionService;
 import com.ocdsoft.bacta.swg.server.game.GameServer;
 import com.ocdsoft.bacta.swg.server.game.GameServerState;
 import com.ocdsoft.bacta.swg.server.game.object.tangible.factory.GuiceNetworkObjectFactory;
@@ -30,7 +30,7 @@ import com.ocdsoft.bacta.swg.server.game.name.NameService;
 import com.ocdsoft.bacta.swg.server.game.object.PreCuObjectTemplateList;
 import com.ocdsoft.bacta.swg.server.game.object.ServerObject;
 import com.ocdsoft.bacta.swg.server.game.object.tangible.TangibleObject;
-import com.ocdsoft.bacta.swg.server.game.service.GameMessageSubscriptionService;
+import com.ocdsoft.bacta.swg.server.game.service.GameSubscriptionService;
 import com.ocdsoft.bacta.swg.server.game.service.data.SetupSharedFile;
 import com.ocdsoft.bacta.swg.server.game.service.data.SharedFileService;
 import com.ocdsoft.bacta.swg.server.game.service.object.ServerObjectService;
@@ -69,7 +69,7 @@ public class GameModule extends AbstractModule implements Module {
         bind(GameServerState.class).to(PreCuGameServerState.class);
         bind(ServerState.class).to(PreCuGameServerState.class);
         bind(NameService.class).to(DefaultNameService.class);
-        bind(MessageSubscriptionService.class).to(GameMessageSubscriptionService.class);
+        bind(SubscriptionService.class).to(GameSubscriptionService.class);
 
         bind(ObjectTemplateList.class).to(PreCuObjectTemplateList.class);
     }

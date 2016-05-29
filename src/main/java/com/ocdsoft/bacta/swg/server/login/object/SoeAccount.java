@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +27,7 @@ public class SoeAccount implements Account {
 
     private String authToken = "";
     private long authExpiration;
+    private InetAddress authInetAddress;
     private long lastCharacterCreationTime;
 
     @Getter(AccessLevel.NONE)

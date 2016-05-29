@@ -1,14 +1,14 @@
 package com.ocdsoft.bacta.swg.server.login.controller;
 
 import com.google.inject.Inject;
-import com.ocdsoft.bacta.engine.conf.BactaConfiguration;
 import com.ocdsoft.bacta.engine.security.authenticator.AccountService;
 import com.ocdsoft.bacta.soe.ServerType;
 import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
 import com.ocdsoft.bacta.soe.controller.ConnectionRolesAllowed;
 import com.ocdsoft.bacta.soe.controller.GameNetworkMessageController;
 import com.ocdsoft.bacta.soe.controller.MessageHandled;
-import com.ocdsoft.bacta.soe.io.udp.MessageSubscriptionService;
+import com.ocdsoft.bacta.soe.io.udp.NetworkConfiguration;
+import com.ocdsoft.bacta.soe.io.udp.SubscriptionService;
 import com.ocdsoft.bacta.swg.server.login.object.SoeAccount;
 import com.ocdsoft.bacta.swg.server.login.message.*;
 import com.ocdsoft.bacta.swg.server.login.service.ClusterService;
@@ -23,22 +23,23 @@ public class LoginClientIdController implements GameNetworkMessageController<Log
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LoginClientIdController.class);
 
-    private int timezone;
-    private ClusterService clusterService;
-    private AccountService<SoeAccount> accountService;
-    private String requiredClientVersion;
-    private final MessageSubscriptionService messageSubscriptionService;
+    private final int timezone;
+    private final ClusterService clusterService;
+    private final AccountService<SoeAccount> accountService;
+    private final NetworkConfiguration configuration;
+    private final SubscriptionService subscriptionService;
 
     @Inject
-    public LoginClientIdController(final BactaConfiguration configuration,
+    public LoginClientIdController(final NetworkConfiguration configuration,
                                    final ClusterService clusterService,
                                    final AccountService<SoeAccount> accountService,
-                                   final MessageSubscriptionService messageSubscriptionService) {
+                                   final SubscriptionService subscriptionService) {
 
         this.clusterService = clusterService;
         this.accountService = accountService;
-        this.messageSubscriptionService = messageSubscriptionService;
-        requiredClientVersion = configuration.getString("Bacta/GameServer", "ClientVersion");
+        this.configuration = configuration;
+        this.subscriptionService = subscriptionService;
+
         timezone = DateTimeZone.getDefault().getOffset(null) / 1000;
     }
 
@@ -49,7 +50,7 @@ public class LoginClientIdController implements GameNetworkMessageController<Log
         if (!isRequiredVersion(message.getClientVersion())) {
             ErrorMessage error = new ErrorMessage("Login Error", "The client you are attempting to connect with does not match that required by the server.", false);
             connection.sendMessage(error);
-            LOGGER.debug("Client attempted to connect with client version {} when {} is required", message.getClientVersion(), requiredClientVersion);
+            LOGGER.debug("Client attempted to connect with client version {} when {} is required", message.getClientVersion(), configuration.getRequiredClientVersion());
             return;
         }
 
@@ -85,7 +86,7 @@ public class LoginClientIdController implements GameNetworkMessageController<Log
             return;
         }
 
-        accountService.createAuthToken(account);
+        accountService.createAuthToken(connection.getRemoteAddress().getAddress(), account);
         connection.setAccountId(account.getId());
         connection.setAccountUsername(account.getUsername());
 
@@ -101,11 +102,11 @@ public class LoginClientIdController implements GameNetworkMessageController<Log
         EnumerateCharacterId characters = new EnumerateCharacterId(account);
         connection.sendMessage(characters);
 
-        messageSubscriptionService.onConnect(connection);
+        subscriptionService.onConnect(connection);
     }
 
     private boolean isRequiredVersion(String clientVersion) {
-        return clientVersion.equals(requiredClientVersion);
+        return clientVersion.equals(configuration.getRequiredClientVersion());
     }
 }
 

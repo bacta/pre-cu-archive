@@ -3,7 +3,7 @@ package com.ocdsoft.bacta.swg.server.login.service;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
-import com.ocdsoft.bacta.soe.io.udp.MessageSubscriptionService;
+import com.ocdsoft.bacta.soe.io.udp.SubscriptionService;
 import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
 import com.ocdsoft.bacta.soe.message.Subscribable;
 
@@ -12,12 +12,12 @@ import com.ocdsoft.bacta.soe.message.Subscribable;
  */
 
 @Singleton
-public final class LoginMessageSubscriptionService implements MessageSubscriptionService {
+public final class LoginSubscriptionService implements SubscriptionService {
 
     private final ClusterService clusterService;
 
     @Inject
-    public LoginMessageSubscriptionService(final ClusterService clusterService) {
+    public LoginSubscriptionService(final ClusterService clusterService) {
         this.clusterService = clusterService;
     }
 
@@ -32,12 +32,12 @@ public final class LoginMessageSubscriptionService implements MessageSubscriptio
     }
 
     @Override
-    public <T extends GameNetworkMessage & Subscribable> void subscribe(SoeUdpConnection connection, Class<T> messageClass) {
+    public <T extends GameNetworkMessage & Subscribable> void messageSubscribe(SoeUdpConnection connection, Class<T> messageClass) {
 
     }
 
     @Override
-    public <T extends GameNetworkMessage & Subscribable> void unsubscribe(SoeUdpConnection connection, Class<T> messageClass) {
+    public <T extends GameNetworkMessage & Subscribable> void messageUnsubscribe(SoeUdpConnection connection, Class<T> messageClass) {
 
     }
 }
