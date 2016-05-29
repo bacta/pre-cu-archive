@@ -15,11 +15,14 @@ appender("STDOUT", ConsoleAppender) {
     }
 }
 
-logger("org.reflections",  WARN)
-logger("io.netty",  WARN)
-logger("com.couchbase",  WARN)
+logger("org.reflections", WARN)
+logger("io.netty", WARN)
+logger("com.couchbase", WARN)
 //logger("com.ocdsoft.bacta.soe.controller.MultiController", TRACE)
 //logger("com.ocdsoft.bacta.soe.controller.GroupMessageController", TRACE)
 //logger("com.ocdsoft.bacta.soe.io.udp.SoeTransceiver", TRACE)
 //logger("com.ocdsoft.bacta.soe.dispatch.SoeDevMessageDispatcher", TRACE)
+logger("com.ocdsoft.bacta.swg.server.game.chat.GameChatService", DEBUG)
+logger("com.ocdsoft.bacta.swg.server.chat.SwgChatServer", DEBUG)
+logger("com.ocdsoft.bacta.swg.server.game.controller.GameGameClientMessageController", DEBUG)
 root(INFO, ["STDOUT"])
