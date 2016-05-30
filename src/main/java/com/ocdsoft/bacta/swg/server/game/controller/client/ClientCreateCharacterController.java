@@ -43,6 +43,7 @@ import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.StringTokenizer;
 import java.util.concurrent.TimeUnit;
 
 @MessageHandled(handles = ClientCreateCharacter.class)
@@ -121,7 +122,9 @@ public class ClientCreateCharacterController implements GameNetworkMessageContro
         Gender gender = Gender.valueOf(genderSpecies.substring(genderSpecies.indexOf("_") + 1).toUpperCase());
         Race race = Race.valueOf(genderSpecies.substring(0, genderSpecies.indexOf("_")).toUpperCase());
 
-        String firstName = createMessage.getCharacterName().split(" ", 2)[0];
+
+        StringTokenizer tokenizer = new StringTokenizer(createMessage.getCharacterName(), " ");
+        String firstName = tokenizer.nextToken();
         String result = nameService.validateName(NameService.PLAYER, account.getId(), createMessage.getCharacterName(), race, gender);
         if (result.equals(NameService.NAME_DECLINED_DEVELOPER) && firstName.equalsIgnoreCase(account.getUsername())) {
             result = NameService.NAME_APPROVED;
