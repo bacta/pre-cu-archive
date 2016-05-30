@@ -1,5 +1,6 @@
 package com.ocdsoft.bacta.swg.server.util
 
+import com.codahale.metrics.MetricRegistry
 import com.ocdsoft.bacta.engine.conf.ini.IniBactaConfiguration
 import com.ocdsoft.bacta.soe.connection.ReliableUdpMessageBuilder
 import com.ocdsoft.bacta.soe.connection.SoeUdpMessageBuilder
@@ -35,14 +36,9 @@ class MultiGameMessageSpec extends Specification {
         def loginClusterStatus = new LoginClusterStatus(clusterEntries)
         def account = new SoeAccount()
         def enumerateCharacterId = new EnumerateCharacterId(account)
-        def networkConfig = new GameNetworkConfiguration(bactaConfig)
-        def messageProcessor = new ReliableUdpMessageBuilder(null, networkConfig)
+        def messageProcessor = new ReliableUdpMessageBuilder(null, networkConfiguration)
 
-        def gameNetworkMessageSerializer = new GameNetworkMessageSerializerImpl()
-        gameNetworkMessageSerializer.addHandledMessageClass(SOECRC32.hashCode(LoginClientToken.class.simpleName), LoginClientToken.class)
-        gameNetworkMessageSerializer.addHandledMessageClass(SOECRC32.hashCode(LoginEnumCluster.class.simpleName), LoginEnumCluster.class)
-        gameNetworkMessageSerializer.addHandledMessageClass(SOECRC32.hashCode(LoginClusterStatus.class.simpleName), LoginClusterStatus.class)
-        gameNetworkMessageSerializer.addHandledMessageClass(SOECRC32.hashCode(EnumerateCharacterId.class.simpleName), EnumerateCharacterId.class)
+        def gameNetworkMessageSerializer = new GameNetworkMessageSerializerImpl(new MetricRegistry())
 
         when:
         messageProcessor.add(gameNetworkMessageSerializer.writeToBuffer(loginClientToken))

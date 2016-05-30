@@ -13,8 +13,10 @@ import java.nio.ByteBuffer;
 import java.util.Collection;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 @Priority(0x2)
+@Getter
 public class LoginEnumCluster extends GameNetworkMessage {
 
     private final Set<ClusterData> clusterDataSet;
@@ -25,30 +27,23 @@ public class LoginEnumCluster extends GameNetworkMessage {
         clusterDataSet = new TreeSet<>();
     }
 
-	public LoginEnumCluster(Collection<ClusterServer> clusterServerSet, int maxCharactersPerAccount) {
+	public LoginEnumCluster(final Collection<ClusterServer> clusterServerSet, final int maxCharactersPerAccount) {
         this();
-
-        clusterDataSet.addAll(clusterServerSet.stream().map(ClusterServer::getClusterData).collect(java.util.stream.Collectors.toList()));
+        clusterDataSet.addAll(clusterServerSet.stream()
+                .map(ClusterServer::getClusterData)
+                .collect(Collectors.toList())
+        );
         this.maxCharactersPerAccount = maxCharactersPerAccount;
 	}
 
-    public LoginEnumCluster(ByteBuffer buffer) {
-        this();
-        for(int i = 0; i < buffer.getInt(); ++i) {
-            ClusterData data = new ClusterData(buffer);
-            clusterDataSet.add(data);
-        }
-
+    public LoginEnumCluster(final ByteBuffer buffer) {
+        clusterDataSet = BufferUtil.getTreeSet(buffer, ClusterData::new);
         maxCharactersPerAccount = buffer.getInt();
     }
 
     @Override
-    public void writeToBuffer(ByteBuffer buffer) {
-
-        buffer.putInt(clusterDataSet.size());
-        for (ClusterData data : clusterDataSet) {
-            data.writeToBuffer(buffer);
-        }
+    public void writeToBuffer(final ByteBuffer buffer) {
+        BufferUtil.put(buffer, clusterDataSet);
         buffer.putInt(maxCharactersPerAccount);
     }
 
@@ -65,14 +60,14 @@ public class LoginEnumCluster extends GameNetworkMessage {
             this.timezone = DateTimeZone.getDefault().getOffset(null) / 1000;
         }
 
-        public ClusterData(ByteBuffer buffer) {
+        public ClusterData(final ByteBuffer buffer) {
             id = buffer.getInt();
             name = BufferUtil.getAscii(buffer);
             timezone = buffer.getInt();
         }
 
         @Override
-        public void writeToBuffer(ByteBuffer buffer) {
+        public void writeToBuffer(final ByteBuffer buffer) {
             buffer.putInt(id);
             BufferUtil.putAscii(buffer, name);
             buffer.putInt(timezone);
@@ -80,7 +75,7 @@ public class LoginEnumCluster extends GameNetworkMessage {
 
         @Override
         public int compareTo(ClusterData o) {
-            return name.compareTo(o.name);
+            return Integer.compare(id, o.getId());
         }
     }
 }
