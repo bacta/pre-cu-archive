@@ -1,6 +1,8 @@
 
 package com.ocdsoft.bacta.swg.server.game.name;
 
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.ocdsoft.bacta.swg.server.game.name.generator.CreatureNameGenerator;
@@ -16,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by kburkhardt on 3/28/14.
@@ -29,17 +32,21 @@ public final class DefaultNameService implements NameService {
     private final Set<String> developersNames;
     private final List<ProfaneWord> profaneWords;
     private final ColognePhonetic phonetic;
+    private final Cache<String, Integer> lockedNames;
 
     private final Map<Integer, NameGenerator> nameGenerators;
 
     @Inject
-    public DefaultNameService(TreeFile treeFile,
-                              CreatureNameGenerator creatureNameGenerator,
-                              PlayerNameGenerator playerNameGenerator) throws IOException {
+    public DefaultNameService(final TreeFile treeFile,
+                              final CreatureNameGenerator creatureNameGenerator,
+                              final PlayerNameGenerator playerNameGenerator) throws IOException {
 
         nameGenerators = new HashMap<>();
         nameGenerators.put(NameService.CREATURE, creatureNameGenerator);
         nameGenerators.put(NameService.PLAYER, playerNameGenerator);
+        lockedNames = CacheBuilder.newBuilder()
+                .expireAfterWrite(10, TimeUnit.MINUTES)
+                .build();
 
         phonetic = new ColognePhonetic();
 
@@ -85,7 +92,7 @@ public final class DefaultNameService implements NameService {
         }
 
         String name = generator.createName(race, gender);
-        while (!validateName(type, name, race, gender).equals(NameService.NAME_APPROVED)) {
+        while (!validateName(type, -1, name, race, gender).equals(NameService.NAME_APPROVED)) {
             name = generator.createName(race, gender);
         }
 
@@ -93,7 +100,14 @@ public final class DefaultNameService implements NameService {
     }
 
     @Override
-    public String validateName(int type, String name, Race race, Gender gender) {
+    public String validateName(final int type, final int bactaId, final String name, final Race race, final Gender gender) {
+
+        final Integer reservedForId = lockedNames.getIfPresent(name);
+        if (reservedForId != null) {
+            if(reservedForId != bactaId) {
+                return NAME_DECLINED_TOO_FAST;
+            }
+        }
 
         NameGenerator generator = nameGenerators.get(type);
         if (generator == null) {
@@ -111,6 +125,16 @@ public final class DefaultNameService implements NameService {
         }
 
         return generator.validateName(name, race, gender);
+    }
+
+    @Override
+    public String verifyAndLockName(final String name, final int bactaId, final Race race, final Gender gender) {
+        String result = validateName(PLAYER, bactaId, name, race, gender);
+        if (result.equals(NAME_APPROVED)) {
+            lockedNames.put(name, bactaId);
+        }
+
+        return result;
     }
 
     private String namePreChecks(String name) {

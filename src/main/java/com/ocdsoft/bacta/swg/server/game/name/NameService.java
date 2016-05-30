@@ -31,7 +31,9 @@ public interface NameService {
 
     String generateName(final int type, final Race race, final Gender gender);
 
-    String validateName(final int type, final String name, final Race race, final Gender gender);
+    String validateName(final int type, int bactaId, final String name, final Race race, final Gender gender);
 
     void addPlayerName(final String firstName);
+
+    String verifyAndLockName(final String name, final int bactaId, final Race race, final Gender gender);
 }

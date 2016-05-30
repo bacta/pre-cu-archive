@@ -1,5 +1,7 @@
 package com.ocdsoft.bacta.swg.server.game.controller.client;
 
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
 import com.google.inject.Inject;
 import com.ocdsoft.bacta.engine.conf.BactaConfiguration;
 import com.ocdsoft.bacta.engine.service.AccountService;
@@ -41,6 +43,8 @@ import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.concurrent.TimeUnit;
+
 @MessageHandled(handles = ClientCreateCharacter.class)
 @ConnectionRolesAllowed({ConnectionRole.AUTHENTICATED})
 public class ClientCreateCharacterController implements GameNetworkMessageController<ClientCreateCharacter> {
@@ -58,7 +62,8 @@ public class ClientCreateCharacterController implements GameNetworkMessageContro
     private final NameService nameService;
     private final StartingLocations startingLocations;
     private final GameServerState serverState;
-    private final int minutesBetweenCreation;
+    private final int secondsBetweenCreation;
+    private final Cache<String, Integer> pendingCreations;
 
     @Inject
     public ClientCreateCharacterController(
@@ -87,10 +92,14 @@ public class ClientCreateCharacterController implements GameNetworkMessageContro
         this.startingLocations = startingLocations;
         this.serverState = serverState;
 
-        this.minutesBetweenCreation = bactaConfiguration.getIntWithDefault(
+        this.secondsBetweenCreation = bactaConfiguration.getIntWithDefault(
                 "Bacta/GameServer/CharacterCreation",
                 "MinutesBetweenCharCreate",
-                15);
+                15) * 60;
+
+        pendingCreations = CacheBuilder.newBuilder()
+                .expireAfterWrite(10, TimeUnit.MINUTES)
+                .build();
     }
 
     @Override
@@ -113,7 +122,7 @@ public class ClientCreateCharacterController implements GameNetworkMessageContro
         Race race = Race.valueOf(genderSpecies.substring(0, genderSpecies.indexOf("_")).toUpperCase());
 
         String firstName = createMessage.getCharacterName().split(" ", 2)[0];
-        String result = nameService.validateName(NameService.PLAYER, createMessage.getCharacterName(), race, gender);
+        String result = nameService.validateName(NameService.PLAYER, account.getId(), createMessage.getCharacterName(), race, gender);
         if (result.equals(NameService.NAME_DECLINED_DEVELOPER) && firstName.equalsIgnoreCase(account.getUsername())) {
             result = NameService.NAME_APPROVED;
         }
@@ -123,16 +132,6 @@ public class ClientCreateCharacterController implements GameNetworkMessageContro
             connection.sendMessage(failed);
             return;
         }
-
-        // check duration
-        int minutesSinceLastCreation = (int)((System.currentTimeMillis() - account.getLastCharacterCreationTime()) / 1000 / 60);
-
-        if(minutesSinceLastCreation < minutesBetweenCreation) {
-            ClientCreateCharacterFailed failed = new ClientCreateCharacterFailed(createMessage.getCharacterName(), NameService.NAME_DECLINED_TOO_FAST);
-            connection.sendMessage(failed);
-            return;
-        }
-
 
         ServerCreatureObjectTemplate objectTemplate = templateService.getObjectTemplate(createMessage.getTemplateName());
         if (objectTemplate == null) {
@@ -145,7 +144,24 @@ public class ClientCreateCharacterController implements GameNetworkMessageContro
             return;
         }
 
-        final CreatureObject newCharacterObject = objectService.createObject(createMessage.getTemplateName());
+        // check duration
+        int secondsSinceLastCreation = (int)((System.currentTimeMillis() - account.getLastCharacterCreationTime()) / 1000);
+        account.setLastCharacterCreationTime(System.currentTimeMillis());
+        accountService.updateAccount(account);
+        if((secondsSinceLastCreation < secondsBetweenCreation)) {
+            ClientCreateCharacterFailed failed = new ClientCreateCharacterFailed(createMessage.getCharacterName(), NameService.NAME_DECLINED_TOO_FAST);
+            connection.sendMessage(failed);
+            return;
+        }
+
+        if(pendingCreations.getIfPresent(firstName) != null) {
+            ClientCreateCharacterFailed failed = new ClientCreateCharacterFailed(createMessage.getCharacterName(), NameService.NAME_DECLINED_IN_USE);
+            connection.sendMessage(failed);
+            return;
+        }
+        pendingCreations.put(firstName, account.getId());
+
+        final CreatureObject newCharacterObject = objectService.createObject(objectTemplate.getResourceName());
         if (newCharacterObject == null) {
 
             LOGGER.error("Account <{}> attempted to create a player but the object service returned null <{}>.",
@@ -270,6 +286,7 @@ public class ClientCreateCharacterController implements GameNetworkMessageContro
 
         nameService.addPlayerName(firstName);
         connection.sendMessage(new ClientCreateCharacterSuccess(newCharacterObject.getNetworkId()));
+        pendingCreations.invalidate(firstName);
 
         // TODO: Chat Avatars
         // Destroy any existing chat avatar that may be using the new character's name

@@ -30,16 +30,12 @@ public class ClientVerifyAndLockNameRequestController implements GameNetworkMess
     @Override
     public void handleIncoming(SoeUdpConnection connection, ClientVerifyAndLockNameRequest message) {
 
-        StringId errorMessage;
-        Race race = Race.parseRace(message.getTemplateName());
-        Gender gender = Gender.parseGender(message.getTemplateName());
+        final Race race = Race.parseRace(message.getTemplateName());
+        final Gender gender = Gender.parseGender(message.getTemplateName());
 
-        String errorString = nameService.validateName(NameService.PLAYER, message.getCharacterName(), race, gender);
-        if(errorString.isEmpty()) {
-            errorString = "name_approved";
-        }
+        String messageString = nameService.verifyAndLockName(message.getCharacterName(), connection.getBactaId(), race, gender);
 
-        errorMessage = new StringId("ui", errorString);
+        final StringId errorMessage = new StringId("ui", messageString);
 
         ClientVerifyAndLockNameResponse response = new ClientVerifyAndLockNameResponse(
                 message.getCharacterName(),
