@@ -23,7 +23,7 @@ public class TemplateDefinitionFileTest {
 
     @Test
     public void shouldWriteSingle() {
-        final String s = "SetLfgInterests";
+        final String s = "addfriend";
         System.out.println(String.format("0x%x : %s", SOECRC32.hashCode(s), s));
     }
 }

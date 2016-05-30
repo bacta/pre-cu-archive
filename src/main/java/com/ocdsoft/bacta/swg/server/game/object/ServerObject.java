@@ -13,7 +13,7 @@ import com.ocdsoft.bacta.swg.archive.delta.*;
 import com.ocdsoft.bacta.swg.server.game.container.IntangibleVolumeContainer;
 import com.ocdsoft.bacta.swg.server.game.container.TangibleVolumeContainer;
 import com.ocdsoft.bacta.swg.server.game.event.ObservableGameEvent;
-import com.ocdsoft.bacta.soe.message.ObjControllerMessage;
+import com.ocdsoft.bacta.swg.server.game.message.object.ObjControllerMessage;
 import com.ocdsoft.bacta.swg.server.game.message.scene.SceneCreateObjectByCrc;
 import com.ocdsoft.bacta.swg.server.game.message.scene.SceneDestroyObject;
 import com.ocdsoft.bacta.swg.server.game.message.scene.SceneEndBaselines;
@@ -23,6 +23,7 @@ import com.ocdsoft.bacta.swg.server.game.object.tangible.TangibleObject;
 import com.ocdsoft.bacta.swg.server.game.object.tangible.creature.CreatureObject;
 import com.ocdsoft.bacta.swg.server.game.object.template.server.ServerObjectTemplate;
 import com.ocdsoft.bacta.swg.server.game.object.template.shared.SharedObjectTemplate;
+import com.ocdsoft.bacta.swg.server.game.object.universe.group.GroupObject;
 import com.ocdsoft.bacta.swg.server.game.service.container.ContainerTransferService;
 import com.ocdsoft.bacta.swg.server.game.synchronizedui.ServerSynchronizedUi;
 import com.ocdsoft.bacta.swg.shared.container.*;
@@ -521,11 +522,13 @@ public abstract class ServerObject extends GameObject implements Subject<Observa
     }
 
     public final void broadcastMessage(ObjControllerMessage message, boolean changeReceiver) {
-        for (SoeUdpConnection theirConnection : listeners) {
+        for (final SoeUdpConnection theirConnection : listeners) {
 
             if (changeReceiver) {
-                message.setReceiver(theirConnection.getCurrentNetworkId());
+                LOGGER.error("Set receiver is disabled right now! FIX THIS.");
+                //message.setReceiver(theirConnection.getCurrentNetworkId());
             }
+
             theirConnection.sendMessage(message);
 
             LOGGER.debug("Broadcasting obj controller to {}", theirConnection.getCurrentCharName());
@@ -744,6 +747,10 @@ public abstract class ServerObject extends GameObject implements Subject<Observa
 
     public CreatureObject asCreatureObject() {
         return this instanceof CreatureObject ? (CreatureObject) this : null;
+    }
+
+    public GroupObject asGroupObject() {
+        return this instanceof GroupObject ? (GroupObject) this : null;
     }
 
     public static final SoeUdpConnection getParentPlayerClient(ServerObject obj) {

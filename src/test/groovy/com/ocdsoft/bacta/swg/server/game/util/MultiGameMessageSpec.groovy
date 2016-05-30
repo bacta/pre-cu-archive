@@ -5,8 +5,6 @@ import com.ocdsoft.bacta.engine.conf.ini.IniBactaConfiguration
 import com.ocdsoft.bacta.soe.connection.ReliableUdpMessageBuilder
 import com.ocdsoft.bacta.soe.connection.SoeUdpMessageBuilder
 import com.ocdsoft.bacta.soe.io.udp.GameNetworkConfiguration
-import com.ocdsoft.bacta.soe.io.udp.NetworkConfiguration
-import com.ocdsoft.bacta.soe.serialize.GameNetworkMessageSerializerImpl
 import com.ocdsoft.bacta.soe.util.SOECRC32
 import com.ocdsoft.bacta.soe.util.SoeMessageUtil
 import com.ocdsoft.bacta.swg.server.login.message.EnumerateCharacterId
@@ -15,6 +13,7 @@ import com.ocdsoft.bacta.swg.server.login.message.LoginClusterStatus
 import com.ocdsoft.bacta.swg.server.login.message.LoginEnumCluster
 import com.ocdsoft.bacta.swg.server.login.object.ClusterServer
 import com.ocdsoft.bacta.swg.server.login.object.SoeAccount
+import com.ocdsoft.bacta.swg.shared.serialize.GameNetworkMessageSerializerImpl
 import spock.lang.Specification
 
 /**

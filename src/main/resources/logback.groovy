@@ -25,6 +25,8 @@ logger("com.couchbase",  WARN)
 //logger("com.ocdsoft.bacta.swg.server.game.chat.GameChatService", DEBUG)
 //logger("com.ocdsoft.bacta.swg.server.chat.SwgChatServer", DEBUG)
 //logger("com.ocdsoft.bacta.swg.server.game.controller.GameGameClientMessageController", DEBUG)
+logger("com.ocdsoft.bacta.swg.shared.dispatch", DEBUG)
+logger("com.ocdsoft.bacta.swg.server.game.controller.object", DEBUG)
 //logger("com.ocdsoft.bacta.soe.io.udp.AccountCache", TRACE)
 
 root(INFO, ["STDOUT"])

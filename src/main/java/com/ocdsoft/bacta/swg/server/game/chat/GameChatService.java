@@ -373,39 +373,39 @@ public final class GameChatService {
         final String gamePrefix = serverAvatar.getGameCode() + ".";
 
         //TODO: Should these universe wide chat rooms be created at the game server level? Probably not.
-        createRoom(avatarName, true, gamePrefix + ChatRoomTypes.UNIVERSE, "public chat for all galaxies, cannot create rooms here");
-        createRoom(avatarName, true, gamePrefix + ChatRoomTypes.SYSTEM, "system messages for all galaxies");
-        createRoom(avatarName, true, gamePrefix + ChatRoomTypes.CHAT, "public chat for all galaxies, can create rooms here");
+//        createRoom(avatarName, true, gamePrefix + ChatRoomTypes.UNIVERSE, "public chat for all galaxies, cannot create rooms here");
+//        createRoom(avatarName, true, gamePrefix + ChatRoomTypes.SYSTEM, "system messages for all galaxies");
+//        createRoom(avatarName, true, gamePrefix + ChatRoomTypes.CHAT, "public chat for all galaxies, can create rooms here");
 
         final String galaxyRoom = gamePrefix + galaxyName + ".";
 
         //TODO: Should we move the system chat rooms to a configuration file?
 
-        createRoom(avatarName, true, galaxyRoom + ChatRoomTypes.GALAXY, "public chat for the whole galaxy, cannot create rooms here");
-        createRoom(avatarName, true, galaxyRoom + ChatRoomTypes.SYSTEM, "system messages for this galaxy");
-        createRoom(avatarName, true, galaxyRoom + ChatRoomTypes.CHAT, "public chat for this galaxy, can create rooms here");
-        createRoom(avatarName, true, galaxyRoom + ChatRoomTypes.IMPERIAL, "Imperial chat for this galaxy");
-        createRoom(avatarName, true, galaxyRoom + ChatRoomTypes.IMPERIAL_WAR_ROOM, "Imperial war room chat for this galaxy");
-        createRoom(avatarName, true, galaxyRoom + ChatRoomTypes.REBEL, "Rebel chat for this galaxy");
-        createRoom(avatarName, true, galaxyRoom + ChatRoomTypes.REBEL_WAR_ROOM, "Rebel war room chat for this galaxy");
-        createRoom(avatarName, true, galaxyRoom + ChatRoomTypes.BOUNTY_HUNTER, "Bounty Hunter chat for this galaxy");
-        createRoom(avatarName, true, galaxyRoom + ChatRoomTypes.COMMANDO, "Commando chat for this galaxy");
-        createRoom(avatarName, true, galaxyRoom + ChatRoomTypes.ENTERTAINER, "Entertainer chat for this galaxy");
-        createRoom(avatarName, true, galaxyRoom + ChatRoomTypes.FORCE_SENSITIVE, "Force Sensitive chat for this galaxy");
-        createRoom(avatarName, true, galaxyRoom + ChatRoomTypes.MEDIC, "Medic chat for this galaxy");
-        createRoom(avatarName, true, galaxyRoom + ChatRoomTypes.OFFICER, "Officer chat for this galaxy");
-        createRoom(avatarName, true, galaxyRoom + ChatRoomTypes.PILOT, "Pilot chat for this galaxy");
-        createRoom(avatarName, true, galaxyRoom + ChatRoomTypes.POLITICIAN, "Politician chat for this galaxy");
-        createRoom(avatarName, true, galaxyRoom + ChatRoomTypes.SMUGGLER, "Smuggler chat for this galaxy");
-        createRoom(avatarName, true, galaxyRoom + ChatRoomTypes.SPY, "Spy chat for this galaxy");
-        createRoom(avatarName, true, galaxyRoom + ChatRoomTypes.TRADER, "Trader chat for this galaxy");
-        createRoom(avatarName, true, galaxyRoom + ChatRoomTypes.BEAST_MASTERY, "Beast Mastery chat for this galaxy");
-        createRoom(avatarName, true, galaxyRoom + ChatRoomTypes.WARDEN, "Warden chat for this galaxy");
-
-        final String planetRoom = galaxyRoom + planetName + ".";
-        createRoom(avatarName, true, planetRoom + ChatRoomTypes.PLANET, "public chat for this planet, cannot create rooms here");
-        createRoom(avatarName, true, planetRoom + ChatRoomTypes.SYSTEM, "system messages for this planet, cannot create rooms here");
-        createRoom(avatarName, true, planetRoom + ChatRoomTypes.CHAT, "public chat for this planet, can create rooms here");
+//        createRoom(avatarName, true, galaxyRoom + ChatRoomTypes.GALAXY, "public chat for the whole galaxy, cannot create rooms here");
+//        createRoom(avatarName, true, galaxyRoom + ChatRoomTypes.SYSTEM, "system messages for this galaxy");
+//        createRoom(avatarName, true, galaxyRoom + ChatRoomTypes.CHAT, "public chat for this galaxy, can create rooms here");
+//        createRoom(avatarName, true, galaxyRoom + ChatRoomTypes.IMPERIAL, "Imperial chat for this galaxy");
+//        createRoom(avatarName, true, galaxyRoom + ChatRoomTypes.IMPERIAL_WAR_ROOM, "Imperial war room chat for this galaxy");
+//        createRoom(avatarName, true, galaxyRoom + ChatRoomTypes.REBEL, "Rebel chat for this galaxy");
+//        createRoom(avatarName, true, galaxyRoom + ChatRoomTypes.REBEL_WAR_ROOM, "Rebel war room chat for this galaxy");
+//        createRoom(avatarName, true, galaxyRoom + ChatRoomTypes.BOUNTY_HUNTER, "Bounty Hunter chat for this galaxy");
+//        createRoom(avatarName, true, galaxyRoom + ChatRoomTypes.COMMANDO, "Commando chat for this galaxy");
+//        createRoom(avatarName, true, galaxyRoom + ChatRoomTypes.ENTERTAINER, "Entertainer chat for this galaxy");
+//        createRoom(avatarName, true, galaxyRoom + ChatRoomTypes.FORCE_SENSITIVE, "Force Sensitive chat for this galaxy");
+//        createRoom(avatarName, true, galaxyRoom + ChatRoomTypes.MEDIC, "Medic chat for this galaxy");
+//        createRoom(avatarName, true, galaxyRoom + ChatRoomTypes.OFFICER, "Officer chat for this galaxy");
+//        createRoom(avatarName, true, galaxyRoom + ChatRoomTypes.PILOT, "Pilot chat for this galaxy");
+//        createRoom(avatarName, true, galaxyRoom + ChatRoomTypes.POLITICIAN, "Politician chat for this galaxy");
+//        createRoom(avatarName, true, galaxyRoom + ChatRoomTypes.SMUGGLER, "Smuggler chat for this galaxy");
+//        createRoom(avatarName, true, galaxyRoom + ChatRoomTypes.SPY, "Spy chat for this galaxy");
+//        createRoom(avatarName, true, galaxyRoom + ChatRoomTypes.TRADER, "Trader chat for this galaxy");
+//        createRoom(avatarName, true, galaxyRoom + ChatRoomTypes.BEAST_MASTERY, "Beast Mastery chat for this galaxy");
+//        createRoom(avatarName, true, galaxyRoom + ChatRoomTypes.WARDEN, "Warden chat for this galaxy");
+//
+//        final String planetRoom = galaxyRoom + planetName + ".";
+//        createRoom(avatarName, true, planetRoom + ChatRoomTypes.PLANET, "public chat for this planet, cannot create rooms here");
+//        createRoom(avatarName, true, planetRoom + ChatRoomTypes.SYSTEM, "system messages for this planet, cannot create rooms here");
+//        createRoom(avatarName, true, planetRoom + ChatRoomTypes.CHAT, "public chat for this planet, can create rooms here");
 
         //Tell GroupService to create all the group chat rooms.
         //Tell GuildService to create all the guild chat rooms.

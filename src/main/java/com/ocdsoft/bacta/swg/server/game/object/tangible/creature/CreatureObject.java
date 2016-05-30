@@ -13,9 +13,12 @@ import com.ocdsoft.bacta.swg.archive.delta.vector.AutoDeltaFloatVector;
 import com.ocdsoft.bacta.swg.archive.delta.vector.AutoDeltaIntVector;
 import com.ocdsoft.bacta.swg.archive.delta.vector.AutoDeltaObjectVector;
 import com.ocdsoft.bacta.swg.server.game.command.CommandQueue;
-import com.ocdsoft.bacta.swg.server.game.message.UpdatePostureMessage;
+import com.ocdsoft.bacta.swg.server.game.controller.object.GameControllerMessageFlags;
 import com.ocdsoft.bacta.swg.server.game.event.ObservableGameEvent;
-import com.ocdsoft.bacta.swg.server.game.message.object.PostureMessage;
+import com.ocdsoft.bacta.swg.server.game.message.UpdatePostureMessage;
+import com.ocdsoft.bacta.swg.server.game.message.object.GameControllerMessageType;
+import com.ocdsoft.bacta.swg.server.game.message.object.MessageQueuePosture;
+import com.ocdsoft.bacta.swg.server.game.message.object.ObjControllerMessage;
 import com.ocdsoft.bacta.swg.server.game.object.buff.Buff;
 import com.ocdsoft.bacta.swg.server.game.object.tangible.TangibleObject;
 import com.ocdsoft.bacta.swg.server.game.object.template.server.ServerCreatureObjectTemplate;
@@ -278,15 +281,19 @@ public class CreatureObject extends TangibleObject {
     }
 
     public final void setPosture(byte posture) {
-
-        if (this.posture.get() == posture) {
+        if (this.posture.get() == posture)
             return;
-        }
 
         this.posture.set(posture);
 
-        PostureMessage postureMessage = new PostureMessage(this, posture);
-        broadcastMessage(postureMessage);
+        //TODO: Cleanup the sending of this.
+        final MessageQueuePosture postureMessage = new MessageQueuePosture(posture, true);
+        broadcastMessage(new ObjControllerMessage(
+                GameControllerMessageFlags.SEND | GameControllerMessageFlags.RELIABLE | GameControllerMessageFlags.DEST_AUTH_CLIENT | GameControllerMessageFlags.DEST_PROXY_CLIENT,
+                GameControllerMessageType.SET_POSTURE.value,
+                getNetworkId(),
+                0,
+                postureMessage));
 
         notifyObservers(ObservableGameEvent.POSTURE_CHANGE);
     }

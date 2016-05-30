@@ -3,11 +3,12 @@ package com.ocdsoft.bacta.soe.connection
 import com.codahale.metrics.MetricRegistry
 import com.ocdsoft.bacta.engine.conf.ini.IniBactaConfiguration
 import com.ocdsoft.bacta.soe.io.udp.GameNetworkConfiguration
-import com.ocdsoft.bacta.soe.serialize.GameNetworkMessageSerializerImpl
 import com.ocdsoft.bacta.soe.util.SOECRC32
 import com.ocdsoft.bacta.swg.server.login.message.LoginEnumCluster
 import com.ocdsoft.bacta.swg.server.login.object.ClusterServer
+import com.ocdsoft.bacta.swg.shared.serialize.GameNetworkMessageSerializerImpl
 import spock.lang.Specification
+
 /**
  * Created by kyle on 5/29/2016.
  */

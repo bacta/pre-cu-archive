@@ -82,6 +82,10 @@ public final class ChatRoom {
         return !isPrivate();
     }
 
+    public boolean isModerated() {
+        return ChatRoomAttributes.isSet(attributes, ChatRoomAttributes.MODERATED);
+    }
+
     public boolean isCreator(final ChatAvatarId avatarId) {
         return creator.equals(avatarId);
     }

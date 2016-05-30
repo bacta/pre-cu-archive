@@ -27,7 +27,7 @@ public class ChatCreateRoomController implements GameNetworkMessageController<Ch
 
     @Override
     public void handleIncoming(final SoeUdpConnection connection, final ChatCreateRoom message) {
-        chatServer.createRoom(connection,
+        chatServer.createRoom(
                 connection.getCurrentNetworkId(),
                 message.getSequence(),
                 message.getRoomName(),

@@ -1,0 +1,22 @@
+package com.ocdsoft.bacta.swg.server.game.message.object;
+
+public enum GameControllerMessageType {
+    #foreach($context in $enumContexts)
+    ${context.getName()}(${context.getValue()}),
+    #end
+    LAST($lastValue);
+
+    private static final GameControllerMessageType[] values = values();
+    public final int value;
+
+    GameControllerMessageType(final int value) {
+        this.value = value;
+    }
+
+    public static GameControllerMessageType from(final int value) {
+        if (value < 0 || value > LAST.value)
+            return values[0];
+
+        return values[value];
+    }
+}

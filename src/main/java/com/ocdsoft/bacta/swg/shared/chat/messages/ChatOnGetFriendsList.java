@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.nio.ByteBuffer;
+import java.util.Set;
 
 /**
  * Created by crush on 5/20/2016.
@@ -16,28 +17,16 @@ import java.nio.ByteBuffer;
 @AllArgsConstructor
 public final class ChatOnGetFriendsList extends GameNetworkMessage {
     private final long characterId;
-    private final ChatAvatarId[] friends;
+    private final Set<ChatAvatarId> friends;
 
     public ChatOnGetFriendsList(final ByteBuffer buffer) {
         this.characterId = buffer.getLong();
-
-        final int size = buffer.getInt();
-
-        this.friends = new ChatAvatarId[size];
-
-        for (int i = 0; i < size; ++i)
-            this.friends[i] = new ChatAvatarId(buffer);
+        this.friends = BufferUtil.getHashSet(buffer, ChatAvatarId::new);
     }
 
     @Override
     public void writeToBuffer(final ByteBuffer buffer) {
         BufferUtil.put(buffer, characterId);
-
-        final int size = friends.length;
-
-        BufferUtil.put(buffer, size);
-
-        for (int i = 0; i < size; ++i)
-            BufferUtil.put(buffer, friends[i]);
+        BufferUtil.put(buffer, friends);
     }
 }

@@ -5,43 +5,43 @@ package com.ocdsoft.bacta.swg.shared.chat.messages;
  */
 public enum ChatError {
     SUCCESS(0),
-    TIMEOUT(1),
-    DUPLICATE_LOGIN(2),
+    TIMEOUT(1), //ChatApi timedout...
+    DUPLICATE_LOGIN(2), //Tried to connect, but already connected!?
     SRC_AVATAR_DOESNT_EXIST(3),
     DST_AVATAR_DOESNT_EXIST(4),
-    ADDRESS_DOESNT_EXIST(5),
-    ADDRESS_NOT_ROOM(6),
+    ADDRESS_DOESNT_EXIST(5), //Address doesn't exist...
+    ADDRESS_NOT_ROOM(6), //Address is not a room...
     ADDRESS_NOT_AID(7),
     FRIEND_NOT_FOUND(8),
-    ROOM_UNKNOWN_FAILURE(9),
-    ROOM_SRC_NOT_IN_ROOM(10),
+    ROOM_UNKNOWN_FAILURE(9), //Unknown failure.
+    ROOM_SRC_NOT_IN_ROOM(10), //Generic result where an avatar is the source of an action, but is not present in room.
     ROOM_DST_NOT_IN_ROOM(11),
-    ROOM_BANNED_AVATAR(12),
-    ROOM_PRIVATE_ROOM(13),
-    ROOM_MODERATED_ROOM(14),
-    ROOM_NOT_IN_ROOM(15),
-    ROOM_NO_PRIVILEGES(16),
+    ROOM_BANNED_AVATAR(12), //Tried to join a room, but were banned.
+    ROOM_PRIVATE_ROOM(13), //Tried to join a room, but it was private.
+    ROOM_MODERATED_ROOM(14), //Tried to talk in a room, but it was moderated.
+    ROOM_NOT_IN_ROOM(15), //Tried to leave a room, but not in the room.
+    ROOM_NO_PRIVILEGES(16), //Tried to perform an elevated action, but have no permissions to do so.
     DATABASE(17),
     CANNOT_GET_AVATAR_ID(18),
     CANNOT_GET_NODE_ID(19),
     CANNOT_GET_PMSG_ID(20),
     PMSG_NOT_FOUND(21),
-    ROOM_MAX_AVATARS_REACHED(22),
-    IGNORING(23),
-    ROOM_ALREADY_EXISTS(24),
+    ROOM_MAX_AVATARS_REACHED(22), //Could not join the room becasue max number of avatars was reached.
+    IGNORING(23), //Can't communicate because ignoring avatar.
+    ROOM_ALREADY_EXISTS(24), //Tried to create a room, but the room already existed.
     NOTHING_TO_CONFIRM(25),
-    DUPLICATE_FRIEND(26),
-    IGNORE_NOT_FOUND(27),
-    DUPLICATE_IGNORE(28),
-    DB_FAIL(29),
-    ROOM_DST_AVATAR_NOT_MODERATOR(30),
-    ROOM_DST_AVATAR_NOT_INVITED(31),
-    ROOM_DST_AVATAR_NOT_BANNED(32),
-    ROOM_DUPLICATE_BAN(33),
-    ROOM_DUPLICATE_MODERATOR(34),
-    ROOM_DUPLICATE_INVITE(35),
-    ROOM_ALREADY_IN_ROOM(36),
-    ROOM_PARENT_NON_PERSISTENT(37),
+    DUPLICATE_FRIEND(26), //Tried to add a friend, but they were already a friend.
+    IGNORE_NOT_FOUND(27), //Tried to remove an ignore, but they were not ignored.
+    DUPLICATE_IGNORE(28), //Tried to add an ignore, but they were already ignored.
+    DB_FAIL(29), //Failure reading or writing to the database.
+    ROOM_DST_AVATAR_NOT_MODERATOR(30), //Tried to remove a moderator, but they were not a moderator.
+    ROOM_DST_AVATAR_NOT_INVITED(31), //Tried to uninvite an avatar, but they were not invited.
+    ROOM_DST_AVATAR_NOT_BANNED(32), //Tried to remove a ban, but the avatar was already not banned.
+    ROOM_DUPLICATE_BAN(33), //Tried to add a ban, but they were already banned.
+    ROOM_DUPLICATE_MODERATOR(34), //Tried to add a moderator, but they were already moderating.
+    ROOM_DUPLICATE_INVITE(35), //Tried to invite an avatar, but they were already invited.
+    ROOM_ALREADY_IN_ROOM(36), //Tried to join a room, but was already in the room.
+    ROOM_PARENT_NON_PERSISTENT(37), //Could not make room persistent because parent is not persistent.
     ROOM_PARENT_BAD_NOTE_TYPE(38),
     NO_FAN_CLUB_HANDLE(39),
 

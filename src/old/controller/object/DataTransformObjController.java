@@ -1,6 +1,5 @@
 package com.ocdsoft.bacta.swg.precu.controller.game.object;
 
-import com.ocdsoft.bacta.soe.controller.ObjController;
 import com.ocdsoft.bacta.soe.controller.ObjControllerId;
 import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
 import com.ocdsoft.bacta.swg.precu.message.game.scene.DataTransformMessage;

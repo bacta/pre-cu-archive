@@ -2,6 +2,7 @@ package com.ocdsoft.bacta.swg.server.chat;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import com.ocdsoft.bacta.engine.collect.RelationshipMap;
 import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
 import com.ocdsoft.bacta.soe.message.GameClientMessage;
 import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
@@ -37,21 +38,24 @@ import java.util.concurrent.atomic.AtomicInteger;
 public final class SwgChatServer implements Observer {
     private static final Logger LOGGER = LoggerFactory.getLogger(SwgChatServer.class);
 
-    private final GameNetworkMessageSerializer serializer;
+    private transient final GameNetworkMessageSerializer serializer;
+    private transient final ChatServerConfiguration configuration;
 
-    private final ChatAvatarId systemAvatarId;
-    private final String baseName;
+    private transient final TLongSet connectedPlayers;
+    private transient final ChatAvatarId systemAvatarId;
+    private transient final String baseName;
+
+    private transient SoeUdpConnection gameServerConnection;
+
+    //Persistent data.
     private final TObjectLongMap<ChatAvatarId> avatarIdToNetworkIdMap;
     private final TLongObjectMap<ChatAvatarId> networkIdToAvatarIdMap;
 
+    private final RelationshipMap<ChatAvatarId> friendRelationships;
+    private final RelationshipMap<ChatAvatarId> ignoreRelationships;
+
     private final Map<String, ChatRoom> chatRoomMap;
     private final AtomicInteger lastRoomId;
-
-    private final TLongSet connectedPlayers;
-
-    private SoeUdpConnection gameServerConnection;
-
-    private final ChatServerConfiguration configuration;
 
     @Inject
     public SwgChatServer(final ChatServerConfiguration configuration,
@@ -62,18 +66,19 @@ public final class SwgChatServer implements Observer {
         this.serializer = serializer;
         this.networkIdToAvatarIdMap = TCollections.synchronizedMap(new TLongObjectHashMap<>());
         this.avatarIdToNetworkIdMap = TCollections.synchronizedMap(new TObjectLongHashMap<>());
-        this.connectedPlayers = new TLongHashSet();
+        this.connectedPlayers = TCollections.synchronizedSet(new TLongHashSet());
         this.chatRoomMap = new ConcurrentHashMap<>();
 
+        //TODO: Should system avatar go through connect like soe did?
         this.systemAvatarId = configuration.getSystemAvatarId();
-
-        //Put the system avatar in the networkIdToAvatarIdMap and avatarIdtoNetworkIdMap with NetworkIdUtil.INVALID.
         this.networkIdToAvatarIdMap.put(NetworkIdUtil.INVALID, systemAvatarId);
         this.avatarIdToNetworkIdMap.put(systemAvatarId, NetworkIdUtil.INVALID);
 
-        this.baseName = String.format("%s.%s", systemAvatarId.getGameCode(), systemAvatarId.getCluster()).toLowerCase();
-
+        this.baseName = String.format("%s.%s", systemAvatarId.getGameCode(), systemAvatarId.getCluster());
         this.lastRoomId = new AtomicInteger(0);
+
+        this.friendRelationships = new RelationshipMap<>();
+        this.ignoreRelationships = new RelationshipMap<>();
     }
 
     public void notifyGameServerOnline(final SoeUdpConnection connection) {
@@ -106,16 +111,18 @@ public final class SwgChatServer implements Observer {
                 connection.getRemoteAddress().getPort(),
                 characterName);
 
-        connectedPlayers.add(networkId);
+        final ChatAvatarId avatarId = makeChatAvatarId(characterName);
 
         //TODO: Destroy any pending ChatDestroyAvatar request for this avatar name.
 
-        final ChatAvatarId avatarId = makeChatAvatarId(characterName);
+        //Add them to our set of connected players so that we know who's online/offline.
+        connectedPlayers.add(networkId);
 
         final ChatAvatarConnected avatarConnected = new ChatAvatarConnected(networkId);
         connection.sendMessage(avatarConnected);
 
         if (!avatarId.equals(systemAvatarId)) {
+            //Make sure we have them in our persisted NetworkId->AvatarId and AvatarId->NetworkId maps.
             avatarIdToNetworkIdMap.put(avatarId, networkId);
             networkIdToAvatarIdMap.put(networkId, avatarId);
 
@@ -127,6 +134,17 @@ public final class SwgChatServer implements Observer {
 
         final ChatOnConnectAvatar onAvatarConnected = new ChatOnConnectAvatar();
         sendToClient(networkId, onAvatarConnected);
+
+        notifyFriendsOfLogin(avatarId);
+    }
+
+    public void disconnectPlayer(final long networkId) {
+        final ChatAvatarId avatarId = networkIdToAvatarIdMap.get(networkId);
+
+        LOGGER.debug("Avatar [{}] disconnecting from chat server.", avatarId.getFullName());
+
+        connectedPlayers.remove(networkId);
+        notifyFriendsOfLogout(avatarId);
     }
 
     /**
@@ -161,7 +179,6 @@ public final class SwgChatServer implements Observer {
     /**
      * A request to create a new chat room.
      *
-     * @param connection
      * @param networkId
      * @param sequence
      * @param roomName
@@ -169,8 +186,7 @@ public final class SwgChatServer implements Observer {
      * @param isPublic
      * @param title
      */
-    public void createRoom(final SoeUdpConnection connection,
-                           final long networkId,
+    public void createRoom(final long networkId,
                            final int sequence,
                            final String roomName,
                            final boolean isModerated,
@@ -189,7 +205,7 @@ public final class SwgChatServer implements Observer {
 
         //If the room name is invalid, then it's either a programming error or a hacking attempt - ignore it.
         if (!isValidRoomName(lowerRoomName)) {
-            LOGGER.warn("Discarding invalid createRoom request with room name {} attempted by {}({}).",
+            LOGGER.warn("Discarding invalid createRoom request with room name {} attempted by {}({})",
                     lowerRoomName,
                     ownerId.getFullName(),
                     Long.toHexString(networkId));
@@ -198,7 +214,7 @@ public final class SwgChatServer implements Observer {
 
         //Make sure it's not a base room, and that it starts with the base path.
         if (lowerRoomName.equals(baseName) || !lowerRoomName.startsWith(baseName)) {
-            LOGGER.error("Room {} did not start with the required base name of {}.", lowerRoomName, baseName);
+            LOGGER.error("Room '{}' did not start with the required base name of '{}'", lowerRoomName, baseName);
             return;
         }
 
@@ -227,7 +243,7 @@ public final class SwgChatServer implements Observer {
 
                 //Check if the parent room exists. If not, create it.
                 if (!chatRoomMap.containsKey(parentRoom))
-                    createRoom(connection, networkId, 0, parentRoom, isModerated, isPublic, "");
+                    createRoom(networkId, 0, parentRoom, isModerated, isPublic, "");
             }
 
             //Setup the attributes for the room.
@@ -262,12 +278,41 @@ public final class SwgChatServer implements Observer {
 
         //Send the room to the client.
         final ChatOnCreateRoom response = new ChatOnCreateRoom(sequence, error.value, roomData);
-        connection.sendMessage(response);
+        gameServerConnection.sendMessage(response); //TODO: Should I use sendToClient!?
     }
 
     public void putSystemAvatarInRoom(final String roomName) {
         final long networkId = avatarIdToNetworkIdMap.get(systemAvatarId);
         enterRoom(networkId, 0, roomName);
+    }
+
+    public void removeSystemAvatarFromRoom(final ChatRoom room) {
+
+    }
+
+    public void enterRoom(final long networkId, final int sequence, final int roomId) {
+        final ChatAvatarId avatarId = networkIdToAvatarIdMap.get(networkId);
+        final ChatRoom room = getChatRoomById(roomId);
+
+        if (avatarId != null && room != null) {
+            internalEnterRoom(networkId, room, sequence);
+        } else {
+            //pending enter room!?
+        }
+    }
+
+    public void enterRoom(final ChatAvatarId avatarId, final String roomName, final boolean forceCreate, final boolean createPrivate) {
+        final String lowerRoomName = roomName.toLowerCase();
+
+        final ChatRoom room = chatRoomMap.get(lowerRoomName);
+        final long networkId = avatarIdToNetworkIdMap.get(avatarId);
+
+        if (room != null && networkId != NetworkIdUtil.INVALID) {
+            internalEnterRoom(networkId, room, 0);
+        } else if (forceCreate) {
+            createRoom(0, 0, lowerRoomName, false, !createPrivate, "");
+            //pending enter room!?
+        }
     }
 
     /**
@@ -304,29 +349,7 @@ public final class SwgChatServer implements Observer {
 
                 //Don't allow the player to enter or leave the root system rooms.
                 if (!leaf.equalsIgnoreCase(ChatRoomTypes.SYSTEM)) {
-
-                    //Send room data to player in case they didn't already know about the room...
-                    final ChatRoomList roomList = new ChatRoomList(Collections.singletonList(chatRoom.createChatRoomData()));
-                    sendToClient(networkId, roomList);
-
-                    //Tell the client the results of the request.
-                    final ChatOnEnteredRoom enteredRoom = new ChatOnEnteredRoom(sequence, error.value, roomId, avatarId);
-                    sendToClient(networkId, enteredRoom);
-
-                    LOGGER.info("{} entered room {} successfully.", avatarId.getFullName(), lowerRoomName);
-
-                    //Tell everyone else in the room.
-                    final Iterator<ChatAvatarId> occupants = chatRoom.getAvatarsIterator();
-
-                    while (occupants.hasNext()) {
-                        final ChatAvatarId occupantId = occupants.next();
-                        final long occupantNetworkId = avatarIdToNetworkIdMap.get(occupantId);
-
-                        if (occupantNetworkId != NetworkIdUtil.INVALID && occupantNetworkId != networkId) {
-                            sendToClient(occupantNetworkId, enteredRoom);
-                        }
-                    }
-
+                    internalEnterRoom(networkId, chatRoom, sequence);
                     return;
                 }
             }
@@ -339,6 +362,182 @@ public final class SwgChatServer implements Observer {
         //If we were unable to place the request, then we need to inform the client now.
         final ChatOnEnteredRoom fail = new ChatOnEnteredRoom(sequence, error.value, roomId, avatarId);
         sendToClient(networkId, fail);
+    }
+
+    private void internalEnterRoom(final long networkId, final ChatRoom chatRoom, int sequence) {
+        final ChatAvatarId avatarId = networkIdToAvatarIdMap.get(networkId);
+        ChatError error = ChatError.SUCCESS;
+
+        //Do some checks on if this avatar can enter the room.
+        if (chatRoom.isInRoom(avatarId)) {
+            error = ChatError.ROOM_ALREADY_IN_ROOM;
+        } else if (chatRoom.isBanned(avatarId)) {
+            error = ChatError.ROOM_BANNED_AVATAR;
+        } else if (chatRoom.isPrivate() &&
+                !chatRoom.isInvited(avatarId) &&
+                !chatRoom.isModerator(avatarId) &&
+                !chatRoom.isAdmin(avatarId) &&
+                !chatRoom.isOwner(avatarId)) {
+            error = ChatError.ROOM_PRIVATE_ROOM;
+        }
+
+        if (error == ChatError.SUCCESS) {
+            //Send room data to player in case they didn't already know about the room...
+            final ChatRoomList roomList = new ChatRoomList(Collections.singletonList(chatRoom.createChatRoomData()));
+            sendToClient(networkId, roomList);
+        }
+
+        //Tell the client that made the request, the results of the request.
+        final ChatOnEnteredRoom enteredRoom = new ChatOnEnteredRoom(sequence, error.value, chatRoom.getId(), avatarId);
+        sendToClient(networkId, enteredRoom);
+
+        if (error == ChatError.SUCCESS) {
+            //If success, tell everyone else in the room, if it's not a system room.
+            if (!chatRoom.getName().contains(".system")) {
+                final Iterator<ChatAvatarId> occupants = chatRoom.getAvatarsIterator();
+
+                while (occupants.hasNext()) {
+                    final ChatAvatarId occupantId = occupants.next();
+                    final long occupantNetworkId = avatarIdToNetworkIdMap.get(occupantId);
+
+                    if (occupantNetworkId != NetworkIdUtil.INVALID && occupantNetworkId != networkId) {
+                        sendToClient(occupantNetworkId, enteredRoom);
+                    }
+                }
+            }
+        }
+    }
+
+    public void leaveRoom(final long networkId, final int sequence, final int roomId) {
+
+    }
+
+    public void destroyRoom(final long networkId, final int sequence, final int roomId) {
+
+    }
+
+    public void destroyRoom(final String roomName) {
+
+    }
+
+    public void removeAvatarFromRoom(final long requestorId, final ChatAvatarId avatarId, final String roomName) {
+
+    }
+
+    public void removeAvatarFromRoom(final ChatAvatarId avatarId, final String roomName) {
+
+    }
+
+    public void kickAvatarFromRoom(final long networkId, final ChatAvatarId avatarId, final String roomName) {
+
+    }
+
+    public void sendRoomMessage(final long networkId, final int sequence, final int roomId, final String message, final String outOfBand) {
+
+    }
+
+    public void sendRoomMessage(final ChatAvatarId from, final String roomName, final String message, final String outOfBand) {
+
+    }
+
+    public void sendInstantMessage(final long fromId, final int sequence, final ChatAvatarId to, final String message, final String outOfBand) {
+
+    }
+
+    public void sendInstantMessage(final ChatAvatarId from, final ChatAvatarId to, final String message, final String outOfBand) {
+
+    }
+
+    public void addFriend(final long networkId, final int sequence, final ChatAvatarId friendName) {
+        final ChatAvatarId avatarId = networkIdToAvatarIdMap.get(networkId);
+        friendRelationships.add(avatarId, friendName);
+    }
+
+    public void removeFriend(final long networkId, final int sequence, final ChatAvatarId friendName) {
+        final ChatAvatarId avatarId = networkIdToAvatarIdMap.get(networkId);
+        friendRelationships.remove(avatarId, friendName);
+    }
+
+    public void getFriendsList(final ChatAvatarId characterName) {
+        LOGGER.debug("Getting friends list for {}", characterName.getFullName());
+
+        final long networkId = avatarIdToNetworkIdMap.get(characterName);
+
+        if (networkId != NetworkIdUtil.INVALID) {
+            final Set<ChatAvatarId> friendList = friendRelationships.getRelationships(characterName);
+
+            final ChatOnGetFriendsList msg = new ChatOnGetFriendsList(networkId, friendList);
+            sendToClient(networkId, msg);
+        }
+    }
+
+    public void addIgnore(final long networkId, final int sequence, final ChatAvatarId ignoreName) {
+        final ChatAvatarId avatarId = networkIdToAvatarIdMap.get(networkId);
+        ignoreRelationships.add(avatarId, ignoreName);
+    }
+
+    public void removeIgnore(final long networkId, final int sequence, final ChatAvatarId ignoreName) {
+        final ChatAvatarId avatarId = networkIdToAvatarIdMap.get(networkId);
+        ignoreRelationships.remove(avatarId, ignoreName);
+    }
+
+    public void getIgnoreList(final ChatAvatarId characterName) {
+        LOGGER.debug("Getting ignore list for {}", characterName.getFullName());
+
+        final long networkId = avatarIdToNetworkIdMap.get(characterName);
+
+        if (networkId != NetworkIdUtil.INVALID) {
+            final Set<ChatAvatarId> ignoreList = ignoreRelationships.getRelationships(characterName);
+
+            final ChatOnGetFriendsList msg = new ChatOnGetFriendsList(networkId, ignoreList);
+            sendToClient(networkId, msg);
+        }
+    }
+
+    /**
+     * Sends a status update message, indicating that the player has come online, to every player that connected to
+     * the chat server and has the player in their friends list.
+     *
+     * @param avatarId The player that has come online.
+     */
+    public void notifyFriendsOfLogin(final ChatAvatarId avatarId) {
+        final Set<ChatAvatarId> notificationList = friendRelationships.getReverseRelationships(avatarId);
+
+        LOGGER.debug("Notifying {} players that {} has logged in.",
+                notificationList.size(),
+                avatarId.getFullName());
+
+        notificationList.stream().forEach(friendId -> {
+            final long networkId = avatarIdToNetworkIdMap.get(friendId);
+
+            if (networkId != NetworkIdUtil.INVALID && connectedPlayers.contains(networkId)) {
+                final ChatFriendsListUpdate msg = new ChatFriendsListUpdate(avatarId, true);
+                sendToClient(networkId, msg);
+            }
+        });
+    }
+
+    /**
+     * Sends a status update message, indicating that the player has gone offline, to every player that connected to
+     * the chat server and has the player in their friends list.
+     *
+     * @param avatarId The player that has gone offline.
+     */
+    public void notifyFriendsOfLogout(final ChatAvatarId avatarId) {
+        final Set<ChatAvatarId> notificationList = friendRelationships.getReverseRelationships(avatarId);
+
+        LOGGER.debug("Notifying {} players that {} has logged out.",
+                notificationList.size(),
+                avatarId.getFullName());
+
+        notificationList.stream().forEach(friendId -> {
+            final long networkId = avatarIdToNetworkIdMap.get(friendId);
+
+            if (networkId != NetworkIdUtil.INVALID && connectedPlayers.contains(networkId)) {
+                final ChatFriendsListUpdate msg = new ChatFriendsListUpdate(avatarId, false);
+                sendToClient(networkId, msg);
+            }
+        });
     }
 
     /**
@@ -367,6 +566,21 @@ public final class SwgChatServer implements Observer {
         }
     }
 
+    /**
+     * Gets the chat room with the specified Id if it exists. Otherwise, returns null.
+     *
+     * @param roomId The id of the chat room.
+     * @return The chat room with the id. Otherwise, null.
+     */
+    public ChatRoom getChatRoomById(final int roomId) {
+        for (final ChatRoom room : chatRoomMap.values()) {
+            if (room.getId() == roomId)
+                return room;
+        }
+
+        return null;
+    }
+
     @Override
     public void update(final Observable o, final Object arg) {
 
@@ -391,10 +605,14 @@ public final class SwgChatServer implements Observer {
         return true;
     }
 
-    private ChatAvatarId makeChatAvatarId(final String characterName) {
+    public ChatAvatarId makeChatAvatarId(final String characterName) {
+        final String name = characterName.toLowerCase();
+        final int spaceIndex = name.indexOf(' ');
+        final String fixedName = spaceIndex != -1 ? name.substring(0, spaceIndex) : name;
+
         return new ChatAvatarId(
                 systemAvatarId.getGameCode(),
                 systemAvatarId.getCluster(),
-                characterName.toLowerCase()); //Make sure the name is lowercase.
+                fixedName);
     }
 }

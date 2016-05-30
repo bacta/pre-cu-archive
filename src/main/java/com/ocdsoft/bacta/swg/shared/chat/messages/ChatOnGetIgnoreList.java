@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.nio.ByteBuffer;
+import java.util.Set;
 
 /**
  * Created by crush on 5/20/2016.
@@ -16,28 +17,16 @@ import java.nio.ByteBuffer;
 @AllArgsConstructor
 public final class ChatOnGetIgnoreList extends GameNetworkMessage {
     private final long characterId;
-    private final ChatAvatarId[] ignores;
+    private final Set<ChatAvatarId> ignores;
 
     public ChatOnGetIgnoreList(final ByteBuffer buffer) {
         this.characterId = buffer.getLong();
-
-        final int size = buffer.getInt();
-
-        this.ignores = new ChatAvatarId[size];
-
-        for (int i = 0; i < size; ++i)
-            this.ignores[i] = new ChatAvatarId(buffer);
+        this.ignores = BufferUtil.getHashSet(buffer, ChatAvatarId::new);
     }
 
     @Override
     public void writeToBuffer(final ByteBuffer buffer) {
         BufferUtil.put(buffer, characterId);
-
-        final int size = ignores.length;
-
-        BufferUtil.put(buffer, size);
-
-        for (int i = 0; i < size; ++i)
-            BufferUtil.put(buffer, ignores[i]);
+        BufferUtil.put(buffer, ignores);
     }
 }
