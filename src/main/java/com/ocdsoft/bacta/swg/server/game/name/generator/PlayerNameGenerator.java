@@ -20,7 +20,7 @@ public class PlayerNameGenerator extends CreatureNameGenerator {
 
     @Inject
     public PlayerNameGenerator(GameServerState serverState, ConnectionDatabaseConnector databaseConnector) {
-        allFirstNames = databaseConnector.getClusterCharacterSet(serverState.getId());
+        allFirstNames = databaseConnector.getClusterCharacterSet(serverState.getClusterId());
     }
 
     @Override

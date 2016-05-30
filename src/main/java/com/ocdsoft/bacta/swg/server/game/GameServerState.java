@@ -8,7 +8,10 @@ import com.ocdsoft.bacta.swg.server.login.object.ClusterServer;
  */
 
 public interface GameServerState extends ServerState {
-    int getId();
+    int getClusterId();
     ClusterServer getClusterServer();
     void setOnlineUsers(int onlineUsers);
+    String getBranch();
+    int getVersion();
+    String getNetworkVersion();
 }

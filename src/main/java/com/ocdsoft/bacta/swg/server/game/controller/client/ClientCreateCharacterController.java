@@ -276,7 +276,7 @@ public class ClientCreateCharacterController implements GameNetworkMessageContro
                 newCharacterObject.getAssignedObjectName(),
                 SOECRC32.hashCode(newCharacterObject.getObjectTemplateName()),
                 newCharacterObject.getNetworkId(),
-                serverState.getId(),
+                serverState.getClusterId(),
                 CharacterInfo.Type.NORMAL,
                 false
         );

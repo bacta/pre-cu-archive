@@ -170,7 +170,9 @@ public final class GameServer implements Runnable, Observer {
 
     private void onConnect(final SoeUdpConnection connection) {
         LOGGER.debug("Sending server cluster information to {}:{}", connection.getRemoteAddress().getAddress().getHostAddress(), connection.getRemoteAddress().getPort());
-        final GameServerOnline gameServerOnline = new GameServerOnline(serverState.getClusterServer());
+        final GameServerOnline gameServerOnline = new GameServerOnline(
+                serverState.getClusterServer()
+        );
         connection.sendMessage(gameServerOnline);
     }
 

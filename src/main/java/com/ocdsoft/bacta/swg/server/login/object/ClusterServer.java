@@ -7,8 +7,10 @@ import com.ocdsoft.bacta.engine.utils.BufferUtil;
 import com.ocdsoft.bacta.soe.io.udp.GameNetworkConfiguration;
 import com.ocdsoft.bacta.soe.io.udp.NetworkConfiguration;
 import com.ocdsoft.bacta.soe.util.SoeMessageUtil;
+import com.ocdsoft.bacta.swg.server.game.GameServerState;
 import com.ocdsoft.bacta.swg.server.login.message.LoginClusterStatus;
 import com.ocdsoft.bacta.swg.server.login.message.LoginEnumCluster;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.net.InetSocketAddress;
@@ -25,9 +27,13 @@ public class ClusterServer implements ByteBufferWritable, Comparable<ClusterServ
     private final String name;
     private final LoginClusterStatus.ClusterData statusClusterData;
     private final LoginEnumCluster.ClusterData clusterData;
+    private final ExtendedClusterData extendedClusterData;
 
     @Inject
-    public ClusterServer(final BactaConfiguration configuration, final GameNetworkConfiguration networkConfiguration) {
+    public ClusterServer(final BactaConfiguration configuration,
+                         final GameNetworkConfiguration networkConfiguration,
+                         final GameServerState gameServerState) {
+
         id = networkConfiguration.getClusterId();
         remoteAddress = new InetSocketAddress(
                 networkConfiguration.getPublicAddress(),
@@ -39,6 +45,8 @@ public class ClusterServer implements ByteBufferWritable, Comparable<ClusterServ
 
         statusClusterData = new LoginClusterStatus.ClusterData(configuration, networkConfiguration);
         clusterData = new LoginEnumCluster.ClusterData(id, name);
+
+        extendedClusterData = new ExtendedClusterData(gameServerState);
     }
 
     /**
@@ -62,6 +70,16 @@ public class ClusterServer implements ByteBufferWritable, Comparable<ClusterServ
 
         statusClusterData = new LoginClusterStatus.ClusterData(status);
         clusterData = new LoginEnumCluster.ClusterData(id, name);
+        extendedClusterData = new ExtendedClusterData(
+                id,
+                (String) clusterInfo.get("branch"),
+                (String) clusterInfo.get("networkVersion"),
+                ((Double)clusterInfo.get("version")).intValue(),
+                ((Double)clusterInfo.get("reserved1")).intValue(),
+                ((Double)clusterInfo.get("reserved2")).intValue(),
+                ((Double)clusterInfo.get("reserved3")).intValue(),
+                ((Double)clusterInfo.get("reserved4")).intValue()
+        );
     }
 
     public ClusterServer(ByteBuffer buffer) {
@@ -76,6 +94,7 @@ public class ClusterServer implements ByteBufferWritable, Comparable<ClusterServ
 
         statusClusterData = new LoginClusterStatus.ClusterData(buffer);
         clusterData = new LoginEnumCluster.ClusterData(buffer);
+        extendedClusterData = new ExtendedClusterData(buffer);
     }
 
 
@@ -96,6 +115,7 @@ public class ClusterServer implements ByteBufferWritable, Comparable<ClusterServ
 
         statusClusterData.writeToBuffer(buffer);
         clusterData.writeToBuffer(buffer);
+        extendedClusterData.writeToBuffer(buffer);
     }
 
 
@@ -130,4 +150,51 @@ public class ClusterServer implements ByteBufferWritable, Comparable<ClusterServ
     }
 
 
+    @Getter
+    @AllArgsConstructor
+    public static class ExtendedClusterData implements ByteBufferWritable {
+
+        private final int clusterId;
+        private final String branch;
+        private final String networkVersion;
+        private final int version;
+        private final int reserved1;
+        private final int reserved2;
+        private final int reserved3;
+        private final int reserved4;
+
+        public ExtendedClusterData(final GameServerState gameServerState) {
+            this.clusterId = gameServerState.getClusterId();
+            this.branch = gameServerState.getBranch();
+            this.networkVersion = gameServerState.getNetworkVersion();
+            this.version = gameServerState.getVersion();
+            this.reserved1 = 0;
+            this.reserved2 = 0;
+            this.reserved3 = 0;
+            this.reserved4 = 0;
+        }
+
+        public ExtendedClusterData(ByteBuffer buffer) {
+            this.clusterId = buffer.getInt();
+            this.branch = BufferUtil.getAscii(buffer);
+            this.networkVersion = BufferUtil.getAscii(buffer);
+            this.version = buffer.getInt();
+            this.reserved1 = buffer.getInt();
+            this.reserved2 = buffer.getInt();
+            this.reserved3 = buffer.getInt();
+            this.reserved4 = buffer.getInt();
+        }
+
+        @Override
+        public void writeToBuffer(ByteBuffer buffer) {
+            buffer.putInt(clusterId);
+            BufferUtil.putAscii(buffer, branch);
+            BufferUtil.putAscii(buffer, networkVersion);
+            buffer.putInt(version);
+            buffer.putInt(reserved1);
+            buffer.putInt(reserved2);
+            buffer.putInt(reserved3);
+            buffer.putInt(reserved4);
+        }
+    }
 }

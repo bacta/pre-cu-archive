@@ -11,7 +11,7 @@ import lombok.Data;
 @Data
 public class PingServerState implements ServerState {
 
-    private int id;
+    private int clusterId;
 
     private final ServerType serverType;
     private ServerStatus serverStatus;

@@ -14,8 +14,7 @@ public class ChatServerState implements ServerState {
         this.serverStatus = ServerStatus.DOWN;
     }
 
-    @Override
-    public int getId() {
+    public int getClusterId() {
         return 0;
     }
 

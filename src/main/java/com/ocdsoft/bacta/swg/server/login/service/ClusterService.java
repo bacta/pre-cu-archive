@@ -129,7 +129,7 @@ public class ClusterService implements Observer {
         }
     }
 
-    public Collection<ClusterServer> getClusterEntries() {
+    public Set<ClusterServer> getClusterEntries() {
         return clusterServerSet;
     }
 

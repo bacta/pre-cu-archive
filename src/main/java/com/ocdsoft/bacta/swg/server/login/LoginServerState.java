@@ -15,8 +15,7 @@ public class LoginServerState implements ServerState {
         serverStatus = ServerStatus.DOWN;
     }
 
-    @Override
-    public int getId() {
+    public int getClusterId() {
         return 0;
     }
 
