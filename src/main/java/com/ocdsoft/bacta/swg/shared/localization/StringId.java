@@ -13,9 +13,9 @@ import java.nio.ByteBuffer;
 public final class StringId implements ByteBufferWritable {
     public static final StringId INVALID = new StringId();
 
-    private String table;
-    private String text;
-    private int textIndex;
+    private final String table;
+    private final String text;
+    private final int textIndex;
 
     public StringId() {
         this.table = "";
@@ -77,30 +77,12 @@ public final class StringId implements ByteBufferWritable {
         return !this.table.isEmpty() && (!this.text.isEmpty() || this.textIndex != 0);
     }
 
-    public void clear() {
-        this.table = "";
-        this.text = "";
-        this.textIndex = 0;
-    }
-
     public String getDebugString() {
         return this.table + ':' + this.text;
     }
 
     public String getCanonicalRepresentation() {
         return this.table + ':' + this.text;
-    }
-
-    public void setTable(final String table) {
-        this.table = table;
-    }
-
-    public void setText(final String text) {
-        this.text = text;
-    }
-
-    public void setTextIndex(final int textIndex) {
-        this.textIndex = textIndex;
     }
 
     public String localize(final LocalizationManager localizationManager) {
@@ -121,9 +103,9 @@ public final class StringId implements ByteBufferWritable {
     }
 
     @Override
-    public void writeToBuffer(ByteBuffer buffer) {
+    public void writeToBuffer(final ByteBuffer buffer) {
         BufferUtil.putAscii(buffer, table);
-        buffer.putInt(textIndex);
+        BufferUtil.put(buffer, textIndex);
         BufferUtil.putAscii(buffer, text);
     }
 }

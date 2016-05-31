@@ -1,4 +1,4 @@
-package com.ocdsoft.bacta.swg.server.game.message.object;
+package com.ocdsoft.bacta.swg.server.game.radialmenu;
 
 import com.ocdsoft.bacta.engine.buffer.ByteBufferWritable;
 import com.ocdsoft.bacta.engine.utils.BufferUtil;
@@ -36,8 +36,7 @@ public final class ObjectMenuRequestData implements ByteBufferWritable {
                                  final short menuItemType,
                                  final String label,
                                  final boolean enabled,
-                                 final boolean serverNotify,
-                                 final boolean outOfRange) {
+                                 final boolean serverNotify) {
         this.id = id;
         this.parentId = parentId;
         this.menuItemType = menuItemType;
@@ -50,9 +49,6 @@ public final class ObjectMenuRequestData implements ByteBufferWritable {
 
         if (serverNotify)
             tempFlags |= SERVER_NOTIFY;
-
-        if (outOfRange)
-            tempFlags |= OUT_OF_RANGE;
 
         this.flags = tempFlags;
     }

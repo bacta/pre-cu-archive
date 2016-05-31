@@ -1,7 +1,9 @@
-package com.ocdsoft.bacta.swg.server.game.controller.object;
+package com.ocdsoft.bacta.swg.server.game.controller.object.queue;
 
 import com.google.inject.Inject;
 import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
+import com.ocdsoft.bacta.swg.server.game.controller.object.GameControllerMessage;
+import com.ocdsoft.bacta.swg.server.game.controller.object.MessageQueueController;
 import com.ocdsoft.bacta.swg.server.game.message.object.GameControllerMessageType;
 import com.ocdsoft.bacta.swg.server.game.message.object.MessageQueueCommandQueueEnqueue;
 import com.ocdsoft.bacta.swg.server.game.object.ServerObject;
@@ -20,7 +22,7 @@ public class CommandQueueEnqueueController implements MessageQueueController<Mes
     }
 
     @Override
-    public void handleIncoming(final SoeUdpConnection connection, final ServerObject actor, final MessageQueueCommandQueueEnqueue data) {
+    public void handleIncoming(final SoeUdpConnection connection, final ServerObject actor, final int flags, final float value, final MessageQueueCommandQueueEnqueue data) {
         dispatcher.dispatch(connection, actor, data);
     }
 }

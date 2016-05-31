@@ -19,6 +19,7 @@ import com.ocdsoft.bacta.swg.server.game.message.scene.SceneDestroyObject;
 import com.ocdsoft.bacta.swg.server.game.message.scene.SceneEndBaselines;
 import com.ocdsoft.bacta.swg.server.game.message.scene.UpdateContainmentMessage;
 import com.ocdsoft.bacta.swg.server.game.object.cell.CellObject;
+import com.ocdsoft.bacta.swg.server.game.object.intangible.player.PlayerObject;
 import com.ocdsoft.bacta.swg.server.game.object.tangible.TangibleObject;
 import com.ocdsoft.bacta.swg.server.game.object.tangible.creature.CreatureObject;
 import com.ocdsoft.bacta.swg.server.game.object.template.server.ServerObjectTemplate;
@@ -68,6 +69,8 @@ public abstract class ServerObject extends GameObject implements Subject<Observa
 
     @Getter
     private transient boolean initialized = false;
+
+    protected transient int movementSequenceId = 0;
 
     @Getter
     @Setter
@@ -683,7 +686,7 @@ public abstract class ServerObject extends GameObject implements Subject<Observa
 
             final GameObject containedBy = containedByProperty.getContainedBy();
 
-            if(containedBy != null) {
+            if (containedBy != null) {
                 return containedBy.getNetworkId();
             }
         }
@@ -747,6 +750,10 @@ public abstract class ServerObject extends GameObject implements Subject<Observa
 
     public CreatureObject asCreatureObject() {
         return this instanceof CreatureObject ? (CreatureObject) this : null;
+    }
+
+    public PlayerObject asPlayerObject() {
+        return this instanceof PlayerObject ? (PlayerObject) this : null;
     }
 
     public GroupObject asGroupObject() {

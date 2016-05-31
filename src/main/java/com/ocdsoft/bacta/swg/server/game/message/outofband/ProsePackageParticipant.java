@@ -3,9 +3,11 @@ package com.ocdsoft.bacta.swg.server.game.message.outofband;
 import com.ocdsoft.bacta.engine.buffer.ByteBufferWritable;
 import com.ocdsoft.bacta.engine.utils.BufferUtil;
 import com.ocdsoft.bacta.swg.shared.localization.StringId;
+import lombok.Getter;
 
 import java.nio.ByteBuffer;
 
+@Getter
 public final class ProsePackageParticipant implements ByteBufferWritable {
     public static final ProsePackageParticipant EMPTY = new ProsePackageParticipant();
 
@@ -63,8 +65,8 @@ public final class ProsePackageParticipant implements ByteBufferWritable {
 
     @Override
     public void writeToBuffer(final ByteBuffer buffer) {
-        buffer.putLong(id);
-        stringId.writeToBuffer(buffer);
+        BufferUtil.put(buffer, id);
+        BufferUtil.put(buffer, stringId);
         BufferUtil.putUnicode(buffer, unicodeString);
     }
 }

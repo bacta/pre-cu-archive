@@ -96,6 +96,10 @@ public class CreatureObject extends TangibleObject {
     private final AutoDeltaLong intendedTarget;
     private final AutoDeltaByte mood;
 
+    private float lookAtYaw;
+    private boolean useLookAtYaw;
+    private int lookAtPositionSequenceId;
+
 
     @Inject
     public CreatureObject(final ObjectTemplateList objectTempalteList,
@@ -692,6 +696,23 @@ public class CreatureObject extends TangibleObject {
     public boolean isDisabled() {
         //Check if its a vehicle type or sub type, then super.isDisabled()
         return (isIncapacitated() || isDead());
+    }
+
+
+    public void setLookAtYaw(final float lookAtYaw, final boolean useLookAtYaw) {
+        if (useLookAtYaw && (this.lookAtYaw != lookAtYaw))
+            setTransformChanged(true);
+
+        this.lookAtYaw = lookAtYaw;
+        this.useLookAtYaw = useLookAtYaw;
+    }
+
+    public float getLookAtYaw() {
+        return lookAtYaw;
+    }
+
+    public boolean getUseLookAtYaw() {
+        return useLookAtYaw;
     }
 
     @Override

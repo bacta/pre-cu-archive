@@ -94,6 +94,10 @@ public final class SwgChatServer implements Observer {
         }
     }
 
+    public long getNetworkIdByAvatarId(final ChatAvatarId avatarId) {
+        return avatarIdToNetworkIdMap.get(avatarId);
+    }
+
     /**
      * Connects a player to the chat server, storing a connection to the game server from which they are communicating, their
      * BactaId identifying them on the Bacta Network, and the networkId associated with their creature.
@@ -227,7 +231,7 @@ public final class SwgChatServer implements Observer {
                 title,
                 lowerRoomName);
 
-        ChatError error = ChatError.SUCCESS;
+        ChatResult error = ChatResult.SUCCESS;
         ChatRoomData roomData = ChatRoomData.EMPTY;
 
         //Check if the room already exists...
@@ -273,7 +277,7 @@ public final class SwgChatServer implements Observer {
             putSystemAvatarInRoom(lowerRoomName);
         } else {
             LOGGER.debug("Declined creation of room {} because it already exists.", lowerRoomName);
-            error = ChatError.ROOM_ALREADY_EXISTS;
+            error = ChatResult.ROOM_ALREADY_EXISTS;
         }
 
         //Send the room to the client.
@@ -334,7 +338,7 @@ public final class SwgChatServer implements Observer {
 
         final String lowerRoomName = roomName.toLowerCase();
 
-        ChatError error = ChatError.SUCCESS;
+        ChatResult error = ChatResult.SUCCESS;
         int roomId = 0;
 
         final ChatRoom chatRoom = chatRoomMap.get(lowerRoomName);
@@ -354,9 +358,9 @@ public final class SwgChatServer implements Observer {
                 }
             }
 
-            error = ChatError.ROOM_UNKNOWN_FAILURE;
+            error = ChatResult.ROOM_UNKNOWN_FAILURE;
         } else {
-            error = ChatError.ADDRESS_NOT_ROOM;
+            error = ChatResult.ADDRESS_NOT_ROOM;
         }
 
         //If we were unable to place the request, then we need to inform the client now.
@@ -366,22 +370,22 @@ public final class SwgChatServer implements Observer {
 
     private void internalEnterRoom(final long networkId, final ChatRoom chatRoom, int sequence) {
         final ChatAvatarId avatarId = networkIdToAvatarIdMap.get(networkId);
-        ChatError error = ChatError.SUCCESS;
+        ChatResult error = ChatResult.SUCCESS;
 
         //Do some checks on if this avatar can enter the room.
         if (chatRoom.isInRoom(avatarId)) {
-            error = ChatError.ROOM_ALREADY_IN_ROOM;
+            error = ChatResult.ROOM_ALREADY_IN_ROOM;
         } else if (chatRoom.isBanned(avatarId)) {
-            error = ChatError.ROOM_BANNED_AVATAR;
+            error = ChatResult.ROOM_BANNED_AVATAR;
         } else if (chatRoom.isPrivate() &&
                 !chatRoom.isInvited(avatarId) &&
                 !chatRoom.isModerator(avatarId) &&
                 !chatRoom.isAdmin(avatarId) &&
                 !chatRoom.isOwner(avatarId)) {
-            error = ChatError.ROOM_PRIVATE_ROOM;
+            error = ChatResult.ROOM_PRIVATE_ROOM;
         }
 
-        if (error == ChatError.SUCCESS) {
+        if (error == ChatResult.SUCCESS) {
             //Send room data to player in case they didn't already know about the room...
             final ChatRoomList roomList = new ChatRoomList(Collections.singletonList(chatRoom.createChatRoomData()));
             sendToClient(networkId, roomList);
@@ -391,7 +395,7 @@ public final class SwgChatServer implements Observer {
         final ChatOnEnteredRoom enteredRoom = new ChatOnEnteredRoom(sequence, error.value, chatRoom.getId(), avatarId);
         sendToClient(networkId, enteredRoom);
 
-        if (error == ChatError.SUCCESS) {
+        if (error == ChatResult.SUCCESS) {
             //If success, tell everyone else in the room, if it's not a system room.
             if (!chatRoom.getName().contains(".system")) {
                 final Iterator<ChatAvatarId> occupants = chatRoom.getAvatarsIterator();
@@ -448,9 +452,37 @@ public final class SwgChatServer implements Observer {
 
     }
 
-    public void addFriend(final long networkId, final int sequence, final ChatAvatarId friendName) {
+    public void addFriend(final long networkId, final int sequence, final ChatAvatarId friendId) {
         final ChatAvatarId avatarId = networkIdToAvatarIdMap.get(networkId);
-        friendRelationships.add(avatarId, friendName);
+
+        ChatResult result = ChatResult.SUCCESS;
+
+        //Make sure that the source avatar is known by the chat server.
+        if (avatarId == null || networkId == NetworkIdUtil.INVALID)
+            result = ChatResult.SRC_AVATAR_DOESNT_EXIST;
+
+            //Check to make sure that the friend is known by the chat server.
+        else if (friendId == null || avatarIdToNetworkIdMap.get(friendId) == NetworkIdUtil.INVALID)
+            result = ChatResult.DST_AVATAR_DOESNT_EXIST;
+
+            //Check if are already on the friends list.
+        else if (friendRelationships.hasRelationshipWith(avatarId, friendId))
+            result = ChatResult.DUPLICATE_FRIEND;
+
+        //If no errors, then add the friend, and send the onAddFriend message.
+        if (result == ChatResult.SUCCESS) {
+            friendRelationships.add(avatarId, friendId);
+
+            final ChatOnAddFriend msg = new ChatOnAddFriend(0, result.value);
+            sendToClient(networkId, msg);
+
+            //Apparently the game server will request the friend list for the player.
+            //notifyFriendOfLogin(avatarId, friendId);
+        }
+
+        //Send the acknowledgement that the request was handled.
+        final ChatOnChangeFriendStatus onChangeFriendStatus = new ChatOnChangeFriendStatus(0, networkId, friendId, true, result);
+        sendToClient(networkId, onChangeFriendStatus);
     }
 
     public void removeFriend(final long networkId, final int sequence, final ChatAvatarId friendName) {
@@ -507,14 +539,24 @@ public final class SwgChatServer implements Observer {
                 notificationList.size(),
                 avatarId.getFullName());
 
-        notificationList.stream().forEach(friendId -> {
-            final long networkId = avatarIdToNetworkIdMap.get(friendId);
+        notificationList.stream().forEach(friendId -> notifyFriendOfLogin(avatarId, friendId));
+    }
 
-            if (networkId != NetworkIdUtil.INVALID && connectedPlayers.contains(networkId)) {
-                final ChatFriendsListUpdate msg = new ChatFriendsListUpdate(avatarId, true);
-                sendToClient(networkId, msg);
-            }
-        });
+    /**
+     * Sends a status update message to an individual friend that the player has come online. The friend must be
+     * connected to the chat server in order to receive the update.
+     *
+     * @param avatarId The player that has come online.
+     * @param friendId The friend that will receive the status update.
+     */
+    public void notifyFriendOfLogin(final ChatAvatarId avatarId, final ChatAvatarId friendId) {
+        final long friendNetworkId = avatarIdToNetworkIdMap.get(friendId);
+
+        //Make sure they are online and a valid networkId
+        if (friendNetworkId != NetworkIdUtil.INVALID && connectedPlayers.contains(friendNetworkId)) {
+            final ChatFriendsListUpdate msg = new ChatFriendsListUpdate(avatarId, true);
+            sendToClient(friendNetworkId, msg);
+        }
     }
 
     /**

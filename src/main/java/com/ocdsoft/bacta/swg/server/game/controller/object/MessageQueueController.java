@@ -8,5 +8,5 @@ import com.ocdsoft.bacta.swg.server.game.object.ServerObject;
  * Created by crush on 5/29/2016.
  */
 public interface MessageQueueController<T extends MessageQueueData> {
-    void handleIncoming(SoeUdpConnection connection, ServerObject actor, T data);
+    void handleIncoming(SoeUdpConnection connection, ServerObject actor, int flags, float value, T data);
 }

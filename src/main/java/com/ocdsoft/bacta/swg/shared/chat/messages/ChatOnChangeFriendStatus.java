@@ -15,18 +15,18 @@ import java.nio.ByteBuffer;
 @Priority(0x05)
 @AllArgsConstructor
 public final class ChatOnChangeFriendStatus extends GameNetworkMessage {
+    private final int sequence;
     private final long characterNetworkId;
     private final ChatAvatarId friendId;
-    private final int sequence;
     private final boolean add;
-    private final int resultCode;
+    private final ChatResult resultCode;
 
     public ChatOnChangeFriendStatus(final ByteBuffer buffer) {
         characterNetworkId = buffer.getLong();
         friendId = new ChatAvatarId(buffer);
         sequence = buffer.getInt();
         add = BufferUtil.getBoolean(buffer);
-        resultCode = buffer.getInt();
+        resultCode = ChatResult.from(buffer.getInt());
     }
 
     @Override
@@ -35,6 +35,6 @@ public final class ChatOnChangeFriendStatus extends GameNetworkMessage {
         BufferUtil.put(buffer, friendId);
         BufferUtil.put(buffer, sequence);
         BufferUtil.put(buffer, add);
-        BufferUtil.put(buffer, resultCode);
+        BufferUtil.put(buffer, resultCode.value);
     }
 }

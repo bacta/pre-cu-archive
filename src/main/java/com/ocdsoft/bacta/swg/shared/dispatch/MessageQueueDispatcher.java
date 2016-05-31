@@ -72,7 +72,7 @@ public final class MessageQueueDispatcher {
         final MessageQueueController controller = controllers.get(type);
 
         if (controller != null) {
-            controller.handleIncoming(connection, actor, message.getData());
+            controller.handleIncoming(connection, actor, message.getFlags(), message.getValue(), message.getData());
         } else {
             LOGGER.error("No controller loaded to handle ObjControllerMessage of type {}.", type);
         }

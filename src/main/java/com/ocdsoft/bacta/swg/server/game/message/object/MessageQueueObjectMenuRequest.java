@@ -2,6 +2,7 @@ package com.ocdsoft.bacta.swg.server.game.message.object;
 
 import com.ocdsoft.bacta.engine.utils.BufferUtil;
 import com.ocdsoft.bacta.swg.server.game.controller.object.GameControllerMessage;
+import com.ocdsoft.bacta.swg.server.game.radialmenu.ObjectMenuRequestData;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

@@ -15,8 +15,8 @@ import java.nio.ByteBuffer;
 @Priority(0x05)
 @AllArgsConstructor
 public final class ChatOnAddFriend extends GameNetworkMessage {
-    private final int result;
     private final int sequence;
+    private final int result;
 
     public ChatOnAddFriend(final ByteBuffer buffer) {
         this.result = buffer.getInt();

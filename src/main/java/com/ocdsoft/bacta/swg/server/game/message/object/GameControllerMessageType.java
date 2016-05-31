@@ -1,5 +1,8 @@
 package com.ocdsoft.bacta.swg.server.game.message.object;
 
+import gnu.trove.map.TIntObjectMap;
+import gnu.trove.map.hash.TIntObjectHashMap;
+
 public enum GameControllerMessageType {
     NOTHING(0),
     CAMERA_YAW(1),
@@ -840,7 +843,16 @@ public enum GameControllerMessageType {
     REMOVE_ALL_OBJECT_EFFECT(1251),
     LAST(1252);
 
-    private static final GameControllerMessageType[] values = values();
+    private static final TIntObjectMap<GameControllerMessageType> reverseLookup;
+
+    static {
+        final GameControllerMessageType[] types = values();
+        reverseLookup = new TIntObjectHashMap<>(types.length);
+
+        for (final GameControllerMessageType type : types)
+            reverseLookup.put(type.value, type);
+    }
+
     public final int value;
 
     GameControllerMessageType(final int value) {
@@ -848,9 +860,12 @@ public enum GameControllerMessageType {
     }
 
     public static GameControllerMessageType from(final int value) {
-        if (value < 0 || value > LAST.value)
-            return values[0];
+        final GameControllerMessageType type = reverseLookup.get(value);
 
-        return values[value];
+        if (type == null)
+            throw new ArrayIndexOutOfBoundsException(
+                    String.format("No GameControllerMessageType could be found corresponding to the value %d", value));
+
+        return type;
     }
 }

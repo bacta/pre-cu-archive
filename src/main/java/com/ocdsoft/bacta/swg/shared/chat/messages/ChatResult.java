@@ -1,9 +1,13 @@
 package com.ocdsoft.bacta.swg.shared.chat.messages;
 
+import gnu.trove.TCollections;
+import gnu.trove.map.TIntObjectMap;
+import gnu.trove.map.hash.TIntObjectHashMap;
+
 /**
  * Created by crush on 5/20/2016.
  */
-public enum ChatError {
+public enum ChatResult {
     SUCCESS(0),
     TIMEOUT(1), //ChatApi timedout...
     DUPLICATE_LOGIN(2), //Tried to connect, but already connected!?
@@ -12,7 +16,7 @@ public enum ChatError {
     ADDRESS_DOESNT_EXIST(5), //Address doesn't exist...
     ADDRESS_NOT_ROOM(6), //Address is not a room...
     ADDRESS_NOT_AID(7),
-    FRIEND_NOT_FOUND(8),
+    FRIEND_NOT_FOUND(8), //Tried to remove a friend, but they were not a friend.
     ROOM_UNKNOWN_FAILURE(9), //Unknown failure.
     ROOM_SRC_NOT_IN_ROOM(10), //Generic result where an avatar is the source of an action, but is not present in room.
     ROOM_DST_NOT_IN_ROOM(11),
@@ -52,9 +56,33 @@ public enum ChatError {
     NOT_WARDEN(1000004),
     WRONG_GCW_REGION_DEFENDER_FACTION(1000005);
 
+
+    private static final TIntObjectMap<ChatResult> reverseLookup;
+
+    static {
+        final ChatResult[] types = values();
+        final int size = types.length;
+
+        final TIntObjectMap<ChatResult> temporaryMap = new TIntObjectHashMap<>(size);
+
+        for (final ChatResult type : types)
+            temporaryMap.put(type.value, type);
+
+        reverseLookup = TCollections.unmodifiableMap(temporaryMap);
+    }
+
     public final int value;
 
-    ChatError(final int value) {
+    ChatResult(final int value) {
         this.value = value;
+    }
+
+    public static ChatResult from(final int value) {
+        final ChatResult type = reverseLookup.get(value);
+
+        if (type == null)
+            throw new IllegalArgumentException("The provided value does not map to any ChatResult type.");
+
+        return type;
     }
 }

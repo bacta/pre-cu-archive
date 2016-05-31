@@ -295,4 +295,9 @@ public class ContainerService {
 
         return count;
     }
+
+    public static GameObject getContainedByObject(final GameObject object) {
+        final ContainedByProperty property = object.getContainedByProperty();
+        return property == null ? null : property.getContainedBy();
+    }
 }

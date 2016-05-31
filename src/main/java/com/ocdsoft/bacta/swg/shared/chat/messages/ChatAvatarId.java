@@ -107,29 +107,22 @@ public final class ChatAvatarId implements ByteBufferWritable {
     }
 
     /**
-     * Gets the name with any missing prefixes appended based on the provided parts. For example, if the existing
-     * ChatAvatarId only consisted of the name part "crush", then one might call this method as follows:
-     * <code>
-     * ChatAvatarId chatAvatarId = new ChatAvatarId("crush"); //Only the name part has a value
-     * chatAvatarId.getNameWithNecessaryPrefix("swg", "bacta");
-     * </code>
-     * This would produce the string "swg.bacta.crush" as opposed to simply "crush" which would be returned from #getFullName().
+     * Gets only the necessary parts of the ChatAvatarId for the local game and cluster. If it's on the same game and
+     * cluster, then it will return just the name. If its on the same game, but a different cluster, then it will
+     * return the name and cluster. If its a different game and cluster, then it will return the game, cluster, and name.
      *
-     * @param localGameCode The game code to use if this ChatAvatarId does not have one specified.
-     * @param localCluster  The cluster to use if this ChatAvatarId does not have one specified.
-     * @return A fully qualified ChatAvatarId name with all missing prefixes supplied as specified by the values passed.
+     * @param localGameCode The local game server's game code.
+     * @param localCluster  The local game server's cluster name.
+     * @return The name with only the necessary prefixes appended.
      */
     public final String getNameWithNecessaryPrefix(final String localGameCode, final String localCluster) {
-        int gameCodeLength = gameCode.length() > 0 ? gameCode.length() : localGameCode.length();
-        int clusterLength = cluster.length() > 0 ? cluster.length() : localCluster.length();
-
-        final StringBuilder stringBuilder = new StringBuilder(gameCodeLength + clusterLength + name.length());
-
-        stringBuilder.append(gameCode.length() > 0 ? gameCode : localGameCode).append('.');
-        stringBuilder.append(gameCode.length() > 0 ? gameCode : localCluster).append('.');
-        stringBuilder.append(name);
-
-        return stringBuilder.toString();
+        if (!gameCode.equalsIgnoreCase(localGameCode)) {
+            return String.format("%s.%s.%s", gameCode, cluster, name);
+        } else if (!cluster.equalsIgnoreCase(localCluster)) {
+            return String.format("%s.%s", cluster, name);
+        } else {
+            return name;
+        }
     }
 
     @Override
@@ -137,5 +130,28 @@ public final class ChatAvatarId implements ByteBufferWritable {
         BufferUtil.putAscii(buffer, gameCode);
         BufferUtil.putAscii(buffer, cluster);
         BufferUtil.putAscii(buffer, name);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        final ChatAvatarId avatarId = (ChatAvatarId) o;
+
+        if (getGameCode() != null ? !getGameCode().equals(avatarId.getGameCode()) : avatarId.getGameCode() != null)
+            return false;
+        if (getCluster() != null ? !getCluster().equals(avatarId.getCluster()) : avatarId.getCluster() != null)
+            return false;
+        return getName() != null ? getName().equals(avatarId.getName()) : avatarId.getName() == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getGameCode() != null ? getGameCode().hashCode() : 0;
+        result = 31 * result + (getCluster() != null ? getCluster().hashCode() : 0);
+        result = 31 * result + (getName() != null ? getName().hashCode() : 0);
+        return result;
     }
 }

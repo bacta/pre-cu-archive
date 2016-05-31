@@ -14,10 +14,12 @@ import com.ocdsoft.bacta.swg.server.game.message.outofband.ProsePackage;
 import com.ocdsoft.bacta.swg.server.game.message.outofband.ProsePackageParticipant;
 import com.ocdsoft.bacta.swg.server.game.object.ServerObject;
 import com.ocdsoft.bacta.swg.server.game.object.tangible.creature.CreatureObject;
+import com.ocdsoft.bacta.swg.shared.chat.ChatAvatarIdBuilder;
 import com.ocdsoft.bacta.swg.shared.chat.ChatRoomTypes;
 import com.ocdsoft.bacta.swg.shared.chat.messages.*;
 import com.ocdsoft.bacta.swg.shared.localization.StringId;
 import gnu.trove.list.TLongList;
+import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,17 +38,18 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Singleton
 public final class GameChatService {
     private static final Logger LOGGER = LoggerFactory.getLogger(GameChatService.class);
-
     private static final String SYSTEM_AVATAR_NAME = "SYSTEM";
     private static final AtomicInteger sequenceId = new AtomicInteger(1);
 
-    private final GameServerState serverState;
-
+    @Getter
     private final ChatAvatarId serverAvatar;
+    private final GameServerState serverState;
 
     private final String systemRoomPath;
     private final String imperialRoomPath;
     private final String rebelRoomPath;
+
+    private final ChatAvatarIdBuilder avatarBuilder;
 
     private SoeUdpConnection chatServerConnection;
 
@@ -59,8 +62,8 @@ public final class GameChatService {
 
         //Create the server chat avatar based off of configuration values.
         this.serverAvatar = new ChatAvatarId(
-                bactaConfiguration.getStringWithDefault("Bacta/ChatServer", "gameCode", "SWG"),
-                serverState.getClusterServer().getName(),
+                bactaConfiguration.getStringWithDefault("Bacta/ChatServer", "gameCode", "SWG").toLowerCase(),
+                serverState.getClusterServer().getName().toLowerCase(),
                 SYSTEM_AVATAR_NAME);
 
         this.systemRoomPath = String.format("%s.%s.%s",
@@ -77,6 +80,10 @@ public final class GameChatService {
                 serverAvatar.getGameCode(),
                 serverAvatar.getCluster(),
                 ChatRoomTypes.REBEL);
+
+        this.avatarBuilder = ChatAvatarIdBuilder.newBuilder()
+                .withDefaultGameCode(serverAvatar.getGameCode())
+                .withDefaultCluster(serverAvatar.getCluster());
     }
 
     public void connectAvatar(final CreatureObject character) {
@@ -332,11 +339,11 @@ public final class GameChatService {
     }
 
     public ChatAvatarId constructChatAvatarId(final ServerObject to) {
-        return constructChatAvatarId(to.getAssignedObjectFirstName());
+        return constructChatAvatarId(to.getAssignedObjectFirstName().toLowerCase());
     }
 
     public ChatAvatarId constructChatAvatarId(final String to) {
-        return new ChatAvatarId(serverAvatar.getGameCode(), serverAvatar.getCluster(), to);
+        return avatarBuilder.build(to);
     }
 
     /**
@@ -431,9 +438,9 @@ public final class GameChatService {
         sendToChatServer(create);
     }
 
-    public ChatError isAllowedToEnterRoom(final CreatureObject who, final String room) {
+    public ChatResult isAllowedToEnterRoom(final CreatureObject who, final String room) {
         if (who.getConnection() != null && who.getConnection().isGod())
-            return ChatError.SUCCESS;
+            return ChatResult.SUCCESS;
 
         //Player must be of correct faction to enter factional chat rooms.
         //TODO: Faction check.
@@ -443,7 +450,7 @@ public final class GameChatService {
 
         //Player must be a warden to enter the warden room.
 
-        return ChatError.SUCCESS;
+        return ChatResult.SUCCESS;
     }
 
     public void sendToChatServer(final GameNetworkMessage message) {
