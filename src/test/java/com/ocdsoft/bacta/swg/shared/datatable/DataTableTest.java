@@ -21,8 +21,8 @@ public class DataTableTest {
 
     @Before
     public void shouldLoadDataTables() throws Exception {
-        final Iff commandTableGroundIff = new Iff("datatables/command/command_table_ground.iff", Files.readAllBytes(Paths.get(resourcesPath + "\\command_table_ground.iff")));
-        final Iff badgeMapIff = new Iff("datatables/badge/badge_map.iff", Files.readAllBytes(Paths.get(resourcesPath + "\\badge_map.iff")));
+        final Iff commandTableGroundIff = new Iff("datatables/command/command_table_ground.iff", Files.readAllBytes(Paths.get(resourcesPath + "\\datatables\\command_table_ground.iff")));
+        final Iff badgeMapIff = new Iff("datatables/badge/badge_map.iff", Files.readAllBytes(Paths.get(resourcesPath + "\\datatables\\badge_map.iff")));
 
         final DataTableManager dataTableManager = new DataTableManager(new TreeFile());
 

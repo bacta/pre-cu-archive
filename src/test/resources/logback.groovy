@@ -17,5 +17,7 @@ logger("org.reflections",  WARN)
 logger("io.netty",  WARN)
 logger("com.couchbase",  WARN)
 logger("com.ocdsoft.bacta.soe.connection.SoeUdpMessageBuilder", TRACE)
+logger("com.ocdsoft.bacta.swg.server.game.object.template.server.ServerCreatureObjectTemplateTest", DEBUG)
+logger("com.ocdsoft.bacta.swg.shared.template.ObjectTemplateList", DEBUG)
 
 root(INFO, ["STDOUT"])

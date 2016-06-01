@@ -7,8 +7,7 @@ import com.ocdsoft.bacta.swg.server.game.controller.object.MessageQueueControlle
 import com.ocdsoft.bacta.swg.server.game.message.object.GameControllerMessageType;
 import com.ocdsoft.bacta.swg.server.game.message.object.MessageQueueObjectMenuRequest;
 import com.ocdsoft.bacta.swg.server.game.object.ServerObject;
-import com.ocdsoft.bacta.swg.server.game.object.tangible.creature.CreatureObject;
-import com.ocdsoft.bacta.swg.server.game.service.object.ServerObjectService;
+import com.ocdsoft.bacta.swg.server.game.radialmenu.ObjectMenuService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,25 +18,15 @@ import org.slf4j.LoggerFactory;
 public final class ObjectMenuRequestController implements MessageQueueController<MessageQueueObjectMenuRequest> {
     private static final Logger LOGGER = LoggerFactory.getLogger(ObjectMenuRequestController.class);
 
-    private final ServerObjectService serverObjectService;
+    private final ObjectMenuService objectMenuService;
 
     @Inject
-    public ObjectMenuRequestController(final ServerObjectService serverObjectService) {
-        this.serverObjectService = serverObjectService;
+    public ObjectMenuRequestController(final ObjectMenuService objectMenuService) {
+        this.objectMenuService = objectMenuService;
     }
 
     @Override
     public void handleIncoming(final SoeUdpConnection connection, final ServerObject actor, final int flags, final float value, final MessageQueueObjectMenuRequest data) {
-        final CreatureObject creatureObject = actor.asCreatureObject();
-
-        if (creatureObject == null)
-            return;
-
-        final ServerObject targetObject = this.serverObjectService.get(data.getTargetId());
-
-        if (targetObject == null)
-            return;
-
-
+        this.objectMenuService.handleObjectMenuRequest(connection, actor, data);
     }
 }

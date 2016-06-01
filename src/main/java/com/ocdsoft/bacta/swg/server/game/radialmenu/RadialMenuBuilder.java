@@ -53,7 +53,7 @@ public final class RadialMenuBuilder {
         /**
          * Adds an item to the root menu item of which this instance is related.
          *
-         * @param menuItemType The item type for the menu entry. {@link RadialMenuService#getTypeByName} allows you to gather
+         * @param menuItemType The item type for the menu entry. {@link ObjectMenuService#getMenuTypeByName} allows you to gather
          *                     these by name.
          * @param label        The custom label to show for the option. This will override any default label that is associated
          *                     with the client-side radial menu item type.

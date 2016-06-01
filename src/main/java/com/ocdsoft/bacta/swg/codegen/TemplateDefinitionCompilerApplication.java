@@ -1,17 +1,18 @@
-package com.ocdsoft.bacta.swg.shared.template.definition;
+package com.ocdsoft.bacta.swg.codegen;
 
-import org.junit.Test;
+import com.ocdsoft.bacta.swg.shared.template.definition.TemplateDefinitionCompiler;
 
 import java.io.File;
 import java.io.IOException;
 
 /**
- * Created by crush on 4/20/2016.
+ * Created by crush on 5/31/2016.
  */
-public class TemplateDefinitionCompilerTest {
-    @Test
-    public void shouldCompile() {
+public final class TemplateDefinitionCompilerApplication {
+    public static void main(final String[] args) {
         try {
+            //TODO: Make this more relative so it's not bound to my system configuration
+
             //Shared
             final File sharedSourceDirectory = new File("C:\\Users\\crush\\Downloads\\swg-src_orig_noshare\\whitengold\\dsrc\\sku.0\\sys.shared\\compiled\\game");
             final File sharedDestinationDirectory = new File("C:/users/crush/git/bacta/pre-cu-master/pre-cu/src/main/java/com/ocdsoft/bacta/swg/server/object/template/shared");
