@@ -1,5 +1,7 @@
 package com.ocdsoft.bacta.swg.server.game.radialmenu;
 
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
 import com.ocdsoft.bacta.swg.server.game.controller.object.ObjControllerBuilder;
 import com.ocdsoft.bacta.swg.server.game.message.object.GameControllerMessageType;
@@ -26,6 +28,7 @@ import static com.ocdsoft.bacta.swg.server.game.radialmenu.RadialMenuBuilder.Rad
  * <p>
  * Manages manipulating radial menus for objects.
  */
+@Singleton
 public final class ObjectMenuService {
     private static final Logger LOGGER = LoggerFactory.getLogger(ObjectMenuService.class);
     private static final String DATATABLE_PATH = "datatables/player/radial_menu.iff";
@@ -39,6 +42,7 @@ public final class ObjectMenuService {
     private final TShortObjectMap<RadialMenuInfo> indexLookup;
     private final TObjectShortMap<String> nameLookup;
 
+    @Inject
     public ObjectMenuService(final DataTableManager dataTableManager,
                              final ServerObjectService serverObjectService,
                              final PlayerObjectService playerObjectService) {
