@@ -44,6 +44,7 @@ public class GameNetworkMessageSerializerImpl implements GameNetworkMessageSeria
     @Inject
     public GameNetworkMessageSerializerImpl(final MetricRegistry metricRegistry,
                                             final ObjControllerMessageSerializer objControllerMessageSerializer) {
+
         this.objControllerMessageSerializer = objControllerMessageSerializer;
         this.metricRegistry = metricRegistry;
         this.histogram = this.metricRegistry.histogram("GameNetworkMessageBufferAllocations");
@@ -59,7 +60,7 @@ public class GameNetworkMessageSerializerImpl implements GameNetworkMessageSeria
         subTypes.forEach(this::loadMessageClass);
     }
 
-    private void loadMessageClass(Class<? extends GameNetworkMessage> messageClass) {
+    public void loadMessageClass(Class<? extends GameNetworkMessage> messageClass) {
 
         final int hash = MessageHashUtil.getHash(messageClass);
 

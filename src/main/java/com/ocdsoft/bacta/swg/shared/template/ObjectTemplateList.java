@@ -17,7 +17,7 @@ import java.util.Collection;
 public class ObjectTemplateList extends DataResourceList<ObjectTemplate> {
     private static final Logger LOGGER = LoggerFactory.getLogger(ObjectTemplateList.class);
 
-    private static final String defaultCrcStringTable = "misc/object_template_crc_string_table.iff";
+    private static final String defaultCrcStringTable = "object/misc/object_template_crc_string_table.iff";
 
     private final CrcStringTable crcStringTable;
 

@@ -163,7 +163,7 @@ public class ClusterServer implements ByteBufferWritable, Comparable<ClusterServ
         private final int reserved3;
         private final int reserved4;
 
-        public ExtendedClusterData(final GameServerState gameServerState) {
+        ExtendedClusterData(final GameServerState gameServerState) {
             this.clusterId = gameServerState.getClusterId();
             this.branch = gameServerState.getBranch();
             this.networkVersion = gameServerState.getNetworkVersion();

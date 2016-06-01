@@ -4,6 +4,7 @@ import com.codahale.metrics.MetricRegistry
 import com.ocdsoft.bacta.engine.conf.ini.IniBactaConfiguration
 import com.ocdsoft.bacta.soe.io.udp.GameNetworkConfiguration
 import com.ocdsoft.bacta.soe.util.SOECRC32
+import com.ocdsoft.bacta.swg.server.PreCuGameServerState
 import com.ocdsoft.bacta.swg.server.login.message.LoginEnumCluster
 import com.ocdsoft.bacta.swg.server.login.object.ClusterServer
 import com.ocdsoft.bacta.swg.shared.serialize.GameNetworkMessageSerializerImpl
@@ -20,6 +21,7 @@ class FragmentSpec extends Specification {
         def clusterSize = 15000
         def bactaConfig = new IniBactaConfiguration()
         def networkConfiguration = new GameNetworkConfiguration(bactaConfig)
+        def gameState = new PreCuGameServerState(bactaConfig, networkConfiguration)
 
         def clusterIdField = GameNetworkConfiguration.class.getDeclaredField("clusterId")
         clusterIdField.setAccessible(true)
@@ -32,14 +34,15 @@ class FragmentSpec extends Specification {
         for(int i = 0; i < clusterSize; ++i)  {
             clusterIdField.set(networkConfiguration, 2 + i)
             assert 2 + i == networkConfiguration.getClusterId()
-            def clusterServer = new ClusterServer(bactaConfig, networkConfiguration)
+            def clusterServer = new ClusterServer(bactaConfig, networkConfiguration, gameState)
             clusterName.set(clusterServer, "Bacta")
             clusterEntries.add(clusterServer)
         }
         def loginEnumCluster = new LoginEnumCluster(clusterEntries, 2)
         def messageProcessor = new ReliableUdpMessageBuilder(null, networkConfiguration)
 
-        def gameNetworkMessageSerializer = new GameNetworkMessageSerializerImpl(new MetricRegistry())
+        def gameNetworkMessageSerializer = new GameNetworkMessageSerializerImpl(new MetricRegistry(), null)
+        gameNetworkMessageSerializer.loadMessageClass(LoginEnumCluster.class)
         def fragmentContainer = new IncomingFragmentContainer()
 
         when:

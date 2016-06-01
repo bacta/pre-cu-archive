@@ -7,6 +7,7 @@ import com.ocdsoft.bacta.soe.connection.SoeUdpMessageBuilder
 import com.ocdsoft.bacta.soe.io.udp.GameNetworkConfiguration
 import com.ocdsoft.bacta.soe.util.SOECRC32
 import com.ocdsoft.bacta.soe.util.SoeMessageUtil
+import com.ocdsoft.bacta.swg.server.PreCuGameServerState
 import com.ocdsoft.bacta.swg.server.login.message.EnumerateCharacterId
 import com.ocdsoft.bacta.swg.server.login.message.LoginClientToken
 import com.ocdsoft.bacta.swg.server.login.message.LoginClusterStatus
@@ -26,8 +27,9 @@ class MultiGameMessageSpec extends Specification {
         setup:
         def bactaConfig = new IniBactaConfiguration()
         def networkConfiguration = new GameNetworkConfiguration(bactaConfig)
+        def gameServerState = new PreCuGameServerState(bactaConfig, networkConfiguration)
 
-        def clusterEntry = new ClusterServer(bactaConfig, networkConfiguration)
+        def clusterEntry = new ClusterServer(bactaConfig, networkConfiguration, gameServerState)
         def loginClientToken = new LoginClientToken("Test", 0, "kyle")
         Set<ClusterServer> clusterEntries = new HashSet<>()
         clusterEntries.add(clusterEntry)
@@ -37,42 +39,7 @@ class MultiGameMessageSpec extends Specification {
         def enumerateCharacterId = new EnumerateCharacterId(account)
         def messageProcessor = new ReliableUdpMessageBuilder(null, networkConfiguration)
 
-        def gameNetworkMessageSerializer = new GameNetworkMessageSerializerImpl(new MetricRegistry())
-
-        when:
-        messageProcessor.add(gameNetworkMessageSerializer.writeToBuffer(loginClientToken))
-        messageProcessor.add(gameNetworkMessageSerializer.writeToBuffer(loginEnumCluster))
-        messageProcessor.add(gameNetworkMessageSerializer.writeToBuffer(loginClusterStatus))
-        messageProcessor.add(gameNetworkMessageSerializer.writeToBuffer(enumerateCharacterId))
-        def buffer = messageProcessor.buildNext()
-
-        then:
-        System.out.println(SoeMessageUtil.bytesToHex(buffer))
-        noExceptionThrown()
-    }
-
-    def "BuildMultiMessage"() {
-
-        setup:
-        def bactaConfig = new IniBactaConfiguration()
-        def networkConfiguration = new GameNetworkConfiguration(bactaConfig)
-
-        def clusterEntry = new ClusterServer(bactaConfig, networkConfiguration)
-        def loginClientToken = new LoginClientToken("Test", 0, "kyle")
-        Set<ClusterServer> clusterEntries = new HashSet<>()
-        clusterEntries.add(clusterEntry)
-        def loginEnumCluster = new LoginEnumCluster(clusterEntries, 2)
-        def loginClusterStatus = new LoginClusterStatus(clusterEntries)
-        def account = new SoeAccount()
-        def enumerateCharacterId = new EnumerateCharacterId(account)
-        def networkConfig = new GameNetworkConfiguration(bactaConfig)
-        def messageProcessor = new SoeUdpMessageBuilder(networkConfig)
-
-        def gameNetworkMessageSerializer = new GameNetworkMessageSerializerImpl()
-        gameNetworkMessageSerializer.addHandledMessageClass(SOECRC32.hashCode(LoginClientToken.class.simpleName), LoginClientToken.class)
-        gameNetworkMessageSerializer.addHandledMessageClass(SOECRC32.hashCode(LoginEnumCluster.class.simpleName), LoginEnumCluster.class)
-        gameNetworkMessageSerializer.addHandledMessageClass(SOECRC32.hashCode(LoginClusterStatus.class.simpleName), LoginClusterStatus.class)
-        gameNetworkMessageSerializer.addHandledMessageClass(SOECRC32.hashCode(EnumerateCharacterId.class.simpleName), EnumerateCharacterId.class)
+        def gameNetworkMessageSerializer = new GameNetworkMessageSerializerImpl(new MetricRegistry(), null)
 
         when:
         messageProcessor.add(gameNetworkMessageSerializer.writeToBuffer(loginClientToken))
