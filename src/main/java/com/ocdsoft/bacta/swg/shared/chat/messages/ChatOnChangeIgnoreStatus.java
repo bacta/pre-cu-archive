@@ -15,18 +15,18 @@ import java.nio.ByteBuffer;
 @Priority(0x05)
 @AllArgsConstructor
 public final class ChatOnChangeIgnoreStatus extends GameNetworkMessage {
+    private final int sequence;
     private final long characterNetworkId;
     private final ChatAvatarId ignoreId;
-    private final int sequence;
     private final boolean ignore;
-    private final int resultCode;
+    private final ChatResult result;
 
     public ChatOnChangeIgnoreStatus(final ByteBuffer buffer) {
         characterNetworkId = buffer.getLong();
         ignoreId = new ChatAvatarId(buffer);
         sequence = buffer.getInt();
         ignore = BufferUtil.getBoolean(buffer);
-        resultCode = buffer.getInt();
+        result = ChatResult.from(buffer.getInt());
     }
 
     @Override
@@ -35,6 +35,6 @@ public final class ChatOnChangeIgnoreStatus extends GameNetworkMessage {
         BufferUtil.put(buffer, ignoreId);
         BufferUtil.put(buffer, sequence);
         BufferUtil.put(buffer, ignore);
-        BufferUtil.put(buffer, resultCode);
+        BufferUtil.put(buffer, result.value);
     }
 }

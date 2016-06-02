@@ -476,6 +476,7 @@ public final class SwgChatServer implements Observer {
             final ChatOnAddFriend msg = new ChatOnAddFriend(0, result.value);
             sendToClient(networkId, msg);
 
+            //Receive notification if they are online, as long as you are not ignored by them.
             notifyFriendOfLogin(friendId, avatarId);
         }
 
@@ -484,9 +485,29 @@ public final class SwgChatServer implements Observer {
         sendToClient(networkId, onChangeFriendStatus);
     }
 
-    public void removeFriend(final long networkId, final int sequence, final ChatAvatarId friendName) {
+    public void removeFriend(final long networkId, final int sequence, final ChatAvatarId friendId) {
         final ChatAvatarId avatarId = networkIdToAvatarIdMap.get(networkId);
-        friendRelationships.remove(avatarId, friendName);
+
+        ChatResult result = ChatResult.SUCCESS;
+
+        if (avatarId == null || networkId == NetworkIdUtil.INVALID)
+            result = ChatResult.SRC_AVATAR_DOESNT_EXIST;
+
+        else if (friendId == null || avatarIdToNetworkIdMap.get(friendId) == NetworkIdUtil.INVALID)
+            result = ChatResult.DST_AVATAR_DOESNT_EXIST;
+
+        else if (!friendRelationships.hasRelationshipWith(avatarId, friendId))
+            result = ChatResult.FRIEND_NOT_FOUND;
+
+        if (result == ChatResult.SUCCESS) {
+            friendRelationships.remove(avatarId, friendId);
+
+            //Don't need to notify yourself that they have gone offline if you are removing them.
+        }
+
+        //Send the acknowledgement that the request was handled.
+        final ChatOnChangeFriendStatus onChangeFriendStatus = new ChatOnChangeFriendStatus(0, networkId, friendId, false, result);
+        sendToClient(networkId, onChangeFriendStatus);
     }
 
     public void getFriendsList(final ChatAvatarId characterName) {
@@ -502,14 +523,60 @@ public final class SwgChatServer implements Observer {
         }
     }
 
-    public void addIgnore(final long networkId, final int sequence, final ChatAvatarId ignoreName) {
+    public void addIgnore(final long networkId, final int sequence, final ChatAvatarId ignoreId) {
         final ChatAvatarId avatarId = networkIdToAvatarIdMap.get(networkId);
-        ignoreRelationships.add(avatarId, ignoreName);
+
+        ChatResult result = ChatResult.SUCCESS;
+
+        //Make sure that the source avatar is known by the chat server.
+        if (avatarId == null || networkId == NetworkIdUtil.INVALID)
+            result = ChatResult.SRC_AVATAR_DOESNT_EXIST;
+
+            //Check to make sure that the ignore is known by the chat server.
+        else if (ignoreId == null || avatarIdToNetworkIdMap.get(ignoreId) == NetworkIdUtil.INVALID)
+            result = ChatResult.DST_AVATAR_DOESNT_EXIST;
+
+            //Check if are already on the ignore list.
+        else if (ignoreRelationships.hasRelationshipWith(avatarId, ignoreId))
+            result = ChatResult.DUPLICATE_FRIEND;
+
+        //If no errors, then add the ignore.
+        if (result == ChatResult.SUCCESS) {
+            //Notify them that you have logged out.
+            notifyFriendOfLogout(avatarId, ignoreId); //Send this first, or it will get filtered out.
+
+            ignoreRelationships.add(avatarId, ignoreId);
+        }
+
+        //Send the acknowledgement that the request was handled.
+        final ChatOnChangeIgnoreStatus onChangeIgnoreStatus = new ChatOnChangeIgnoreStatus(0, networkId, ignoreId, true, result);
+        sendToClient(networkId, onChangeIgnoreStatus);
     }
 
-    public void removeIgnore(final long networkId, final int sequence, final ChatAvatarId ignoreName) {
+    public void removeIgnore(final long networkId, final int sequence, final ChatAvatarId ignoreId) {
         final ChatAvatarId avatarId = networkIdToAvatarIdMap.get(networkId);
-        ignoreRelationships.remove(avatarId, ignoreName);
+
+        ChatResult result = ChatResult.SUCCESS;
+
+        if (avatarId == null || networkId == NetworkIdUtil.INVALID)
+            result = ChatResult.SRC_AVATAR_DOESNT_EXIST;
+
+        else if (ignoreId == null || avatarIdToNetworkIdMap.get(ignoreId) == NetworkIdUtil.INVALID)
+            result = ChatResult.DST_AVATAR_DOESNT_EXIST;
+
+        else if (!ignoreRelationships.hasRelationshipWith(avatarId, ignoreId))
+            result = ChatResult.FRIEND_NOT_FOUND;
+
+        if (result == ChatResult.SUCCESS) {
+            ignoreRelationships.remove(avatarId, ignoreId);
+
+            //If they have you on their friends list, and you remove them from ignore, tell them that you are online.
+            notifyFriendOfLogin(avatarId, ignoreId);
+        }
+
+        //Send the acknowledgement that the request was handled.
+        final ChatOnChangeIgnoreStatus onChangeIgnoreStatus = new ChatOnChangeIgnoreStatus(0, networkId, ignoreId, false, result);
+        sendToClient(networkId, onChangeIgnoreStatus);
     }
 
     public void getIgnoreList(final ChatAvatarId characterName) {
@@ -551,8 +618,10 @@ public final class SwgChatServer implements Observer {
     public void notifyFriendOfLogin(final ChatAvatarId avatarId, final ChatAvatarId friendId) {
         final long friendNetworkId = avatarIdToNetworkIdMap.get(friendId);
 
-        //Make sure they are online and a valid networkId
-        if (friendNetworkId != NetworkIdUtil.INVALID && connectedPlayers.contains(friendNetworkId)) {
+        //Make sure they are online, not ignored, and a valid networkId
+        if (friendNetworkId != NetworkIdUtil.INVALID
+                && !ignoreRelationships.hasRelationshipWith(avatarId, friendId)
+                && connectedPlayers.contains(friendNetworkId)) {
             final ChatFriendsListUpdate msg = new ChatFriendsListUpdate(avatarId, true);
             sendToClient(friendNetworkId, msg);
         }
@@ -571,14 +640,26 @@ public final class SwgChatServer implements Observer {
                 notificationList.size(),
                 avatarId.getFullName());
 
-        notificationList.stream().forEach(friendId -> {
-            final long networkId = avatarIdToNetworkIdMap.get(friendId);
+        notificationList.stream().forEach(friendId -> notifyFriendOfLogout(avatarId, friendId));
+    }
 
-            if (networkId != NetworkIdUtil.INVALID && connectedPlayers.contains(networkId)) {
-                final ChatFriendsListUpdate msg = new ChatFriendsListUpdate(avatarId, false);
-                sendToClient(networkId, msg);
-            }
-        });
+    /**
+     * Sends a status update message to an individual friend that the player has gone offline. The friend must be
+     * connected to the chat server in order to receive the update.
+     *
+     * @param avatarId The player that has gone offline.
+     * @param friendId The friend that will receive the status update.
+     */
+    public void notifyFriendOfLogout(final ChatAvatarId avatarId, final ChatAvatarId friendId) {
+        final long friendNetworkId = avatarIdToNetworkIdMap.get(friendId);
+
+        //Make sure they are online, not ignored, and a valid networkId
+        if (friendNetworkId != NetworkIdUtil.INVALID
+                && !ignoreRelationships.hasRelationshipWith(avatarId, friendId)
+                && connectedPlayers.contains(friendNetworkId)) {
+            final ChatFriendsListUpdate msg = new ChatFriendsListUpdate(avatarId, false);
+            sendToClient(friendNetworkId, msg);
+        }
     }
 
     /**
