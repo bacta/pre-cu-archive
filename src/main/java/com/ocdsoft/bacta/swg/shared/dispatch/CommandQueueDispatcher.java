@@ -16,6 +16,7 @@ import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ResourceBundle;
 import java.util.Set;
 
 /**
@@ -29,6 +30,7 @@ public final class CommandQueueDispatcher {
 
     private final Injector injector;
     private final ServerObjectService serverObjectService;
+    private final TIntObjectMap<String> knownCommandNames;
     private final TIntObjectMap<CommandQueueController> controllers;
 
     @Inject
@@ -36,9 +38,17 @@ public final class CommandQueueDispatcher {
                                   final ServerObjectService serverObjectService) {
         this.injector = injector;
         this.serverObjectService = serverObjectService;
+        this.knownCommandNames = new TIntObjectHashMap<>();
         this.controllers = new TIntObjectHashMap<>();
 
+        loadCommandNames();
         loadControllers();
+    }
+
+    private void loadCommandNames() {
+        final ResourceBundle bundle = ResourceBundle.getBundle("commandnames");
+        bundle.keySet().stream()
+                .forEach(key -> knownCommandNames.put((int) Long.parseLong(key, 16), bundle.getString(key)));
     }
 
     private void loadControllers() {
@@ -50,26 +60,29 @@ public final class CommandQueueDispatcher {
     private void loadController(final Class<? extends CommandQueueController> controllerClass) {
         final QueuesCommand controllerAnnotation = controllerClass.getAnnotation(QueuesCommand.class);
 
+        final String controllerClassName = controllerClass.getName();
+
         if (controllerAnnotation != null) {
             final CommandQueueController controller = injector.getInstance(controllerClass);
-            final int commandHash = SOECRC32.hashCode(controllerAnnotation.value());
+            final String lowerCommandName = controllerAnnotation.value().toLowerCase();
+            final int commandHash = SOECRC32.hashCode(lowerCommandName);
 
             if (controllers.containsKey(commandHash)) {
                 LOGGER.error("Controller {} is already handling command '{}'(0x{}). Cannot load controller {} to also handle this type.",
                         controllers.get(commandHash).getClass().getName(),
-                        controllerAnnotation.value(),
+                        lowerCommandName,
                         Integer.toHexString(commandHash),
-                        controllerClass.getName());
+                        controllerClassName);
             } else {
                 LOGGER.debug("Loaded controller {} to handle type '{}'(0x{}).",
-                        controllerClass.getName(),
-                        controllerAnnotation.value(),
+                        controllerClassName,
+                        lowerCommandName,
                         Integer.toHexString(commandHash));
 
                 controllers.put(commandHash, controller);
             }
         } else {
-            LOGGER.error("Missing QueuesCommand annotation on {}", controllerClass.getName());
+            LOGGER.error("Missing QueuesCommand annotation on {}", controllerClassName);
         }
     }
 
@@ -82,8 +95,10 @@ public final class CommandQueueDispatcher {
             final ServerObject target = serverObjectService.get(data.getTargetId());
             controller.handleCommand(connection, actor, target, data.getParams());
         } else {
-            LOGGER.error("No controller loaded to handle CommandQueueController for command 0x{}.",
+            LOGGER.error("No controller loaded to handle CommandQueueController for command '{}'(0x{}).",
+                    knownCommandNames.get(data.getCommandHash()),
                     Integer.toHexString(data.getCommandHash()));
+            //TODO: Velocity Engine generate template.
         }
     }
 }

@@ -11,25 +11,22 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Handles the /addfriend [name] command.
+ * Created by crush on 6/1/2016.
  */
-@QueuesCommand("addfriend")
-public final class AddFriendCommandQueueController implements CommandQueueController {
-    private static Logger LOGGER = LoggerFactory.getLogger(AddFriendCommandQueueController.class);
+@QueuesCommand("removeIgnore")
+public final class RemoveIgnoreCommandController implements CommandQueueController {
+    private static Logger LOGGER = LoggerFactory.getLogger(RemoveIgnoreCommandController.class);
 
     private final GameChatService chatService;
 
     @Inject
-    public AddFriendCommandQueueController(final GameChatService chatService) {
+    public RemoveIgnoreCommandController(final GameChatService chatService) {
         this.chatService = chatService;
     }
 
     @Override
     public void handleCommand(final SoeUdpConnection connection, final ServerObject actor, final ServerObject target, final String params) {
         final String firstName = StringUtil.getFirstWord(params);
-
-        chatService.addFriend(
-                chatService.constructChatAvatarId(actor).getFullName(),
-                firstName);
+        chatService.removeIgnore(chatService.constructChatAvatarId(actor).getFullName(), firstName);
     }
 }

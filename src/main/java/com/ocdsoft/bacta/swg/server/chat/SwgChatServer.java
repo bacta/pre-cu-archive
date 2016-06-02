@@ -476,8 +476,7 @@ public final class SwgChatServer implements Observer {
             final ChatOnAddFriend msg = new ChatOnAddFriend(0, result.value);
             sendToClient(networkId, msg);
 
-            //Apparently the game server will request the friend list for the player.
-            //notifyFriendOfLogin(avatarId, friendId);
+            notifyFriendOfLogin(friendId, avatarId);
         }
 
         //Send the acknowledgement that the request was handled.
