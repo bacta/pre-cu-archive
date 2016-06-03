@@ -25,10 +25,10 @@ import com.ocdsoft.bacta.swg.server.game.object.tangible.TangibleObject;
 import com.ocdsoft.bacta.swg.server.game.object.tangible.creature.CreatureObject;
 import com.ocdsoft.bacta.swg.server.game.object.template.server.ServerCreatureObjectTemplate;
 import com.ocdsoft.bacta.swg.server.game.object.template.shared.SharedObjectTemplate;
+import com.ocdsoft.bacta.swg.server.game.player.creation.CharacterCreationService;
+import com.ocdsoft.bacta.swg.server.game.player.creation.NewbieTutorialService;
+import com.ocdsoft.bacta.swg.server.game.player.creation.StartingLocations;
 import com.ocdsoft.bacta.swg.server.game.service.data.ObjectTemplateService;
-import com.ocdsoft.bacta.swg.server.game.service.data.creation.StartingLocations;
-import com.ocdsoft.bacta.swg.server.game.service.player.CharacterCreationService;
-import com.ocdsoft.bacta.swg.server.game.service.player.NewbieTutorialService;
 import com.ocdsoft.bacta.swg.server.game.util.Gender;
 import com.ocdsoft.bacta.swg.server.game.util.Race;
 import com.ocdsoft.bacta.swg.server.login.object.CharacterInfo;
@@ -55,7 +55,7 @@ public class ClientCreateCharacterController implements GameNetworkMessageContro
     private final CharacterCreationService characterCreationService;
     private final NewbieTutorialService newbieTutorialService;
     private final BiographyService biographyService;
-//    private final ContainerService<ServerObject> containerService;
+    //    private final ContainerService<ServerObject> containerService;
     private final SlotIdManager slotIdManager;
     private final AccountService<SoeAccount> accountService;
     private final ObjectService<ServerObject> objectService;
@@ -108,24 +108,26 @@ public class ClientCreateCharacterController implements GameNetworkMessageContro
 
         // Get the account object for this connection
         final SoeAccount account = accountService.getAccount(connection.getAccountUsername());
+
         if (account == null) {
-            ErrorMessage error = new ErrorMessage("Error", "Account not found.", false);
+            final ErrorMessage error = new ErrorMessage("Error", "Account not found.", false);
             connection.sendMessage(error);
-            LOGGER.info("Account <{}> with username {} was not found.",
-                    account.getId(),
-                    account.getUsername());
+
+            LOGGER.info("Account was not found.");
             return;
         }
 
         // Validate name based on Gender and Race
-        String genderSpecies = createMessage.getTemplateName().substring(createMessage.getTemplateName().lastIndexOf('/') + 1, createMessage.getTemplateName().length() - 4); //Gets the file name of the racefile. i.e. human_male.
-        Gender gender = Gender.valueOf(genderSpecies.substring(genderSpecies.indexOf("_") + 1).toUpperCase());
-        Race race = Race.valueOf(genderSpecies.substring(0, genderSpecies.indexOf("_")).toUpperCase());
+        final String genderSpecies = createMessage.getTemplateName().substring(createMessage.getTemplateName().lastIndexOf('/') + 1, createMessage.getTemplateName().length() - 4); //Gets the file name of the racefile. i.e. human_male.
+        final Gender gender = Gender.valueOf(genderSpecies.substring(genderSpecies.indexOf("_") + 1).toUpperCase());
+        final Race race = Race.valueOf(genderSpecies.substring(0, genderSpecies.indexOf("_")).toUpperCase());
 
 
-        StringTokenizer tokenizer = new StringTokenizer(createMessage.getCharacterName(), " ");
-        String firstName = tokenizer.nextToken();
+        final StringTokenizer tokenizer = new StringTokenizer(createMessage.getCharacterName(), " ");
+        final String firstName = tokenizer.nextToken();
+
         String result = nameService.validateName(NameService.PLAYER, account.getId(), createMessage.getCharacterName(), race, gender);
+
         if (result.equals(NameService.NAME_DECLINED_DEVELOPER) && firstName.equalsIgnoreCase(account.getUsername())) {
             result = NameService.NAME_APPROVED;
         }
@@ -148,16 +150,17 @@ public class ClientCreateCharacterController implements GameNetworkMessageContro
         }
 
         // check duration
-        int secondsSinceLastCreation = (int)((System.currentTimeMillis() - account.getLastCharacterCreationTime()) / 1000);
+        int secondsSinceLastCreation = (int) ((System.currentTimeMillis() - account.getLastCharacterCreationTime()) / 1000);
         account.setLastCharacterCreationTime(System.currentTimeMillis());
         accountService.updateAccount(account);
-        if((secondsSinceLastCreation < secondsBetweenCreation)) {
+
+        if ((secondsSinceLastCreation < secondsBetweenCreation)) {
             ClientCreateCharacterFailed failed = new ClientCreateCharacterFailed(createMessage.getCharacterName(), NameService.NAME_DECLINED_TOO_FAST);
             connection.sendMessage(failed);
             return;
         }
 
-        if(pendingCreations.getIfPresent(firstName) != null) {
+        if (pendingCreations.getIfPresent(firstName) != null) {
             ClientCreateCharacterFailed failed = new ClientCreateCharacterFailed(createMessage.getCharacterName(), NameService.NAME_DECLINED_IN_USE);
             connection.sendMessage(failed);
             return;
@@ -182,7 +185,7 @@ public class ClientCreateCharacterController implements GameNetworkMessageContro
         StartingLocations.StartingLocationInfo startingLocationInfo = startingLocations.getStartingLocationInfo(createMessage.getStartingLocation());
 
         final Transform transform = new Transform();
-        if(createMessage.isUseNewbieTutorial()) {
+        if (createMessage.isUseNewbieTutorial()) {
             newbieTutorialService.setupCharacterForTutorial(newCharacterObject);
             final Vector newbieTutorialLocation = newbieTutorialService.getTutorialLocation();
             transform.setPositionInParentSpace(newbieTutorialLocation);
@@ -202,7 +205,7 @@ public class ClientCreateCharacterController implements GameNetworkMessageContro
         newCharacterObject.setTransformObjectToParent(transform);
 
         final CollisionProperty collision = newCharacterObject.getCollisionProperty();
-        if(collision != null) {
+        if (collision != null) {
             collision.setPlayerControlled(true);
         }
 
@@ -227,7 +230,7 @@ public class ClientCreateCharacterController implements GameNetworkMessageContro
         }
 
         // hair equip hack - lives on
-        if(!createMessage.getHairTemplateName().isEmpty()) {
+        if (!createMessage.getHairTemplateName().isEmpty()) {
             final ServerObject hair = objectService.createObject(createMessage.getHairTemplateName(), newCharacterObject);
             assert hair != null : String.format("Could not create hair %s\n", createMessage.getHairTemplateName());
 
@@ -246,7 +249,7 @@ public class ClientCreateCharacterController implements GameNetworkMessageContro
             biographyService.setBiography(newCharacterObject.getNetworkId(), createMessage.getBiography());
         }
 
-        PlayerObject play = objectService.createObject("object/player/player.iff", newCharacterObject);
+        final PlayerObject play = objectService.createObject("object/player/player.iff", newCharacterObject);
 
         assert play != null : String.format("%d unable to create player object for new character %s", account.getId(), newCharacterObject.getNetworkId());
 
@@ -278,7 +281,7 @@ public class ClientCreateCharacterController implements GameNetworkMessageContro
         // Persist object (Done in Object Manager)
 
         //Post character setup.
-        CharacterInfo info = new CharacterInfo(
+        final CharacterInfo info = new CharacterInfo(
                 newCharacterObject.getAssignedObjectName(),
                 SOECRC32.hashCode(newCharacterObject.getObjectTemplateName()),
                 newCharacterObject.getNetworkId(),

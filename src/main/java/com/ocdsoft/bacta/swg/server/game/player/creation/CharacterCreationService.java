@@ -1,13 +1,15 @@
-package com.ocdsoft.bacta.swg.server.game.service.player;
+package com.ocdsoft.bacta.swg.server.game.player.creation;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.ocdsoft.bacta.engine.conf.BactaConfiguration;
 import com.ocdsoft.bacta.engine.service.AccountService;
 import com.ocdsoft.bacta.swg.server.game.object.tangible.creature.CreatureObject;
+import com.ocdsoft.bacta.swg.server.game.service.object.ServerObjectService;
 import com.ocdsoft.bacta.swg.server.login.object.SoeAccount;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -17,14 +19,21 @@ import java.util.Set;
 public final class CharacterCreationService {
 
     private final AccountService<SoeAccount> accountService;
+    private final ServerObjectService serverObjectService;
+    private final ProfessionDefaultsService professionDefaultsService;
     private final String defaultProfession;
     private final Set<String> disabledProfessions;
 
     @Inject
     public CharacterCreationService(final AccountService<SoeAccount> accountService,
+                                    final ServerObjectService serverObjectService,
+                                    final ProfessionDefaultsService professionDefaultsService,
                                     final BactaConfiguration bactaConfiguration) {
 
         this.accountService = accountService;
+        this.serverObjectService = serverObjectService;
+        this.professionDefaultsService = professionDefaultsService;
+
         this.disabledProfessions = new HashSet<>(bactaConfiguration.getStringCollection(
                 "Bacta/GameServer/CharacterCreation",
                 "DisabledProfession"));
@@ -35,12 +44,40 @@ public final class CharacterCreationService {
                 "crafting_artisan");
     }
 
-    public void setupPlayer(final CreatureObject newCharacterObject, String profession, final boolean jedi) {
+    public void setupPlayer(final CreatureObject newCharacterObject, final String profession, final boolean jedi) {
 
         /*if (this.disabledProfessions.contains(profession)) {
             profession = this.defaultProfession;
+        }*/
+
+        final String sharedTemplateName = newCharacterObject.getSharedTemplate().getResourceName();
+
+
+        final ProfessionInfo professionInfo = professionDefaultsService.getDefaults(profession);
+
+        if (professionInfo != null) {
+            final List<EquipmentInfo> equipmentList = professionInfo.getEquipmentForTemplate(sharedTemplateName);
+
+            for (final EquipmentInfo equipmentInfo : equipmentList) {
+                final String serverTemplateName = equipmentInfo.getServerTemplateName();
+
+                serverObjectService.createObject(serverTemplateName, newCharacterObject);
+            }
         }
 
+
+
+
+
+
+
+
+
+
+
+
+
+                /*
         //TODO: Remove this after service side hair templates have been created...
         StringBuilder stringBuilder = new StringBuilder(message.getHairTemplateName());
         stringBuilder.insert(message.getHairTemplateName().lastIndexOf('/') + 1, "shared_");
@@ -50,7 +87,7 @@ public final class CharacterCreationService {
 /*
         ProfessionMods.ProfessionModInfo professionModInfo = professionMods.getProfessionModInfo(profession);
         //TODO: Iff reading
-        ProfessionDefaults.ProfessionInfo professionInfo = professionDefaults.getProfessionInfo(profession);
+        ProfessionDefaultsService.ProfessionInfo professionInfo = professionDefaults.getProfessionInfo(profession);
         HairStyles.HairStyleInfo hairStyleInfo = hairStyles.getHairStyleInfo(objectTemplate.getResourceName());
 
         if (hairStyleInfo == null || professionModInfo == null || professionInfo == null) {

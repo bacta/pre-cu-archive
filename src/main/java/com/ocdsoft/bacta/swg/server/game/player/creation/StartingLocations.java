@@ -1,4 +1,4 @@
-package com.ocdsoft.bacta.swg.server.game.service.data.creation;
+package com.ocdsoft.bacta.swg.server.game.player.creation;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
