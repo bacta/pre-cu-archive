@@ -12,18 +12,26 @@ import java.nio.ByteBuffer;
 @Getter
 @AllArgsConstructor
 public class GroupInviter implements ByteBufferWritable {
-
     private final long inviterId;
-    private final long inviteCounter;
+    private final String name;
+    private final long inviterShipId;
 
-    public GroupInviter(ByteBuffer buffer) {
+    public GroupInviter() {
+        inviterId = 0;
+        name = "";
+        inviterShipId = 0;
+    }
+
+    public GroupInviter(final ByteBuffer buffer) {
         inviterId = buffer.getLong();
-        inviteCounter = buffer.getLong();
+        //ship and name aren't in the buffer apparently!?
+        this.name = "";
+        this.inviterShipId = 0;
     }
 
     @Override
-    public void writeToBuffer(ByteBuffer buffer) {
+    public void writeToBuffer(final ByteBuffer buffer) {
         buffer.putLong(inviterId);
-        buffer.putLong(inviteCounter);
+        //ship and name aren't in the buffer apparently!?
     }
 }

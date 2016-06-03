@@ -19,9 +19,10 @@ public class AutoByteStream {
     }
 
     public void pack(final ByteBuffer buffer) {
-        buffer.putShort((short) getItemCount());
+        final short size = (short) members.size();
+        buffer.putShort(size);
 
-        for (AutoVariableBase variable : members) {
+        for (final AutoVariableBase variable : members) {
             variable.pack(buffer);
         }
     }

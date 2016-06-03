@@ -69,6 +69,7 @@ public class AutoDeltaByteStream extends AutoByteStream {
         super.addVariable(variable);
     }
 
+    @Override
     public int getItemCount() {
         short count = 0;
 

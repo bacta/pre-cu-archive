@@ -12,16 +12,12 @@ public class AutoDeltaVariable<T extends ByteBufferWritable> extends AutoDeltaVa
 
     private final Function<ByteBuffer, T> createFunc;
 
-    public AutoDeltaVariable(final Function<ByteBuffer, T> createFunc) {
-        this.createFunc = createFunc;
-    }
-
-    public AutoDeltaVariable(final T value, final Function<ByteBuffer, T> createFunc) {
+    public AutoDeltaVariable(final T initialValue, final Function<ByteBuffer, T> createFunc) {
         super();
 
         this.createFunc = createFunc;
-        this.currentValue = value;
-        this.lastValue = value.hashCode();
+        this.currentValue = initialValue;
+        this.lastValue = initialValue.hashCode();
     }
 
     public T get() {

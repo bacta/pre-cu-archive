@@ -1,9 +1,9 @@
 package com.ocdsoft.bacta.swg.server.game.object.intangible.mission;
 
 import com.google.inject.Inject;
-import com.ocdsoft.bacta.engine.lang.UnicodeString;
 import com.ocdsoft.bacta.swg.archive.delta.AutoDeltaInt;
 import com.ocdsoft.bacta.swg.archive.delta.AutoDeltaString;
+import com.ocdsoft.bacta.swg.archive.delta.AutoDeltaUnicodeString;
 import com.ocdsoft.bacta.swg.archive.delta.AutoDeltaVariable;
 import com.ocdsoft.bacta.swg.server.game.object.intangible.IntangibleObject;
 import com.ocdsoft.bacta.swg.server.game.object.template.server.ServerObjectTemplate;
@@ -22,7 +22,7 @@ public class MissionObject extends IntangibleObject {
     private final AutoDeltaInt difficulty;
     private final AutoDeltaVariable<Location> endLocation;
     private final AutoDeltaVariable<Vector> location;
-    private final AutoDeltaVariable<UnicodeString> missionCreator;
+    private final AutoDeltaUnicodeString missionCreator;
     private final AutoDeltaInt missionType;
     private final AutoDeltaInt reward;
     private final AutoDeltaVariable<Vector> startLocation;
@@ -40,17 +40,17 @@ public class MissionObject extends IntangibleObject {
 
         description = new AutoDeltaVariable<>(StringId.INVALID, StringId::new);
         difficulty = new AutoDeltaInt();
-        endLocation = new AutoDeltaVariable<>(Location::new);
-        location = new AutoDeltaVariable<>(Vector::new);
-        missionCreator = new AutoDeltaVariable<>(UnicodeString::new);
+        endLocation = new AutoDeltaVariable<>(new Location(), Location::new);
+        location = new AutoDeltaVariable<>(Vector.ZERO, Vector::new);
+        missionCreator = new AutoDeltaUnicodeString();
         missionType = new AutoDeltaInt();
         reward = new AutoDeltaInt();
-        startLocation = new AutoDeltaVariable<>(Vector::new);
+        startLocation = new AutoDeltaVariable<>(Vector.ZERO, Vector::new);
         targetAppearance = new AutoDeltaInt();
         title = new AutoDeltaVariable<>(StringId.INVALID, StringId::new);
         status = new AutoDeltaInt();
         targetName = new AutoDeltaString();
-        waypoint = new AutoDeltaVariable<>(Waypoint::new);
+        waypoint = new AutoDeltaVariable<>(new Waypoint(), Waypoint::new);
 
         addMembersToPackages();
     }

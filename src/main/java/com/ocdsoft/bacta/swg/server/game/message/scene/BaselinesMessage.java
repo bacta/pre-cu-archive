@@ -6,6 +6,7 @@ import com.ocdsoft.bacta.swg.archive.delta.AutoDeltaByteStream;
 import com.ocdsoft.bacta.swg.server.game.object.ServerObject;
 
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 
 @Priority(0x5)
 public final class BaselinesMessage extends GameNetworkMessage {
@@ -30,7 +31,7 @@ public final class BaselinesMessage extends GameNetworkMessage {
         this.typeId = object.getObjectType();
         this.packageId = (byte) packageId;
 
-        this.packageBuffer = ByteBuffer.allocate(4096);
+        this.packageBuffer = ByteBuffer.allocate(4096).order(ByteOrder.LITTLE_ENDIAN);
         sourcePackage.pack(this.packageBuffer);
     }
 

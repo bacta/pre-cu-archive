@@ -13,7 +13,7 @@ public class AutoDeltaUnicodeString extends AutoDeltaVariableBase {
         lastValue = "";
     }
 
-    public AutoDeltaUnicodeString(String value) {
+    public AutoDeltaUnicodeString(final String value) {
         super();
 
         this.currentValue = value;

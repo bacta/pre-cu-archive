@@ -14,8 +14,14 @@ import java.nio.ByteBuffer;
 @AllArgsConstructor
 public final class GcwDefenderRegionQualifications implements ByteBufferWritable {
     private final String gcwRegionName;
-    private boolean qualifyForRegionBonus;
-    private boolean qualifyForRegionDefenderTitle;
+    private final boolean qualifyForRegionBonus;
+    private final boolean qualifyForRegionDefenderTitle;
+
+    public GcwDefenderRegionQualifications() {
+        gcwRegionName = "";
+        qualifyForRegionBonus = false;
+        qualifyForRegionDefenderTitle = false;
+    }
 
     public GcwDefenderRegionQualifications(final ByteBuffer buffer) {
         this.gcwRegionName = BufferUtil.getAscii(buffer);

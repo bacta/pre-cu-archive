@@ -14,10 +14,7 @@ import com.ocdsoft.bacta.swg.server.game.container.IntangibleVolumeContainer;
 import com.ocdsoft.bacta.swg.server.game.container.TangibleVolumeContainer;
 import com.ocdsoft.bacta.swg.server.game.event.ObservableGameEvent;
 import com.ocdsoft.bacta.swg.server.game.message.object.ObjControllerMessage;
-import com.ocdsoft.bacta.swg.server.game.message.scene.SceneCreateObjectByCrc;
-import com.ocdsoft.bacta.swg.server.game.message.scene.SceneDestroyObject;
-import com.ocdsoft.bacta.swg.server.game.message.scene.SceneEndBaselines;
-import com.ocdsoft.bacta.swg.server.game.message.scene.UpdateContainmentMessage;
+import com.ocdsoft.bacta.swg.server.game.message.scene.*;
 import com.ocdsoft.bacta.swg.server.game.object.cell.CellObject;
 import com.ocdsoft.bacta.swg.server.game.object.intangible.player.PlayerObject;
 import com.ocdsoft.bacta.swg.server.game.object.tangible.TangibleObject;
@@ -230,9 +227,9 @@ public abstract class ServerObject extends GameObject implements Subject<Observa
         sharedPackage.addVariable(nameStringId);
         sharedPackage.addVariable(objectName);
         sharedPackage.addVariable(volume);
-        sharedPackage.addVariable(descriptionStringId);
 
         sharedPackageNp.addVariable(authServerProcessId);
+        sharedPackageNp.addVariable(descriptionStringId);
     }
 
 
@@ -383,12 +380,12 @@ public abstract class ServerObject extends GameObject implements Subject<Observa
         final UpdateContainmentMessage ucm = new UpdateContainmentMessage(this);
         final boolean sendUpdateContainment = (ucm.getContainerId() != NetworkObject.INVALID || ucm.getSlotArrangement() != -1);
 
-//        final BaselinesMessage sharedBaselines = new BaselinesMessage(this, sharedPackage, BaselinesMessage.BASELINES_SHARED);
-//        final BaselinesMessage sharedNpBaselines = new BaselinesMessage(this, sharedPackageNp, BaselinesMessage.BASELINES_SHARED_NP);
-//        final BaselinesMessage authClientServerBaselines = new BaselinesMessage(this, authClientServerPackage, BaselinesMessage.BASELINES_CLIENT_SERVER);
-//        final BaselinesMessage authClientServerNpBaselines = new BaselinesMessage(this, authClientServerPackageNp, BaselinesMessage.BASELINES_CLIENT_SERVER_NP);
-//        final BaselinesMessage firstParentAuthClientServerBaselines = new BaselinesMessage(this, firstParentAuthClientServerPackage, BaselinesMessage.BASELINES_FIRST_PARENT_CLIENT_SERVER);
-//        final BaselinesMessage firstParentAuthClientServerNpBaselines = new BaselinesMessage(this, firstParentAuthClientServerPackageNp, BaselinesMessage.BASELINES_FIRST_PARENT_CLIENT_SERVER_NP);
+        final BaselinesMessage sharedBaselines = new BaselinesMessage(this, sharedPackage, BaselinesMessage.BASELINES_SHARED);
+        final BaselinesMessage sharedNpBaselines = new BaselinesMessage(this, sharedPackageNp, BaselinesMessage.BASELINES_SHARED_NP);
+        final BaselinesMessage authClientServerBaselines = new BaselinesMessage(this, authClientServerPackage, BaselinesMessage.BASELINES_CLIENT_SERVER);
+        final BaselinesMessage authClientServerNpBaselines = new BaselinesMessage(this, authClientServerPackageNp, BaselinesMessage.BASELINES_CLIENT_SERVER_NP);
+        final BaselinesMessage firstParentAuthClientServerBaselines = new BaselinesMessage(this, firstParentAuthClientServerPackage, BaselinesMessage.BASELINES_FIRST_PARENT_CLIENT_SERVER);
+        final BaselinesMessage firstParentAuthClientServerNpBaselines = new BaselinesMessage(this, firstParentAuthClientServerPackageNp, BaselinesMessage.BASELINES_FIRST_PARENT_CLIENT_SERVER_NP);
 
         for (final SoeUdpConnection client : clients) {
             client.sendMessage(msg);
@@ -396,24 +393,24 @@ public abstract class ServerObject extends GameObject implements Subject<Observa
             if (sendUpdateContainment)
                 client.sendMessage(ucm);
 
-//            client.sendMessage(sharedBaselines);
-//            client.sendMessage(sharedNpBaselines);
+            client.sendMessage(sharedBaselines); //good
+            //client.sendMessage(sharedNpBaselines); //bad
         }
 
         //These only get sent to this client.
         final SoeUdpConnection authClient = getConnection();
 
-//        if (authClient != null) {
-//            authClient.sendMessage(authClientServerBaselines);
-//            authClient.sendMessage(authClientServerNpBaselines);
-//        }
-//
-//        final SoeUdpConnection firstParentClient = getParentPlayerClient(this);
-//
-//        if (firstParentClient != null) {
-//            firstParentClient.sendMessage(firstParentAuthClientServerBaselines);
-//            firstParentClient.sendMessage(firstParentAuthClientServerNpBaselines);
-//        }
+        if (authClient != null) {
+            authClient.sendMessage(authClientServerBaselines); //good
+            authClient.sendMessage(authClientServerNpBaselines); //good
+        }
+
+        final SoeUdpConnection firstParentClient = getParentPlayerClient(this);
+
+        if (firstParentClient != null) {
+            firstParentClient.sendMessage(firstParentAuthClientServerBaselines); //good
+            //firstParentClient.sendMessage(firstParentAuthClientServerNpBaselines); //bad
+        }
 
         //Send create messages for contents
         final Container container = getContainerProperty();

@@ -71,7 +71,7 @@ public final class PlayerObject extends IntangibleObject {
     private final AutoDeltaString workingSkill;
     private final AutoDeltaInt currentGcwPoints;
     private final AutoDeltaInt currentPvpKills;
-    private final AutoDeltaInt lifetimeGcwPoints;
+    private final AutoDeltaLong lifetimeGcwPoints;
     private final AutoDeltaInt lifetimePvpKills;
     private final AutoDeltaInt currentGcwRank;
     private final AutoDeltaFloat currentGcwRankProgress;
@@ -120,8 +120,8 @@ public final class PlayerObject extends IntangibleObject {
         craftingStage = new AutoDeltaInt();
         craftingStation = new AutoDeltaLong();
         craftingComponentBioLink = new AutoDeltaLong();
-        matchMakingPersonalProfileId = new AutoDeltaVariable<>(MatchMakingId::new);
-        matchMakingCharacterProfileId = new AutoDeltaVariable<>(MatchMakingId::new);
+        matchMakingPersonalProfileId = new AutoDeltaVariable<>(new MatchMakingId(), MatchMakingId::new);
+        matchMakingCharacterProfileId = new AutoDeltaVariable<>(new MatchMakingId(), MatchMakingId::new);
         friendList = new AutoDeltaStringVector();
         ignoreList = new AutoDeltaStringVector();
         skillTitle = new AutoDeltaString();
@@ -137,8 +137,8 @@ public final class PlayerObject extends IntangibleObject {
         meds = new AutoDeltaInt();
         maxMeds = new AutoDeltaInt();
         privilegedTitle = new AutoDeltaByte();
-        completedQuests = new AutoDeltaVariable<>(BitArray::new);
-        activeQuests = new AutoDeltaVariable<>(BitArray::new);
+        completedQuests = new AutoDeltaVariable<>(new BitArray(), BitArray::new);
+        activeQuests = new AutoDeltaVariable<>(new BitArray(), BitArray::new);
         currentQuest = new AutoDeltaInt();
         quests = new AutoDeltaPackedPlayerQuestDataMap();
         roleIconChoice = new AutoDeltaInt();
@@ -146,7 +146,7 @@ public final class PlayerObject extends IntangibleObject {
         workingSkill = new AutoDeltaString();
         currentGcwPoints = new AutoDeltaInt();
         currentPvpKills = new AutoDeltaInt();
-        lifetimeGcwPoints = new AutoDeltaInt();
+        lifetimeGcwPoints = new AutoDeltaLong();
         lifetimePvpKills = new AutoDeltaInt();
         currentGcwRank = new AutoDeltaInt();
         currentGcwRankProgress = new AutoDeltaFloat();
@@ -158,12 +158,12 @@ public final class PlayerObject extends IntangibleObject {
         petId = new AutoDeltaLong();
         petCommandList = new AutoDeltaStringVector();
         petToggledCommands = new AutoDeltaStringVector();
-        collections = new AutoDeltaVariable<>(BitArray::new);
-        collections2 = new AutoDeltaVariable<>(BitArray::new);
+        collections = new AutoDeltaVariable<>(new BitArray(), BitArray::new);
+        collections2 = new AutoDeltaVariable<>(new BitArray(), BitArray::new);
         citizenshipCity = new AutoDeltaString();
         citizenshipType = new AutoDeltaByte();
-        cityGcwDefenderRegion = new AutoDeltaVariable<>(GcwDefenderRegionQualifications::new);
-        guildGcwDefenderRegion = new AutoDeltaVariable<>(GcwDefenderRegionQualifications::new);
+        cityGcwDefenderRegion = new AutoDeltaVariable<>(new GcwDefenderRegionQualifications(), GcwDefenderRegionQualifications::new);
+        guildGcwDefenderRegion = new AutoDeltaVariable<>(new GcwDefenderRegionQualifications(), GcwDefenderRegionQualifications::new);
         squelchedById = new AutoDeltaLong();
         squelchedByName = new AutoDeltaString();
         squelchExpireTime = new AutoDeltaInt();
@@ -171,8 +171,8 @@ public final class PlayerObject extends IntangibleObject {
         showHelmet = new AutoDeltaBoolean();
         environmentFlags = new AutoDeltaInt();
         defaultAttackOverride = new AutoDeltaString();
-        guildRank = new AutoDeltaVariable<>(BitArray::new);
-        citizenRank = new AutoDeltaVariable<>(BitArray::new);
+        guildRank = new AutoDeltaVariable<>(new BitArray(), BitArray::new);
+        citizenRank = new AutoDeltaVariable<>(new BitArray(), BitArray::new);
         galacticReserveDeposit = new AutoDeltaByte();
         pgcRatingCount = new AutoDeltaLong();
         pgcRatingTotal = new AutoDeltaLong();

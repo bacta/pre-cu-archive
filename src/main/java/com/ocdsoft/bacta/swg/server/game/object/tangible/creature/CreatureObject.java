@@ -7,9 +7,8 @@ import com.ocdsoft.bacta.swg.archive.delta.*;
 import com.ocdsoft.bacta.swg.archive.delta.map.AutoDeltaIntObjectMap;
 import com.ocdsoft.bacta.swg.archive.delta.map.AutoDeltaStringIntMap;
 import com.ocdsoft.bacta.swg.archive.delta.map.AutoDeltaStringObjectMap;
-import com.ocdsoft.bacta.swg.archive.delta.packedmap.AutoDeltaPackedBuffMap;
+import com.ocdsoft.bacta.swg.archive.delta.set.AutoDeltaObjectSet;
 import com.ocdsoft.bacta.swg.archive.delta.set.AutoDeltaStringSet;
-import com.ocdsoft.bacta.swg.archive.delta.vector.AutoDeltaFloatVector;
 import com.ocdsoft.bacta.swg.archive.delta.vector.AutoDeltaIntVector;
 import com.ocdsoft.bacta.swg.archive.delta.vector.AutoDeltaObjectVector;
 import com.ocdsoft.bacta.swg.server.game.command.CommandQueue;
@@ -35,6 +34,12 @@ import com.ocdsoft.bacta.swg.shared.template.ObjectTemplateList;
 import gnu.trove.list.TIntList;
 
 public class CreatureObject extends TangibleObject {
+
+    @Override
+    public int getObjectType() {
+        return 0x4352454F;
+    } //'CREO'
+
     private final AutoDeltaIntVector unmodifiedMaxAttributes;
     private final AutoDeltaStringSet skills;
     private final AutoDeltaByte posture;
@@ -55,7 +60,7 @@ public class CreatureObject extends TangibleObject {
     private final AutoDeltaFloat turnScale;
     private final AutoDeltaFloat walkSpeed;
     private final AutoDeltaFloat waterModPercent;
-    private final AutoDeltaObjectVector<GroupMissionCriticalObject> groupMissionCriticalObjectList;
+    private final AutoDeltaObjectSet<GroupMissionCriticalObject> groupMissionCriticalObjectList;
     private final AutoDeltaShort level;
     private final AutoDeltaString animatingSkillData;
     private final AutoDeltaString animationMood;
@@ -64,7 +69,6 @@ public class CreatureObject extends TangibleObject {
     private final AutoDeltaVariable<GroupInviter> groupInviter;
     private final AutoDeltaInt guildId;
     private final AutoDeltaLong lookAtTarget;
-    private final AutoDeltaByte moodId;
     private final AutoDeltaInt performanceStartTime;
     private final AutoDeltaInt performanceType;
     private final AutoDeltaIntVector attributes;
@@ -77,7 +81,6 @@ public class CreatureObject extends TangibleObject {
     private final AutoDeltaString alternateAppearanceSharedObjectTemplateName;
     private final AutoDeltaBoolean coverVisibility;
     private final AutoDeltaIntObjectMap<Buff.PackedBuff> buffs;
-    private final AutoDeltaPackedBuffMap persistedBuffs;
     private final AutoDeltaInt hologramType;
     private final AutoDeltaBoolean clientUsesAnimationLocomotion;
     private final AutoDeltaByte difficulty;
@@ -89,10 +92,6 @@ public class CreatureObject extends TangibleObject {
     private final AutoDeltaLong decoyOrigin; //The OID of the player whome we copied for this decoy creature.
     private final AutoDeltaInt totalLevelXp;
     private final AutoDeltaInt levelHealthGranted;
-    private final AutoDeltaLong inviterForPendingGroup;
-    private final AutoDeltaIntVector timedMod;
-    private final AutoDeltaFloatVector timedModDuration;
-    private final AutoDeltaIntVector timedModUpdateTime;
     private final AutoDeltaLong intendedTarget;
     private final AutoDeltaByte mood;
 
@@ -129,16 +128,15 @@ public class CreatureObject extends TangibleObject {
         turnScale = new AutoDeltaFloat(1.0F);
         walkSpeed = new AutoDeltaFloat(((SharedCreatureObjectTemplate) getSharedTemplate()).getSpeed(MovementTypes.MT_walk));
         waterModPercent = new AutoDeltaFloat(((SharedCreatureObjectTemplate) getSharedTemplate()).getWaterModPercent());
-        groupMissionCriticalObjectList = new AutoDeltaObjectVector<>(GroupMissionCriticalObject::new);
+        groupMissionCriticalObjectList = new AutoDeltaObjectSet<>(GroupMissionCriticalObject::new);
         level = new AutoDeltaShort((short) -1);
         animatingSkillData = new AutoDeltaString();
         animationMood = new AutoDeltaString("neutral");
         currentWeapon = new AutoDeltaLong();
         group = new AutoDeltaLong();
-        groupInviter = new AutoDeltaVariable<>(GroupInviter::new);
+        groupInviter = new AutoDeltaVariable<>(new GroupInviter(), GroupInviter::new);
         guildId = new AutoDeltaInt(0);
         lookAtTarget = new AutoDeltaLong();
-        moodId = new AutoDeltaByte();
         performanceStartTime = new AutoDeltaInt();
         performanceType = new AutoDeltaInt();
         attributes = new AutoDeltaIntVector(Attribute.SIZE);
@@ -149,7 +147,6 @@ public class CreatureObject extends TangibleObject {
         totalAttributes = new AutoDeltaIntVector();
         totalMaxAttributes = new AutoDeltaIntVector();
         buffs = new AutoDeltaIntObjectMap<>(Buff.PackedBuff::new);
-        persistedBuffs = new AutoDeltaPackedBuffMap();
         hologramType = new AutoDeltaInt();
         clientUsesAnimationLocomotion = new AutoDeltaBoolean();
         difficulty = new AutoDeltaByte();
@@ -161,10 +158,6 @@ public class CreatureObject extends TangibleObject {
         decoyOrigin = new AutoDeltaLong();
         totalLevelXp = new AutoDeltaInt();
         levelHealthGranted = new AutoDeltaInt();
-        inviterForPendingGroup = new AutoDeltaLong();
-        timedMod = new AutoDeltaIntVector();
-        timedModDuration = new AutoDeltaFloatVector();
-        timedModUpdateTime = new AutoDeltaIntVector();
         intendedTarget = new AutoDeltaLong();
         mood = new AutoDeltaByte();
 
@@ -254,7 +247,6 @@ public class CreatureObject extends TangibleObject {
         sharedPackageNp.addVariable(currentWeapon);
         sharedPackageNp.addVariable(group);
         sharedPackageNp.addVariable(groupInviter);
-        sharedPackageNp.addVariable(inviterForPendingGroup);
         sharedPackageNp.addVariable(guildId);
         sharedPackageNp.addVariable(lookAtTarget);
         sharedPackageNp.addVariable(intendedTarget);
@@ -265,9 +257,6 @@ public class CreatureObject extends TangibleObject {
         sharedPackageNp.addVariable(totalMaxAttributes);
         sharedPackageNp.addVariable(wearableData);
         sharedPackageNp.addVariable(alternateAppearanceSharedObjectTemplateName);
-        sharedPackageNp.addVariable(timedMod);
-        sharedPackageNp.addVariable(timedModDuration);
-        sharedPackageNp.addVariable(timedModUpdateTime);
         sharedPackageNp.addVariable(coverVisibility);
         sharedPackageNp.addVariable(buffs);
         sharedPackageNp.addVariable(clientUsesAnimationLocomotion);

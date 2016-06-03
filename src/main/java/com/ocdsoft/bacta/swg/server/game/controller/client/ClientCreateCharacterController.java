@@ -104,7 +104,7 @@ public class ClientCreateCharacterController implements GameNetworkMessageContro
     }
 
     @Override
-    public void handleIncoming(SoeUdpConnection connection, ClientCreateCharacter createMessage) {
+    public void handleIncoming(final SoeUdpConnection connection, final ClientCreateCharacter createMessage) {
 
         // Get the account object for this connection
         final SoeAccount account = accountService.getAccount(connection.getAccountUsername());
@@ -232,7 +232,10 @@ public class ClientCreateCharacterController implements GameNetworkMessageContro
             assert hair != null : String.format("Could not create hair %s\n", createMessage.getHairTemplateName());
 
             final TangibleObject tangibleHair = TangibleObject.asTangibleObject(hair);
+
             assert tangibleHair != null : String.format("Hair is not tangible, wtf.  Can't customize it.  (among other things, probably)...");
+
+            tangibleHair.setAppearanceData(createMessage.getHairAppearanceData());
         }
 
         if (!createMessage.getProfession().isEmpty()) {

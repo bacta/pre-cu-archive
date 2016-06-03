@@ -17,7 +17,7 @@ public class AutoDeltaStringSet extends AutoDeltaContainer {
 
     public AutoDeltaStringSet() {
         this.commands = new ArrayList<>(5);
-        this.set = new TreeSet<String>();
+        this.set = new TreeSet<>();
         this.baselineCommandCount = 0;
     }
 
@@ -89,9 +89,7 @@ public class AutoDeltaStringSet extends AutoDeltaContainer {
         buffer.putInt(set.size());
         buffer.putInt(baselineCommandCount);
 
-        set.forEach(value -> {
-            BufferUtil.put(buffer, value);
-        });
+        set.forEach(value -> BufferUtil.put(buffer, value));
     }
 
     @Override

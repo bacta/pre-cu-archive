@@ -105,7 +105,7 @@ public class TangibleObject extends ServerObject implements SteerSubject<Vec3> {
 
         pvpFaction = new AutoDeltaInt();
         pvpType = new AutoDeltaInt();
-        appearanceData = new AutoDeltaString("");
+        appearanceData = new AutoDeltaString();
         components = new AutoDeltaIntSet();
         condition = new AutoDeltaInt(objectTemplate.getCondition());
         count = new AutoDeltaInt(objectTemplate.getCount());
@@ -182,8 +182,8 @@ public class TangibleObject extends ServerObject implements SteerSubject<Vec3> {
         sharedPackage.addVariable(damageTaken);
         sharedPackage.addVariable(maxHitPoints);
         sharedPackage.addVariable(visible);
-        sharedPackage.addVariable(inCombat);
 
+        sharedPackageNp.addVariable(inCombat);
         sharedPackageNp.addVariable(passiveRevealPlayerCharacter);
         sharedPackageNp.addVariable(mapColorOverride);
         sharedPackageNp.addVariable(accessList);
