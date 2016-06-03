@@ -393,23 +393,23 @@ public abstract class ServerObject extends GameObject implements Subject<Observa
             if (sendUpdateContainment)
                 client.sendMessage(ucm);
 
-            client.sendMessage(sharedBaselines); //good
-            //client.sendMessage(sharedNpBaselines); //bad
+            client.sendMessage(sharedBaselines);
+            client.sendMessage(sharedNpBaselines);
         }
 
         //These only get sent to this client.
         final SoeUdpConnection authClient = getConnection();
 
         if (authClient != null) {
-            authClient.sendMessage(authClientServerBaselines); //good
-            authClient.sendMessage(authClientServerNpBaselines); //good
+            authClient.sendMessage(authClientServerBaselines);
+            authClient.sendMessage(authClientServerNpBaselines);
         }
 
         final SoeUdpConnection firstParentClient = getParentPlayerClient(this);
 
         if (firstParentClient != null) {
-            firstParentClient.sendMessage(firstParentAuthClientServerBaselines); //good
-            //firstParentClient.sendMessage(firstParentAuthClientServerNpBaselines); //bad
+            firstParentClient.sendMessage(firstParentAuthClientServerBaselines);
+            firstParentClient.sendMessage(firstParentAuthClientServerNpBaselines);
         }
 
         //Send create messages for contents

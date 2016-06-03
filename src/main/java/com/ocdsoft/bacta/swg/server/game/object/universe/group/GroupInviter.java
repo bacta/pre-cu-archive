@@ -1,6 +1,7 @@
 package com.ocdsoft.bacta.swg.server.game.object.universe.group;
 
 import com.ocdsoft.bacta.engine.buffer.ByteBufferWritable;
+import com.ocdsoft.bacta.engine.utils.BufferUtil;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -11,7 +12,7 @@ import java.nio.ByteBuffer;
  */
 @Getter
 @AllArgsConstructor
-public class GroupInviter implements ByteBufferWritable {
+public final class GroupInviter implements ByteBufferWritable {
     private final long inviterId;
     private final String name;
     private final long inviterShipId;
@@ -23,15 +24,15 @@ public class GroupInviter implements ByteBufferWritable {
     }
 
     public GroupInviter(final ByteBuffer buffer) {
-        inviterId = buffer.getLong();
-        //ship and name aren't in the buffer apparently!?
-        this.name = "";
-        this.inviterShipId = 0;
+        this.inviterId = buffer.getLong();
+        this.name = BufferUtil.getAscii(buffer);
+        this.inviterShipId = buffer.getLong();
     }
 
     @Override
     public void writeToBuffer(final ByteBuffer buffer) {
-        buffer.putLong(inviterId);
-        //ship and name aren't in the buffer apparently!?
+        BufferUtil.put(buffer, inviterId);
+        BufferUtil.putAscii(buffer, name);
+        BufferUtil.put(buffer, inviterShipId);
     }
 }

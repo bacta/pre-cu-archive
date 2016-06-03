@@ -96,6 +96,8 @@ public final class PlayerObject extends IntangibleObject {
     private final AutoDeltaBoolean showHelmet;
     private final AutoDeltaInt environmentFlags; // Force Day, Night, whatever else.
     private final AutoDeltaString defaultAttackOverride; // This string will override the user's default attack
+    private final AutoDeltaByte unknownByte;
+    private final AutoDeltaInt unknownInt;
     private final AutoDeltaVariable<BitArray> guildRank;
     private final AutoDeltaVariable<BitArray> citizenRank;
     private final AutoDeltaByte galacticReserveDeposit;
@@ -171,6 +173,8 @@ public final class PlayerObject extends IntangibleObject {
         showHelmet = new AutoDeltaBoolean();
         environmentFlags = new AutoDeltaInt();
         defaultAttackOverride = new AutoDeltaString();
+        unknownByte = new AutoDeltaByte();
+        unknownInt = new AutoDeltaInt();
         guildRank = new AutoDeltaVariable<>(new BitArray(), BitArray::new);
         citizenRank = new AutoDeltaVariable<>(new BitArray(), BitArray::new);
         galacticReserveDeposit = new AutoDeltaByte();
@@ -186,7 +190,7 @@ public final class PlayerObject extends IntangibleObject {
         firstParentAuthClientServerPackageNp.addVariable(craftingStage);
         firstParentAuthClientServerPackageNp.addVariable(craftingStation);
         firstParentAuthClientServerPackageNp.addVariable(draftSchematics);
-        firstParentAuthClientServerPackageNp.addVariable(craftingComponentBioLink);
+        firstParentAuthClientServerPackageNp.addVariable(craftingComponentBioLink); //investigate
         firstParentAuthClientServerPackageNp.addVariable(experimentPoints);
         firstParentAuthClientServerPackageNp.addVariable(expModified);
         firstParentAuthClientServerPackageNp.addVariable(friendList);
@@ -205,12 +209,14 @@ public final class PlayerObject extends IntangibleObject {
         firstParentAuthClientServerPackageNp.addVariable(petId);
         firstParentAuthClientServerPackageNp.addVariable(petCommandList);
         firstParentAuthClientServerPackageNp.addVariable(petToggledCommands);
+        firstParentAuthClientServerPackageNp.addVariable(unknownByte);
+        firstParentAuthClientServerPackageNp.addVariable(unknownInt);
         firstParentAuthClientServerPackageNp.addVariable(guildRank);
         firstParentAuthClientServerPackageNp.addVariable(citizenRank);
         firstParentAuthClientServerPackageNp.addVariable(galacticReserveDeposit);
         firstParentAuthClientServerPackageNp.addVariable(pgcRatingCount);
         firstParentAuthClientServerPackageNp.addVariable(pgcRatingTotal);
-        firstParentAuthClientServerPackageNp.addVariable(pgcLastRatingTime);
+        firstParentAuthClientServerPackageNp.addVariable(pgcLastRatingTime); //37
 
         firstParentAuthClientServerPackage.addVariable(experiencePoints);
         firstParentAuthClientServerPackage.addVariable(waypoints);
