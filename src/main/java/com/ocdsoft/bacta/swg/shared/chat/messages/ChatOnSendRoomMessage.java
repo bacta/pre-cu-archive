@@ -21,16 +21,16 @@ import java.nio.ByteBuffer;
 @AllArgsConstructor
 public final class ChatOnSendRoomMessage extends GameNetworkMessage {
     private final int sequence;
-    private final int result;
+    private final ChatResult result;
 
     public ChatOnSendRoomMessage(final ByteBuffer buffer) {
-        result = buffer.getInt();
+        result = ChatResult.from(buffer.getInt());
         sequence = buffer.get();
     }
 
     @Override
     public void writeToBuffer(final ByteBuffer buffer) {
-        BufferUtil.put(buffer, result);
+        BufferUtil.put(buffer, result.value);
         BufferUtil.put(buffer, sequence);
     }
 }

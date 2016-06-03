@@ -79,4 +79,20 @@ public class CommandParamsIteratorTest {
 
         Assert.assertEquals(expected, actual);
     }
+
+    @Test
+    public void shouldGetRemainingStringToNull() {
+        final String params = new String(new byte[]{'T', 'e', 's', 't', '\0', 'i', 'n', 'g'});
+
+        final CommandParamsIterator iterator = new CommandParamsIterator(params);
+        final String beforeNull = iterator.getRemainingStringToNull();
+        final String afterNull = iterator.getRemainingStringTrimmed();
+
+        Assert.assertEquals("Test", beforeNull);
+        Assert.assertEquals("ing", afterNull);
+
+        final CommandParamsIterator otherIterator = new CommandParamsIterator("Testing");
+
+        Assert.assertEquals("Testing", otherIterator.getRemainingStringToNull());
+    }
 }

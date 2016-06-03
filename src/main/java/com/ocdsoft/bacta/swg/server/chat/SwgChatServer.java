@@ -38,6 +38,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 public final class SwgChatServer implements Observer {
     private static final Logger LOGGER = LoggerFactory.getLogger(SwgChatServer.class);
 
+    private static final int MAX_ROOM_MESSAGE_LENGTH = 512;
+
     private transient final GameNetworkMessageSerializer serializer;
     private transient final ChatServerConfiguration configuration;
 
@@ -301,7 +303,7 @@ public final class SwgChatServer implements Observer {
         if (avatarId != null && room != null) {
             internalEnterRoom(networkId, room, sequence);
         } else {
-            //pending enter room!?
+            LOGGER.debug("Not entering room because it doesn't exist yet, and no pending enter is implemented.");
         }
     }
 
@@ -315,7 +317,8 @@ public final class SwgChatServer implements Observer {
             internalEnterRoom(networkId, room, 0);
         } else if (forceCreate) {
             createRoom(0, 0, lowerRoomName, false, !createPrivate, "");
-            //pending enter room!?
+            //We need to send them an enter when the room is created.
+            LOGGER.debug("Created room, but not entering because pending enter is not implemented.");
         }
     }
 
@@ -364,7 +367,7 @@ public final class SwgChatServer implements Observer {
         }
 
         //If we were unable to place the request, then we need to inform the client now.
-        final ChatOnEnteredRoom fail = new ChatOnEnteredRoom(sequence, error.value, roomId, avatarId);
+        final ChatOnEnteredRoom fail = new ChatOnEnteredRoom(sequence, error, roomId, avatarId);
         sendToClient(networkId, fail);
     }
 
@@ -392,7 +395,7 @@ public final class SwgChatServer implements Observer {
         }
 
         //Tell the client that made the request, the results of the request.
-        final ChatOnEnteredRoom enteredRoom = new ChatOnEnteredRoom(sequence, error.value, chatRoom.getId(), avatarId);
+        final ChatOnEnteredRoom enteredRoom = new ChatOnEnteredRoom(sequence, error, chatRoom.getId(), avatarId);
         sendToClient(networkId, enteredRoom);
 
         if (error == ChatResult.SUCCESS) {
@@ -437,11 +440,73 @@ public final class SwgChatServer implements Observer {
     }
 
     public void sendRoomMessage(final long networkId, final int sequence, final int roomId, final String message, final String outOfBand) {
+        if (!message.isEmpty() || !outOfBand.isEmpty()) {
+            LOGGER.debug("Sending message to room {}", roomId);
 
+            final ChatAvatarId sender = networkIdToAvatarIdMap.get(networkId);
+            final ChatRoom chatRoom = getChatRoomById(roomId);
+
+            if (chatRoom != null && sender != null) {
+                if (message.length() < MAX_ROOM_MESSAGE_LENGTH) {
+                    //TODO: Spam limit
+                    //TODO: Squelch time
+
+                    final boolean squelched = false;
+                    final boolean allowedToSpeak = false; //Are they allowed to speak?
+                    final int timeUntilTalk = 0; //How long until they can talk again.
+
+                    if (allowedToSpeak) {
+                        internalSendRoomMessage(sender, chatRoom, message, outOfBand, sequence);
+                    } else if (!squelched) {
+                        final ChatSpamLimited chatSpamLimited = new ChatSpamLimited(timeUntilTalk);
+                        sendToClient(networkId, chatSpamLimited);
+                    }
+                }
+            }
+        }
     }
 
     public void sendRoomMessage(final ChatAvatarId from, final String roomName, final String message, final String outOfBand) {
 
+    }
+
+    private void internalSendRoomMessage(final ChatAvatarId sender, final ChatRoom chatRoom, final String message, final String outOfBand, final int sequenceId) {
+        ChatResult result = ChatResult.SUCCESS;
+
+        final boolean privileged = chatRoom.isModerator(sender) || chatRoom.isOwner(sender) || chatRoom.isAdmin(sender);
+
+        if (!chatRoom.isInRoom(sender))
+            result = ChatResult.ROOM_SRC_NOT_IN_ROOM;
+
+        else if (chatRoom.isModerated() && !privileged)
+            result = ChatResult.ROOM_NO_PRIVILEGES;
+
+        if (result == ChatResult.SUCCESS) {
+            //Send the message to everyone in the room.
+            final Iterator<ChatAvatarId> iterator = chatRoom.getAvatarsIterator();
+
+            while (iterator.hasNext()) {
+                final ChatAvatarId recipientId = iterator.next();
+                notifyReceivedRoomMessage(sender, recipientId, chatRoom, message, outOfBand);
+            }
+        }
+
+        final ChatOnSendRoomMessage chatOnSendRoomMessage = new ChatOnSendRoomMessage(sequenceId, result);
+        sendToClient(sender, chatOnSendRoomMessage);
+    }
+
+    private void notifyReceivedRoomMessage(final ChatAvatarId senderId, final ChatAvatarId recipientId, final ChatRoom chatRoom, final String message, final String outOfBand) {
+        //TODO: Check to prevent sending duplicate messages.
+
+        if (senderId.equals(systemAvatarId)) {
+            final ChatSystemMessage systemMessage = new ChatSystemMessage(ChatSystemMessage.Flags.BROADCAST, message, outOfBand);
+            sendToClient(recipientId, systemMessage);
+        } else {
+            final ChatRoomMessage roomMessage = new ChatRoomMessage(chatRoom.getId(), senderId, message, outOfBand);
+            sendToClient(recipientId, roomMessage);
+        }
+
+        //TODO: Log chat, but not planet-wide chat.
     }
 
     public void sendInstantMessage(final long fromId, final int sequence, final ChatAvatarId to, final String message, final String outOfBand) {
@@ -598,7 +663,7 @@ public final class SwgChatServer implements Observer {
      *
      * @param avatarId The player that has come online.
      */
-    public void notifyFriendsOfLogin(final ChatAvatarId avatarId) {
+    private void notifyFriendsOfLogin(final ChatAvatarId avatarId) {
         final Set<ChatAvatarId> notificationList = friendRelationships.getReverseRelationships(avatarId);
 
         LOGGER.debug("Notifying {} players that {} has logged in.",
@@ -615,7 +680,7 @@ public final class SwgChatServer implements Observer {
      * @param avatarId The player that has come online.
      * @param friendId The friend that will receive the status update.
      */
-    public void notifyFriendOfLogin(final ChatAvatarId avatarId, final ChatAvatarId friendId) {
+    private void notifyFriendOfLogin(final ChatAvatarId avatarId, final ChatAvatarId friendId) {
         final long friendNetworkId = avatarIdToNetworkIdMap.get(friendId);
 
         //Make sure they are online, not ignored, and a valid networkId
@@ -633,7 +698,7 @@ public final class SwgChatServer implements Observer {
      *
      * @param avatarId The player that has gone offline.
      */
-    public void notifyFriendsOfLogout(final ChatAvatarId avatarId) {
+    private void notifyFriendsOfLogout(final ChatAvatarId avatarId) {
         final Set<ChatAvatarId> notificationList = friendRelationships.getReverseRelationships(avatarId);
 
         LOGGER.debug("Notifying {} players that {} has logged out.",
@@ -650,7 +715,7 @@ public final class SwgChatServer implements Observer {
      * @param avatarId The player that has gone offline.
      * @param friendId The friend that will receive the status update.
      */
-    public void notifyFriendOfLogout(final ChatAvatarId avatarId, final ChatAvatarId friendId) {
+    private void notifyFriendOfLogout(final ChatAvatarId avatarId, final ChatAvatarId friendId) {
         final long friendNetworkId = avatarIdToNetworkIdMap.get(friendId);
 
         //Make sure they are online, not ignored, and a valid networkId
@@ -660,6 +725,14 @@ public final class SwgChatServer implements Observer {
             final ChatFriendsListUpdate msg = new ChatFriendsListUpdate(avatarId, false);
             sendToClient(friendNetworkId, msg);
         }
+    }
+
+
+    public void sendToClient(final ChatAvatarId avatarId, final GameNetworkMessage gnm) {
+        final long networkId = avatarIdToNetworkIdMap.get(avatarId);
+
+        if (networkId != NetworkIdUtil.INVALID)
+            sendToClient(gameServerConnection, networkId, gnm);
     }
 
     /**

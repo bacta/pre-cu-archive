@@ -5,8 +5,9 @@ import com.google.inject.Singleton;
 import com.ocdsoft.bacta.engine.conf.BactaConfiguration;
 import com.ocdsoft.bacta.engine.object.NetworkObject;
 import com.ocdsoft.bacta.soe.connection.SoeUdpConnection;
+import com.ocdsoft.bacta.soe.message.GameClientMessage;
 import com.ocdsoft.bacta.soe.message.GameNetworkMessage;
-import com.ocdsoft.bacta.soe.service.OutgoingConnectionService;
+import com.ocdsoft.bacta.soe.serialize.GameNetworkMessageSerializer;
 import com.ocdsoft.bacta.swg.server.game.GameServerState;
 import com.ocdsoft.bacta.swg.server.game.message.chat.ChatConnectAvatar;
 import com.ocdsoft.bacta.swg.server.game.message.outofband.OutOfBandPackager;
@@ -23,6 +24,7 @@ import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.nio.ByteBuffer;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -50,15 +52,17 @@ public final class GameChatService {
     private final String rebelRoomPath;
 
     private final ChatAvatarIdBuilder avatarBuilder;
+    private final GameNetworkMessageSerializer gameNetworkMessageSerializer;
 
     private SoeUdpConnection chatServerConnection;
 
     @Inject
     public GameChatService(final BactaConfiguration bactaConfiguration,
                            final GameServerState serverState,
-                           final OutgoingConnectionService outgoingConnectionService) {
+                           final GameNetworkMessageSerializer gameNetworkMessageSerializer) {
 
         this.serverState = serverState;
+        this.gameNetworkMessageSerializer = gameNetworkMessageSerializer;
 
         //Create the server chat avatar based off of configuration values.
         this.serverAvatar = new ChatAvatarId(
@@ -457,7 +461,26 @@ public final class GameChatService {
         if (chatServerConnection != null) {
             chatServerConnection.sendMessage(message);
         } else {
-            LOGGER.error("Tried to send message of type {} but no chat server connection existed.",
+            LOGGER.error("Tried to send message of type {}, but no chat server connection existed.",
+                    message.getClass().getSimpleName());
+        }
+    }
+
+    /**
+     * Forwards the message to the game server, wrapped in a GameClientMessage.
+     *
+     * @param networkId
+     * @param message
+     */
+    public void forwardToChatServer(final long networkId, final GameNetworkMessage message) {
+        if (chatServerConnection != null) {
+            final long[] distributionList = new long[]{networkId};
+            final ByteBuffer internalMessage = gameNetworkMessageSerializer.writeToBuffer(message);
+
+            final GameClientMessage gcm = new GameClientMessage(distributionList, true, internalMessage);
+            sendToChatServer(gcm);
+        } else {
+            LOGGER.error("Tried to forward message of type {}, but no chat server connection existed.",
                     message.getClass().getSimpleName());
         }
     }

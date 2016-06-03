@@ -16,13 +16,13 @@ import java.nio.ByteBuffer;
 @AllArgsConstructor
 public final class ChatOnEnteredRoom extends GameNetworkMessage {
     private final int sequence;
-    private final int result;
+    private final ChatResult result;
     private final int roomId;
     private final ChatAvatarId characterName;
 
     public ChatOnEnteredRoom(final ByteBuffer buffer) {
         this.characterName = new ChatAvatarId(buffer);
-        this.result = buffer.getInt();
+        this.result = ChatResult.from(buffer.getInt());
         this.roomId = buffer.getInt();
         this.sequence = buffer.getInt();
     }
@@ -30,7 +30,7 @@ public final class ChatOnEnteredRoom extends GameNetworkMessage {
     @Override
     public void writeToBuffer(final ByteBuffer buffer) {
         BufferUtil.put(buffer, characterName);
-        BufferUtil.put(buffer, result);
+        BufferUtil.put(buffer, result.value);
         BufferUtil.put(buffer, roomId);
         BufferUtil.put(buffer, sequence);
     }

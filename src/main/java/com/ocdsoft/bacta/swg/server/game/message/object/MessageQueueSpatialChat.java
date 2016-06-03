@@ -23,13 +23,13 @@ import java.nio.ByteBuffer;
         GameControllerMessageType.SPATIAL_CHAT_RECEIVE
 })
 public final class MessageQueueSpatialChat implements MessageQueueData {
-    private final String text; //unicode
     private final long sourceId;
     private final long targetId;
-    private final int flags;
+    private final String text; //unicode
     private final short volume;
     private final short chatType;
     private final short moodType;
+    private final int flags;
     private final byte language;
     private final String outOfBand; //unicode
     private final String sourceName; //unicode

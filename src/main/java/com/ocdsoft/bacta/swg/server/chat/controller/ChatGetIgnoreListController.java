@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * Created by crush on 6/1/2016.
  */
 @MessageHandled(handles = ChatGetIgnoreList.class, type = ServerType.CHAT)
-@ConnectionRolesAllowed(value = ConnectionRole.AUTHENTICATED)
+@ConnectionRolesAllowed(value = ConnectionRole.WHITELISTED)
 public class ChatGetIgnoreListController implements GameNetworkMessageController<ChatGetIgnoreList> {
     private static final Logger LOGGER = LoggerFactory.getLogger(ChatGetIgnoreListController.class);
 

@@ -13,6 +13,10 @@ public final class CommandParamsIterator {
         this.params = params;
     }
 
+    public boolean isAtEnd() {
+        return position > params.length() - 1;
+    }
+
     /**
      * Gets the next token in the string that is separated by a whitespace.
      *
@@ -46,6 +50,66 @@ public final class CommandParamsIterator {
 
         skipWhiteSpace();
         return value;
+    }
+
+    /**
+     * Gets the remaining string, but will trim the whitespace off the front and back.
+     * @return The rest of the String, trimmed.
+     * @see #getRemainingString()
+     */
+    public String getRemainingStringTrimmed() {
+        return internalGetRemainingString(true);
+    }
+
+    /**
+     * Gets exactly whats left in the underlying string.
+     *
+     * @return The rest of the String.
+     * @see #getRemainingStringTrimmed()
+     */
+    public String getRemainingString() {
+        return internalGetRemainingString(false);
+    }
+
+    /**
+     * Attempts to get everything in the string until a null character is encountered, at which it will return the
+     * string at that position. There may be more in the string after the null character.
+     *
+     * @return
+     */
+    public String getRemainingStringToNull() {
+        final StringBuilder sb = new StringBuilder(params.length() - position);
+
+        for (int size = params.length(); position < size; ++position) {
+            final char c = params.charAt(position);
+
+            if (c == '\0') {
+                ++position; //increment position one more to skip the null byte.
+                break;
+            }
+
+            sb.append(c);
+        }
+
+        return sb.toString();
+    }
+
+    private String internalGetRemainingString(final boolean trim) {
+        final String result;
+        if (!trim) {
+            result = params.substring(position);
+        } else {
+            //NOTE: This only matches on space, and not all whitespace. Might want to fix eventually.
+            final int lastIndex = params.lastIndexOf(' ');
+
+            if (lastIndex <= position)
+                result = params.substring(position);
+            else
+                result = params.substring(position, lastIndex);
+        }
+
+        position = params.length();
+        return result;
     }
 
     /**
@@ -85,6 +149,25 @@ public final class CommandParamsIterator {
             position = params.length();
         } else {
             value = Integer.parseInt(params.substring(position, endIndex));
+            position = endIndex + 1;
+        }
+
+        skipWhiteSpace();
+
+        return value;
+    }
+
+    public long getLong() {
+        skipWhiteSpace();
+
+        final int endIndex = params.indexOf(' ', position);
+        final long value;
+
+        if (endIndex == -1) {
+            value = Long.parseLong(params.substring(position));
+            position = params.length();
+        } else {
+            value = Long.parseLong(params.substring(position, endIndex));
             position = endIndex + 1;
         }
 
