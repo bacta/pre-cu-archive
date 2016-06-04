@@ -104,6 +104,7 @@ public final class PlayerObject extends IntangibleObject {
     private final AutoDeltaLong pgcRatingCount;
     private final AutoDeltaLong pgcRatingTotal;
     private final AutoDeltaInt pgcLastRatingTime;
+    private final AutoDeltaInt jediState;
 
     @Inject
     public PlayerObject(final ObjectTemplateList objectTemplateList,
@@ -181,6 +182,7 @@ public final class PlayerObject extends IntangibleObject {
         pgcRatingCount = new AutoDeltaLong();
         pgcRatingTotal = new AutoDeltaLong();
         pgcLastRatingTime = new AutoDeltaInt();
+        jediState = new AutoDeltaInt();
 
         addMembersToPackages();
     }
@@ -209,14 +211,15 @@ public final class PlayerObject extends IntangibleObject {
         firstParentAuthClientServerPackageNp.addVariable(petId);
         firstParentAuthClientServerPackageNp.addVariable(petCommandList);
         firstParentAuthClientServerPackageNp.addVariable(petToggledCommands);
-        firstParentAuthClientServerPackageNp.addVariable(unknownByte);
-        firstParentAuthClientServerPackageNp.addVariable(unknownInt);
+        //firstParentAuthClientServerPackageNp.addVariable(unknownByte);
+        //firstParentAuthClientServerPackageNp.addVariable(unknownInt);
         firstParentAuthClientServerPackageNp.addVariable(guildRank);
         firstParentAuthClientServerPackageNp.addVariable(citizenRank);
         firstParentAuthClientServerPackageNp.addVariable(galacticReserveDeposit);
         firstParentAuthClientServerPackageNp.addVariable(pgcRatingCount);
         firstParentAuthClientServerPackageNp.addVariable(pgcRatingTotal);
-        firstParentAuthClientServerPackageNp.addVariable(pgcLastRatingTime); //37
+        firstParentAuthClientServerPackageNp.addVariable(pgcLastRatingTime);
+        firstParentAuthClientServerPackageNp.addVariable(jediState);
 
         firstParentAuthClientServerPackage.addVariable(experiencePoints);
         firstParentAuthClientServerPackage.addVariable(waypoints);
